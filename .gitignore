@@ -1,3 +1,5 @@
 /.settings
 /.project
 /.buildpath
+/build.xml
+/build.properties
