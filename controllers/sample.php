@@ -65,7 +65,7 @@
  *
  */
 
-class controller_sample {
+class Sample {
 	
 	function test()
 	{
