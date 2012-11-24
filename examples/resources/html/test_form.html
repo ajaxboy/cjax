@@ -1,0 +1,64 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Test Form</title>
+<link rel="stylesheet" type="text/css" href="resources/send_form/view.css" media="all">
+</head>
+<body>
+<div id="main_body" >
+	<div id="form_container" style="width:570px;">
+		<h1><a>Ajax Overlay and Validation</a></h1>
+		<form id="form1" name="form1" class="appnitro"  method="post" action="" onsubmit="return false;">
+			<div class="form_description">
+				<h2>Form</h2>
+				<p>Ajax Overlay and Validation...</p>
+			</div>						
+			<ul>
+			<li id="li_2" >
+				<label class="description" for="element_2">Name </label>
+		
+				<span>
+					<input id="name" name="a[name]" class="element text" maxlength="255" size="8" value=""/>
+					<label>First</label>
+				</span>
+				<span>
+					<input id="last_name" name="a[last_name]" class="element text" maxlength="255" size="14" value=""/>
+					<label>Last</label>
+				</span> 
+			</li>
+			<li id="li_4" >
+				<label class="description" for="element_4">Drop Down </label>
+				<div>
+				<select class="element select medium" id="drop_down" name="a[drop_down]"> 
+					<option value="" selected="selected"></option>
+					<option value="1" >First option</option>
+					<option value="2" >Second option</option>
+					<option value="3" >Third option</option>
+				</select>
+		
+				</div> 
+			</li>		
+			<li id="li_1" >
+				<label class="description" for="element_1">Country </label>
+				<div>
+					<input id="a[country]" name="country" class="element text medium" type="text" maxlength="255" value=""/> 
+				</div> 
+			</li>
+			<li id="li_3" >
+				<label class="description" for="element_3">State </label>
+		
+				<div>
+					<input id="a[state]" name="state" class="element text medium" type="text" maxlength="255" value=""/> 
+				</div> 
+			</li>
+			<li class="buttons">
+					<input id="button1" class="button_text" type="submit" name="submit" value="Submit" />
+			</li>
+			</ul>
+		</form>	
+	</div>
+	<img id="bottom" src="resources/send_form/bottom.png" alt="">
+</div>
+
+</body>
+</html>

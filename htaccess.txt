@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+
+	#	If you are having problems with the rewrite rules, remove the "#" from the
+	#	line that begins "RewriteBase" below. You will also have to change the path
+	#	of the rewrite to reflect the path to your base path.
+	#RewriteBase /
+
+
+RewriteRule  ^/?ajax/(.*)$	ajax.php?$1 [NC,QSA,L]
+</IfModule>

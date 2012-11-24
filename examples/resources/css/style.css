@@ -1,0 +1,32 @@
+@CHARSET "ISO-8859-1";
+
+
+#content { position: relative;  margin: 0px; }
+
+.add {
+	position:relative;
+	width: 200px;
+	height: 200px;
+	float:left; 
+	margin-right:1px;
+	background-color: #CEFFCE;
+}
+
+.odd {
+	position:relative;
+	width: 200px;
+	height: 200px;
+	float:left; 
+	margin-right:1px;
+	background-color: #FFDDCC;
+}
+
+
+
+#container {
+	clear:both;
+	padding:0px;
+	margin: 0px;
+	margin-left: auto;
+	margin-right: auto;
+}
