@@ -1,7 +1,7 @@
 @CHARSET "ISO-8859-1";
 h2 {
   border-bottom: 1px dashed #999;
-  display: inline;
+  margin-left: 4px;
 }
 
 .cjax_dialog,#cjax_dialog {

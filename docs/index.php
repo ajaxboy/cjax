@@ -10,10 +10,11 @@ require 'ajax.php';
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <?php echo $ajax->init();?>
 <title>Cjax Framework Docs</title>
+<link rel="stylesheet" type="text/css" href="resources/css/userguide.css" media="all">
 </head>
 <body>
 <p>
-Want to contribute to this documentation?, you may do so by folking the source code(under docs): <a target='_blank' href='https://github.com/ajaxboy/cjax'>https://github.com/ajaxboy/cjax</a>. We could use a hand (also with the styling).
+Want to contribute to this documentation?, you may do so by folking the source code(under docs): <a target='_blank' href='https://github.com/ajaxboy/cjax'>https://github.com/ajaxboy/cjax</a>. We could use a hand.
 </p>
 <h2>Cjax Framework Docs</h2>
 <ul>
@@ -62,6 +63,9 @@ Want to contribute to this documentation?, you may do so by folking the source c
 	</li>
 	<li>
 		<a href="manipulating_container.php"  target="_blank">Manipulating Elements</a>
+	</li>
+		<li>
+		<a href="value_modifiers.php"  target="_blank">Value Mofidifers</a>
 	</li>
 	<li>
 		<a href="bind_elements.php"  target="_blank">Binding Elements</a>

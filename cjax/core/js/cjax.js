@@ -4009,12 +4009,17 @@ function CJAX_FRAMEWORK() {
 				if(use_fns) {
 					for(var i = 1; i < fns.length; i++) {
 						fn = CJAX.lib.pharseFunction(fns[i]);
-						if(CJAX.lib.isFn(fn) || CJAX.lib.isFn(fn  = window[fns[i]])) {
-							switch(element.type) {
-								default:
-								case 'text':
-								_value = fn(_value, element);
-								break;
+						console.log(fn);
+						if(!CJAX.lib.isFn(fn) && CJAX.lib.isFn(_value[fns[i]])) {
+							_value = _value[fn]();
+						} else {
+							if(CJAX.lib.isFn(fn) || CJAX.lib.isFn(fn  = window[fns[i]])) {
+								switch(element.type) {
+									default:
+									case 'text':
+									_value = fn(_value, element);
+									break;
+								}
 							}
 						}
 					}
