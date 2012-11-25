@@ -8,9 +8,12 @@
 
 ## Links
 
-Official Site: http://cjax.sourceforge.net/
-Official Repo: https://github.com/ajaxboy/cjax#
-Official Download Location: https://sourceforge.net/projects/cjax/
+ Official Site: http://cjax.sourceforge.net/
+
+ Official Repo: https://github.com/ajaxboy/cjax
+
+ Official Download Location: https://sourceforge.net/projects/cjax/
+
 
 ## Instructions
 
