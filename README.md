@@ -33,6 +33,7 @@ http://cjax.sourceforge.net/docs/ (Also anyone can contribute/folk to the docs o
 It's really simple as
 
 ```php
+<?php
 $ajax->click('#element_id , $ajax->call('controller/the_function/'));
 ?>
 <!doctype html>
