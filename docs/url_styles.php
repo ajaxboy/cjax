@@ -6,6 +6,7 @@ require 'ajax.php';
 </head>
 <body>
 <h2>Ajax Framework URL Styles</h2>
+<br />
 You may access your controllers in any of the following ways:
 <br /><br />
 <?php 
