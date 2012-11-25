@@ -15,7 +15,7 @@ Cjax is a small lightweight but very powerful Ajax Framework that translate PHP 
 help to develop Ajax applications in record time, saving you up to 60% of development time once you are familiar with the
 simple to use Cjax API.
   
-Cjax is simplistic and uses Convertion over configuration model approach. With its MVC design makes it quite easy to integrate
+Cjax is simplistic and uses Convention  Over Configuration model approach. With its MVC design makes it quite easy to integrate
 into existing PHP-Frameworks (such as Zend, CodeIgnater, cakePHP, Yii, etc).
 
 In most cases all you need is one line of code. Cjax carries a plugin system (as well as the core) that makes PHP and JavaScript look like lovers, meaning that
