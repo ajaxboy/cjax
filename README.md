@@ -37,6 +37,8 @@ http://cjax.sourceforge.net/docs/ (Also anyone can contribute/folk to the docs o
 
 It's really simple as
 
+
+## Example #1 - Ajax Call
 ```php
 <?php
 $ajax->click('#element_id , $ajax->call('controller/the_function/'));
@@ -51,3 +53,28 @@ $ajax->click('#element_id , $ajax->call('controller/the_function/'));
 	</body>
 </html>
 ```
+
+
+## Example #2 - Ajax Form
+```php
+<?php
+$ajax->click('#element_id , $ajax->form('controller/the_function/'));
+?>
+<!doctype html>
+<html>
+	<head>
+		<?php echo $ajax->init();?>
+	</head>
+	<body>
+	<form>
+		Field #1 <input type='text' name='field1' />
+		<br />
+		Field #2 <input type='text' name='field2' />
+		<br />
+		<a id='element_id' href='#'>Click me To Submit Form</a>
+	</form>
+	</body>
+</html>
+```
+
+
