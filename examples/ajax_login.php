@@ -74,7 +74,7 @@ class ajax_login {
 }
 ");
 
-$ajax->Exec('code', $ajax->overlayContent($code,array('width'=> '1000px','top'=>50)));
+$ajax->click('code', $ajax->overlayContent($code,array('width'=> '1000px','top'=>50)));
 ?>
 <html>
 <head>
