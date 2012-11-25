@@ -8,7 +8,7 @@ require_once 'ajax.php';
 <title>Value Modifiers</title>
 </head>
 <body>
-<h2>Value Modifiers</h2>
+<h2>Value Modifiers (Cjax 5.4+)</h2>
 Value pharser allows you to pass values within the url, for example:
 <br /><br />
 ajax.php?controller/function/|some_field|
