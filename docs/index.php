@@ -12,6 +12,9 @@ require 'ajax.php';
 <title>Cjax Framework Docs</title>
 </head>
 <body>
+<p>
+Want to contribute to this documentation?, you may do so by folking the source code(under docs): <a target='_blank' href='https://github.com/ajaxboy/cjax'>https://github.com/ajaxboy/cjax</a>. We could use a hand (also with the styling).
+</p>
 <h2>Cjax Framework Docs</h2>
 <ul>
 	<li>
