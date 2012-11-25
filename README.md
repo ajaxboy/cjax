@@ -67,9 +67,9 @@ $ajax->click('#element_id , $ajax->form('controller/the_function/'));
 	</head>
 	<body>
 	<form>
-		Field #1 <input type='text' name='field1' />
+		Field #1 <input type='text' id='field1' name='field1' />
 		<br />
-		Field #2 <input type='text' name='field2' />
+		Field #2 <input type='text' id='field1' name='field2' />
 		<br />
 		<a id='element_id' href='#'>Click me To Submit Form</a>
 	</form>
@@ -77,4 +77,18 @@ $ajax->click('#element_id , $ajax->form('controller/the_function/'));
 </html>
 ```
 
-
+## Example #3 - Ajax Overlay, Lightbox
+```php
+<?php
+$ajax->click('#element_id , $ajax->overlay('some/splash/html'));
+?>
+<!doctype html>
+<html>
+	<head>
+		<?php echo $ajax->init();?>
+	</head>
+	<body>
+		<a id='element_id' href='#'>Click Show Overlay</a>
+	</body>
+</html>
+```
