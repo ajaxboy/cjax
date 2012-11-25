@@ -39,8 +39,16 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	function keypress($element_id, $actions, $key = null)
 	{
 		if($key && is_a($actions,'xmlItem')) {
-			$actions->key = $key;
-			$actions->buffer = array('key'=> $key);
+			if(is_array($key)) {
+				foreach($key as $k => $v) {
+					if($v=='enter') $v = 13;
+					$_keys[$v] = $v;
+				}
+			} else {
+				$_keys = array($key => $key);
+			}
+			$actions->key = $_keys;
+			$actions->buffer = array('key'=> $_keys);
 		}
 		return $this->Exec($element_id, $actions,'keypress');;
 	}

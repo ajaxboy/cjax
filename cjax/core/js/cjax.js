@@ -1597,7 +1597,7 @@ function CJAX_FRAMEWORK() {
 				}
 
 				if(_event='onkeypress') {
-					var key = CJAX.xml('key', method);
+					var key = CJAX.util.json(CJAX.xml('key', method));
 					if(key) {
 						element.onkeypress = function(e) {
 							if(e.keyCode) {
@@ -1607,8 +1607,7 @@ function CJAX_FRAMEWORK() {
 							}
 						};
 						new_fn = function(data) {
-							console.log(element.keyCode);
-							if(element.keyCode==key) {
+							if(key[element.keyCode]) {
 								_fn(data);
 							}
 						};
