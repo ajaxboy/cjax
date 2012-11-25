@@ -1,4 +1,4 @@
-# Cjax Web Development Framework
+# Cjax Web Development Ajax Framework
 
 ## What do I need?
 
