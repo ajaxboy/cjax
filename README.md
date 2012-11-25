@@ -5,6 +5,10 @@
 +    PHP 5.2 or PHP 5.3
 +    Strict Standards turned off
 
+## Instructions
+
+This reposition is for Folk only and contributions only, for downloads go to: http://cjax.sourceforge.net/. We build the releases internally because there are different packages that derive from this project (examples, plugins, docs, and 2 versions of Cjax).
+
 ## Introduction
 
 Cjax is a small lightweight but very powerful Ajax Framework that translate PHP Code into User Interface Actions. It can 
