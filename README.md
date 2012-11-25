@@ -12,7 +12,7 @@
 
  Official Repo: https://github.com/ajaxboy/cjax
 
- Official Download Location: https://sourceforge.net/projects/cjax/
+ Official Download Location: https://sourceforge.net/projects/cjax/files/
 
 
 ## Instructions
