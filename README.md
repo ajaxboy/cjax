@@ -3,6 +3,7 @@
 ## What do I need?
 
 +    PHP 5.2 or PHP 5.3
++    Strict Standards turned off
 
 ## Introduction
 
