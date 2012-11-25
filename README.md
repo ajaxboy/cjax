@@ -54,7 +54,6 @@ $ajax->click('#element_id , $ajax->call('controller/the_function/'));
 </html>
 ```
 
-
 ## Example #2 - Ajax Form
 ```php
 <?php
@@ -80,7 +79,7 @@ $ajax->click('#element_id , $ajax->form('controller/the_function/'));
 ## Example #3 - Ajax Overlay, Lightbox
 ```php
 <?php
-$ajax->click('#element_id , $ajax->overlay('some/splash/html'));
+$ajax->click('#element_id' , $ajax->overlay('some/splash/html'));
 ?>
 <!doctype html>
 <html>
@@ -92,3 +91,5 @@ $ajax->click('#element_id , $ajax->overlay('some/splash/html'));
 	</body>
 </html>
 ```
+
+## 40+ more examples here: http://cjax.sourceforge.net/examples/
