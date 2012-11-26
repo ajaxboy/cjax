@@ -1,3 +1,9 @@
+CJAX 5.4
+
+Support for keypress event
+Ability for url element values to process Js modifiers and functions.
+
+
 
 CJAX 5.3-Obama2012
 Nov 2nd, 2012

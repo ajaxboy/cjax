@@ -76,7 +76,8 @@ function CJAX_FRAMEWORK() {
 		ajaxVars: {},
 		success: function() {},
 		complete: function() {},
-		error: function() {}
+		error: function() {},
+		stop: false,//if true, halts an ajax request and resets to false
 	}; 
 	//don't change these
 	var FLAG_WAIT = 1;
@@ -1364,7 +1365,7 @@ function CJAX_FRAMEWORK() {
 		
 		for(x in events) {
 			buffer = events[x];
-			CJAX.set.event(CJAX.$( element ), buffer.event? buffer.event: event, buffer.xml, x);
+			CJAX.set.event(element, buffer.event? buffer.event: event, buffer.xml, x);
 		}
 	};
 	
@@ -1514,7 +1515,18 @@ function CJAX_FRAMEWORK() {
 			title: function(title) {
 				document.title = title;
 			},
-			'event' : function(element,_event,method,cache_id){
+			event: function(element,_event,method,cache_id){
+				var use_fns = false;
+				if(typeof element=='string') {
+					if(element.indexOf(':') !=-1) {
+						use_fns = true;
+						fns = element.split(':');
+						element = fns[0];
+						element = CJAX.$(element);
+					} else {
+						element = CJAX.$(element);
+					}
+				}
 				
 				if(CJAX.debug) {
 					console.log("set.even  for -..:",element);
@@ -1564,34 +1576,73 @@ function CJAX_FRAMEWORK() {
 					cache_id = new Date().getTime();
 				}
 				
+				var _stop = false;
+				if(use_fns) {
+					for(var i = 1; i < fns.length; i++) {
+						pub_fn = CJAX.lib.pharseFunction(fns[i]);
+						x_fn = function() {
+							props = {
+								exec: function(element) {
+									return pub_fn(element);
+								},
+								stop: function() {
+									_stop = true;
+								},
+								start: function() {
+									_stop = false;
+								}
+							}
+							return props;
+						};
+						fn_object = new x_fn();
+						
+						if(CJAX.lib.isFn(pub_fn) || CJAX.lib.isFn(pub_fn  = window[fns[i]])) {
+							switch(element.type) {
+								default:
+								case 'text':
+								fn_object.exec(element);
+								break;
+							}
+						}
+					}
+				}
+				
 				if(plugin_name = CJAX.xml('is_plugin',method)) {
 					if(init = CJAX.inits[plugin_name]) {
-						fn = CJAX.lib.pharseFunction(init);
-						fn();
+						plugin_fn = CJAX.lib.pharseFunction(init);
+						plugin_fn();
 					}
 					_fn = function() {
-						CJAX._extendPlugin(plugin_name, method, 
-						{
-							element: element,
-							event: _event,
-							element_id: element.id,
-							clear: function() {
-								CJAX._EventCache.flushElement(element);
-							}
-						});
+						if(!_stop) {
+							CJAX._extendPlugin(plugin_name, method, 
+							{
+								element: element,
+								event: _event,
+								element_id: element.id,
+								clear: function() {
+									CJAX._EventCache.flushElement(element);
+								}
+							});
+						} else {
+							_stop = false;
+						}
 					};
 				} else {
 				
 					_fn = function(data) {
 						_method = data.replace(/\n/g,"");
 						
-						if(CJAX.util.isXML(_method)) {
-							if(!CJAX.is_cjax(_method)) {
-								_method = "<cjax>"+_method+"</cjax>";
+						if(!_stop) {
+							if(CJAX.util.isXML(_method)) {
+								if(!CJAX.is_cjax(_method)) {
+									_method = "<cjax>"+_method+"</cjax>";
+								}
+								CJAX._process(_method,'set.event',element);
+							} else {
+								eval(_method);
 							}
-							CJAX._process(_method,'set.event',element);
 						} else {
-							eval(_method);
+							_stop = false;
 						}
 					};
 				}
@@ -1617,6 +1668,8 @@ function CJAX_FRAMEWORK() {
 				} else {
 					new_fn = _fn;
 				}
+				
+				
 				_x[cache_id] = method;
 				
 				
@@ -3552,6 +3605,10 @@ function CJAX_FRAMEWORK() {
 		
 		url = CJAX._pharseValues(url);
 		
+		if(CJAX.ajaxSettings.stop) {
+			CJAX.ajaxSettings.stop = false;
+			return true;
+		}
 		if(CJAX.ajaxSettings.cache) {
 			lower_url = url.toLowerCase();
 			if(CJAX.cache_calls[lower_url]) {
@@ -4009,15 +4066,28 @@ function CJAX_FRAMEWORK() {
 				if(use_fns) {
 					for(var i = 1; i < fns.length; i++) {
 						fn = CJAX.lib.pharseFunction(fns[i]);
-						console.log(fn);
 						if(!CJAX.lib.isFn(fn) && CJAX.lib.isFn(_value[fns[i]])) {
 							_value = _value[fn]();
 						} else {
+							_fn = function() {
+								props = {
+									exec: fn,
+									stop: function() {
+										CJAX.ajaxSettings.stop = true;
+									}
+								}
+								return props;
+							};
+							fn_object = new _fn();
+							
 							if(CJAX.lib.isFn(fn) || CJAX.lib.isFn(fn  = window[fns[i]])) {
 								switch(element.type) {
 									default:
 									case 'text':
-									_value = fn(_value, element);
+									_value = fn_object.exec(_value, element);
+									if(typeof _value=='undefined') {
+										_value = '';
+									}
 									break;
 								}
 							}
