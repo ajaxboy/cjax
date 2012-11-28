@@ -47,6 +47,7 @@ http://cjax.sourceforge.net/docs/ (Also anyone can contribute/folk to the docs o
 
 It's really simple as
 
+## The CJax's way, one line of php code does it all
 
 ## Example #1 - Ajax Call
 ```php
