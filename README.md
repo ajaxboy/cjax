@@ -1,6 +1,6 @@
 # Cjax Web Development Ajax Framework
 
-## What do I need?
+## Requirements
 
 +    PHP 5.2 or PHP 5.3
 +    Strict Standards turned off
@@ -67,7 +67,7 @@ $ajax->click('#element_id , $ajax->call('controller/the_function/'));
 ## Example #2 - Ajax Form
 ```php
 <?php
-$ajax->click('#element_id , $ajax->form('controller/the_function/'));
+$ajax->click('#element_id' , $ajax->form('controller/the_function/'));
 ?>
 <!doctype html>
 <html>
