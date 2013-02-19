@@ -1668,12 +1668,7 @@ function CJAX_FRAMEWORK() {
 				} else {
 					new_fn = _fn;
 				}
-				
-				
 				_x[cache_id] = method;
-				
-				console.log(element, method, new_fn);
-				
 				
 				return CJAX._addEvent(element, _event, function() {new_fn(_x[cache_id]);}, cache_id);
 			}

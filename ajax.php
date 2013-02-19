@@ -1,16 +1,17 @@
 <?php
 //@app_header;
 
+if(!defined('AJAX_CD')) {
+	//if you experience a file not found error, and  AJAX_CD hasn't been defined anywhere
+	//enter a relateive path to the base/parent directory where the controllers are.
+	define('AJAX_CD', 'controllers');
+}
 /**
  * //@ajax_php;
  * 
  * $Rev: 1563 $
  **/
 class ajax  {
-	
-	//if you experience a file not found error, 
-	//enter a relateive path to the base/parent directory where the controllers are.
-	CONST CONTROLLERS_DIR = "controllers";
 	
 	function ajax($controller)
 	{
@@ -118,7 +119,6 @@ class ajax  {
 		if($alt_controller) {
 			$files[] = $alt_controller;
 		}
-		$ajax_cd = self::CONTROLLERS_DIR;
 		if(defined('AJAX_CD')) {
 			$ajax_cd = AJAX_CD;
 		} else if(isset($_COOKIE['AJAX_CD']) && $_COOKIE['AJAX_CD']) {
