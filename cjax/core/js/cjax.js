@@ -1647,7 +1647,7 @@ function CJAX_FRAMEWORK() {
 					};
 				}
 
-				if(_event='onkeypress') {
+				if(_event=='onkeypress') {
 					var key = CJAX.util.json(CJAX.xml('key', method));
 					if(key) {
 						element.onkeypress = function(e) {
@@ -1671,6 +1671,8 @@ function CJAX_FRAMEWORK() {
 				
 				
 				_x[cache_id] = method;
+				
+				console.log(element, method, new_fn);
 				
 				
 				return CJAX._addEvent(element, _event, function() {new_fn(_x[cache_id]);}, cache_id);
