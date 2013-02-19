@@ -4181,7 +4181,7 @@ function CJAX_FRAMEWORK() {
 		CJAX.importFile(__base__+'core/css/cjax.css');
 		//ajax requests made with jquery..
 		if(typeof jQuery !='undefined') {
-			$.ajaxSetup({
+			jQuery.ajaxSetup({
 				complete: function(a, b) {
 					
 					if(a) {
