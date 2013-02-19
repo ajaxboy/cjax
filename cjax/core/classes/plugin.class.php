@@ -465,9 +465,10 @@ class plugin extends ext {
 		} else {
 			$_plugin = self::$_instances[$plugin];
 		}
+		$dir = plugin::dir($plugin).$_plugin->controllers_dir;
 		$_plugin->xml = $ajax->xmlObject($instance_id);
-		$_plugin->controllers_dir = plugin::dir($plugin).$_plugin->controllers_dir;
-		$_plugin->controller_file = $_plugin->controllers_dir."/{$plugin}.php";
+		$_plugin->controllers_dir = $dir;
+		$_plugin->controller_file = $dir."/{$plugin}.php";
 		$_plugin->loading = $plugin;
 		return $_plugin;
 	
