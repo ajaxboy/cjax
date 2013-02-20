@@ -3325,7 +3325,7 @@ function CJAX_FRAMEWORK() {
 	
 	this.ajaxVars		=		function(buffer)
 	{
-		vars = CJAX.xml('vars',buffer);
+		vars = CJAX.xml('vars', CJAX.decode(buffer));
 		if(vars) {
 			CJAX.ajaxSettings.AjaxVars = vars;
 		}
