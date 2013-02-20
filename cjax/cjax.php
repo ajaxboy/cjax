@@ -35,9 +35,7 @@ if(isset($_SERVER['QUERY_STRING']) && $query = $_SERVER['QUERY_STRING']) {
 				unset($packet[0]);
 				unset($packet[1]);
 				if($packet){
-					$params = range('a','z');//array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
-					
-					die(print_r($params,1));
+					$params = range('a','z');
 					foreach($packet as $k  => $v) {
 						$_REQUEST[current($params)] = $v;
 						next($params);
