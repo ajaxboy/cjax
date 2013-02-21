@@ -3,7 +3,7 @@
  * @author cj
  */
 
-function uploader(settings)
+function uploader(a,b,c)
 {
 	console.log('uploader');
 	this.callback(false);
@@ -41,12 +41,14 @@ function uploader(settings)
 		iframe.height = '200';
 		form.appendChild(iframe);
 		
-		for(x in settings) {
-			extra = document.createElement('input');
-			extra.type = 'hidden';
-			extra.name = 'a['+x+']';
-			extra.value = settings[x];
-			form.appendChild(extra);
+		if(typeof a=='object') {
+			for(x in a) {
+				extra = document.createElement('input');
+				extra.type = 'hidden';
+				extra.name = 'a['+x+']';
+				extra.value = a[x];
+				form.appendChild(extra);
+			}
 		}
 		
 		with(form) {
@@ -58,11 +60,36 @@ function uploader(settings)
 
 		form.submit();
 		uploader.load(iframe, function() {
-			response = iframe.contentWindow.document.body.innerHTML;
-			CJAX.process_all(response);
-			console.log(url, settings);
-			if(url) {
-				$callback(false);
+			_fn = function(data) {
+				CJAX.process_all(data);
+				if(url) {
+					$callback(false);
+				}
+			};
+
+			_wait = function () {
+				setTimeout(function() {
+					if(typeof iframe.contentWindow.body != 'undefined') {
+						response = iframe.contentWindow.document.body.innerHTML;
+						if(response) {
+							_fn(response);
+						}
+					} else {
+						_wait();
+					}
+				}, 100)
+			};
+			try {
+				if(iframe.contentWindow.document.URL=="about:blank") {
+					_wait();
+				} else {
+					response = iframe.contentWindow.document.body.innerHTML;
+					if(response) {
+						_fn(response);
+					}
+				}
+			} catch(e) {
+				_wait();
 			}
 		});
 		return iframe;
