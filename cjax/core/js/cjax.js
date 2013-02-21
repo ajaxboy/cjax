@@ -2351,7 +2351,7 @@ function CJAX_FRAMEWORK() {
 			file = CJAX.xml('file',buffer);
 			
 			if(_extra = CJAX.decode(CJAX.xml('extra',buffer))) {
-				 extra = _extra;
+				 extra = CJAX.util.json(_extra);
 			}
 			var data = CJAX.decode(CJAX.xml('data',buffer));
 			data = CJAX.util.json(data);

@@ -136,6 +136,7 @@ body{ /*height:100%*/ }
 	letter-spacing: 1px;
 	color: #000;
 	font-weight: bolder;
+	z-index: 9999;
 }
 
 
@@ -156,6 +157,7 @@ body{ /*height:100%*/ }
 	letter-spacing: 1px;
 	color: #000;
 	font-weight: bolder;
+	z-index: 9999;
 }
 
 	.cjax_loading_f {
@@ -164,6 +166,7 @@ body{ /*height:100%*/ }
 		background-repeat: no-repeat;
 		padding: 10px !important;
 		margin: 5px;
+		z-index: 9999;
 	}
 
 .cjax_warning {
@@ -180,6 +183,7 @@ body{ /*height:100%*/ }
 	font-size: 13px;
 	word-spacing: 1px !important;
 	letter-spacing: 1px;
+	z-index: 9999;
 }
 
 .cjax_error {
@@ -197,6 +201,7 @@ body{ /*height:100%*/ }
 	letter-spacing: 1px;
 	color: #fff;
 	font-weight: bolder;
+	z-index: 9999;
 }
 
 .cjax_process {
@@ -214,6 +219,7 @@ body{ /*height:100%*/ }
 	letter-spacing: 1px;
 	color: #000;
 	font-weight: bolder;
+	z-index: 9999;
 }
 
 .cjax_info {
@@ -241,5 +247,5 @@ body{ /*height:100%*/ }
     height: auto;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
-	border-radius: 5px; 
+	border-radius: 5px;
 }

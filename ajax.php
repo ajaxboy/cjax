@@ -3,7 +3,7 @@
 
 if(!defined('AJAX_CD')) {
 	//if you experience a file not found error, and  AJAX_CD hasn't been defined anywhere
-	//enter a relateive path to the base/parent directory where the controllers are.
+	//enter a relateive path to the base directory where the controllers are.
 	define('AJAX_CD', 'controllers');
 }
 /**
