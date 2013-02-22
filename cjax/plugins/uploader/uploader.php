@@ -66,8 +66,10 @@ class uploader extends plugin {
 			}
 		}
 		$ajax = ajax();
-		
-		if(isset($options['preUrl'])) {
+		foreach($options as $k =>$v) {
+			$this->{$k} = $v;
+		}
+		if(isset($options['before'])) {
 			$this->set('a', $options);
 		}
 		

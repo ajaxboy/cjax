@@ -2350,8 +2350,8 @@ function CJAX_FRAMEWORK() {
 		if(buffer) {
 			file = CJAX.xml('file',buffer);
 			
-			if(_extra = CJAX.decode(CJAX.xml('extra',buffer))) {
-				 extra = CJAX.util.json(_extra);
+			if(_extra = CJAX.xml('extra',buffer)) {
+				extra = CJAX.util.json(_extra);
 			}
 			var data = CJAX.decode(CJAX.xml('data',buffer));
 			data = CJAX.util.json(data);
@@ -3960,12 +3960,12 @@ function CJAX_FRAMEWORK() {
 		if(typeof seconds =='undefined') {
 			var seconds = CJAX.default_timeout;
 		}
+		options = {
+				message: "<data><div class='cjax_message cjax_message_type cjax_success'>"+message+"</div></data>",
+				time : seconds
+			};
 		
-		CJAX.message({
-			
-			time: seconds,
-			message: "<data><div class='cjax_message cjax_message_type cjax_success'>"+message+"</div></data>"
-		});
+		CJAX.message(options);
 	};
 	
 	this.warning	=	function(message, seconds)
@@ -3975,13 +3975,14 @@ function CJAX_FRAMEWORK() {
 		}
 		if(typeof seconds =='undefined') {
 			var seconds = CJAX.default_timeout;
-		}		
-		$out  = [];
-		$out.push("<data><div class='cjax_message cjax_message_type cjax_warning'>"+message+"</div></data>");
-		if(seconds) {
-			$out.push('<time>'+seconds+'</time>');
 		}
-		CJAX._message($out.toString());
+		
+		options = {
+			message: "<data><div class='cjax_message cjax_message_type cjax_warning'>"+message+"</div></data>",
+			time : seconds
+		};
+		
+		CJAX._message(options);
 	};
 	
 	this.error	=	function(message, seconds)
@@ -3991,13 +3992,13 @@ function CJAX_FRAMEWORK() {
 		}
 		if(typeof seconds =='undefined') {
 			var seconds = CJAX.default_timeout;
-		}		
-		$out  = [];
-		$out.push("<data><div class='cjax_message cjax_message_type cjax_error'>"+message+"</div></data>");
-		if(seconds) {
-			$out.push('<time>'+seconds+'</time>');
 		}
-		CJAX._message($out.toString());
+		options = {
+			message: "<data><div class='cjax_message cjax_message_type cjax_error'>"+message+"</div></data>",
+			time : seconds
+		};
+		
+		CJAX._message(options);
 	};
 
 	/**

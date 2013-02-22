@@ -5,7 +5,6 @@
 
 function uploader(a,b,c)
 {
-	console.log('uploader');
 	this.callback(false);
 	
 	var handler,version;
@@ -17,6 +16,10 @@ function uploader(a,b,c)
 	} else {
 		handler = 'fileupload';
 	}
+	
+	var options = this;
+	
+	
 	/**
 	 * Upload Handler
 	 * 
@@ -28,11 +31,14 @@ function uploader(a,b,c)
 	 * $callback - form ajax request callback to fire after the files are uploaded.
 	 */
 	this.handler(handler, function(form, url, $callback) {
-		console.log('uploading...');
 		var count = 0;
 		for(var i = 0; i < form.length; i++) {if(form[i].type=='file') {if(form[i].value) {count = true;break;}}}
 		if(!count) {//no files
-			CJAX.message();
+			if(options.no_files) {
+				CJAX.warning(CJAX.decode(options.no_files));
+			} else {
+				CJAX.message();
+			}
 			return false;
 		}
 		

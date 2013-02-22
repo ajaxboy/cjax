@@ -104,7 +104,9 @@ class _uploader
 				$ajax->message();
 				return true;
 			}
-			$this->error = "No Files Were selected";
+			if(!$this->error) {
+				$this->error = "No Files Were selected";
+			}
 		}
 		
 		if(!$this->error) {
@@ -149,7 +151,7 @@ class _uploader
 		if($options && $options->debug) {
 			$ajax = ajax();
 			
-			$options->{"Files Uploaded Successfully"} = $this->post;
+			$options->{"List Of Files Uploaded"} = $this->post;
 				
 			$settings['php.ini post_max_size'] = ini_get('post_max_size');
 			$settings['php.ini upload_max_filesize'] = ini_get('upload_max_filesize');
@@ -187,8 +189,8 @@ class _uploader
 		$info = pathinfo($filename);
 		
 		if($this->options->ext && is_array($this->options->ext)) {
-			
-			if(!in_array($info['extension'], $this->options->ext)) {
+			$exts =  array_map('strtolower', $this->options->ext);
+			if(!in_array(strtolower($info['extension']), $exts)) {
 				$this->error = "File Extension: .{$info['extension']}  is not supported.";
 				return false;
 			}
