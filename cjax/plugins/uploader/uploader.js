@@ -32,6 +32,7 @@ function uploader(a,b,c)
 		var count = 0;
 		for(var i = 0; i < form.length; i++) {if(form[i].type=='file') {if(form[i].value) {count = true;break;}}}
 		if(!count) {//no files
+			CJAX.message();
 			return false;
 		}
 		
