@@ -7,7 +7,12 @@ Frebruary 22, 2013
 Support for keypress event
 Ability for url element values to process Js modifiers and functions.
 Fixed minor ploblems with plugin data processor
-Enhanced ajax uploader plugin - so it is now more efficient, bullet proof and reliable.
+Enhanced some range statements
+Removed autoloading function
+Added extra php settings check to check for error display
+Added Strict Standard Check and tries to automatically turn it off of it is on.
+Fixed some notices
+Enhanced the uploader and made more efficient and reliable. Re-did the ajax uploader documentation
 Other fixes and improvements
 
 
