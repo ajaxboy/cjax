@@ -1640,4 +1640,22 @@ if (document.addEventListener) {
 		}
 		return $data;
 	}
+	
+	static function errorHandlingConfig()
+	{
+		/**Error Handling**/
+		@ini_set('display_errors', 1);
+		@ini_set('log_errors', 1);
+		$level = ini_get('error_reporting');
+		if($level > 30719 || $level ==2048) {
+			@ini_set('error_reporting', $level-E_STRICT);
+			$_level = ini_get('error_reporting');
+			if($_level > 30719 || $_level ==2048) {
+				die("Cjax requirements not met. Strict Stardards must be turned off in your php.ini.");
+			} else {
+				$level = $_level;
+			}
+		}
+		return $level;
+	}
 }

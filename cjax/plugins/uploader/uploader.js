@@ -81,6 +81,9 @@ function uploader(a,b,c)
 						if(response) {
 							_fn(response);
 						}
+						if(url) {
+							$callback(false);
+						}
 					} else {
 						_wait();
 					}

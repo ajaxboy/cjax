@@ -15,7 +15,7 @@ require_once $base.'/classes/plugin.class.php';
 require_once $base.'/classes/cjax.class.php';
 require_once $base.'/classes/std.class.php';
 if(function_exists('spl_autoload_register')) {
-	spl_autoload_register(array('instanceFanctory','cjax_autoload')); // As of PHP 5.3.0
+	//spl_autoload_register(array('instanceFanctory','cjax_autoload')); // As of PHP 5.3.0
 }
 class CJAX extends CJAX_FRAMEWORK {
 
@@ -31,6 +31,9 @@ class CJAX extends CJAX_FRAMEWORK {
 		if(self::$CJAX) {
 			return self::$CJAX;
 		}
+		
+		CoreEvents::errorHandlingConfig();
+		
 		$ajax = new CJAX_FRAMEWORK;
 		
 		if(!defined('JSON_FORCE_OBJECT')) {

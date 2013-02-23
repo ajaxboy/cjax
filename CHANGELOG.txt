@@ -1,8 +1,14 @@
+
+
+
 CJAX 5.4
+Frebruary 22, 2013
 
 Support for keypress event
 Ability for url element values to process Js modifiers and functions.
-
+Fixed minor ploblems with plugin data processor
+Enhanced ajax uploader plugin - so it is now more efficient, bullet proof and reliable.
+Other fixes and improvements
 
 
 CJAX 5.3-Obama2012

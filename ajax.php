@@ -139,11 +139,9 @@ class ajax  {
 	
 	protected function _params()
 	{
-		$params = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
-		
 		$args = array();
 		$arg_count = count(array_keys($_REQUEST)) - 3;
-		foreach($params as $k => $v) {
+		foreach(range('a','z') as $k => $v) {
 			if(isset($_REQUEST[$v])) {
 				if(is_array($_REQUEST[$v])) {
 					foreach($_REQUEST[$v] as $k2 => $v2) {

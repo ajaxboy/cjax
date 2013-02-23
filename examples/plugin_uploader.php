@@ -63,7 +63,6 @@ Uploader
 
 <div id="content">
 
-
 <h1>Plugin Uploader</h1>
 
 <p>This plugin is the former $ajax->upload() API, converted into an stand alone plugin (That is to fast and lightweight). If you were using the
@@ -95,9 +94,6 @@ if you are using unique name settings this is specially useful because the new n
 <p>This plugin takes a maximum of 3 parameters, the first two are required, the third one is optional - the thrid parameter is an array with options
 you may specify to costimize the uploader, all options are optinal. </p>
 <br />
-
-<?php echo $rules;?>
-
 <h2>Parameters</h2>
 
 <p>Uploader plugin takes the following parameters</p>
@@ -123,7 +119,7 @@ you may specify to costimize the uploader, all options are optinal. </p>
 	<td class="td">Yes</td>
 	<td class="td">String</td>
 	<td class="td">directory/uploads/</td>
-	<td class="td">The uploads directory is when the files will be uploaded, it must have the proper permissions.</td>
+	<td class="td">The uploads directory is where the files will be uploaded, it must have the proper permissions.</td>
 </tr>
 <tr>
 	<td class="td"><strong>$options</strong></td>

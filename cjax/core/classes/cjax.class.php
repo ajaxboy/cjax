@@ -588,9 +588,6 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		$data['element_id'] = $element;
 		$data['event'] = $event;
 		$data['events'] = $actions;
-		if($actions->buffer) {
-			
-		}
 	
 		return $this->xmlItem($this->xml($data),'AddEventTo','api');
 	}

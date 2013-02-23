@@ -11,8 +11,8 @@ $ajax->Exec('#link1', $ajax->call('ajax.php?flush/flush_element'));
 </head>
 <body>
 <H2>Flush</H2>
-Remove events from an element. Lets say you used $ajax->Exec() to add requests to a link, and maybe other APis.
-Flush, will clear all events that have been assigned to that element so that it can be re-used.
+Remove events from an element. Lets say you used $ajax->click() to add one or more requests to a link, and maybe other APis.
+Flush, will clear  all events set to that element. This allows you to re-use stuff.
 <?php 
 echo $ajax->code("
 //add an ajax request to #link1

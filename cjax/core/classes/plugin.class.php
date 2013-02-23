@@ -648,7 +648,7 @@ class plugin extends ext {
 					if(class_exists($class)) {
 						$vars = get_class_vars($class);
 						
-						if($vars['file']) {
+						if(isset($vars['file'])) {
 							$obj->file = $vars['file'];
 							$obj->method = preg_replace(array("/\..+$/","/\.js$/"), '', $obj->file);
 						}

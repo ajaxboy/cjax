@@ -41,7 +41,7 @@ class plugin_validate extends plugin {
 	{
 		$ajax = ajax();
 		
-		$this->callback($ajax->Exec($button_id,$ajax->form($post_url)));
+		$this->callback($ajax->click($button_id,$ajax->form($post_url)));
 		
 		
 		if($import_js) {

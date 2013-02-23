@@ -1,6 +1,7 @@
 <?php
 //@app_header;
 
+
 include_once 'core/cjax_config.php';
 $ajax = CJAX::getInstance();
 
