@@ -439,8 +439,7 @@ class plugin extends ext {
 			} else {
 				$args = array();
 				$params = $params[1];
-				$_params = array('a','b','c','d','e','f');
-				
+				$_params = range('a','f');
 				foreach($_params as $k => $v) {
 					$args[$v] = current($params);
 					if($k >= count($params)) {
@@ -471,7 +470,6 @@ class plugin extends ext {
 		$_plugin->controller_file = $dir."/{$plugin}.php";
 		$_plugin->loading = $plugin;
 		return $_plugin;
-	
 	}
 	
 	function instanceTriggers($_plugin , $params)
@@ -482,7 +480,7 @@ class plugin extends ext {
 				if($params) {
 					call_user_func_array(array($_plugin,'onLoad'), $params);
 				}
-			}
+			}	
 		} else {
 			if(method_exists($_plugin, 'onAjaxLoad')) {
 				if($params) {
@@ -491,7 +489,7 @@ class plugin extends ext {
 			}						
 		}
 	}
-
+	
 	function DeleteEntry($entry_id)
 	{
 		if(isset(CoreEvents::$cache[$entry_id])) {

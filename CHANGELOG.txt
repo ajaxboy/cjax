@@ -1,21 +1,20 @@
 
-
-
 CJAX 5.4
-Frebruary 22, 2013
+Frebruary 23, 2013
 
 Support for keypress event
 Ability for url element values to process Js modifiers and functions.
-Fixed minor ploblems with plugin data processor
+Fixed minor problems with plugin data processor
 Enhanced some range statements
 Removed autoloading function
 Added extra php settings check to check for error display
-Added Strict Standard Check and tries to automatically turn it off of it is on.
+Added Strict Standard Check and tries to automatically turn it off if it is on.
+Added PHP version check, so it shows a message if your php versions is not compatible.
 Fixed some notices
 Enhanced the uploader and made more efficient and reliable. Re-did the ajax uploader documentation
 Other fixes and improvements
-
-
+	
+	
 CJAX 5.3-Obama2012
 Nov 2nd, 2012
 Maintenance Release

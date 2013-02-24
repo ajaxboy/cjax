@@ -1,6 +1,6 @@
 <?php
 
-class plugin_test {
+class plugin_test extends plugin {
 	
 	
 	
