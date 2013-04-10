@@ -3265,7 +3265,11 @@ function CJAX_FRAMEWORK() {
 				console.log('built-in handler:',CJAX.handlers);				
 			}
 			//@deprecated
-			CJAX.files = CJAX._handleUploads(form, url, handlerFormRequest);
+			//CJAX.files = CJAX._handleUploads(form, url, handlerFormRequest);
+			if(url) {
+				handlerFormRequest();
+				CJAX.loading();
+			}
 		}else {
 			if(url) {
 				handlerFormRequest();
@@ -3329,43 +3333,6 @@ function CJAX_FRAMEWORK() {
 		if(vars) {
 			CJAX.ajaxSettings.AjaxVars = vars;
 		}
-	};
-	
-	/**
-	 * @deprecated
-	 * Backward compatibily
-	 * File uploads are now handle by plugin
-	 */
-	this._handleUploads		=		function(form, url, $callback)
-	{
-		var count = 0;
-		for(var i = 0; i < form.length; i++) {if(form[i].type=='file') {if(form[i].value) {count = true;break;}}}
-		if(!count) {//no files
-			return false;
-		}
-		
-		iframe = CJAX.create.frame('frame_upload');
-		iframe.style.display = 'none';
-		iframe.width = '400';
-		iframe.height = '200';
-		form.appendChild(iframe);
-		
-		with(form) {
-			method = 'POST';
-			action = CJAX.f+'?controller=uploader&function=upload&cjax_iframe=1';
-			enctype = "multipart/form-data";
-			target = iframe.name;
-		}
-		
-		form.submit();
-		CJAX.lib.loadCallback(iframe, function() {
-			response = iframe.contentWindow.document.body.innerHTML;
-			CJAX.process_all(response);
-			if(url) {
-				$callback(false);
-			}
-		});
-		return iframe;
 	};
 	
 	this.$					=		function(element_id,v) {

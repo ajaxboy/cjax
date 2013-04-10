@@ -11,6 +11,7 @@ class _uploader
 	private $error;
 	private $post;
 	private $options;
+	private $files;
 	
 	private $upload_count = 0;
 	
@@ -81,7 +82,7 @@ class _uploader
 						break;
 					}
 					if($v['error']) {
-						$this->error = $this->error($err, $filename, $v['size']);
+						$this->error = $this->error($v['error'], $filename, $v['size']);
 						break;
 					} else {
 						if($v['name']) {
@@ -113,6 +114,26 @@ class _uploader
 			if($this->post) {
 				$ajax->ajaxVars($this->post);
 			}
+			if($this->options->preview) {
+				$preview = $this->options->preview;
+				$preview_url = $this->options->preview_url;
+				if($preview_url) {
+					$preview_url = rtrim($preview_url,'/').'/';
+				}
+				$range = range(1,  count($this->files));
+				array_walk($range, function(&$v) {
+					$v =  "#image{$v}#";
+					
+				});
+				foreach($this->files as $k => $v) {
+					$this->files[$k] = $preview_url.$v;
+				}
+				foreach($preview as $k => $v) {
+					$image = str_replace($range, $this->files, $v);
+					$ajax->update($k, $image);
+				}
+			}
+			
 			$_files = implode(', ',$files);
 			$message = $this->options->success_message;
 			if(!$message) {
@@ -234,6 +255,9 @@ class _uploader
 		$ajax = ajax();
 		
 		$this->post['a'][] = $ajax->encode($filename);
+		
+			$this->files[] = $ajax->encode($filename);
+		
 		if(@move_uploaded_file($tmp_name,$this->options->target.$filename)) {
 			$this->upload_count++;
 			return $filename;

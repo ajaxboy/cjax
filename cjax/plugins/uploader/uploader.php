@@ -8,6 +8,7 @@
  */
 class uploader extends plugin {
 	
+	private $options = array();
 	
 	private $callback_id;
 	
@@ -53,6 +54,17 @@ class uploader extends plugin {
 				CoreEvents::simpleCommit();
 			break;
 		}
+	}
+	
+	function preview($preview_url, $data = array())
+	{
+		$ajax = ajax();
+		if($ajax->config->preview_url) {
+			$preview_url = $ajax->config->preview_url;
+		}
+		$this->options['preview'] = $data;
+		$this->options['preview_url'] = $preview_url;
+		$ajax->save('upload_options', $this->options);
 	}
 	
 	function onLoad($btn_id =  null, $target_directory = null, $options = array())
@@ -111,6 +123,7 @@ class uploader extends plugin {
 		} else {
 			$xml = $ajax->Exec($btn_id, $ajax->form($options['url'], $options['form_id']));
 		}
+		$this->options = $options;
 		$this->callback($xml);
 	}
 	

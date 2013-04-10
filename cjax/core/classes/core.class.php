@@ -232,8 +232,13 @@ class CoreEvents extends cjaxFormat {
 		}
 		$_xml = new xmlItem($xml, $name);
 		
+		if(!$this->xmlObjects) {
+			$this->xmlObjects = new stdClass();
+		}
 		
-		return $this->xmlObjects->{$_xml->id} = $_xml;
+		$this->xmlObjects->{$_xml->id} = $_xml;
+	
+		return $_xml;
 	}
 	
 	function camelize($string, $ucfirst = true)
@@ -280,6 +285,13 @@ class CoreEvents extends cjaxFormat {
 		$_SESSION['cjax_debug'] = '';
 		@setcookie('cjax_preload','');
 		@setcookie('cjax_debug','');
+	}
+	
+	function flushRawCache()
+	{
+		CoreEvents::$cache = array();
+		CoreEvents::$actions = array();
+		CoreEvents::$lastCache = array();
 	}
 	
 	function callbacks($cache, $test = false)

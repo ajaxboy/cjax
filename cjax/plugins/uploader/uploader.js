@@ -43,7 +43,9 @@ function uploader(a,b,c)
 		}
 		
 		iframe = CJAX.create.frame('frame_upload');
-		iframe.style.display = 'none';
+		if(!options.show_iframe) {
+			iframe.style.display = 'none';
+		}
 		iframe.width = '400';
 		iframe.height = '200';
 		form.appendChild(iframe);

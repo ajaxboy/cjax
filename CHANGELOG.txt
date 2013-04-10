@@ -1,4 +1,14 @@
 
+CJAX 5.5
+
+April 10, 2013
+
+
+Support for PHP5.4x
+Fixed plugins docs issues with an old function reference interupting the page from displaying.
+
+
+
 CJAX 5.4
 Frebruary 23, 2013
 

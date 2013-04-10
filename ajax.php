@@ -1,15 +1,16 @@
 <?php
 //@app_header;
 	
-if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
-    die('You are using PHP'.PHP_VERSION.'. Currently, Cjax uses PHP 5.2 OR PHP5.3 to operate.');
-}
-
+//if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
+//    die('You are using PHP'.PHP_VERSION.'. Currently, Cjax uses PHP 5.2 OR PHP5.3 to operate.');
+//}
+	
 if(!defined('AJAX_CD')) {
 	//if you experience a file not found error, and  AJAX_CD hasn't been defined anywhere
 	//enter a relateive path to the base directory where the controllers are.
 	define('AJAX_CD', 'controllers');
 }
+	
 /**
  * //@ajax_php;
  **/

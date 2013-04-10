@@ -11,7 +11,7 @@ $ajax = ajax();
 
 function tryAgain()
 {
-	sleep(1);
+	usleep(1000);
 	$ajax = ajax();
 	$_cache = $ajax->get('cjax_x_cache');
 	echo "//trying\n";
