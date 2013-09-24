@@ -136,11 +136,6 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		$this->xml($data);
 	}
 	
-	/*function sizzle($selector, $actions, $event = "click")
-	{
-		return $this->Exec($selector, $actions, $event);	
-	}*/
-	
 	/**
 	 * Bind events to elements
 	 * 
@@ -596,7 +591,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		$data['element_id'] = $element;
 		$data['event'] = $event;
 		$data['events'] = $actions;
-	
+		
 		return $this->xmlItem($this->xml($data),'AddEventTo','api');
 	}
 

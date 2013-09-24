@@ -173,6 +173,9 @@ function CJAX_FRAMEWORK() {
 	
 	this._fn		=		function(buffer) 
 	{
+		if(typeof buffer =='object') {
+			buffer = buffer.buffer;
+		}
 		fn = _raw_fn = CJAX.xml('fn', buffer);
 		var prop;
 		data = CJAX.util.json(CJAX.decode(CJAX.xml('fn_data', buffer)));

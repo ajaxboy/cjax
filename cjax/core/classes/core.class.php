@@ -670,7 +670,7 @@ class CoreEvents extends cjaxFormat {
 	 * @param xml $xml
 	 * @return string
 	 */
-	function xml($xml)
+	function xml($xml, $api_name  = null)
 	{
 		$ajax = ajax();
 		if(isset($xml['do'])) {
@@ -689,7 +689,9 @@ class CoreEvents extends cjaxFormat {
 				}
 			}
 		}
+		
 		self::cache($xml);
+		
 		if(!self::isAjaxRequest()) {
 			self::simpleCommit();
 		}
