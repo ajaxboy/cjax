@@ -6,6 +6,12 @@
 
 
 /**
+ * Enable advanced selectors (all jquery selectors will work), 
+ */
+$config->sizzle = false;
+
+
+/**
 * Having issues on page load not loading some times?
 * Cjax uses PHP sessions to pass data across, some times sessions fail or some setting on the server's cache
 * may cause unexpented behavior, and could cause cjax not to able to pass the data - in that  case 

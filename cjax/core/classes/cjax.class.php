@@ -136,6 +136,11 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		$this->xml($data);
 	}
 	
+	/*function sizzle($selector, $actions, $event = "click")
+	{
+		return $this->Exec($selector, $actions, $event);	
+	}*/
+	
 	/**
 	 * Bind events to elements
 	 * 

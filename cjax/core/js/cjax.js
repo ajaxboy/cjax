@@ -1328,6 +1328,9 @@ function CJAX_FRAMEWORK() {
 		
 		var element = CJAX.xml('element_id',temp_buffer);
 		
+		console.log(element);
+		
+		
 		//binding elements
 		if(element.indexOf(CJAX.split_delimiter)!=-1) {
 			var bind = element.split(CJAX.split_delimiter);

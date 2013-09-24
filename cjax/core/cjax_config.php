@@ -43,14 +43,15 @@ class CJAX extends CJAX_FRAMEWORK {
 		if(!isset($ajax->format) || !$ajax->format) {
 			$ajax->format = new cjaxFormat();
 			
-			$_config = new ext;
+			$config = new ext;
 			if(file_exists($f = CJAX_HOME.'/'.'config.php')) {
 				include($f);
 				if(isset($config)) {
-					$_config = new ext($config);
+					$config = new ext($config);
 				}
 			}
-			$ajax->config = $_config;
+			$ajax->config = $config;
+			
 			$ajax->initiate($ajax);
 			if(!$ajax->isAjaxRequest()) {
 				//$ajax->flushCache();

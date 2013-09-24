@@ -845,7 +845,12 @@ if (document.addEventListener) {
 		if($ajax->crc32) {
 			$file .= "?crc32={$ajax->crc32}";
 		}
-	
+		
+		if($this->config->sizzle) {
+			$lib_path = str_replace('/core/js','/lib',$js_path);
+			$script[] = "<script type='text/javascript' src='{$lib_path}sizzle.js'></script>\n";
+		}
+		
 		if($ajax->init_extra) {
 			$plugin_path = str_replace('/core/js','/plugins',$js_path);
 			//die($plugin_path);
