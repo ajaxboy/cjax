@@ -167,8 +167,6 @@ function CJAX_FRAMEWORK() {
 				element.style.display = 'block'; 
 			break;
 			default:
-				
-				console.log('Testing:',_raw_fn);
 				CJAX.lib.fnCall(element,{_raw_fn: data.b});
 		}
 	};
@@ -1326,10 +1324,8 @@ function CJAX_FRAMEWORK() {
 
 		uid = CJAX._uniqid(temp_buffer);
 		
+		
 		var element = CJAX.xml('element_id',temp_buffer);
-		
-		console.log(element);
-		
 		
 		//binding elements
 		if(element.indexOf(CJAX.split_delimiter)!=-1) {
@@ -1347,6 +1343,28 @@ function CJAX_FRAMEWORK() {
 			}
 			return;
 		}
+		if(typeof Sizzle !='undefined' || typeof jQuery !='undefined') {
+			if(!/[^a-zA-Z0-9_\-]/.test(element) && element.indexOf('#')==-1) {
+				element = '#'+element;
+			}
+			if(typeof jQuery !='undefined') {
+				elements = jQuery(element);
+				elements.each(function(index, element) {
+					CJAX.__AddEventTo(element, buffer);
+				});
+			} else {
+				elements = Sizzle(element);
+				for(x in elements) {
+					CJAX.__AddEventTo(elements[x], buffer);
+				}
+			}
+		} else {
+			CJAX.__AddEventTo(element, buffer);
+		}
+	};
+	
+	this.__AddEventTo	=	function(element, buffer)
+	{
 		var events = CJAX.util.json(CJAX.xml('events', buffer));
 		var event = CJAX.xml('event', buffer);
 		
@@ -1354,7 +1372,7 @@ function CJAX_FRAMEWORK() {
 			buffer = events[x];
 			CJAX.set.event(element, buffer.event? buffer.event: event, buffer.xml, x);
 		}
-	};
+	}
 	
 	this.is_cjax		=		function(buffer) {
 		if(typeof buffer !='string') {
@@ -1616,15 +1634,14 @@ function CJAX_FRAMEWORK() {
 					};
 				} else {
 				
-					_fn = function(data) {
-						_method = data.replace(/\n/g,"");
-						
+					_fn = function(data, selector) {
+						_method = data.buffer.replace(/\n/g,"");
 						if(!_stop) {
 							if(CJAX.util.isXML(_method)) {
 								if(!CJAX.is_cjax(_method)) {
 									_method = "<cjax>"+_method+"</cjax>";
 								}
-								CJAX._process(_method,'set.event',element);
+								CJAX._process({buffer:_method, selector: selector},'set.event',element);
 							} else {
 								eval(_method);
 							}
@@ -1655,9 +1672,9 @@ function CJAX_FRAMEWORK() {
 				} else {
 					new_fn = _fn;
 				}
-				_x[cache_id] = method;
+				_x[cache_id] = {selector: element, buffer: method };
 				
-				return CJAX._addEvent(element, _event, function() {new_fn(_x[cache_id]);}, cache_id);
+				return CJAX._addEvent(element, _event, function() {new_fn(_x[cache_id], element);}, cache_id);
 			}
 			,type: function(elem,new_type,verbose){
 				if( !elem ) return false;
@@ -2639,6 +2656,10 @@ function CJAX_FRAMEWORK() {
 	
 	this._process		=		function(buffer , caller, uniqid)
 	{
+		var obj_buffer = buffer;
+		if(typeof buffer == 'object') {
+			var buffer = buffer.buffer;
+		}
 		if(buffer==null) var buffer = '';
 		if(encoded==null) var encoded = '';
 		CJAX.method = CJAX.get_function(buffer);
@@ -2689,10 +2710,10 @@ function CJAX_FRAMEWORK() {
 			try {
 				if(seconds){
 					buffer = buffer.replace(/[\n\r]/gm,'\\n');
-					setTimeout(PREFIX+CJAX.method+'("'+buffer+'")',seconds);
+					setTimeout(PREFIX+CJAX.method+'("'+obj_buffer+'")',seconds);
 				} else {
 					fn = CJAX[SUBFIX];
-					fn(buffer);
+					fn(obj_buffer);
 				}
 			} catch( _e ) {
 				alert('#process unabled to load function#1: '+ CJAX.method+'();  '+_e.message);
@@ -3156,7 +3177,11 @@ function CJAX_FRAMEWORK() {
 	};
 	
 	this._form		=		function( buffer ) {
-		
+		var selector;
+		if(typeof buffer == 'object') {
+			selector = buffer.selector;
+			buffer = buffer.buffer;
+		}
 		buffer = CJAX.decode(buffer);
 		var url = CJAX.xml('url',buffer);
 		var form_id = CJAX.xml('form_id',buffer);
@@ -3225,8 +3250,8 @@ function CJAX_FRAMEWORK() {
 		}
 		serial = CJAX._serialize(form);
 		
-		url = CJAX._pharseValues(url);
-		
+		url = CJAX._pharseValues(url, selector);
+	
 		if( container ){
 			container = CJAX.$( container );
 			if( !container ) return false;
@@ -3523,6 +3548,11 @@ function CJAX_FRAMEWORK() {
 		if(CJAX.debug) {
 			console.log('Call executed.');
 		}
+		var selector;
+		if(typeof buffer == 'object') {
+			selector = buffer.selector;
+			buffer = buffer.buffer;
+		}
 		buffer = CJAX.decode(buffer);
 		var msg = null, x, response;
 		
@@ -3557,7 +3587,7 @@ function CJAX_FRAMEWORK() {
 			CJAX.$('cjax_overlay').style.display = 'none';
 		}
 		
-		url = CJAX._pharseValues(url);
+		url = CJAX._pharseValues(url, selector);
 		
 		if(CJAX.ajaxSettings.stop) {
 			CJAX.ajaxSettings.stop = false;
@@ -3961,13 +3991,14 @@ function CJAX_FRAMEWORK() {
 	/**
 	 * Pharse url elements values passed in vertical bars
 	 */
-	this._pharseValues		=	function(url)
+	this._pharseValues		=	function(url, selector)
 	{
-		var v = url.match(/\|(.+)\|/gi);
+		var v = url.match(/\|[^\|\|]*\|/g);
 		
 		try {
 			for(x in v) {
 				id = v[x].replace(/\|/g,'');
+				
 				if(id=='rand') {
 					element = CJAX.$(id);
 					
@@ -3979,43 +4010,60 @@ function CJAX_FRAMEWORK() {
 				} else {
 					var use_fns = false;
 					
-					if(id.indexOf(':') !=-1) {
-						use_fns = true;
-						fns = id.split(':');
-						id = fns[0];
-						element = CJAX.$(id);
-					} else {						
-						element = CJAX.$(id);
-					}
-					
-					if(!element) {
-						continue;
-					}
-				
-					switch(element.type) {
-						case 'checkbox':
-							_value = element.checked? 1: 0;
-						break;
-						case 'radio':
-							var radios = document.getElementsByName(id);
-							if(radios) {
-								var element;
-								var check = '';
-					
-								for(var i = 0; i < radios.length; i++) {
-									element = radios[i];
-									if(element.checked) {
-										check = element.value;
-										break;
-									}
+					if(selector && (id.indexOf('.')!=-1 || id.indexOf('function')!=-1)) {
+						var data = id.split('.');
+						switch(data[0]) {
+							case 'this':
+								_value = selector[data[1]];
+								break;
+							case 'data':
+								_value = CJAX.decode(selector.getAttribute('data-'+data[1]));
+								break;
+							default:
+								var fn = CJAX.lib.pharseFunction(data[0]);
+								if(CJAX.lib.isFn(fn)) {
+									_value = fn();
 								}
-								
-								_value = check;
-							}
-						break;
-						case 'text':
-						default:
-							_value = element.value;
+						}
+					} else {
+						if(id.indexOf(':') !=-1) {
+							use_fns = true;
+							fns = id.split(':');
+							id = fns[0];
+							element = CJAX.$(id);
+						} else {						
+							element = CJAX.$(id);
+						}
+						
+						if(!element) {
+							continue;
+						}
+					
+						switch(element.type) {
+							case 'checkbox':
+								_value = element.checked? 1: 0;
+							break;
+							case 'radio':
+								var radios = document.getElementsByName(id);
+								if(radios) {
+									var element;
+									var check = '';
+						
+									for(var i = 0; i < radios.length; i++) {
+										element = radios[i];
+										if(element.checked) {
+											check = element.value;
+											break;
+										}
+									}
+									
+									_value = check;
+								}
+							break;
+							case 'text':
+							default:
+								_value = element.value;
+						}
 					}
 				}
 				if(use_fns) {
