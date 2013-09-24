@@ -23,8 +23,8 @@ class Calc {
 				$ajax->buffer = null;
 				$ajax->result = 0;
 			break;
-			case '=': //equal
-				$buffer = rtrim($buffer,"=+-\/*");
+			case 'e': //equal
+				$buffer = rtrim($buffer,"e=+-\/*");
 				
 				eval("\$action = ({$buffer});");
 				

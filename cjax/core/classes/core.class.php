@@ -339,7 +339,7 @@ class CoreEvents extends cjaxFormat {
 		
 		$cache = self::callbacks($cache);
 		
-		$_preload = array();
+		$_preload = null;
 		foreach($cache as $k => $v) {
 			if($v['do']=='_import' || $v['do']=='_imports' || isset($v['is_plugin'])) {
 				$_preload[$k] = $v;
@@ -1355,7 +1355,7 @@ if (document.addEventListener) {
 	/*
 	 * Show loading indicator
 	 */
-	public  function loading($set_loading = null)
+	public  function loading($msg = null)
 	{
 		$ajax = CJAX::getInstance();
 		if(!$msg) {

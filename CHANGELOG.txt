@@ -1,4 +1,23 @@
 
+CJAX 5.6
+
+September 19, 2013
+
+* Fixed issue displaying a blank page some times (Thanks Stefan for reporting this)
+* Fixed click trigger event
+* Improved some Js access functions processing
+* Added new Main property in samples
+* Added Js Properties in samples
+* Added Location in samples
+* Added click() on samples
+* Fixed form loading text option not display when submitting a form (thanks Jim for reporting this)
+* Plugin uploader now included in main release package
+* Plugin uploadify now included in main release package
+* Plugin validate now included in main release package
+* Plugin autocomplete now included in main release package
+* Plugin ExamplePlugin now included in main release package
+
+
 CJAX 5.5
 
 April 10, 2013
@@ -7,8 +26,7 @@ April 10, 2013
 Support for PHP5.4x
 Fixed plugins docs issues with an old function reference interupting the page from displaying.
 
-
-
+ 
 CJAX 5.4
 Frebruary 23, 2013
 

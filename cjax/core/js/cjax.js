@@ -167,6 +167,8 @@ function CJAX_FRAMEWORK() {
 				element.style.display = 'block'; 
 			break;
 			default:
+				
+				console.log('Testing:',_raw_fn);
 				CJAX.lib.fnCall(element,{_raw_fn: data.b});
 		}
 	};
@@ -246,21 +248,11 @@ function CJAX_FRAMEWORK() {
 						element.appendChild(child);
 					break;
 					default:
-					if(data.f) {
-						my_fn(data.b,data.c,data.d,data.e,data.f);
-					} else if(data.e) {
-						my_fn(data.b,data.c,data.d,data.e);
-					} else if(data.d) {
-						my_fn(data.b,data.c,data.d);
-					} else if(data.c) {
-						my_fn(data.b,data.c);
-					} else  if(data.b) {
-						my_fn(data.b);
-					} else  if(data.a) {
-						my_fn(data.a);
-					} else {
-						my_fn();
-					}
+						arr_data = [];
+						for(x in data) {
+							arr_data.push(data[x]);
+						}
+						my_fn.apply(this, arr_data);
 				}
 				return;
 			}
@@ -279,19 +271,11 @@ function CJAX_FRAMEWORK() {
 						}
 					}
 				} else {
-					if(data.f) {
-						my_fn(data.b,data.c,data.d,data.e,data.f);
-					} else if(data.e) {
-						my_fn(data.b,data.c,data.d,data.e);
-					} else if(data.d) {
-						my_fn(data.b,data.c,data.d);
-					} else if(data.c) {
-						my_fn(data.b,data.c);
-					} else  if(data.b) {
-						my_fn(data.b);
-					} else {
-						my_fn();
+					arr_data = [];
+					for(x in data) {
+						arr_data.push(data[x]);
 					}
+					my_fn.apply(this, arr_data);
 				}
 			}
 		}
@@ -3175,7 +3159,7 @@ function CJAX_FRAMEWORK() {
 		var form_id = CJAX.xml('form_id',buffer);
 		var args = CJAX.xml('args',buffer);
 		var container = CJAX.xml('container',buffer);
-		var text = CJAX.xml('text',buffer);
+		var text = CJAX._text =  CJAX.xml('text',buffer);
 		CJAX.IS_POST = is_post  = CJAX.xml('post',buffer);
 		
 		if(text) {
@@ -3270,10 +3254,10 @@ function CJAX_FRAMEWORK() {
 				handlerFormRequest();
 				CJAX.loading();
 			}
-		}else {
+		} else {
 			if(url) {
 				handlerFormRequest();
-				CJAX.loading();
+				
 			}
 		}
 	};
@@ -3296,6 +3280,9 @@ function CJAX_FRAMEWORK() {
 						response = CJAX.handlers._handlerRequestStatus(url, CJAX.HTTP_REQUEST_INSTANCE.status);
 					} else{
 						response = CJAX._handlerRequestStatus(url, CJAX.HTTP_REQUEST_INSTANCE.status);
+					}
+					if(CJAX._text) {
+						CJAX.loading();
 					}
 				}
 			}
@@ -3354,7 +3341,7 @@ function CJAX_FRAMEWORK() {
 		}
 		element_id = element_id.replace(/^\#/,'');
 		
-		if(/[^a-zA-Z0-9_]/.test(element_id)) {
+		if(/[^a-zA-Z0-9_\-]/.test(element_id)) {
 			//if(CJAX.debug) {
 				console.log('Invalid Element ID:', element_id);
 			//}

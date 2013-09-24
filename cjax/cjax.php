@@ -16,7 +16,7 @@ if(isset($_SERVER['REDIRECT_QUERY_STRING']) && $_SERVER['REDIRECT_QUERY_STRING']
 
 $file = 'ajax.php';
 if(isset($_SERVER['SCRIPT_NAME'])) {
-	$file = preg_replace("/.+\//",'',$_SERVER['SCRIPT_NAME']);
+	$file = preg_replace("/.+\//",'', ltrim($_SERVER['SCRIPT_NAME'],'/'));
 }
 if(defined('AJAX_FILE') && AJAX_FILE !=$file) {
 	return true;

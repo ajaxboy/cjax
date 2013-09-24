@@ -72,10 +72,13 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	public function __call($method, $args)
 	{
 		$list = array();
-		$params = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
+		$params = range('a','z');
 
 		$pParams = array();
 		if($args) {
+			if(!is_array($args)) {
+				$args = array($args);
+			}
 			foreach($args as $v) {
 				$pParams[current($params)] =  $v;
 				next($params);
@@ -136,17 +139,17 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	/**
 	 * Bind events to elements
 	 * 
-	 * @param $element
+	 * @param $selector
 	 * @param $actions
 	 * @param $event
 	 */
-	function Exec($element , $actions , $event="click")
+	function Exec($selector , $actions , $event="click")
 	{
 		if(!self::getCache()) {
 			return false;
 		}
-		if(is_array($element)) {
-			$element = implode('|', $element);
+		if(is_array($selector)) {
+			$selector = implode('|', $selector);
 		}
 		if($event) {
 			if(substr($event, 0,2)  != "on" && $event!='click') {
@@ -163,10 +166,10 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 			foreach($actions as $k => $v) {
 				if(is_object($v) && (is_a($v, 'xmlItem') || is_a($v,'plugin'))) {
 					if(is_a($v,'plugin')) {
-						$v->element_id = $element;
-						$v->xml->element_id = $element;
+						$v->element_id = $selector;
+						$v->xml->element_id = $selector;
 						if(method_exists($v, 'onEvent')) {
-							call_user_method('onEvent', $v, $element);
+							call_user_method('onEvent', $v, $selector);
 						}
 					}
 					$_actions[$v->id] = $v->xml();
@@ -184,15 +187,15 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 					unset(CoreEvents::$cache[$v]);
 				}
 			}
-			return $this->AddEventTo($element,$_actions, $event);
+			return $this->AddEventTo($selector,$_actions, $event);
 		}
 			
 		if(is_a($actions,'xmlItem') || is_a($actions,'plugin')) {
 			if(is_a($actions,'plugin')) {
-				$actions->element_id = $element;
-				$actions->xml->element_id = $element;
+				$actions->element_id = $selector;
+				$actions->xml->element_id = $selector;
 				if(method_exists($actions, 'onEvent')) {
-					call_user_method('onEvent', $actions, $element);
+					call_user_method('onEvent', $actions, $selector);
 				}
 			}
 			$item = $actions->xml();
@@ -202,12 +205,12 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 				$item['callback'] = CoreEvents::mkArray($item['callback'],'json', true);
 			}
 			$actions->delete();
-			return $this->AddEventTo($element, array($actions->id => $item),$event);
+			return $this->AddEventTo($selector, array($actions->id => $item),$event);
 		} else {
 			$_actions = CoreEvents::$cache[$actions];
 			$_actions['event'] = $event;
 			$this->removeLastCache(1);
-			return $this->AddEventTo($element, array($actions => $_actions),$event);
+			return $this->AddEventTo($selector, array($actions => $_actions),$event);
 		}
 	}
 	

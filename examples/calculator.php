@@ -4,6 +4,16 @@ require_once 'ajax.php';
 
 //add ajax call to each button, so when you click it it fires and sends the desired operation.
 
+$buttons = array(0,1,2,3,4,5,6,7,8,9,'p','m','x','c','e','d');
+
+do {
+	$button = current($buttons);
+	$ajax->click("button{$button}", $ajax->call("ajax.php?calc/math/{$button}/|buffer|"));
+} while($buttons && next($buttons));
+
+
+/*
+ * //OR you could add the even to each button.
 $ajax->click('button1', $ajax->call('ajax.php?calc/math/1/|buffer|'));
 $ajax->click('button2', $ajax->call('ajax.php?calc/math/2/|buffer|'));
 $ajax->click('button3', $ajax->call('ajax.php?calc/math/3/|buffer|'));
@@ -18,8 +28,9 @@ $ajax->click('button9', $ajax->call('ajax.php?calc/math/9/|buffer|'));
 $ajax->click('buttonx', $ajax->call('ajax.php?calc/math/x/|buffer|'));
 $ajax->click('buttonc', $ajax->call('ajax.php?calc/math/c/|buffer|'));
 $ajax->click('button0', $ajax->call('ajax.php?calc/math/0/|buffer|'));
-$ajax->click('buttone', $ajax->call('ajax.php?calc/math/=/|buffer|'));
+$ajax->click('buttone', $ajax->call('ajax.php?calc/math/e/|buffer|'));
 $ajax->click('buttond', $ajax->call('ajax.php?calc/math/d/|buffer|'));
+*/
 ?>
 <html>
 <head>
@@ -74,22 +85,12 @@ This is just an example of what you can do with the Cjax Framework.
 <?php 
 
 echo $ajax->code("
-\$ajax->click('button1', \$ajax->call('ajax.php?calc/math/1/|buffer|'));
-\$ajax->click('button2', \$ajax->call('ajax.php?calc/math/2/|buffer|'));
-\$ajax->click('button3', \$ajax->call('ajax.php?calc/math/3/|buffer|'));
-\$ajax->click('buttonp', \$ajax->call('ajax.php?calc/math/p/|buffer|'));
-\$ajax->click('button4', \$ajax->call('ajax.php?calc/math/4/|buffer|'));
-\$ajax->click('button5', \$ajax->call('ajax.php?calc/math/5/|buffer|'));
-\$ajax->click('button6', \$ajax->call('ajax.php?calc/math/6/|buffer|'));
-\$ajax->click('buttonm', \$ajax->call('ajax.php?calc/math/m/|buffer|'));
-\$ajax->click('button7', \$ajax->call('ajax.php?calc/math/7/|buffer|'));
-\$ajax->click('button8', \$ajax->call('ajax.php?calc/math/8/|buffer|'));
-\$ajax->click('button9', \$ajax->call('ajax.php?calc/math/9/|buffer|'));
-\$ajax->click('buttonx', \$ajax->call('ajax.php?calc/math/x/|buffer|'));
-\$ajax->click('buttonc', \$ajax->call('ajax.php?calc/math/c/|buffer|'));
-\$ajax->click('button0', \$ajax->call('ajax.php?calc/math/0/|buffer|'));
-\$ajax->click('buttone', \$ajax->call('ajax.php?calc/math/=/|buffer|'));
-\$ajax->click('buttond', \$ajax->call('ajax.php?calc/math/d/|buffer|'));
+\$buttons = array(0,1,2,3,4,5,6,7,8,9,'p','m','x','c','e','d');
+
+do {
+	\$button = current(\$buttons);
+	\$ajax->click(\"button{\$button}\", \$ajax->call(\"ajax.php?calc/math/{\$button}/|buffer|\"));
+} while(\$buttons && next(\$buttons));
 ");
 ?>
 <h4>Controller</h4>

@@ -4,6 +4,8 @@ require_once "ajax.php";
 $ajax = ajax();
 
 $ajax->click("button1",$ajax->call("ajax.php?click_ajax_request/click_button/Hello!"));
+
+
 ?>
 <html>
 <head>
@@ -14,6 +16,7 @@ $ajax->click("button1",$ajax->call("ajax.php?click_ajax_request/click_button/Hel
 <body>
 <h2>Simple ajax request binded to a button</h2>
 <input type='button' id='button1' value='Click this button to make an ajax request'>
+<div id='response'></div>
 <br />
 <br />
 <br />
