@@ -2,7 +2,7 @@
 
 ## Requirements
 
-+    PHP 5.2 or PHP 5.3
++    PHP 5.2 or PHP 5.3 or PHP 5.4
 +    Strict Standards turned off
 
 
