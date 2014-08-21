@@ -52,7 +52,7 @@ It's really simple as
 ## Example #1 - Ajax Call
 ```php
 <?php
-$ajax->click('#element_id , $ajax->call('controller/the_function/'));
+$ajax->click('#element_id' , $ajax->call('controller/the_function/'));
 ?>
 <!doctype html>
 <html>
