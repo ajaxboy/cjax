@@ -17,7 +17,7 @@
 
 ## Instructions
 
-This reposition is for Folk only and contributions only, for downloads go to: http://cjax.sourceforge.net/. We build the releases internally because there are different packages that derive from this project (examples, plugins, docs, and 2 versions of Cjax).
+This reposition is for Fork and contributions only, for downloads go to: http://cjax.sourceforge.net/. We build the releases internally because there are different packages that derive from this project (examples, plugins, docs, and 2 versions of Cjax).
 
 ## Introduction
 
