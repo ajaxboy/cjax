@@ -173,7 +173,6 @@ class XmlItem{
 	
 	public function callback($xmlObj, $fn = null){
 		$this->callback = $xmlObj;
-		//die("<pre>".print_r($this,1).print_r($xmlObj,1));
 	}
 	
 	public function delete(){

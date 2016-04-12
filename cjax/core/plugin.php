@@ -29,11 +29,12 @@ class Plugin extends Ext{
 	 * @var unknown_type
 	 */
 	private static $instance;
-	
-	public $xml;//xmlItem Object
+    
+	//xmlItem Object
+	public $xml;
 	
 	/**
-	*  Instances to plugins
+	 * Instances to plugins
 	 */
 	private static $_instances = [];
 	/**

@@ -29,7 +29,7 @@ class CJAXSingleton{
 	static $instances = [];  // array of instance names
 	
     static  function getInstance($class, $param=null){
-    // implements the 'singleton' design pattern.	
+        // implements the 'singleton' design pattern.	
         if (!array_key_exists($class, self::$instances)) {
             // instance does not exist, so create it
             self::$instances[$class] = new $class;
