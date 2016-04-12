@@ -264,8 +264,7 @@ class Plugin extends Ext{
 	 * 
 	 * Impor javascript and css files
 	 * @param mixed $file
-	 * @param string $name
-	 * @param integer $load_time - in milliseconds
+	 * @param integer $loadTime - in milliseconds
 	 */
 	public function import($file , $loadTime = 0, $onInit = false){
 		$ajax = CJAX::getInstance();	
@@ -277,10 +276,10 @@ class Plugin extends Ext{
 			$data['file'] = $file;
 		}
 		
-		$data['time'] = (int) $load_time;
+		$data['time'] = (int) $loadTime;
 			
 			
-		if($on_init){
+		if($onInit){
 			$ajax->initExtra[] = $data;
 		} 
         else{
@@ -306,7 +305,6 @@ class Plugin extends Ext{
 		if(self::$_initiated){
 			return true;
 		}
-		$plugin = new Plugin();
 		if(!self::$_instances){
 			return;
 		}
@@ -426,7 +424,6 @@ class Plugin extends Ext{
 		
 		if(!isset(self::$_instances[$plugin]) || !is_object(self::$_instances[$plugin])){
 			$ajax = CJAX::getInstance();
-
 			if(!isset($params[1])){
 				self::$_loadingPrefix = $plugin;
 				$_plugin = self::$_instances[$plugin] = new $pluginClass();
@@ -531,7 +528,7 @@ class Plugin extends Ext{
 			return self::$initiatePlugins;
 		}
 		$base = CJAX_HOME;    
-		$plugins = CJAX_HOME."/plugins/";
+		$plugins = $base."/plugins/";
 		
 		self::$initiatePlugins = self::readDir($plugins);
 	}
