@@ -80,7 +80,6 @@ class XmlItem{
 						$value->delete();
 					}					
 					return;
-				    break;
 				default:
 					return;
 			}
