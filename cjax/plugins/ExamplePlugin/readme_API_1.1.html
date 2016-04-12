@@ -1,0 +1,1009 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/table.css" media="all">
+</head>
+<body>
+<h2>Plugins</h2>
+<div class='cjax_dialog'>
+Put bluntly, with Cjax, you can literally execute Javascript from PHP, and with Cjax Plugins you can execute your own custom Javascript Code  through PHP.
+This makes it handy dandy, for you to consolidate solid functionality through  your application, and easily execute without having to get your hands dirty with chunks of javascript everywhere.
+</div><br />
+<div class='cjax_dialog'><div class='cjax_dialog_title'>Creating Plugins</div>
+<h2>Steps for creating a plugin</h2>
+<ul>
+	<li>Create a Javascript file under cjax/plugins/YourPlugin.js
+	<ol>
+	<br />
+	        Or you may also create a directory inside plugins directory like so:  
+        cjax/plugins/YourPlugin/YourPlugin.js,  In case you want to add additional css,         images, or other media, etc.
+	<br />
+	<br />
+	</ol>
+	</li>
+	<li>Add a function <b>YourPlugin</b> in  YourPlugin.js <ol> <code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">YourPlugin</span><span style="color: #007700">()&nbsp;{}<br /></span><span style="color: #0000BB"></span>
+</span>
+</code></ol></li> 
+	<li>Call your plugin <div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />$ajax</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">YourPlugin</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div></li>  
+	<li>Replace "YourPlugin" with the name you would like your plugin to have</li>
+	<li>Pass parameters 
+		<ol>
+		You may pass strings or arrays through function parameters through your php plugin call.
+		 <div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />$ajax</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">YourPlugin</span><span style="color: #007700">(</span><span style="color: #DD0000">'pass&nbsp;strings'</span><span style="color: #007700">,&nbsp;array(</span><span style="color: #DD0000">'pass'</span><span style="color: #007700">=&gt;</span><span style="color: #DD0000">'arrays'</span><span style="color: #007700">))<br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div> 
+		</ol>
+		<ol>
+		<br />
+		Acess parameters in your JavaScript Plugin:
+		<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//cjax/plugins/YourPlugin.js
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">YourPlugin</span><span style="color: #007700">(</span><span style="color: #0000BB">string</span><span style="color: #007700">,&nbsp;array)&nbsp;{
+<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">alert</span><span style="color: #007700">(string);
+<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//alerts&nbsp;all&nbsp;the&nbsp;items&nbsp;in&nbsp;your&nbsp;array.
+<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">for(</span><span style="color: #0000BB">item&nbsp;in&nbsp;</span><span style="color: #007700">array)&nbsp;{
+<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">alert</span><span style="color: #007700">(</span><span style="color: #0000BB">item</span><span style="color: #007700">+&nbsp;</span><span style="color: #DD0000">'&nbsp;'</span><span style="color: #007700">+array[</span><span style="color: #0000BB">item</span><span style="color: #007700">]);
+<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /></span><span style="color: #0000BB"></span>
+</span>
+</code>		</ol>
+		<ol>
+		
+			Arrays are converted to  Json objects, that is how you would access them.
+		</ol>
+	</li>
+</ul>
+
+</div>
+<div class='cjax_dialog'><div class='cjax_dialog_title'>Hello World Sample Plugin</div><h2>Hello World Plugin</h2>
+PHP Code used to call plugin:
+<div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&lt;?php&nbsp;<br />$ajax</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">hello_world</span><span style="color: #007700">(</span><span style="color: #DD0000">'hello'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'world!'</span><span style="color: #007700">,array(</span><span style="color: #DD0000">'test'</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code></div>
+<br />
+This is what hello_world.js looks like:
+<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />
+<br /></span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">hello_world</span><span style="color: #007700">(</span><span style="color: #0000BB">a</span><span style="color: #007700">,</span><span style="color: #0000BB">b</span><span style="color: #007700">,</span><span style="color: #0000BB">c</span><span style="color: #007700">)
+<br />{
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//sample&nbsp;of&nbsp;importing&nbsp;javascript&nbsp;into&nbsp;the&nbsp;scope
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">importFile</span><span style="color: #007700">(</span><span style="color: #DD0000">'http://cjax.googlecode.com/svn/trunk/_extra/test_unit/plugins/js/test.js'</span><span style="color: #007700">);
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//sample&nbsp;of&nbsp;importing&nbsp;css&nbsp;to&nbsp;the&nbsp;page
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">importFile</span><span style="color: #007700">(</span><span style="color: #DD0000">'http://cjax.googlecode.com/svn/trunk/_extra/test_unit/plugins/css/test.css'</span><span style="color: #007700">);
+<br />&nbsp;&nbsp;&nbsp;&nbsp;
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">console</span><span style="color: #007700">.</span><span style="color: #0000BB">log</span><span style="color: #007700">(</span><span style="color: #DD0000">'File&nbsp;base:'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">base</span><span style="color: #007700">);
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">console</span><span style="color: #007700">.</span><span style="color: #0000BB">log</span><span style="color: #007700">(</span><span style="color: #DD0000">'This&nbsp;file:'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">file</span><span style="color: #007700">);
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">console</span><span style="color: #007700">.</span><span style="color: #0000BB">log</span><span style="color: #007700">(</span><span style="color: #DD0000">'Paramters&nbsp;Passed:'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">a</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">b&nbsp;</span><span style="color: #007700">,</span><span style="color: #0000BB">c</span><span style="color: #007700">);
+<br />}
+<br /><br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div>
+
+<h2>Plugins JavaScript API</h2>
+<table class='table'>
+<thead>
+	<tr>
+	<th>API</th>
+	<th>type</th>
+	<th>Params</th>
+	<th>Description</th>
+	<th>Example(s)</th>
+	</tr>
+</thead>
+
+
+<tr>
+	<td style="vertical-align:middle" width="100">
+		<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">importFile</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+	<td style="vertical-align:middle" width="60">
+		Function
+	</td>
+	<td style="vertical-align:middle">
+		path - required string
+		<br /><br />
+		$callback - optional callback function
+	</td>
+	<td width="300">
+		Import and  caches <b>JavaScript</b> or <b>CSS</b>  files. You may use <b>relative path</b> to your plugin, eg: just
+		"myfile.js" or "js/myfile.js". You may also import remote CSS or JavaScript.
+		You may use the callback as  an indicator that the script/css is fully loaded.
+		
+	</td>
+	<td width="300">
+<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />
+<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">importFile</span><span style="color: #007700">(</span><span style="color: #DD0000">'css/style.css'</span><span style="color: #007700">);
+<br />
+<br /></span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">importFile</span><span style="color: #007700">(</span><span style="color: #DD0000">'js/myFile.js'</span><span style="color: #007700">);
+<br />
+<br /></span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">importFile</span><span style="color: #007700">(</span><span style="color: #DD0000">'js/myFile2.js'</span><span style="color: #007700">,&nbsp;function()&nbsp;{
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">alert</span><span style="color: #007700">(</span><span style="color: #DD0000">'script&nbsp;loaded'</span><span style="color: #007700">);
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//do&nbsp;something&nbsp;with&nbsp;the&nbsp;loaded&nbsp;file&nbsp;
+<br /></span><span style="color: #007700">});
+<br /><br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+</tr>
+
+<tr>
+	<td style="vertical-align:middle">
+		<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">base<br /></span>
+</span>
+</code>	</td>
+	<td style="vertical-align:middle" width="60">
+		Variable
+	</td>
+	<td style="vertical-align:middle">
+		-
+	</td>
+	<td style="vertical-align:middle">
+		Returns the full base path url to your plugin directory location.
+	</td>
+	<td width="300">
+		<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />alert</span><span style="color: #007700">(</span><span style="color: #DD0000">'Directory:&nbsp;'</span><span style="color: #007700">+</span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">base</span><span style="color: #007700">);<br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+</tr>
+
+<tr>
+	<td style="vertical-align:middle">
+		<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">file<br /></span>
+</span>
+</code>	</td>
+	<td style="vertical-align:middle" width="60">
+		Variable
+	</td>
+	<td style="vertical-align:middle">
+		-
+	</td>
+	<td width="250">
+		Returns file name, eg.  myPlugin.js
+	</td>
+	<td width="300">
+		<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />alert</span><span style="color: #007700">(</span><span style="color: #DD0000">'File:&nbsp;'</span><span style="color: #007700">+</span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">file</span><span style="color: #007700">);<br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+</tr>
+
+
+<tr>
+	<td style="vertical-align:middle">
+		<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">ajaxFile<br /></span>
+</span>
+</code>	</td>
+	<td style="vertical-align:middle" width="60">
+		Variable
+	</td>
+	<td style="vertical-align:middle">
+		-
+	</td>
+	<td width="250">
+		Returns the default path to ajax.php
+	</td>
+	<td width="300">
+		<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />alert</span><span style="color: #007700">(</span><span style="color: #DD0000">'File:&nbsp;'</span><span style="color: #007700">+</span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">ajaxFile</span><span style="color: #007700">);<br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+</tr>
+
+
+<tr>
+	<td style="vertical-align:middle">
+		<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">prevent</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+	<td style="vertical-align:middle" width="60">
+		Function
+	</td>
+	<td style="vertical-align:middle">
+		$count - optional integer [default 1]
+	</td>
+	<td width="250">
+		Allows you to intercept the execution of  $ajax object APIs. It returns  a function
+		which you can use to trigger the intercepted APIs. If $count is specified,
+		you may place how many APIs you want to prevent after  the execution of the plugin API.
+		
+	</td>
+	<td width="300">
+		in  your controller...
+		<br />
+<div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&lt;?php&nbsp;<br />
+<br />$ajax</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">yourPlugin</span><span style="color: #007700">();
+<br />
+<br /></span><span style="color: #0000BB">$ajax</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">call</span><span style="color: #007700">(</span><span style="color: #DD0000">"ajax.php?controller/functions"</span><span style="color: #007700">);
+<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code></div>		<br /><br />
+		in your js plugin...
+		<br />
+<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />
+<br /></span><span style="color: #007700">var&nbsp;</span><span style="color: #0000BB">func&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">prevent</span><span style="color: #007700">();
+<br /></span><span style="color: #FF8000">//it&nbsp;prevented&nbsp;&nbsp;$ajax-&gt;call()&nbsp;from&nbsp;&nbsp;being&nbsp;executed.
+<br />
+<br />//now&nbsp;you&nbsp;have&nbsp;the&nbsp;control&nbsp;of&nbsp;when&nbsp;it&nbsp;should&nbsp;be&nbsp;executed
+<br /></span><span style="color: #0000BB">func</span><span style="color: #007700">();
+<br /><br /></span><span style="color: #0000BB"></span>
+</span>
+</code>		you may prevent more than one.
+	</td>
+</tr>
+
+
+
+
+<tr>
+	<td style="vertical-align:middle">
+		<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">serialize</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+	<td style="vertical-align:middle" width="60">
+		Function
+	</td>
+	<td style="vertical-align:middle">
+		$form_id - require string
+	</td>
+	<td width="250">
+		Get all values in a form.
+		
+	</td>
+	<td width="300">
+<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />
+<br /></span><span style="color: #FF8000">//c/f&nbsp;=&nbsp;controller/function
+<br /></span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">post</span><span style="color: #007700">(</span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">AjaxFile</span><span style="color: #007700">+</span><span style="color: #DD0000">'?c/f'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">serialize</span><span style="color: #007700">(</span><span style="color: #DD0000">'form1'</span><span style="color: #007700">));
+<br /><br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+</tr>
+
+
+
+<tr>
+	<td style="vertical-align:middle">
+		<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">call</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+	<td style="vertical-align:middle" width="60">
+		Function
+	</td>
+	<td style="vertical-align:middle">
+		$mix_url - require mixed [string, object]<br /><br />
+		$mix_item - optional mixed [string, object]
+	</td>
+	<td width="250">
+		Create ajax requests
+	</td>
+	<td width="350">
+<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />
+<br /></span><span style="color: #FF8000">//c/f&nbsp;=&nbsp;controller/function
+<br />
+<br /></span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">call</span><span style="color: #007700">(</span><span style="color: #DD0000">'ajax.php?c/f'</span><span style="color: #007700">);
+<br />
+<br /></span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">call</span><span style="color: #007700">(</span><span style="color: #DD0000">'ajax.php?c/f'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'container_id'</span><span style="color: #007700">);
+<br />
+<br /></span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">call</span><span style="color: #007700">(</span><span style="color: #DD0000">'ajax.php?c/f'</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">response</span><span style="color: #007700">)&nbsp;{
+<br />
+<br />});
+<br />
+<br /></span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">call</span><span style="color: #007700">({
+<br />&nbsp;</span><span style="color: #0000BB">url</span><span style="color: #007700">:&nbsp;</span><span style="color: #DD0000">'ajax.php?c/f'</span><span style="color: #007700">,
+<br />&nbsp;</span><span style="color: #0000BB">data</span><span style="color: #007700">:&nbsp;</span><span style="color: #DD0000">'a=1&amp;b=2&amp;c=3'</span><span style="color: #007700">,
+<br />&nbsp;</span><span style="color: #0000BB">success</span><span style="color: #007700">:&nbsp;function(</span><span style="color: #0000BB">response</span><span style="color: #007700">)&nbsp;{},
+<br />&nbsp;</span><span style="color: #0000BB">error</span><span style="color: #007700">:&nbsp;function(</span><span style="color: #0000BB">error_status</span><span style="color: #007700">)&nbsp;{}
+<br />});
+<br /><br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+</tr>
+
+<tr>
+	<td style="vertical-align:middle">
+		<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">get</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+	<td style="vertical-align:middle" width="60">
+		Function
+	</td>
+	<td style="vertical-align:middle">
+		$url - require mixed [string]<br /><br />
+		$mixed - optional mixed [string, object]
+	</td>
+	<td width="250">
+		Create ajax requests with get. $mixed can be a container id
+		where the  response html is  sent to or it can be a callback function
+		which returns the response.
+	</td>
+	<td width="350">
+<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />
+<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">get</span><span style="color: #007700">(</span><span style="color: #DD0000">'ajax.php?c/f'</span><span style="color: #007700">);
+<br />
+<br /></span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">get</span><span style="color: #007700">(</span><span style="color: #DD0000">'ajax.php?c/f'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'container_id'</span><span style="color: #007700">);
+<br />
+<br /></span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">get</span><span style="color: #007700">(</span><span style="color: #DD0000">'ajax.php?c/f'</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">response</span><span style="color: #007700">)&nbsp;{
+<br />
+<br />});
+<br /><br /></span><span style="color: #0000BB"></span>
+</span>
+</code></td>
+</tr>
+
+
+<tr>
+	<td style="vertical-align:middle">
+		<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">post</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+	<td style="vertical-align:middle" width="60">
+		Function
+	</td>
+	<td style="vertical-align:middle">
+		$url - require mixed [string]<br /><br />
+		$mixed - optional mixed [string, object]
+	</td>
+	<td width="250">
+		Create ajax requests with post. $mixed can be a container id
+		where the  response html is  sent to or it can be a callback function
+		which returns the response.
+	</td>
+	<td width="350">
+<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />
+<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">post</span><span style="color: #007700">(</span><span style="color: #DD0000">'ajax.php?c/f'</span><span style="color: #007700">,</span><span style="color: #DD0000">'a=1&amp;b2&amp;c=3'</span><span style="color: #007700">);
+<br />
+<br /></span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">post</span><span style="color: #007700">(</span><span style="color: #DD0000">'ajax.php?c/f'</span><span style="color: #007700">,</span><span style="color: #DD0000">'a=1&amp;b2&amp;c=3'</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">response</span><span style="color: #007700">)&nbsp;{
+<br />
+<br />});
+<br />
+<br /></span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">post</span><span style="color: #007700">(</span><span style="color: #DD0000">'ajax.php?c/f'</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">response</span><span style="color: #007700">)&nbsp;{
+<br />&nbsp;&nbsp;&nbsp;&nbsp;
+<br />});
+<br /><br /></span><span style="color: #0000BB"></span>
+</span>
+</code></td>
+</tr>
+
+
+<tr>
+	<td style="vertical-align:middle">
+		<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">overLayContent</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+	<td style="vertical-align:middle" width="60">
+		Function
+	</td>
+	<td style="vertical-align:middle">
+		content - required [string]<br /><br />
+		options - optional mixed [object]
+		<div style="margin-left: 15px">
+			<i>top</i> - position from top of the page
+			<br />
+			<i>left</i> - position from left
+			<br />
+			<i>transparent</i> - from 1 to 100 level of background transparency.
+			<br />
+			<i>color</i> - color of the background
+		</div>
+	</td>
+	<td width="250">
+		Displays a lightbox overlay window with supplied content.
+	</td>
+	<td width="350">
+<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />
+<br /></span><span style="color: #FF8000">//1
+<br /></span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">overLayContent</span><span style="color: #007700">(</span><span style="color: #DD0000">'Content&nbsp;Here'</span><span style="color: #007700">);
+<br /></span><span style="color: #FF8000">//2
+<br /></span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">overLayContent</span><span style="color: #007700">(</span><span style="color: #DD0000">'Content&nbsp;Here'</span><span style="color: #007700">,&nbsp;{
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">top</span><span style="color: #007700">:&nbsp;</span><span style="color: #DD0000">'200px'</span><span style="color: #007700">,
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">left</span><span style="color: #007700">:&nbsp;</span><span style="color: #DD0000">'200px'</span><span style="color: #007700">,
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">transparent</span><span style="color: #007700">:&nbsp;</span><span style="color: #DD0000">'50%'</span><span style="color: #007700">,
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">color</span><span style="color: #007700">:&nbsp;</span><span style="color: #DD0000">'#333'</span><span style="color: #007700">,
+<br />});
+<br /><br /></span><span style="color: #0000BB"></span>
+</span>
+</code></td>
+</tr>
+
+
+
+<tr>
+	<td style="vertical-align:middle">
+		<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">overLay</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+	<td style="vertical-align:middle" width="60">
+		Function
+	</td>
+	<td style="vertical-align:middle">
+		content - required [string]<br /><br />
+		options - optional mixed [object]
+		<div style="margin-left: 15px">
+			<i>top</i> - position from top of the page
+			<br />
+			<i>left</i> - position from left
+			<br />
+			<i>transparent</i> - from 1 to 100 level of background transparency.
+			<br />
+			<i>color</i> - color of the background
+			<i>remote</i> - If it is an external url
+		</div>
+	</td>
+	<td width="250">
+		Displays a lightbox overlay window with supplied url.
+	</td>
+	<td width="350">
+<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />
+<br /></span><span style="color: #FF8000">//1
+<br /></span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">overLay</span><span style="color: #007700">(</span><span style="color: #DD0000">'http://url/to/ajax.php?controller/function'</span><span style="color: #007700">);
+<br /></span><span style="color: #FF8000">//2
+<br /></span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">overLay</span><span style="color: #007700">(</span><span style="color: #DD0000">'http://url/to/ajax.php?controller/function'</span><span style="color: #007700">,&nbsp;{
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">top</span><span style="color: #007700">:&nbsp;</span><span style="color: #DD0000">'200px'</span><span style="color: #007700">,
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">left</span><span style="color: #007700">:&nbsp;</span><span style="color: #DD0000">'200px'</span><span style="color: #007700">,
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">transparent</span><span style="color: #007700">:&nbsp;</span><span style="color: #DD0000">'50%'</span><span style="color: #007700">,
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">color</span><span style="color: #007700">:&nbsp;</span><span style="color: #DD0000">'#333'</span><span style="color: #007700">,
+<br />});
+<br /></span><span style="color: #FF8000">//3
+<br />//triggers&nbsp;crossdomain&nbsp;ajax
+<br /></span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">overLay</span><span style="color: #007700">(</span><span style="color: #DD0000">'http://url/to/remote/location'</span><span style="color: #007700">,&nbsp;{
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">remote</span><span style="color: #007700">:&nbsp;</span><span style="color: #0000BB">true
+<br /></span><span style="color: #007700">});
+<br /><br /></span><span style="color: #0000BB"></span>
+</span>
+</code></td>
+</tr>
+
+
+
+<tr>
+	<td style="vertical-align:middle">
+		<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">message</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+	<td style="vertical-align:middle" width="60">
+		Function
+	</td>
+	<td style="vertical-align:middle" width="200">
+		message - string<br /><br />
+		seconds - optional [default 3]
+	</td>
+	<td width="250">
+		Displays supplied text/content on the screen in form of message. 
+	if $seconds is provided, that is how long the message will last on the screen before it disappears, 0 would remove time limit.
+	</td>
+	<td width="300">
+	<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">message</span><span style="color: #007700">(</span><span style="color: #DD0000">'Test'</span><span style="color: #007700">);<br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+</tr>
+
+<tr>
+	<td style="vertical-align:middle">
+		<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">success</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+	<td style="vertical-align:middle" width="60">
+		Function
+	</td>
+	<td style="vertical-align:middle" width="200">
+		message - string [default 'Success!']<br /><br />
+		seconds - optional [default 3]
+	</td>
+	<td width="250">
+		Makes use of this.message() to display a success formatted message.
+	</td>
+	<td width="300">
+	<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">success</span><span style="color: #007700">();<br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+</tr>
+
+<tr>
+	<td style="vertical-align:middle">
+		<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">warning</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+	<td style="vertical-align:middle" width="60">
+		Function
+	</td>
+	<td style="vertical-align:middle" width="200">
+		message - string [default 'Invalid Input']<br /><br />
+		seconds - optional [default 3]
+	</td>
+	<td width="250">
+		Makes use of this.message() to display a warning formatted message.
+	</td>
+	<td width="300">
+	<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">warning</span><span style="color: #007700">();<br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+</tr>
+
+<tr>
+	<td style="vertical-align:middle">
+		<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">error</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+	<td style="vertical-align:middle" width="60">
+		Function
+	</td>
+	<td style="vertical-align:middle" width="200">
+		message - string<br /><br />
+		seconds - optional [default 3]
+	</td>
+	<td width="250">
+		Makes use of this.message() to display an error formatted message.
+	</td>
+	<td width="300">
+	<code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />this</span><span style="color: #007700">.</span><span style="color: #0000BB">error</span><span style="color: #007700">(</span><span style="color: #DD0000">'Error!'</span><span style="color: #007700">);<br /></span><span style="color: #0000BB"></span>
+</span>
+</code>	</td>
+</tr>
+
+
+<tr>
+	<td style="vertical-align:middle" colspan="4">
+		<h3>Scope</h3>
+		All plugins APIS apply to  local scope to each plugin within plugin contructor function.
+	</td>
+</tr>
+</table>
+
+
+<br />
+<div class='cjax_dialog'><div class='cjax_dialog_title'>Plugins PHP API</div>
+A Plugin can stand on its own  without a php class - and does not require one. However if you require more power in your plugin
+extra functions or ajax controllers, Or to overwrite plugin core functionality to customize your plugin even more
+then you might be interested in using a php class in your plugin. 
+<br />
+Some of the functions in plugin PHP APIs are available to all plugins even  if they don't have class.
+<br />
+These are:  save, get , set, import, imports.
+</div><br />
+
+<div class='cjax_dialog'><div class='cjax_dialog_title'>Creating a PHP Class for plugin</div>
+<h2>Steps for creating a PHP class for your plugin</h2>
+<ul>
+	<li>Create a PHP file under your plugin directory, name it YourPlugin.php
+	<ol>
+	<br />
+	</ol>
+	</li>
+	<li>Add a class <b>YourPlugin</b> in  YourPlugin.php <ol> 
+	<div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&lt;?php&nbsp;<br />
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">class&nbsp;&nbsp;</span><span style="color: #0000BB">YourPlugin&nbsp;</span><span style="color: #007700">{
+<br />&nbsp;&nbsp;&nbsp;&nbsp;
+<br />&nbsp;&nbsp;&nbsp;&nbsp;}
+<br />&nbsp;&nbsp;&nbsp;&nbsp;<br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code></div></ol></li> 
+	<li>Add a function <b>__construct</b> <ol> <div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&lt;?php&nbsp;<br />
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">class&nbsp;&nbsp;</span><span style="color: #0000BB">YourPlugin&nbsp;</span><span style="color: #007700">{
+<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;</span><span style="color: #0000BB">__construct</span><span style="color: #007700">()
+<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br />&nbsp;&nbsp;&nbsp;&nbsp;}
+<br />&nbsp;&nbsp;&nbsp;&nbsp;<br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code></div>	</ol>
+	</li> 
+	<li>Call your plugin <div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />$ajax</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">YourPlugin</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div>		<ol>
+			When you call your plugin, the contructor is automatically triggered, all parameters
+			passed  in your plugin will be passed in the constructor as well.
+			<br /> There are more trigger functions that trigger themselves, look in the PHP plugin API below.
+		</ol>
+	</li>  
+	<li>Replace "YourPlugin" with the name of your plugin</li>
+</ul>
+
+<h2>Ajax Controllers for plugins</h2>
+<br /><br />
+Firstly to start using Ajax Controllers in your plugin, you'd need to create a "controllers" directory in your plugin.
+Then you are ready to go. The ajax framework through ajax.php automatically detends your plugin if you pass the plugin name as controller.
+For example:  ajax.php?myPlugin/funtion1 will automatically go into your plugin and look for controllers/myPlugin.php.
+Class name is controller_myPlugin and function funtion1 (or any function name you pass through second parameter in the URL).
+
+
+</div>
+<br />
+<br />
+<h2>Plugins PHP API</h2>
+<table class='table'>
+<thead>
+	<tr>
+	<th>API</th>
+	<th>type</th>
+	<th>Params</th>
+	<th>Description</th>
+	<th>Example(s)</th>
+	</tr>
+</thead>
+
+
+<tr>
+	<td style="vertical-align:middle" width="100">
+		<div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />$myplugin</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">import</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div>	</td>
+	<td style="vertical-align:middle" width="60">
+		Function
+	</td>
+	<td style="vertical-align:middle">
+		$url - required string
+		<br /><br />
+		$load_time - optional integer <br />
+		 milliseconds
+	</td>
+	<td width="300">
+		Import and  caches <b>JavaScript</b> or <b>CSS</b>  files. You may use <b>relative path</b> to your plugin, eg: just
+		"myfile.js" or "js/myfile.js". You may also import remote CSS or JavaScript.
+		<br /><br />
+		$load_time  -
+		Import scripts are loaded asynchronously, when importing multiple scrips it is possible that a second  script could load before the first one, if it is smaller. 
+		You may give extra milliseconds to your import to ensure that it doesn't load too fast or too slow in comparism with others.
+		The range should be from 50 to max 400 (4th of a second), depending how big the script is. 
+		If you experience issues with one script loading in mixed order use imports() function instead.
+	</td>
+	<td width="300">
+<div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />
+<br />$myPlugin</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">import</span><span style="color: #007700">(</span><span style="color: #DD0000">'file.js'</span><span style="color: #007700">);
+<br /></span><span style="color: #0000BB">$myPlugin</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">import</span><span style="color: #007700">(</span><span style="color: #DD0000">'file.css'</span><span style="color: #007700">);
+<br /></span><span style="color: #0000BB">$myPlugin</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">import</span><span style="color: #007700">(</span><span style="color: #DD0000">'file2.js'</span><span style="color: #007700">);
+<br /><br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div>	</td>
+</tr>
+
+
+<tr>
+	<td style="vertical-align:middle" width="100">
+		<div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />$myplugin</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">imports</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div>	</td>
+	<td style="vertical-align:middle" width="60">
+		Function
+	</td>
+	<td style="vertical-align:middle">
+		$files - required array
+		<br /><br />
+	</td>
+	<td width="300">
+		Import and  caches <b>JavaScript</b> or <b>CSS</b>  files. You may use <b>relative path</b> to your plugin, eg: just
+		"myfile.js" or "js/myfile.js". You may also import remote CSS or JavaScript.
+		<br /><br />
+		This function first waits for the previous file to be fully loaded before loading the next  one.
+		
+	</td>
+	<td width="300">
+<div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />
+<br />$myPlugin</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">imports</span><span style="color: #007700">(</span><span style="color: #DD0000">'file.js'</span><span style="color: #007700">,</span><span style="color: #DD0000">'file2.js'</span><span style="color: #007700">,</span><span style="color: #DD0000">'file3.js'</span><span style="color: #007700">);
+<br /><br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div>	</td>
+</tr>
+
+
+
+<tr>
+	<td style="vertical-align:middle" width="100">
+		<div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />$myplugin</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div>	</td>
+	<td style="vertical-align:middle" width="60">
+		Function
+	</td>
+	<td style="vertical-align:middle">
+		$setting - required string
+		<br /><br />
+		$value - require mixed string
+	</td>
+	<td width="300">
+		Updates plugin parameters and variables of your JavaScript plugin.
+		You may use
+		a,b,c,d,e,f etc. 
+		If you <b>don't</b> use alphabetic letters to update parameters, any other variable name
+		will also be accessible within your plugin as eg: this.variable_name.
+		
+	</td>
+	<td width="300">
+<div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />
+<br /></span><span style="color: #FF8000">//Setting&nbsp;Paratemers
+<br /></span><span style="color: #0000BB">$myPlugin</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set</span><span style="color: #007700">(</span><span style="color: #DD0000">'a'</span><span style="color: #007700">,</span><span style="color: #DD0000">'this&nbsp;is&nbsp;parameter&nbsp;one&nbsp;in&nbsp;your&nbsp;script'</span><span style="color: #007700">);
+<br /></span><span style="color: #0000BB">$myPlugin</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set</span><span style="color: #007700">(</span><span style="color: #DD0000">'b'</span><span style="color: #007700">,</span><span style="color: #DD0000">'this&nbsp;is&nbsp;parameter&nbsp;two&nbsp;in&nbsp;your&nbsp;script'</span><span style="color: #007700">);
+<br />
+<br />--</span><span style="color: #0000BB">access&nbsp;parameters
+<br />
+<br /></span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">myPlugin</span><span style="color: #007700">(</span><span style="color: #0000BB">a</span><span style="color: #007700">,</span><span style="color: #0000BB">b</span><span style="color: #007700">)&nbsp;{
+<br />
+<br />}
+<br />
+<br /></span><span style="color: #FF8000">//Setting&nbsp;Variables
+<br /></span><span style="color: #0000BB">$myPlugin</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set</span><span style="color: #007700">(</span><span style="color: #DD0000">'test1'</span><span style="color: #007700">,</span><span style="color: #DD0000">'this&nbsp;is&nbsp;a&nbsp;variable'</span><span style="color: #007700">);
+<br /></span><span style="color: #0000BB">$myPlugin</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set</span><span style="color: #007700">(</span><span style="color: #DD0000">'test2'</span><span style="color: #007700">,</span><span style="color: #DD0000">'this&nbsp;is&nbsp;another&nbsp;variable'</span><span style="color: #007700">);
+<br />
+<br />--</span><span style="color: #0000BB">access&nbsp;&nbsp;variables&nbsp;in&nbsp;your&nbsp;plugin
+<br />
+<br /></span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">myPlugin</span><span style="color: #007700">(</span><span style="color: #0000BB">a</span><span style="color: #007700">,</span><span style="color: #0000BB">b</span><span style="color: #007700">,</span><span style="color: #0000BB">c</span><span style="color: #007700">)&nbsp;{
+<br />
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">alert</span><span style="color: #007700">(</span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">test1</span><span style="color: #007700">);
+<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">alert</span><span style="color: #007700">(</span><span style="color: #0000BB">this</span><span style="color: #007700">.</span><span style="color: #0000BB">test2</span><span style="color: #007700">);
+<br />}
+<br /><br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div>	</td>
+</tr>
+
+
+
+
+<tr>
+	<td style="vertical-align:middle" width="100">
+		<div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />$myplugin</span><span style="color: #007700">::</span><span style="color: #0000BB">__construct</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div>	</td>
+	<td style="vertical-align:middle" width="60">
+		Function
+	</td>
+	<td style="vertical-align:middle">
+		-
+	</td>
+	<td width="300">
+	Trigger Function - 
+	This function is a type of constructor function. Is Automatically called at the initiation of your  plugin.
+	The paratemers passed when you call your plugin, will be passed through this function in the same order.
+		
+	</td>
+	<td width="300">
+<div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />
+<br />
+<br />$myPluing&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$ajax</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">myPluing</span><span style="color: #007700">(</span><span style="color: #0000BB">$arg1</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$arg2</span><span style="color: #007700">);
+<br />
+<br /></span><span style="color: #FF8000">//plugins/myPlugin/myPlugin.php
+<br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">myPlugin&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">plugin&nbsp;</span><span style="color: #007700">{
+<br />&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;</span><span style="color: #0000BB">onAjaxLoad</span><span style="color: #007700">(</span><span style="color: #0000BB">$arg1</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$arg2</span><span style="color: #007700">)
+<br />&nbsp;&nbsp;&nbsp;&nbsp;{
+<br />&nbsp;&nbsp;&nbsp;&nbsp;
+<br />&nbsp;&nbsp;&nbsp;&nbsp;}
+<br />}
+<br /><br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div>	</td>
+</tr>
+
+
+<tr>
+	<td style="vertical-align:middle" width="100">
+		<div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />$myplugin</span><span style="color: #007700">::</span><span style="color: #0000BB">onLoad</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div>	</td>
+	<td style="vertical-align:middle" width="60">
+		Function
+	</td>
+	<td style="vertical-align:middle">
+		-
+	</td>
+	<td width="300">
+	Trigger Function - 
+	This function is a type of constructor function. Is Automatically called at the initiation of your plugin
+	in controller (none Ajax Mode).
+	The paratemers passed when you call your plugin, will be passed through this function in the same order.
+		
+	</td>
+	<td width="300">
+<div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />
+<br />
+<br />$myPluing&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$ajax</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">myPluing</span><span style="color: #007700">(</span><span style="color: #0000BB">$arg1</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$arg2</span><span style="color: #007700">);
+<br />
+<br /></span><span style="color: #FF8000">//plugins/myPlugin/myPlugin.php
+<br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">myPlugin&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">plugin&nbsp;</span><span style="color: #007700">{
+<br />&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;</span><span style="color: #0000BB">onLoad</span><span style="color: #007700">(</span><span style="color: #0000BB">$arg1</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$arg2</span><span style="color: #007700">)
+<br />&nbsp;&nbsp;&nbsp;&nbsp;{
+<br />&nbsp;&nbsp;&nbsp;&nbsp;
+<br />&nbsp;&nbsp;&nbsp;&nbsp;}
+<br />}
+<br /><br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div>	</td>
+</tr>
+
+
+
+<tr>
+	<td style="vertical-align:middle" width="100">
+		<div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />$myplugin</span><span style="color: #007700">::</span><span style="color: #0000BB">onAjaxLoad</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div>	</td>
+	<td style="vertical-align:middle" width="60">
+		Function
+	</td>
+	<td style="vertical-align:middle">
+		-
+	</td>
+	<td width="300">
+	Trigger Function - 
+	This function is a type of constructor function. Is Automatically called at the initiation of your  plugin
+	<b> in an Ajax Controller</b>.
+	The paratemers passed when you call your plugin, will be passed through this function in the same order.
+	Thi function is optional.
+		
+	</td>
+	<td width="300">
+<div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />
+<br />
+<br />$myPluing&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$ajax</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">myPluing</span><span style="color: #007700">(</span><span style="color: #0000BB">$arg1</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$arg2</span><span style="color: #007700">);
+<br />
+<br /></span><span style="color: #FF8000">//plugins/myPlugin/myPlugin.php
+<br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">myPlugin&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">plugin&nbsp;</span><span style="color: #007700">{
+<br />&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;</span><span style="color: #0000BB">onAjaxLoad</span><span style="color: #007700">(</span><span style="color: #0000BB">$arg1</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$arg2</span><span style="color: #007700">)
+<br />&nbsp;&nbsp;&nbsp;&nbsp;{
+<br />&nbsp;&nbsp;&nbsp;&nbsp;
+<br />&nbsp;&nbsp;&nbsp;&nbsp;}
+<br />}
+<br /><br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div>	</td>
+</tr>
+
+
+
+
+
+<tr>
+	<td style="vertical-align:middle" width="100">
+		<div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />$myplugin</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">save</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div>	</td>
+	<td style="vertical-align:middle" width="60">
+		Function
+	</td>
+	<td style="vertical-align:middle">
+		$setting - required string
+		<br /><br />
+		$value - required mixed string
+	</td>
+	<td width="300">
+	Save plugin settings in session or cookie. You may access this data in the plugin's ajax controllers.
+		
+	</td>
+	<td width="300">
+<div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />
+<br />
+<br />$myPluing</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">save</span><span style="color: #007700">(</span><span style="color: #DD0000">'my_variable'</span><span style="color: #007700">,</span><span style="color: #DD0000">'the_value'</span><span style="color: #007700">);
+<br />
+<br />
+<br /><br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div>	</td>
+</tr>
+
+
+
+
+<tr>
+	<td style="vertical-align:middle" width="100">
+		<div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />$myplugin</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">get</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div>	</td>
+	<td style="vertical-align:middle" width="60">
+		Function
+	</td>
+	<td style="vertical-align:middle">
+		$setting - required string
+	</td>
+	<td width="300">
+	Get setting that has been saved with save() function. 
+		
+	</td>
+	<td width="300">
+<div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />
+<br />
+<br />$myPluing</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">get</span><span style="color: #007700">(</span><span style="color: #DD0000">'my_variable'</span><span style="color: #007700">);
+<br />
+<br />
+<br /><br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div>	</td>
+</tr>
+
+
+
+<tr>
+	<td style="vertical-align:middle" width="100">
+		<div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />$myplugin</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">filter</span><span style="color: #007700">()<br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div>	</td>
+	<td style="vertical-align:middle" width="60">
+		Function
+	</td>
+	<td style="vertical-align:middle">
+		-
+	</td>
+	<td width="300">
+	Triger Function - This function is automatically called at the end of the processing.
+	It passes the raw data being sent from your plugin.
+	<br />
+	$cache variable  holds all the raw data being sent from the plugin, you may make careful changes still.
+	return the $cache, if you don't return anything no changes will be made.
+	</td>
+	<td width="300">
+<div id="code_highlighted"><code><span style="color: #0000BB">
+<span style="color: #0000BB">&nbsp;<br />
+<br />
+<br /></span><span style="color: #FF8000">//plugins/myPlugin/myPlugin.php
+<br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">myPlugin&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">plugin&nbsp;</span><span style="color: #007700">{
+<br />&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;</span><span style="color: #0000BB">filter</span><span style="color: #007700">(</span><span style="color: #0000BB">$cache</span><span style="color: #007700">)
+<br />&nbsp;&nbsp;&nbsp;&nbsp;{
+<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;</span><span style="color: #0000BB">$cache</span><span style="color: #007700">;
+<br />&nbsp;&nbsp;&nbsp;&nbsp;}
+<br />}
+<br /><br /></span><span style="color: #0000BB"></span>
+</span>
+</code></div>	</td>
+</tr>
+
+
+
+</table>
+&copy; Cj Galindo
+</body>
+</html>
+
