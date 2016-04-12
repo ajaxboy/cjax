@@ -2,8 +2,9 @@
 
 ## Requirements
 
-+    PHP 5.2+
-+    Strict Standards turned off
++    PHP 5.4+
++    javascript enabled
++    eval() enabled
 
 
 ## Links
