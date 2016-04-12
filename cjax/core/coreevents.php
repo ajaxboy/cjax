@@ -1293,7 +1293,7 @@ if (document.addEventListener) {
 	/**
 	 * 
 	 * remove cache
-	 * @param mixed $cache_id
+	 * @param int $count
 	 */
 	public function removeLastCache($count){
 		do{
@@ -1560,7 +1560,6 @@ if (document.addEventListener) {
 	}
 	
 	public function code($data, $tags = true){
-		$flushOnClosingBrace =  true;
 		$cString = "#DD0000";
 		$cComment = "#FF8000";
 		$cKeyword = "#007700";
@@ -1572,21 +1571,17 @@ if (document.addEventListener) {
 		@ini_set('highlight.keyword', $cKeyword);
 		@ini_set('highlight.default', $cDefault);
 		@ini_set('highlight.html', $cHtml);
-		
-		
-		
-		//$data = str_replace([') { ', ' }', ";", "\r\n"], [") {\n", "\n}", ";\n", "\n"], $data); // Newlinefy all braces and change Windows linebreaks to Linux (much nicer!) 
-		
-		$data = str_replace("\n\n", "\n", $data);
-		
+			
+		//$data = str_replace([') { ', ' }', ";", "\r\n"], [") {\n", "\n}", ";\n", "\n"], $data); // Newlinefy all braces and change Windows linebreaks to Linux (much nicer!) 		
+		$data = str_replace("\n\n", "\n", $data);		
 		//$data = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $data); // Regex identifies all extra empty lines produced by the str_replace above. It is quicker to do it like this than deal with a more complicated regular expression above.
 		
 		
 		if(!$tags){
-			$data = highlight_string( $data , true); // Add nice and friendly <script> tags around highlighted text
+		    $data = highlight_string($data, true); // Add nice and friendly <script> tags around highlighted text
 		} 
         else{
-			$data = highlight_string("<?php \n" . $data . "\n?>", true); 
+		    $data = highlight_string("<?php \n" . $data . "\n?>", true); 
 		}
 		
 		return '<div id="code_highlighted">'.$data."</div>";
