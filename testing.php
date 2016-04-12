@@ -13,4 +13,4 @@ $_SERVER['HTTP_X_REQUESTED_WITH'] = 'CJAX FRAMEW0RK 6.0';
 #Controllers directory
 define('AJAX_CD','controllers');
 
-require 'ajax.php';
+require 'cjax/ajax.php';

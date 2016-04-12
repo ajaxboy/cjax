@@ -165,7 +165,6 @@ class Framework Extends CoreEvents{
 	}
 	
 	public function __call($method, $args){
-		$list = [];
 		$params = range('a','z');
 
 		$pParams = [];
@@ -333,7 +332,7 @@ class Framework Extends CoreEvents{
 	 * This is an alternative to call() when the requests go so fast and need just a little timeout to work properly.
 	 * 
 	 * @param unknown_type $url
-	 * @param unknown_type $container_id
+	 * @param unknown_type $containerId
 	 * @param unknown_type $confirm
 	 */
 	public function callc($url, $containerId = null, $confirm = null){
@@ -484,7 +483,7 @@ class Framework Extends CoreEvents{
         $out['do'] = '_form';
         $out['url'] = $url;
         if($formId) $out['form_id'] = $formId;
-        if(!is_null($container_id)){
+        if(!is_null($containerId)){
         	$out['container'] = $containerId;
         }
 
@@ -528,8 +527,8 @@ class Framework Extends CoreEvents{
 	 *
 	 * overlay url
 	 * @param $url
+     * @param $options
 	 * @param $useCache
-	 * @param $options
 	 * Accepted  $options Example
 	 *  $options['top'] = '50px';
 		$options['left'] = '100px';
@@ -556,7 +555,7 @@ class Framework Extends CoreEvents{
 			$data['options'] = $options;
 		}
 		$data['url'] = $url;
-		$data['cache'] = $useCahe;
+		$data['cache'] = $useCache;
 		if($url){
 			$data['template'] = $this->template('overlay.html');
 		}
@@ -578,8 +577,6 @@ class Framework Extends CoreEvents{
 	 * @param $options
 	 */
 	public function overlayContent($content = null, $options = null){
-		$_options = [];
-
 		$data['do'] = '_overLayContent';
 		$data['content'] = $content;
 		if(!isset($options['click_close'])){
@@ -616,7 +613,7 @@ class Framework Extends CoreEvents{
 	 * 
 	 * import css and javascript files
 	 * @param mixed_type $file
-	 * @param unknown_type $max_time
+	 * @param unknown_type $loadTime
 	 */
 	public function import($file , $loadTime = 0){
 		$data['do'] = '_import';
@@ -636,8 +633,8 @@ class Framework Extends CoreEvents{
 	/**
 	 * 
 	 * import more than one file, waiting for the previous to load.
-	 * @param mixed_type $file
-	 * @param unknown_type $max_time
+	 * @param mixed_type $files
+	 * @param unknown_type $data
 	 */
 	public function imports($files = [], &$data = []){
 		$data['do'] = '_imports';
@@ -651,7 +648,7 @@ class Framework Extends CoreEvents{
 	/**
 	 * Update any element on the page by specifying the element ID
 	 * Usage:  $ajax->update('element_id',$content);
-	 * @param string $obj
+	 * @param string $elementId
 	 * @param string $data
 	 */
 	public function update($elementId, $data = null){
@@ -664,8 +661,8 @@ class Framework Extends CoreEvents{
 	 * AddEventTo();
 	 *
 	 * @param string $element
+	 * @param string|array $actions
 	 * @param string $event
-	 * @param string $method
 	 */
 	public function AddEventTo($element, $actions, $event = 'onclick'){
 		$data['do'] = 'AddEventTo';
@@ -735,7 +732,7 @@ class Framework Extends CoreEvents{
 	 * Redirect the page.
 	 * this is a recommended alternative to the built-in php function Header();
 	 *
-	 * @param string $where [URL]
+	 * @param string $url [URL]
 	 */
 	public function location($url = null){
 		$data['do'] = 'location';

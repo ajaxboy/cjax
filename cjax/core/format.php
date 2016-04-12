@@ -48,9 +48,9 @@ class Format{
 	/**
 	 * Show a prompt message
 	 *
-	 * @param string $str
+	 * @param string $msg
 	 * @param string $title
-	 * @param bol $escape
+	 * @param string $id
 	 * @return STRING
 	 */
 	public function prompt($msg, $title = null, $id = 'cjax_prompt_box'){
@@ -59,36 +59,29 @@ class Format{
 		$string = null;
 		
 		if($type = CJAX::CSS_INFO){
-				$css = "information";
+			$css = "information";
 		} 
         elseif($type == CJAX::CSS_WARNING){
-				$css = "warning";
+			$css = "warning";
 		}
 		
-		$ajax = CJAX::getInstance();
-		
+
 		$msgId = $id.self::$prompts;
 		
 		if($title){
 			$string ="<div onmousedown=\"CJAX.drag(event,'$msgId')\" class='$css bar' style='padding: 5px 5px 0px 4px;font-weight: bold;'>$title <a href='javascript:void(0)' onclick=\"CJAX.remove('$msgId');\"/><div style='position: relative; float: right; top: -4px' class='cjax_close'></div></a></div>";
 		}
 		
-		$string ="
-		<div id='$msgId' class='cjax_prompt_box_class'>
-		$string
-		<div>
-			$msg
-			<div style='clear:both'></div>
-		</div>
-		</div>
-
-		";
+		$string = "<div id='$msgId' class='cjax_prompt_box_class'>$string
+		               <div>$msg
+                           <div style='clear:both'></div>
+		               </div>
+		           </div>";
 		return $string;
 	}
 
 	
 	public function message($text, $type = self::CSS_SUCCESS){
-		$ajax = CJAX::getInstance();
 		if($type==self::CSS_SUCCESS || !$type){
             $css  = " cjax_success";
 		} 
