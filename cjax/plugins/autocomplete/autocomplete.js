@@ -1,3 +1,5 @@
+/* global CJAX */
+
 /**
  * autocomplete 1.0
  * 
@@ -17,8 +19,7 @@ CJAX.importFile({
 });
 
 
-function autocomplete(url)
-{
+function autocomplete(url){
 	version = CJAX.version.replace(/[^0-9\.].*/,'');
 	
 	if(parseFloat(version) < 5.3) {
