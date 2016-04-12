@@ -240,7 +240,6 @@ class CoreEvents extends Format{
 
 	protected static $flags = [];
 
-
 	public static $const = [];
 	
 	//holds he latest flag
@@ -266,28 +265,15 @@ class CoreEvents extends Format{
 		$string = str_replace(['-', '_'], ' ', $string);
 		$string = ucwords($string);
 		$string = str_replace(' ', '', $string); 
-		
-		if($ucfirst){
-			return ucfirst($string);
-		} 
-        else{
-			return lcfirst($string);
-		}
+		return ($ucfirst)? ucfirst($string): lcfirst($string);
 	}
 	
 	public function xmlObject($id = null){
-		if(!is_null($id)){
-			//if(isset($this->xmlObjects->$id)) {
-				return $this->xmlObjects->$id;
-			//}
-		}
+        return (is_null($id))? null: $this->xmlObjects->$id;
 	}
 	
 	public function xmlObjects($id = null){
-		if(!is_null($id)){
-			return $this->xmlObjects->$id;
-		}
-		return $this->xmlObjects;
+        return (is_null($id))? $this->xmlObjects: $this->xmlObjects->$id;
 	}
 
 	
@@ -314,12 +300,7 @@ class CoreEvents extends Format{
 	public function callbacks($cache, $test = false){
 		if(self::$callbacks){
 			foreach(self::$callbacks as $k => $v){
-				if(!$test){
-					$cb = $this->processScache($v);
-				} 
-                else{
-					$cb = $this->processScache($v);
-				}
+                $cb = $this->processScache($v);
 				if(!isset($cache[$k])){
 					$v[$k]['callback'] = $this->mkArray($cb,'json', true);
 				} 
@@ -351,8 +332,7 @@ class CoreEvents extends Format{
 			}
 		}
 		
-		$cache = $this->callbacks($cache);
-		
+		$cache = $this->callbacks($cache);		
 		$_preload = null;
 		foreach($cache as $k => $v){
 			if($v['do']=='_import' || $v['do']=='_imports' || isset($v['is_plugin'])) {
@@ -396,16 +376,9 @@ class CoreEvents extends Format{
 				self::$cache = array_merge(self::$lastCache, self::$cache);
 			}
 		}
-		$ajax = CJAX::getInstance();
-		
+        
+		$ajax = CJAX::getInstance();		
 		self::$cache = $this->callbacks(self::$cache);
-		
-		//if(self::$simpleCommit==self::$cache && !$ajax->config->caching && !$ajax->config->fallback) {
-		//	return true;
-		//}
-		
-		
-		
 		$_preload = [];
 		foreach(self::$cache as $k => $v){
 			if($v['do']=='_import' || $v['do']=='_imports' || isset($v['is_plugin'])) {
@@ -415,16 +388,9 @@ class CoreEvents extends Format{
 				}
 			}
 		}
-		if($_preload){
-			$_preload = $this->processScache($_preload);
-			$_preload = $this->mkArray($_preload);
-		} 
-        else{
-			$_preload = null;
-		}
 
-		$_cache = $this->processScache(self::$cache);		
-		$_cache = $this->mkArray($_cache);		
+        $_preload = ($_preload)? $this->mkArray($this->processScache($_preload)): null;   
+		$_cache = $this->mkArray($this->processScache(self::$cache));		
 		if($ajax->config->debug){
 			$ajax->debug = true;
 		}
@@ -466,12 +432,9 @@ class CoreEvents extends Format{
 			}
 		}
 		if($_preload){
-			$_preload = $this->processScache($_preload);
-			$_preload = $this->mkArray($_preload);
-		}
-
-		$_cache = $this->processScache($cache);		
-		$_cache = $this->mkArray($_cache);		
+			$_preload = $this->mkArray($this->processScache($_preload));
+		}		
+		$_cache = $this->mkArray($this->processScache($cache));		
 		if($ajax->config->debug){
 			$ajax->debug = true;
 		}
@@ -496,11 +459,8 @@ class CoreEvents extends Format{
 	 */
 	public static function saveSCache(){
 		$ajax = CJAX::getInstance();
-
-		if($ajax->log){
-			if(self::$cache){
-				die("Debug Info:<pre>".print_r(self::$cache,1)."</pre>");
-			}
+		if($ajax->log && self::$cache){
+			die("Debug Info:<pre>".print_r(self::$cache,1)."</pre>");
 		}
 		
         $coreEvents = new self;	
@@ -593,11 +553,12 @@ class CoreEvents extends Format{
 			}
 			
 			foreach($v  as $k2 => $v2){
-				if(is_array($v2)) {
+				if(is_array($v2)){
 					$v2 = $this->mkArray($v2);
 					$v[$k2] =  "<$k2>$v2</$k2>";
 					
-				} else {
+				} 
+                else{
 					$v[$k2] =  "<$k2>$v2</$k2>";
 				}
 			}
@@ -642,10 +603,8 @@ class CoreEvents extends Format{
 	 * gets plugin only if it has a class
 	 */
 	public function plugin($pluginName, $loadController = false){
-		if($this->isPlugin($pluginName)){
-			if($plugin = Plugin::getPluginInstance($pluginName, null, null, $loadController)){
-				return $plugin;
-			}
+		if($this->isPlugin($pluginName) && $plugin = Plugin::getPluginInstance($pluginName, null, null, $loadController)){
+			return $plugin;
 		}
 	}
 	
@@ -665,15 +624,15 @@ class CoreEvents extends Format{
 	 * xml outputer, allows the interaction with xml
 	 *
 	 * @param xml $xml
+     * @param string $apiName
 	 * @return string
 	 */
-	public function xml($xml, $api_name  = null){
+	public function xml($xml, $apiName  = null){
 		$ajax = CJAX::getInstance();
 		if(isset($xml['do'])){
 			$this->lastCmd = $xml['do'];
 		}
-		if($ajax->_flag){
-			
+		if($ajax->_flag){			
 			if(is_array($ajax->_flag)){
 				$xml['flag'] = $this->xmlIt($ajax->_flag);
 				$ajax->_flag = null;
@@ -687,22 +646,19 @@ class CoreEvents extends Format{
 			}
 		}
 		
-		$this->cache($xml);
-		
+		$this->cache($xml);		
 		if(!$this->isAjaxRequest()){
 			$this->simpleCommit();
 		}
-		$count = $this->lastEntryId();
-		
+		$count = $this->lastEntryId();		
 		return $count;
 	}
 	
 	
 	public function cacheWrapper($wrapper = []){
-		if(!is_array($wrapper)){
-			return;
-		}
-		self::$wrapper = implode('(!xml!)',$wrapper);
+		if(is_array($wrapper)){
+			self::$wrapper = implode('(!xml!)',$wrapper);
+		}		
 	}
 	
 	public function fallbackPrint($out){
@@ -753,8 +709,7 @@ if (document.addEventListener) {
 			self::$useCache = true;
 			if(!headers_sent()) {
 				//flush();
-			}
-			
+			}			
 		}
 		
 		if($cacheId){
@@ -775,15 +730,11 @@ if (document.addEventListener) {
 	}
 	
 	public function template($templateName){
-		$template = file_get_contents(CJAX_HOME."/assets/templates/{$templateName}");		
-		return $template;
+		return file_get_contents(CJAX_HOME."/assets/templates/{$templateName}");		
 	}
 	
 	public function jsonEncode($array){
-		if(version_compare('5.3', phpversion(),'>')){
-			return json_encode($array);
-		}
-		return json_encode($array,JSON_FORCE_OBJECT);
+		return json_encode($array, JSON_FORCE_OBJECT);
 	}
 	
 	public function mkArray($array, $tag = 'json', $double = false){
@@ -804,7 +755,7 @@ if (document.addEventListener) {
 			self::$path = $jsdir;
 			return $this->jsdir = false;
 		}
-		if(!$this->jsdir && $this->jsdir !==false){
+		if(!$this->jsdir && $this->jsdir !== false){
 			self::$path = $jsdir;
 			$this->jsdir = $jsdir;
 		}
@@ -822,12 +773,7 @@ if (document.addEventListener) {
 			$file = $this->_file;
 		}
 		if(is_string($min) && !is_bool($min)){
-			if($file){
-				$jsPath =  rtrim($min,'/').'/cjax/assets/js/';
-			} 
-            else{
-				$jsPath =  rtrim($min,'/');
-			}
+            $jsPath = ($file)? rtrim($min,'/').'/cjax/assets/js/': rtrim($min,'/'); 
 		} 
         else{
 			if($ajax->config->initUrl && preg_match("/https?/", $ajax->config->initUrl)) {
@@ -846,33 +792,20 @@ if (document.addEventListener) {
 			$pluginPath = str_replace('/assets/js','/plugins',$jsPath);
 			//die($plugin_path);
 			foreach($ajax->initExtra as $k => $v) {
-				if(isset($v['plugin_dir'])){
-					$script[] = "\t<script type='text/javascript' src='".$pluginPath.$v['plugin_dir'].'/'.$v['file']."'></script>\n";
-				} 
-                else{
-					$script[] = "\t<script type='text/javascript' src='".$v['file']."'></script>\n";
-				}
+                $script[] = (isset($v['plugin_dir']))? "\t<script type='text/javascript' src='".$pluginPath.$v['plugin_dir'].'/'.$v['file']."'></script>\n"
+                                                     : "\t<script type='text/javascript' src='".$v['file']."'></script>\n";
 			}
 		}
 		if($this->jsdir){
-			if(!$file){
-				$path = $jsPath;
-			} 
-            else{
-				$path = $jsPath.$file;
-			}
+            $path = ($file)? $jsPath.$file: $jsPath;
 			$ajax->_path = $path;
 			$script[] = "<script defer='defer' id='cjax_lib' type='text/javascript' src='{$path}'></script>\n";
-		} else if(self::$path){
+		} 
+        elseif(self::$path){
 			if(self::$path[strlen(self::$path)-1] =='/') {
 				self::$path = substr(self::$path,0,strlen(self::$path) -1);
 			}
-			
-			if(!$this->_file){
-				$ajax->_path = self::$path."/assets/js/";
-			} else {
-				$ajax->_path = self::$path;
-			}
+			$ajax->_path = ($this->_file)? self::$path: self::$path."/assets/js/";
 			$script[] = "<script id='cjax_lib' type='text/javascript' src='".$ajax->_path.$file."'></script>\n";
 		}
 		return implode($script);
@@ -885,16 +818,9 @@ if (document.addEventListener) {
 	 * @return string
 	 */
 	public function init($min = true){
-		if($min && substr($min, 0, 2)=='..'){
-			if(strpos($min,'.js')!==false) {
-				$this->_file = null;
-			} else {
-				$this->_file = "cjax-6.0.min.js";
-			}
-		} else {
-			$this->_file = "cjax-6.0.min.js";
-		}
-		
+        $this->_file = ($min && substr($min, 0, 2)=='..')
+                        ? (strpos($min,'.js') !== false) ? null: "cjax-6.0.min.js"
+                        : "cjax-6.0.min.js";
 		$href = $this->headRef ($this->jsdir, $min);
 		$this->isInit = $href;
 		//plugin::trigger('onInit');
@@ -914,25 +840,15 @@ if (document.addEventListener) {
 		$data = curl_exec($ch);
 		$err = curl_errno($ch);
 		curl_close($ch);
-		
-		if($err){
-		    return $this->fsockopen($url);
-		}
-		return $data;
+		return ($err)? $this->fsockopen($url): $data;
 	}
 	
 	public function remote($url){
-		$content = @file_get_contents($url);
-		
+		$content = @file_get_contents($url);		
 		if($content !== false){			
 			return $content;
 		}
-		if(function_exists('curl_init')){
-			return $this->curl($url);
-		} 
-        else{
-			return $this->fsockopen($url);
-		}
+        return (function_exists('curl_init'))? $this->curl($url): $this->fsockopen($url);
 	}
 	
 	public function fsockopen($url, $errno = null, $errstr = null){
@@ -967,7 +883,7 @@ if (document.addEventListener) {
         
 		while(!feof($fp)){
 			if($getInfo){
-					$data[] = fread($fp, 1024);
+				$data[] = fread($fp, 1024);
 			} 
             else{
 				if(fgets($fp, 1024) == "\r\n"){
@@ -975,24 +891,13 @@ if (document.addEventListener) {
 				}
 			}
 		}
-		fclose($fp);
-		
+		fclose($fp);		
 		return implode($data);
 	}
 	
 	public function readCache($crc32 = null){
-		if(!$crc32){
-			$filename = 'cjax.txt';
-		} 
-        else{
-			$filename = $crc32;
-		}
-		if($this->config->caching){
- 			$dir = sys_get_temp_dir();
- 		} 
-        else{
- 			$dir = CJAX_HOME.'/assets/cache/';
- 		}
+        $filename = ($crc32)? $crc32: 'cjax.txt';
+        $dir = ($this->config->caching)? sys_get_temp_dir(): CJAX_HOME.'/assets/cache/';
  		$dir = rtrim($dir, '/').'/';
  		$file = $dir.$filename;
  		if(is_file($file)){
@@ -1034,11 +939,9 @@ if (document.addEventListener) {
  		$dir = rtrim($dir, '/').'/';
  		$file = $dir.$filename;
  		if(file_exists($file)){
- 			if (!is_writable($file)){
- 				if (!chmod($filename, 0666)){
- 					echo "CJAX: Error! file ($file) is not writable, Not enough permission";
- 					exit;
- 				}
+ 			if (!is_writable($file) && !chmod($filename, 0666)){
+ 				echo "CJAX: Error! file ($file) is not writable, Not enough permission";
+ 				exit;
  			}
  		}
  		if(!$fp = @fopen($file, 'w')){
@@ -1062,7 +965,7 @@ if (document.addEventListener) {
 	 */
 	public function crossdomain($url){
 		$response = $this->remote($url);
-		if(!$response || strpos(strtolower($response),'not found')!==false){
+		if(!$response || strpos(strtolower($response),'not found') !== false){
 			return;
 		}
 		print $response;
@@ -1111,12 +1014,8 @@ if (document.addEventListener) {
 		if(function_exists('apache_request_headers')){
 			$headers = apache_request_headers();
 			if(!isset($headers['X-Requested-With'])){
-				if(isset($_SERVER['HTTP_X_REQUESTED_WITH'])){
-					$headers['X-Requested-With'] = $_SERVER['HTTP_X_REQUESTED_WITH'];
-				} 
-                else{
-					$headers['X-Requested-With'] = null;
-				}
+                $headers['X-Requested-With'] = (isset($_SERVER['HTTP_X_REQUESTED_WITH']))?
+                                                $_SERVER['HTTP_X_REQUESTED_WITH'] : null;
 			}
 		} 
         else{
@@ -1156,15 +1055,13 @@ if (document.addEventListener) {
 	 			}
 	 			if(!$params) $params = [];
 	 			$r = call_user_func_array($callback,$params);
-	 		} else {
+	 		} 
+            else{
 	 			$r = call_user_func($callback);
 	 		}
 	 		exit();
 	 	}
-	 	if(!$this->isAjaxRequest()){
-	 		return false;
-	 	}
-	 	return true;
+        return ($this->isAjaxRequest())? true: false;
 	 }
 
 	public function setRequest($request = true){
@@ -1197,7 +1094,7 @@ if (document.addEventListener) {
 	public function xmlIt($input = [], $tag = null){
 		$new = [];
 		if(is_array($input) && $input){
-			foreach ($input as $k =>$v){
+			foreach($input as $k =>$v){
 				if($v){
 					if($tag){
 						$k = $tag;
@@ -1223,11 +1120,9 @@ if (document.addEventListener) {
 			@session_start();
 		}
 		if($ajax->fallback || $ajax->config->fallback){
-			if($value===null) {
-				if(isset($_SESSION[$setting])){
-					unset($_SESSION[$setting]);
-					$this->cookie($setting);
-				}
+			if($value===null && isset($_SESSION[$setting])){
+				unset($_SESSION[$setting]);
+				$this->cookie($setting);
 			} 
             else{
 				$_SESSION[$setting] = $value;
@@ -1236,10 +1131,8 @@ if (document.addEventListener) {
 		} 
         else{
 			if(!$useCookie){
-				if($value===null){
-					if(isset($_SESSION[$setting])) {
-						unset($_SESSION[$setting]);
-					}
+				if($value === null && isset($_SESSION[$setting])){
+					unset($_SESSION[$setting]);
 				} 
                 else{
 					$_SESSION[$setting] = $value;
@@ -1252,12 +1145,8 @@ if (document.addEventListener) {
 	}
 	
 	public function cookie($setting, $value = null){
-		if($value===null){
-			@setcookie ($setting, $value, time()-(3600*1000), '/');
-		} 
-        else{
-			@setcookie ($setting, $value, null, '/');
-		}
+        ($value === null)? @setcookie($setting, $value, time()-(3600*1000), '/')
+                         : @setcookie($setting, $value, null, '/');
 	}
 
 	public function getSetting($setting){
@@ -1299,8 +1188,7 @@ if (document.addEventListener) {
 		do{
 			$count--;
 			end(self::$cache);
-			unset(self::$cache[key(self::$cache)]);
-			
+			unset(self::$cache[key(self::$cache)]);			
 		}while($count);
 	}
 	
@@ -1388,7 +1276,6 @@ if (document.addEventListener) {
 				echo "Aborting...<br />\n";
 				exit(1);
 			    break;
-
 			case E_USER_WARNING:
 				echo "<b>Cjax WARNING</b> [$errno] $errstr<br />\n";
 				break;
@@ -1427,10 +1314,8 @@ if (document.addEventListener) {
 			@session_start();
 		} 
         else{
-			if(!$ajax->config->fallback){
-				if(!isset($_SESSION)){
-					@session_start();
-				}
+			if(!$ajax->config->fallback && !isset($_SESSION)){
+				@session_start();
 			}
 		}
 	}
@@ -1454,8 +1339,7 @@ if (document.addEventListener) {
 		self::$path = $path;
 	}
 
-	public static function remotePath()
-	{
+	public static function remotePath(){
 		$host = $_SERVER['HTTP_HOST'];
 		$sname = dirname($_SERVER["SCRIPT_NAME"]);
 		return 'http://'.$host.$sname.'/cjax';
@@ -1465,7 +1349,7 @@ if (document.addEventListener) {
 		return self::connect($_SERVER['HTTP_HOST'],(isset($_SERVER['SERVER_PORT'])? $_SERVER['SERVER_PORT']:80), $file, true);
 	}
 
-	public static function connect($file = null,$port = 80,$local = false){
+	public static function connect($file = null, $port = 80, $local = false){
 		$ajax = CJAX::getInstance();
 
 		if(!$port){
@@ -1500,10 +1384,10 @@ if (document.addEventListener) {
 		$data = [];
 		while(!feof($fp)){
 			if ($getInfo){
-					$data[] = fread($fp, 1024);
+				$data[] = fread($fp, 1024);
 			} 
             else{
-				if (fgets($fp, 1024) == "\r\n"){
+				if(fgets($fp, 1024) == "\r\n"){
 					$getInfo = true;
 				} 
                 else{
@@ -1516,12 +1400,14 @@ if (document.addEventListener) {
 	}
 	
 	public function input($value=null){
-		if($value===null) $value= 'cjax';
-		$v = isset($_REQUEST[$value])? $_REQUEST[$value] : (isset($_GET[$value])? $_GET[$value]:null);
-		
+		if($value === null){
+            $value= 'cjax';
+        }
+		$v = isset($_REQUEST[$value])? $_REQUEST[$value] : (isset($_GET[$value])? $_GET[$value]: null);		
 		if(!$v && isset($_COOKIE[$value]) && $_COOKIE[$value]){
 			$v = $_COOKIE[$value];
 		}
+        
 		if(is_array($v)){
 			foreach($v as $k => $kv){
 				if(!is_array($kv)){
@@ -1576,14 +1462,8 @@ if (document.addEventListener) {
 		$data = str_replace("\n\n", "\n", $data);		
 		//$data = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $data); // Regex identifies all extra empty lines produced by the str_replace above. It is quicker to do it like this than deal with a more complicated regular expression above.
 		
-		
-		if(!$tags){
-		    $data = highlight_string($data, true); // Add nice and friendly <script> tags around highlighted text
-		} 
-        else{
-		    $data = highlight_string("<?php \n" . $data . "\n?>", true); 
-		}
-		
+		$data = ($tags)? highlight_string("<?php \n" . $data . "\n?>", true)
+                       : highlight_string($data, true); 		
 		return '<div id="code_highlighted">'.$data."</div>";
 	}
 	
@@ -1593,8 +1473,7 @@ if (document.addEventListener) {
 		$cKeyword = "green";
 		$cDefault = "#0000BB";
 		$cHtml = "#0000BB";
-		 
-		
+		 		
 		@ini_set('highlight.string', $cString); // Set each colour for each part of the syntax
 		@ini_set('highlight.comment', $cComment); // Suppression has to happen as some hosts deny access to ini_set and there is no way of detecting this
 		@ini_set('highlight.keyword', $cKeyword);
@@ -1607,13 +1486,8 @@ if (document.addEventListener) {
 		
 		//$data = explode("\n", str_replace(["<br />"], ["\n"], $data));
 		
-		if($tags){
-			$data = str_replace(['?php', '?&gt;'], ['script type="text/javascript">', '&lt;/script&gt;'], $output); // Add nice and friendly <script> tags around highlighted text
-		} 
-        else{
-			$data = str_replace(['&lt;?php', '?&gt;'], ['', ''], $data); // Add nice and friendly <script> tags around highlighted text			
-		}
-		return $data;
+        return ($tags)? str_replace(['?php', '?&gt;'], ['script type="text/javascript">', '&lt;/script&gt;'], $output)
+                      : str_replace(['&lt;?php', '?&gt;'], ['', ''], $data);
 	}
 	
 	public static function errorHandlingConfig(){
