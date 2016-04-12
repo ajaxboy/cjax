@@ -343,14 +343,11 @@ class CoreEvents extends Format{
 			}
 		}
 		if($_preload){
-			$_preload = $this->processScache($_preload);
-			$_preload = $this->mkArray($_preload);
+			$_preload = $this->mkArray($this->processScache($_preload));
 		}
 		
-		$_cache = $this->processScache($cache);
-		$_cache = $this->mkArray($_cache);
-		
-		
+		$_cache = $this->mkArray($this->processScache($cache));
+				
 		$out  = "<xml class='cjax'>{$_cache}</xml><xml class='cjax'><preload>{$_preload}</preload></xml>";
 		if(self::$wrapper){
 			$out = str_replace('(!xml!)', $out, self::$wrapper);
