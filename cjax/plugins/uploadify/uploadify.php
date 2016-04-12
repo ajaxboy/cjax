@@ -23,7 +23,7 @@ class uploadify extends Plugin{
 
 	/**
 	 * 
-	 * @param string $upload_id
+	 * @param string $uploadId
 	 * @param array $options
 	 */
 	public function onLoad($uploadId = null, $options = []){

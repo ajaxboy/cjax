@@ -1,7 +1,9 @@
 
+/* global CJAX */
+
 /**
- * Plugin: validate 1.6
- * Dependencies: Cjax 4.3+, Jquery, jquery.validate
+ * Plugin: validate 2.0
+ * Dependencies: Cjax 6.0+, Jquery, jquery.validate
  * 
  * Ref:
  * 
@@ -11,13 +13,14 @@
  * http://code.google.com/p/cjax
  * http://code.google.com/p/ajax-framework-for-codeigniter
  * 
- * @param form_id string
+ * @param btn_id string
+ * @param url string
  * @param fields Json Object
+ * @author cj
  */
 
 
-function validate(btn_id, url, fields)
-{
+function validate(btn_id, url, fields){
 	if(typeof jQuery  =='undefined') {
 		CJAX.error('Validate Plugin requires Jquery library.');
 		//jquery was not found

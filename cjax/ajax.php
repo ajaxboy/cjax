@@ -72,7 +72,7 @@ final class AJAX{
 		if(!$function){
 			$function = $rawClass;
 		}
-        $this->_exists($isFile, $classExists, $requestObject, controller, $function);        
+        $this->_exists($isFile, $rawClass, $classExists, $requestObject, $controller, $function);        
         $method = new ReflectionMethod($requestObject, $function);
         $this->_response($method->invokeArgs($requestObject, $this->_event($method, $args)));
 	}
@@ -98,7 +98,7 @@ final class AJAX{
 		}          
     }
     
-    private function _exists($isFile, $classExists, $requestObject, $controller, $function){
+    private function _exists($isFile, $rawClass, $classExists, $requestObject, $controller, $function){
 		if(!$isFile){
 			header("Content-disposition:inline; filename='{$controller}.php'");
 			header("HTTP/1.0 404 Not Found");
@@ -222,7 +222,6 @@ final class AJAX{
 			return false;
 		}
 		if(method_exists($class, $rawController)){
-			$parent = get_parent_class($class);
 			//prevent constructor
 			$_class = 'empty_'.$class;
 			eval('class ' . $_class . ' extends '. $class .'{}');
@@ -246,7 +245,6 @@ final class AJAX{
 	}
 
 	private function _class($controller){
-		$rawController = $controller;
 		if($this->ajax->config->camelize){
 			$controller = $this->ajax->camelize($controller, $this->ajax->config->camelizeUcfirst);
 		}

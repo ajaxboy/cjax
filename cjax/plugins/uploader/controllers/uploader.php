@@ -23,7 +23,6 @@ class Uploader{
 	 */
 	public function upload(){
 		$ajax  = CJAX::getInstance();
-		$error = false;
 		$filesFount = false;
 		$files = [];
 		
@@ -224,7 +223,6 @@ class Uploader{
 		$info = pathinfo($filename);
 		$filename = $info['filename'];
 		
-		$oldFilename = $filename;
 		if($prefix = $this->options->prefix){
 			if($prefix=='time'){
 				$prefix = time();
@@ -244,8 +242,7 @@ class Uploader{
 			$filename = $filename.'_'.$suffix;
 		}
 		
-		$filename = $filename.'.'.$info['extension'];		
-		$ajax = CJAX::getInstance();		
+		$filename = $filename.'.'.$info['extension'];			
 		$this->post['a'][] = $filename;
 		$this->files[] = $filename;
 		
@@ -297,7 +294,6 @@ class Uploader{
 	 * @param integer $size
 	 */
 	public function error($errorNo, $fileName, $size = 0){
-		$ajax  = CJAX::getInstance();
 		$error = null;
 		
 		if($errorNo){

@@ -1,24 +1,18 @@
+/* global CJAX */
+
 /**
- * Plugin Ajax Uploader 1.3
+ * Plugin Ajax Uploader 2.0
+ * @param a
+ * @param b
+ * @param c
  * @author cj
  */
 
-function uploader(a,b,c)
-{
-	this.callback(false);
-	
-	var handler,version;
-	//backward compatibility with pre-5.3
-	version = CJAX.version.replace(/[^0-9\.].*/,'');
-	
-	if(parseFloat(version) < 5.3) {
-		handler = 'handlerFileupload';
-	} else {
-		handler = 'fileupload';
-	}
-	
+function uploader(a,b,c){
+    
+	this.callback(false);	
+	var handler = 'fileupload';	
 	var options = this;
-	
 	
 	/**
 	 * Upload Handler
@@ -26,9 +20,9 @@ function uploader(a,b,c)
 	 * This handler is fired acter the form ajax request settings are settle but before the request is fired.
 	 * The request is passed on $callback function, we trigger if there is a url after the files are uploaded.
 	 * 
-	 * form - is the form being submitted
-	 * url - the url where the form is going
-	 * $callback - form ajax request callback to fire after the files are uploaded.
+	 * @param form - is the form being submitted
+	 * @param url - the url where the form is going
+	 * @param $callback - form ajax request callback to fire after the files are uploaded.
 	 */
 	this.handler(handler, function(form, url, $callback) {
 		var count = 0;
@@ -89,7 +83,7 @@ function uploader(a,b,c)
 					} else {
 						_wait();
 					}
-				}, 100)
+				}, 100);
 			};
 			try {
 				if(iframe.contentWindow.document.URL=="about:blank") {
