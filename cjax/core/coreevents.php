@@ -254,7 +254,7 @@ class CoreEvents extends Format{
 		$_xml = new XmlItem($this, $xml, $name);
 		
 		if(!$this->xmlObjects){
-			$this->xmlObjects = new stdClass();
+			$this->xmlObjects = new StdClass();
 		}
 		
 		$this->xmlObjects->{$_xml->id} = $_xml;
@@ -625,7 +625,7 @@ class CoreEvents extends Format{
 	 * Tells if plugin exists or not
 	 * regardless of it having a class or not
 	 * 
-	 * @param unknown_type $plugin_name
+	 * @param unknown_type $pluginName
 	 */
 	public function isPlugin($pluginName){
         $plugin = new Plugin;
@@ -748,7 +748,7 @@ if (document.addEventListener) {
 	 */
 	public function cache($add=null, $cacheId = null){
 		if(!self::$_isShutdownCalled) {
-			$bol = register_shutdown_function(['CJAX\\Core\\CoreEvents','saveSCache']);
+			register_shutdown_function(['CJAX\\Core\\CoreEvents','saveSCache']);
 			self::$_isShutdownCalled = true;
 			self::$useCache = true;
 			if(!headers_sent()) {
@@ -756,8 +756,8 @@ if (document.addEventListener) {
 			}
 			
 		}
-		$ajax = CJAX::getInstance();
-		if($cache_id){
+		
+		if($cacheId){
 			if($cacheId=='actions'){
 				self::$actions[] = $add;
 			} 
@@ -831,7 +831,7 @@ if (document.addEventListener) {
 		} 
         else{
 			if($ajax->config->initUrl && preg_match("/https?/", $ajax->config->initUrl)) {
-				$js_path = rtrim($ajax->config->initUrl,'/').'/cjax/assets/js/';
+				$jsPath = rtrim($ajax->config->initUrl,'/').'/cjax/assets/js/';
 			}
 		}
 		if($ajax->crc32){
@@ -902,8 +902,6 @@ if (document.addEventListener) {
 	}
 
 	public function curl($url, $postData = []){
-		$ajax = CJAX::getInstance();
-		
 		$ch = curl_init($url);
 		curl_setopt($ch, CURLOPT_URL, 'http://sourceforge.net');
 		curl_setopt($ch, CURLOPT_HEADER,0);  // DO NOT RETURN HTTP HEADERS
@@ -918,7 +916,7 @@ if (document.addEventListener) {
 		curl_close($ch);
 		
 		if($err){
-			return $this->fsockopen($url);
+		    return $this->fsockopen($url);
 		}
 		return $data;
 	}
@@ -937,7 +935,7 @@ if (document.addEventListener) {
 		}
 	}
 	
-	public function fsockopen($url){
+	public function fsockopen($url, $errno = null, $errstr = null){
 		if(!function_exists('fsockopen')){
 			die('You  need cURL or fsockopen enabled to connect to a remote server.');
 		}
@@ -1020,7 +1018,7 @@ if (document.addEventListener) {
 	 * write to a file in file system, used as an alrernative to for cache
 	 *
 	 * @param string $content
-	 * @param string $flag
+	 * @param string $filename
 	 */
  	public function write($content, $filename = null){
  		if(!$filename){
@@ -1040,7 +1038,7 @@ if (document.addEventListener) {
  				if (!chmod($filename, 0666)){
  					echo "CJAX: Error! file ($file) is not writable, Not enough permission";
  					exit;
- 				};
+ 				}
  			}
  		}
  		if(!$fp = @fopen($file, 'w')){
@@ -1076,8 +1074,6 @@ if (document.addEventListener) {
 	 * @param $command_count
 	 */
 	public function flag($flagId, $commandCount = 1 ,$settings = []){
-		$flags = [];
-
 		switch($flagId){
 			case 'wait':					
 				$settings['command_count'] = $commandCount;		
@@ -1280,7 +1276,7 @@ if (document.addEventListener) {
 	/**
 	 * 
 	 * remove cache
-	 * @param mixed $cache_id
+	 * @param mixed $cacheId
 	 */
 	public function removeExecCache($cacheId){
 		if(is_array($cacheId)){
@@ -1311,7 +1307,7 @@ if (document.addEventListener) {
 	/**
 	 * 
 	 * remove cache
-	 * @param mixed $cache_id
+	 * @param mixed $cacheId
 	 */
 	public function removeCache($cacheId){
 		unset(self::$cache[$cacheId]);
@@ -1452,7 +1448,7 @@ if (document.addEventListener) {
 	 * CJAX is bein called from within a child directory then you will need to specify
 	 * the url where CJAX is located (eg. http://yoursite.com/cjax)
 	 *
-	 * @param string $Path [CJAX URL]
+	 * @param string $path [CJAX URL]
 	 */
 	public function path($path){
 		self::$path = $path;
@@ -1469,7 +1465,7 @@ if (document.addEventListener) {
 		return self::connect($_SERVER['HTTP_HOST'],(isset($_SERVER['SERVER_PORT'])? $_SERVER['SERVER_PORT']:80), $file, true);
 	}
 
-	public static function connect($file=null,$port = 80,$local = false){
+	public static function connect($file = null,$port = 80,$local = false){
 		$ajax = CJAX::getInstance();
 
 		if(!$port){
@@ -1587,7 +1583,7 @@ if (document.addEventListener) {
 		
 		
 		if(!$tags){
-			$data = highlight_string( $data , true); ; // Add nice and friendly <script> tags around highlighted text
+			$data = highlight_string( $data , true); // Add nice and friendly <script> tags around highlighted text
 		} 
         else{
 			$data = highlight_string("<?php \n" . $data . "\n?>", true); 
@@ -1596,7 +1592,7 @@ if (document.addEventListener) {
 		return '<div id="code_highlighted">'.$data."</div>";
 	}
 	
-	public function jsCode($data, $tags = false){
+	public function jsCode($data, $tags = false, $output = null){
 		$cString = "#DD0000";
 		$cComment = "#FF8000";
 		$cKeyword = "green";
