@@ -1,7 +1,6 @@
 <?php
 
 require_once "ajax.php";
-$ajax = ajax();
 
 ## The  validation array below uses the exact same format as it does in the Jquery.validate plugin javascript format.
 
@@ -14,47 +13,27 @@ $ajax = ajax();
 //$ajax->log = 1;
 if($ajax->isPlugin('validate')) {
 		
-	$rules = array(
-		'rules' => array(
-			'a[name]' => array(
-				'required' => true,
-				'minlength'  => 5,
-			),
-			'a[last_name]' => array(
-				'required' => true,
-				'minlength'  => 5,
-			),
-			'a[email]' => array(
-				'required' => false,
-				'email' => false
-			)
-		),
-		'messages' => array(
-			'a[name]' => array(
-				'required' => 'Please enter your name',
-			),
-			'a[last_name]' => array(
-				'required' => 'Enter your last name',
-			),
-			'a[email]' => array(
-				'required' => 'Email is required',
-			)
-			
-		)
-	);
+	$rules = [
+		'rules' => [
+			'a[name]' => ['required' => true, 'minlength'  => 5],
+			'a[last_name]' => ['required' => true, 'minlength'  => 5],
+			'a[email]' => ['required' => false, 'email' => false]
+		],
+		'messages' => [
+			'a[name]' => ['required' => 'Please enter your name'],
+			'a[last_name]' => ['required' => 'Enter your last name'],
+			'a[email]' => ['required' => 'Email is required']
+		]
+	];
 	
 	$validate = $ajax->validate('btn_saveForm', 'ajax.php?send_form/validate', $rules);
 	
-	$rule  = array(
-		'required' => array( true , 'This field is required!'),
-		'minlength'=> array( 2 ,'Minimum length is 2!')
-	);
+	$rule  = [
+		'required' => [true , 'This field is required!'],
+		'minlength'=> [2 ,'Minimum length is 2!']
+	];
 	
 	$validate->rule('a[state]',$rule);
-	
-	
-	//$validate->imports(array('jquery-1.7.2.min.js','jquery.validate.min.js'));
-	
 	
 } else {
 	$data = "
@@ -69,34 +48,18 @@ if($ajax->isPlugin('validate')) {
 }
 
 $rules = $ajax->code("
-\$rules = array(
-	'rules' => array(
-		'a[name]' => array(
-			'required' => true,
-			'minlength'  => 5,
-		),
-		'a[last_name]' => array(
-			'required' => true,
-			'minlength'  => 5,
-		),
-		'a[email]' => array(
-			'required' => true,
-			'email' => true  //in this demo is set to false to make it faster but it works.
-		)
-	),
-	'messages' => array(
-		'a[name]' => array(
-			'required' => 'Please enter your name',
-		),
-		'a[last_name]' => array(
-			'required' => 'Enter your last name',
-		),
-		'a[email]' => array(
-			'required' => 'Email is required',
-		)
-		
-	)
-);
+\$rules = [
+	'rules' => [
+		'a[name]' => ['required' => true, 'minlength'  => 5],
+		'a[last_name]' => ['required' => true, 'minlength'  => 5],
+		'a[email]' => ['required' => true, 'email' => true  //in this demo is set to false to make it faster but it works.]
+	],
+	'messages' => [
+		'a[name]' => ['required' => 'Please enter your name'],
+		'a[last_name]' => ['required' => 'Enter your last name'],
+		'a[email]' => ['required' => 'Email is required']		
+	]
+];
 ");
 
 
@@ -104,14 +67,14 @@ $code = $ajax->code("
 \$validate = \$ajax->validate('btn_saveForm', 'ajax.php?send_form/validate', \$rules);
 ");
 
-$ajax->Exec('code', $ajax->overlayContent($code, array('width'=> '800px','top'=>30)));
+$ajax->Exec('code', $ajax->overlayContent($code, ['width'=> '800px', 'top'=>30]));
 
 
 $more_code = $ajax->code("
-\$rule  = array(
-	'required' => true, //no custom message
-	'minlength'=> array( 2 ,'Minimum length is 2!') //with custom message
-);
+\$rule  = [
+    'required' => true, //no custom message
+	'minlength'=> [2 ,'Minimum length is 2!'] //with custom message
+];
 // field name, rule
 \$validate->rule('a[state]',\$rule);
 ");
@@ -131,7 +94,7 @@ $more_code = $ajax->code("
 	<title>Validate Form...</title>
 	<link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
 	<link rel="stylesheet" type="text/css" href="resources/send_form/view.css" media="all">
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 	<script type="text/javascript" src="resources/send_form/view.js"></script>
 </head>
 <body>

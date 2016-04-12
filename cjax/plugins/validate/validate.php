@@ -7,7 +7,12 @@
  * @author cj
  *
  */
-class plugin_validate extends plugin {
+ 
+namespace CJAX\Plugins\Validate; 
+use CJAX\Core\CJAX;
+use CJAX\Core\Plugin;
+ 
+class Validate extends Plugin{
 	
 	private $rules;
 	
@@ -21,11 +26,9 @@ class plugin_validate extends plugin {
 	 * @param string $api - internal API name 
 	 * @param array $args
 	 */
-	function rightHandler($api, $args, $xmlObj)
-	{
-		switch($api) {
-			case '_overLay':
-				
+	public function rightHandler($api, $args, $xmlObj){
+		switch($api){
+			case '_overLay':				
 				$xmlObj->callback = $this;
 				break;
 			case '_overLayContent':
@@ -37,23 +40,18 @@ class plugin_validate extends plugin {
 		
 	}
 	
-	function onLoad($button_id, $post_url, $rules = array(), $import_js = false)
-	{
-		$ajax = ajax();
+	function onLoad($buttonId, $postUrl, $rules = [], $importJs = false){
+		$ajax = CJAX::getInstance();
+		$this->callback($ajax->click($buttonId,$ajax->form($postUrl)));	
 		
-		$this->callback($ajax->click($button_id,$ajax->form($post_url)));
-		
-		
-		if($import_js) {
+		if($importJs){
 			$this->import('jquery.validate.min.js');
-		}
-		
+		}		
 		$this->rules = $rules;
 	}
 	
-	function onAjaxLoad($button_id, $post_url, $rules = array())
-	{
-		return $this->onLoad($button_id,$post_url, $rules);
+	public function onAjaxLoad($buttonId, $postUrl, $rules = []){
+		return $this->onLoad($buttonId, $postUrl, $rules);
 	}
 	
 	/**
@@ -62,23 +60,23 @@ class plugin_validate extends plugin {
 	 * @param unknown_type $name
 	 * @param unknown_type $rule
 	 */
-	function rule($name, $rule)
-	{
-		if(!$rule) {
+	public function rule($name, $rule){
+		if(!$rule){
 			return;
 		}
 		$rules = $this->rules['rules'];
 		$messages  = $this->rules['messages'];
 		
-		foreach($rule as $k => $v) {
-			if(is_array($v)) {
-				if(isset($v[0])) {
+		foreach($rule as $k => $v){
+			if(is_array($v)){
+				if(isset($v[0])){
 					$rules[$name][$k] = $v[0];
 				}
-				if(isset($v[1])) {
+				if(isset($v[1])){
 					$messages[$name][$k] = $v[1];
 				}
-			} else {
+			} 
+            else{
 				$rules[$name][$k] = $v;
 			}
 		}

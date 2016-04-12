@@ -1,7 +1,6 @@
 <?php
 
 require_once "ajax.php";
-$ajax = ajax();
 
 
 //timeout 5 seconds

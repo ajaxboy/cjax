@@ -3,8 +3,6 @@
 //core file, reference..
 require_once "ajax.php";
 
-$ajax = ajax();
-
 
 $ajax->call("ajax.php?pagination/show","response");
 	

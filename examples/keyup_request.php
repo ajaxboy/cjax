@@ -3,7 +3,6 @@
 //core file, reference..
 require_once "ajax.php";
 //initiate CJAX..
-$ajax = ajax();
 
 // 1. test field
 // 2. URL to be requested.

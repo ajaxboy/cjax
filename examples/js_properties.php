@@ -2,10 +2,6 @@
 
 //core file, reference..
 require_once "ajax.php";
-
-$ajax = ajax();
-
-
 	
 ?>
 <html>
@@ -38,7 +34,7 @@ $ajax = ajax();
 <td id="breadcrumb">
 <a href="http://cjax.sourceforge.net/">Project Home</a> &nbsp;&#8250;&nbsp;
 <a href="http://cjax.sourceforge.net/examples/">Demos</a> &nbsp;&#8250;&nbsp;
-Main Property
+JS Properties
 </td>
 <td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="cjax.sourceforge.net/" />Search Project User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
 </tr>

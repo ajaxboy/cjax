@@ -1,10 +1,12 @@
 <?php
 
+use CJAX\Core\CJAX;
+
 class controller_ajax_request {
 	
 	function on_the_fly()
 	{
-		$ajax = ajax();
+		$ajax = CJAX::getInstance();
 		
 		$ajax->update('container1','This text was updated through ajax...');
 		

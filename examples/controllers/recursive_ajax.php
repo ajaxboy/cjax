@@ -1,5 +1,7 @@
 <?php
 
+use CJAX\Core\CJAX;
+
 class recursive_ajax {
 	
 	function call($counter, $count)
@@ -9,7 +11,7 @@ class recursive_ajax {
 		
 		$counter++;
 		
-		$ajax = ajax();
+		$ajax = CJAX::getInstance();
 		
 		if($count > 100) {
 			$ajax->focus('count');

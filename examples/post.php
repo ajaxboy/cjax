@@ -1,7 +1,6 @@
 <?php
 
 require_once "ajax.php";
-$ajax = ajax();
 
 
 //look inside controller/post.php for code that handles this request.

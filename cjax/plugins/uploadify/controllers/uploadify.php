@@ -16,54 +16,52 @@ Copyright (c) 2012 Reactive Apps, Ronnie Garcia
 Released under the MIT License <http://www.opensource.org/licenses/mit-license.php> 
 */
 
-class _uploadify {
+use CJAX\Core\CJAX;
+
+class Uploadify{
 	
-	function fileExists()
-	{
-		$ajax = ajax();
+	public function fileExists(){
+		$ajax = CJAX::getInstance();
 		$plugin = $ajax->uploadify();
-		
-		
-		if (file_exists($plugin->target . $_POST['filename'])) {
+				
+		if(file_exists($plugin->target . $_POST['filename'])){
 			echo 1;
-		} else {
+		} 
+        else{
 			echo 0;
 		}
 	}
 	
-	function upload()
-	{
-		$ajax = ajax();
-		
-		$plugin = $ajax->uploadify();
-		
-		$exts = $plugin->get('exts');
-		
-		$target = $plugin->get('target');
-		
-		
+	public function upload(){
+		$ajax = CJAX::getInstance();		
+		$plugin = $ajax->uploadify();		
+		$exts = $plugin->get('exts');		
+		$target = $plugin->get('target');		
 		$targetFolder = $target;
 		
-		if (!empty($_FILES)) {
+		if(!empty($_FILES)){
 			
 			$tempFile = $_FILES['Filedata']['tmp_name'];
 			
 			$targetFile = rtrim($targetFolder,'/') . '/' . $_FILES['Filedata']['name'];
 			// Validate the file type
-			if($exts) {
+			if($exts){
 				$fileTypes = $exts; // File extensions
-			} else {
-				$fileTypes = array('jpg','jpeg','gif','png'); // File extensions
+			} 
+            else{
+				$fileTypes = ['jpg','jpeg','gif','png']; // File extensions
 			}
 			$fileParts = pathinfo($_FILES['Filedata']['name']);
-			if (in_array($fileParts['extension'],$fileTypes)) {
+			if(in_array($fileParts['extension'],$fileTypes)){
 				echo $targetFile;
-				if(move_uploaded_file($tempFile,$targetFile)) {
+				if(move_uploaded_file($tempFile,$targetFile)){
 					echo '1';
-				} else {
+				} 
+                else{
 					echo 'error!';
 				}
-			} else {
+			} 
+            else{
 				echo 'Invalid file type.';
 			}
 		}

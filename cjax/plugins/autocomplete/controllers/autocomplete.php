@@ -1,10 +1,9 @@
 <?php
 
-class _autocomplete {
+class Autocomplete{
 	
-	function update($string)
-	{
-		$countries = array(
+	public function update($string){
+		$countries = [
 		  "GB" => "United Kingdom",
 		  "US" => "United States",
 		  "AF" => "Afghanistan",
@@ -235,7 +234,7 @@ class _autocomplete {
 		  "UZ" => "Uzbekistan",
 		  "VU" => "Vanuatu",
 		  "VE" => "Venezuela",
-		  "VN" => "Viet Nam",
+		  "VN" => "Vietnam",
 		  "VG" => "Virgin Islands (British)",
 		  "VI" => "Virgin Islands (U.S.)",
 		  "WF" => "Wallis And Futuna Islands",
@@ -244,17 +243,14 @@ class _autocomplete {
 		  "YU" => "Yugoslavia",
 		  "ZM" => "Zambia",
 		  "ZW" => "Zimbabwe"
-		);
+		];
 		
-		$out = array();
-		
-		foreach($countries as $v) {
-			if(substr(strtolower($v), 0, strlen($string)) == strtolower($string)) {
+		$out = [];		
+		foreach($countries as $v){
+			if(substr(strtolower($v), 0, strlen($string)) == strtolower($string)){
 				$out[] = $v;
 			}
 		}
-		
-		
 		return $out;
 	}
 }

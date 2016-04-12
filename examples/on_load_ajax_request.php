@@ -1,7 +1,6 @@
 <?php
 
 require_once "ajax.php";
-$ajax = ajax();
 
 //call method ajax_request::on_the_fly()  in controllers/ajax_request.php
 $ajax->call("ajax.php?ajax_request/on_the_fly");

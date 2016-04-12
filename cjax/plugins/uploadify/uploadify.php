@@ -1,19 +1,24 @@
 <?php
 
 /**
- * //@uploadify;
+ * uploadify 1.6
  * 
  * Plugin Controller
  * 
  * @author cj
  *
  */
-class uploadify extends plugin {
+ 
+namespace CJAX\Plugins\Uploadify; 
+use CJAX\Core\CJAX;
+use CJAX\Core\Plugin;
+ 
+class uploadify extends Plugin{
 	
-	private $options = array(); //local variable
+	private $options = []; //local variable
 	
 	//extensions
-	public $exts = array('jpg','jpeg','gif','png');
+	public $exts = ['jpg','jpeg','gif','png'];
 		
 
 	/**
@@ -21,8 +26,7 @@ class uploadify extends plugin {
 	 * @param string $upload_id
 	 * @param array $options
 	 */
-	function onLoad($upload_id = null, $options = array())
-	{
+	public function onLoad($uploadId = null, $options = []){
 	
 		$this->options = $options;
 		
@@ -51,19 +55,18 @@ class uploadify extends plugin {
 	 * $this->buttonText = "Button";
 	 * $this->fileTypeDesc = "Images";
 	 */
-	function __set($setting, $value)
-	{
+	public function __set($setting, $value){
 		//upload directory
-		if($setting=='target') {
-			if($dir = ajax()->config->uploadify_dir) {
+		if($setting=='target'){
+			if($dir = CJAX::getInstance()->config->uploadify_dir){
 				$value = $dir;
 			}
-			if(!$value) {
+			if(!$value){
 				$value = './';
 			}
-			if(!is_writable($value)) {
+			if(!is_writable($value)){
 				
-				$ajax = ajax();
+				$ajax = CJAX::getInstance();
 				$ajax->error("Uploadify: Target is not writable. Check directory exists and has proper permission, then try again.");
 				
 				//remove any pending uploadify tasks
@@ -80,8 +83,8 @@ class uploadify extends plugin {
 		 * sure we are using  the right extensions.
 		 * see controlles/uploadify.php
 		 */
-		if($setting=='fileTypeExts') {
-			$exts = preg_replace(array("/^\*\./","/\*|\;/"),'',$value);
+		if($setting=='fileTypeExts'){
+			$exts = preg_replace(["/^\*\./","/\*|\;/"],'',$value);
 			$exts = explode('.',$exts);
 				
 			//update extensions

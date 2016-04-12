@@ -1,5 +1,7 @@
 <?php
 
+use CJAX\Core\CJAX;
+
 class controller_bind  {
 	
 	function link1()

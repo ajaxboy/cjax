@@ -4,8 +4,6 @@
 require_once "ajax.php";
 //initiate CJAX..
 
-$ajax = ajax();
-
 //This shows how to assign the same ajax call to 2 or more elements
 
 //bind two elements with one command. So when these elements are fired.. the same command is fired..

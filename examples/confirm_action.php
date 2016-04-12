@@ -1,7 +1,6 @@
 <?php
 
 require_once "ajax.php";
-$ajax = ajax();
 
 //displays a confirmation box before executing an ajax call.
 

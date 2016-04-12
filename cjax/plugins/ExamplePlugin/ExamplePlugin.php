@@ -20,7 +20,12 @@
 
 //class name must match directory name, as well as the file name.
 //extend plugin to inheric generic plugin properties
-class ExamplePlugin extends plugin {
+
+namespace CJAX\Plugin\ExamplePlugin;
+use CJAX\Core\CoreEvents;
+use CJAX\Core\Plugin;
+
+class ExamplePlugin extends Plugin{
 	
 	/**
 	 * 
@@ -52,8 +57,7 @@ class ExamplePlugin extends plugin {
 	 * 
 	 * Autoload - is fired regardless of if the plugin is called or not, in page load and during ajax requests
 	 */
-	static function autoload()
-	{
+	static function autoload(){
 		
 	}
 	
@@ -61,8 +65,7 @@ class ExamplePlugin extends plugin {
 	 * 
 	 * Autoload - is fired regardless of if the plugin is called or not while the page first load ( not in ajax requests)
 	 */
-	static function PageAutoload()
-	{
+	static function PageAutoload(){
 		
 	}	
 	
@@ -70,8 +73,7 @@ class ExamplePlugin extends plugin {
 	 * 
 	 * Autoload - is fired during an ajax request regardless of if the plugin is called or not
 	 */
-	static function AjaxAutoload()
-	{
+	static function AjaxAutoload(){
 		
 	}
 	
@@ -89,11 +91,10 @@ class ExamplePlugin extends plugin {
 	 * @param unknown_type $arg
 	 * @param unknown_type $ar2
 	 */
-	function ___construct($arg, $ar2)
-	{
+	function ___construct($arg, $ar2){
 		//you may access these variables in the plugin as:
 		// this.test1 and this.test2
-		$this->test1 = array('test_1','test_2');
+		$this->test1 = ['test_1','test_2'];
 		$this->test2 = 'test2';
 	}
 	
@@ -116,8 +117,7 @@ class ExamplePlugin extends plugin {
 	 * 
 	 * 
 	 */
-	function waitfor($file)
-	{
+	function waitfor($file){
 		return parent::waitFor($file);
 	}
 	
@@ -142,8 +142,7 @@ class ExamplePlugin extends plugin {
 	 * 
 	 * @see plugin::set()
 	 */
-	function set($setting, $value)
-	{
+	public function set($setting, $value , $instance_id = null){
 		return parent::set($setting, $value);
 	}
 	
@@ -158,8 +157,7 @@ class ExamplePlugin extends plugin {
 	 * @param unknown_type $upload_id
 	 * @param unknown_type $options
 	 */
-	function onLoad($arg = null, $ar2 = array())
-	{
+	function onLoad($arg = null, $ar2 = array()){
 		
 	}
 	
@@ -171,8 +169,7 @@ class ExamplePlugin extends plugin {
 	 * 
 	 * The parameters of the contructor will be passed.
 	 */
-	function onAjaxLoad($arg = null, $ar2 = null)
-	{
+	function onAjaxLoad($arg = null, $ar2 = null){
 		
 	}
 	
@@ -184,8 +181,7 @@ class ExamplePlugin extends plugin {
 	 * 
 	 * As of  5.3 +
 	 */
-	function onEvent($element_id)
-	{
+	function onEvent($element_id){
 		
 	}
 	
@@ -195,8 +191,7 @@ class ExamplePlugin extends plugin {
 	 * 
 	 * @see plugin::save()
 	 */
-	function save($setting, $value)
-	{
+	public  function save($setting, $value, $prefix = null){
 		return parent::save($setting, $value);
 	}
 	
@@ -204,8 +199,7 @@ class ExamplePlugin extends plugin {
 	 * Get plugin  setting  saved with  save();
 	 * @see plugin::get()
 	 */
-	function get($setting)
-	{
+	function get($setting,$prefix = null){
 		return parent::get($setting);
 	}
 	
@@ -224,8 +218,7 @@ class ExamplePlugin extends plugin {
 	 * only use this if you are experiecing issues with the file not being loaded on time.
 	 * 
 	 */
-	function import($file, $load_time = 0)
-	{
+	function import($file , $load_time = 0, $on_init = false){
 		return parent::import($file, $load_time);
 	}
 	
@@ -243,8 +236,7 @@ class ExamplePlugin extends plugin {
 	 * $this->imports(array('file.css','file2.js','file3.js'); et.
 	 * 
 	 */
-	function imports($files = array())
-	{
+	function imports($files = [], &$data = []){
 		
 	}
 	
@@ -259,9 +251,8 @@ class ExamplePlugin extends plugin {
 	 * @param string $api - internal API name 
 	 * @param array $args
 	 */
-	function rightHandler($api, $args, $xmlObj)
-	{
-		switch($api) {
+	function rightHandler($api, $args, $xmlObj){
+		switch($api){
 			/**
 			 * To view all 'internal methods' available , see: cjax/core/classes/cjax.class.php
 			 * all functions that say  $data['do'] = 'Function name'; that would be what goes in this list.
@@ -290,8 +281,8 @@ class ExamplePlugin extends plugin {
 	 * 
 	 * 
 	 */
-	function callbackHandler($xmlObj_from, $xmlObj_to, $setting)
-	{
+	function callbackHandler($xmlObj_from, $xmlObj_to, $setting){
+        $coreEvents = new CoreEvents;
 		$event = CoreEvents::$cache[$xmlObj_from->id];
 		$callback = CoreEvents::$cache[$xmlObj_to->id];
 		
@@ -306,7 +297,7 @@ class ExamplePlugin extends plugin {
 		//push changes
 		CoreEvents::$cache[$xmlObj_to->id] = $event;
 		//commit changes
-		CoreEvents::simpleCommit();
+		$coreEvents->simpleCommit();
 		
 		return true;
 	}

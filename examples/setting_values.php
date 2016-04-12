@@ -3,7 +3,6 @@
 //core file, reference..
 require_once "ajax.php";
 //initiate CJAX..
-$ajax = ajax();
 
 $ajax->click("button1",$ajax->call("ajax.php?change_value/text/text1/|text1|"));
 

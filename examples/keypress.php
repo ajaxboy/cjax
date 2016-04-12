@@ -4,7 +4,7 @@ require_once  'ajax.php';
 
 
 //** Press Enter, a, b c,  and the call go through **//
-$ajax->keypress('url', $ajax->call("ajax.php?test/remote/|url|"), array(13,97,98,99));
+$ajax->keypress('url', $ajax->call("ajax.php?test/remote/|url|"), [13,97,98,99]);
 
 ?>
 <!doctype html>

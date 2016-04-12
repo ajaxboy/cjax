@@ -2,23 +2,19 @@
 
 require_once "ajax.php";
 
-$ajax = ajax();
-
 
 //button id, upload directory
-$uploader = $ajax->uploader('btn_saveForm', null,
+$uploader = $ajax->uploader('btn_saveForm', 'examples/resources/images/uploads/',
 	//settings are optional
-	array(
-		'url' => 'ajax.php?upload_file/post', //post request after files are uploaded
-		'suffix' => md5(time(). rand(1,10000000)), // makes files names universally unique,
-		'debug' => 'Debug Option is turned on this Demo.',
-		'success_message' => 'File(s) @files successfully uploaded.', //@files tag is replaced by files uploaded.
-		'ext' => array('jpg','gif', 'png','jpeg'),
-		'no_files' => 'Please select a file'
-	)
+	['url' => 'ajax.php?upload_file/post', //post request after files are uploaded
+	 'suffix' => md5(time(). rand(1,10000000)), // makes files names universally unique,
+     'debug' => true,       
+     'success_message' => 'File(s) @files successfully uploaded.', //@files tag is replaced by files uploaded.
+	 'ext' => array('jpg','gif', 'png','jpeg'),
+	 'no_files' => 'Please select a file']
 );
 
-$uploader->preview('../', array(
+$uploader->preview('resources/images/uploads', array(
 	"placeholder"=> "<img style='max-width: 250px;' src='#image1#' />"
 ));
 

@@ -1,17 +1,19 @@
 <?php
 
+use CJAX\Core\CJAX;
+
 class overlay_validation {
 	
 	function form()
 	{
-		$ajax = ajax();
+		$ajax = CJAX::getInstance();
 		//show posted variables
 		$ajax->debug($_POST,'Post Debug Info',"These are the fields posted.");
 	}
 	
 	function overlay2()
 	{
-		$ajax = ajax();
+		$ajax = CJAX::getInstance();
 		
 		$rules = array(
 			'rules' => array(

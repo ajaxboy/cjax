@@ -1,7 +1,6 @@
 <?php
 
 require_once "ajax.php";
-$ajax = ajax();
 
 $ajax->click("button1",$ajax->call("ajax.php?update/update_box"));
 ?>

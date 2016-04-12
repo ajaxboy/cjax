@@ -1,8 +1,8 @@
 <?php
-require_once "ajax.php";
-$ajax = ajax();
 
-//$ajax->config->sizzle = true; 
+require_once "ajax.php";
+
+$ajax->config->sizzle = true; 
 
 $ajax->click(".bt", $ajax->call("ajax.php?click_ajax_request/click_button/"));
 
@@ -11,7 +11,7 @@ $ajax->click(".buttons", $ajax->call("ajax.php?click_ajax_request/click_button/|
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
 
 <title>Selectors</title>

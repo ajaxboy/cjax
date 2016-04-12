@@ -1,10 +1,12 @@
 <?php
 
+use CJAX\Core\CJAX;
+
 class controller_keyup_update {
 	
 	function update($text)
 	{
-		$ajax = ajax();
+		$ajax = CJAX::getInstance();
 		
 		$ajax->document('title', $text);
 		

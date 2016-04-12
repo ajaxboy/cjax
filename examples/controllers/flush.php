@@ -1,10 +1,12 @@
 <?php
 
+use CJAX\Core\CJAX;
+
 class flush  {
 	
 	function flush_element()
 	{
-		$ajax = ajax();
+		$ajax = CJAX::getInstance();
 		
 		$ajax->flush('#link1');
 		

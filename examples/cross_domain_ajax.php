@@ -2,8 +2,6 @@
 
 require 'ajax.php';
 
-$ajax = ajax();
-
 $url = $ajax->config->crossdomain_url; //reserved, some servers don't allow outbund requestt. 
 //For testing purposes the crossdomain_url setting can be speficied in config.
 if(!$url) {

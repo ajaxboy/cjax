@@ -1,5 +1,5 @@
 /**
- * Plugin //@uploader;
+ * Plugin Ajax Uploader 1.3
  * @author cj
  */
 

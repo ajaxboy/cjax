@@ -3,8 +3,6 @@
 //core file, reference..
 require_once "ajax.php";
 
-$ajax = ajax();
-
 
 //This example shows how to send more than 1 ajax call, 
 //( or any other command for tha matter) within 1 single command as nested.

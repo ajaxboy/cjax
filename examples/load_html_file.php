@@ -2,8 +2,6 @@
 
 require_once "ajax.php";
 
-$ajax = ajax();
-
 //The simplest way to execute  a call
 
 //load file "resources/html/test.html" into div

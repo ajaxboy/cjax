@@ -10,7 +10,10 @@
  * 
  */
 
-class AjaxAuth {
+namespace CJAX;
+use CJAX\Core\CJAX;
+ 
+class AjaxAuth{
 	
 	/*
 	 * This function aims at covering the user authentification, 
@@ -22,9 +25,7 @@ class AjaxAuth {
 	 * 
 	 * If the authentication is valid or do not require authentication, return true.
 	 */
-	function validate($controller = null, $function = null, $args = array())
-	{
-		
+	public function validate($controller = null, $function = null, $args = array()){
 		return true;
 	}
 	
@@ -32,10 +33,8 @@ class AjaxAuth {
 	 * 
 	 * This function is ran if the validation above is unsuccessful.
 	 */
-	function authError()
-	{
-		$ajax = ajax();
-		
+	public function authError(){
+		$ajax = CJAX::getInstance();
 		$ajax->warning("Could no Authenticate. Please re-login");
 	}
 	
@@ -61,9 +60,7 @@ class AjaxAuth {
 	 * $args array
 	 * $requesObj object or null.  If a cotroller exists for this request the controller object is passed.
 	 */
-	function intercept($controller = null, $function = null , $args = array(), $requestObj = null)
-	{
+	public function intercept($controller = null, $function = null , $args = array(), $requestObj = null){
 		return false;
 	}
-	
 }

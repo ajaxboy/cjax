@@ -2,15 +2,21 @@
 
 /**
  * 
- * //@uploader;
+ * Ajax Uploader 1.3
  * @author cj
  *
  */
-class uploader extends plugin {
+
+namespace CJAX\Plugins\Uploader;
+use CJAX\Core\CJAX;
+use CJAX\Core\CoreEvents;
+use CJAX\Core\Plugin; 
+ 
+class Uploader extends Plugin{
 	
-	private $options = array();
+	private $options = [];
 	
-	private $callback_id;
+	private $callbackId;
 	
 	/**
 	 * 
@@ -22,8 +28,7 @@ class uploader extends plugin {
 	 * @param string $api - internal API name 
 	 * @param array $args
 	 */
-	function rightHandler($api, $args, $xmlObj)
-	{
+	public function rightHandler($api, $args, $xmlObj){
 		$xmlObj->postCallback = $this;
 	}
 		
@@ -34,102 +39,97 @@ class uploader extends plugin {
 	 * 
 	 * @param unknown_type $value
 	 */
-	function callbackHandler($sender , $receiver, $setting)
-	{
-		switch($setting) {
+	public function callbackHandler($sender, $receiver, $setting){
+        $coreEvents = new CoreEvents;
+		switch($setting){
 			case 'postCallback':
-				$event = CoreEvents::$cache[$receiver->id];
-				
-				$callback = CoreEvents::$cache[$sender->id];
-				
+				$event = CoreEvents::$cache[$receiver->id];				
+				$callback = CoreEvents::$cache[$sender->id];				
 				$event['postCallback'][$sender->id] = $callback;
 				$sender->delete();
 				
-				$callbacks = CoreEvents::processScache($event['postCallback']);
-				$callbacks = CoreEvents::mkArray($callbacks,'json', true);
-				$event['postCallback'] =  "<cjax>$callbacks</cjax>";
-				
-				CoreEvents::$cache[$receiver->id] = $event;
-				
-				CoreEvents::simpleCommit();
+				$callbacks = $coreEvents->processScache($event['postCallback']);
+				$callbacks = $coreEvents->mkArray($callbacks,'json', true);
+				$event['postCallback'] =  "<cjax>{$callbacks}</cjax>";				
+				CoreEvents::$cache[$receiver->id] = $event;				
+				$coreEvents->simpleCommit();
 			break;
 		}
 	}
 	
-	function preview($preview_url, $data = array())
-	{
-		$ajax = ajax();
-		if($ajax->config->preview_url) {
-			$preview_url = $ajax->config->preview_url;
+	public function preview($previewUrl, $data = []){
+		$ajax = CJAX::getInstance();
+		if($ajax->config->previewUrl){
+			$previewUrl = $ajax->config->previewUrl;
 		}
 		$this->options['preview'] = $data;
-		$this->options['preview_url'] = $preview_url;
+		$this->options['preview_url'] = $previewUrl;
 		$ajax->save('upload_options', $this->options);
 	}
 	
-	function onLoad($btn_id =  null, $target_directory = null, $options = array())
-	{
-		if(is_array($btn_id) && !$options) {
-			$options = $btn_id;
-			$btn_id = null;
+	public function onLoad($btnId =  null, $targetDirectory = null, $options = []){
+		if(is_array($btnId) && !$options){
+			$options = $btnId;
+			$btnId = null;
 			
-			if(isset($options['dir'])) {
-				$target_directory = $options['dir'];
+			if(isset($options['dir'])){
+				$targetDirectory = $options['dir'];
 			}
 		}
-		$ajax = ajax();
-		foreach($options as $k =>$v) {
+		$ajax = CJAX::getInstance();
+		foreach($options as $k =>$v){
 			$this->{$k} = $v;
 		}
-		if(isset($options['before'])) {
+		if(isset($options['before'])){
 			$this->set('a', $options);
 		}
 		
-		if($ajax->config->uploader_dir) {
-			$target_directory = $ajax->config->uploader_dir;
+		if($ajax->config->uploaderDir){
+			$targetDirectory = $ajax->config->uploaderDir;
 		}
-		if(!$target_directory) {
-			$target_directory = './';
+		if(!$targetDirectory){
+			$targetDirectory = './';
 		}
-		if(!is_writable($target_directory)) {
-			return $ajax->warning("Cjax Upload: Directory '$target_directory' is not writable, , aborting..",5);
+
+		if(!is_writable($targetDirectory) && !is_writable("../{$targetDirectory}")){
+			return $ajax->warning("Cjax Upload: Directory '{$targetDirectory}' is not writable, , aborting..",5);
 		}
-		if(!isset($options['text'])) {
+		if(!isset($options['text'])){
 			$options['text'] = 'Uploading File(s)...';
 		}
-		if(!isset($options['ext'])) {
-			$options['ext'] = array('jpg','jpeg','gif','png');
+		if(!isset($options['ext'])){
+			$options['ext'] = ['jpg','jpeg','gif','png'];
 		}
-		if(!isset($options['files_require'])) {
+		if(!isset($options['files_require'])){
 			$options['files_require'] = true;
 		}
-		if(!isset($options['form_id']) ) {
+		if(!isset($options['form_id'])){
 			$options['form_id'] = null;
 		}
 		$ajax->text = $options['text'];
-		$target = rtrim($target_directory,'/') . '/';
+		$target = rtrim($targetDirectory,'/') . '/';
 		
-		if(!isset($options['url'])) {
+		if(!isset($options['url'])){
 			$options['url'] = null;
 		}
 		
-		if(!isset($options['target'])) {
-			$options['target'] = $target;
+		if(!isset($options['target'])){
+            $root = (defined('CJAX_ROOT'))?CJAX_ROOT."/":"";         
+			$options['target'] = $root.$target;
 		}
-		$ajax->save('upload_options', $options);
+		$ajax->save('uploadOptions', $options);
 			
-		if(!$btn_id || is_array($btn_id)) {
+		if(!$btnId || is_array($btnId)){
 			$xml = $ajax->form($options['url'], $options['form_id']);
-		} else {
-			$xml = $ajax->Exec($btn_id, $ajax->form($options['url'], $options['form_id']));
+		} 
+        else{
+			$xml = $ajax->Exec($btnId, $ajax->form($options['url'], $options['form_id']));
 		}
 		$this->options = $options;
 		$this->callback($xml);
 	}
 	
-	function onAjaxLoad($btn_id, $target_directory, $options = array())
-	{
-		return $this->onLoad($btn_id, $target_directory, $options);
+	public function onAjaxLoad($btnId, $targetDirectory, $options = []){
+		return $this->onLoad($btnId, $targetDirectory, $options);
 	}
-	
 }

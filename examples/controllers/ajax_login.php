@@ -1,5 +1,7 @@
 <?php
 
+use CJAX\Core\CJAX;
+
 class ajax_login {
 	
 	function user($username)
@@ -9,7 +11,7 @@ class ajax_login {
 	
 	function handler($username, $password) 
 	{
-		$ajax = ajax();
+		$ajax = CJAX::getInstance();
 		
 		if(!$username) {
 			return  $ajax->err = 'Enter your username.';
@@ -35,7 +37,7 @@ class ajax_login {
 	
 	function logout()
 	{
-		$ajax = ajax();
+		$ajax = CJAX::getInstance();
 		$ajax->flush('#a_login');
 		$ajax->success("You haved logged out.");
 		$ajax->a_login = 'Login';

@@ -1,4 +1,38 @@
 
+CJAX 6.0
+
+Apr 10, 2016
+
+Namespace, closure and short array syntax used in the framework, PHP version now requires 5.4.0+
+Fixed strict standard errors resulted from calling instance methods statically for PHP 5.5 and 5.6 compatibility
+Added autoloader for CJAX classes, no need for require/include statements
+Added functionality to pass javascript event object to PHP through cookie
+Added event classes that represent valid javascript event objects to use in AJAX controllers
+Support for Mouse events
+Support for Drag-Drop events
+Added documentation for CJAX API in PHPDocumentator style
+Redesigned folder structure for CJAX
+Updated examples and Added new examples for Mouse and Drag-Drop events
+Updated readme.md
+Upgraded versions for third party libraries such as sizzle
+Other fixes and improvements.
+
+CJAX 5.8
+
+Oct 6, 2013
+
+Updated readme.md.
+Other fixes and improvements.
+
+CJAX 5.7
+
+Oct 3, 2013
+
+Advanced selectors (Sizzle, JQuery selectors allowed)
+Fixed issue when passing multiple url values
+Fixed issue in processing that was introduced in previous release
+Added support for main properties for tables tr,td,thead,tbody, etc.
+
 CJAX 5.6
 
 September 19, 2013
@@ -24,11 +58,11 @@ April 10, 2013
 
 
 Support for PHP5.4x
-Fixed plugins docs issues with an old function reference interupting the page from displaying.
+Fixed plugins docs issues with an old function reference interrupting the page from displaying.
 
  
 CJAX 5.4
-Frebruary 23, 2013
+February 23, 2013
 
 Support for keypress event
 Ability for url element values to process Js modifiers and functions.
@@ -59,7 +93,7 @@ CJAX. 5.2-Stable
 Maintenance Release
 October 29, 2012
 
-* Support to change lable element
+* Support to change table element
 * Improved Select API, now can specify a default value
 * Changed AJAX_CD cookie deletion
 * Added Support for Exec events on Plugins.

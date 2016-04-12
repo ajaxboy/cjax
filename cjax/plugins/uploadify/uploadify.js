@@ -1,5 +1,5 @@
 /**
- * Uploadify  //@uploadify;
+ * Uploadify  uploadify 1.6
  * 
  * Dependencies: Cjax 5.0+, Jquery, jquery.uploadify
  * 

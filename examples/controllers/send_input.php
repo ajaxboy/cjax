@@ -1,5 +1,7 @@
 <?php
 
+use CJAX\Core\CJAX;
+
 class controller_send_input {
 	
 	function send_text( $text )

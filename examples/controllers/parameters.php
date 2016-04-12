@@ -1,5 +1,7 @@
 <?php
 
+use CJAX\Core\CJAX;
+
 class controller_parameters {
 	
 	function send_params($a,$b,$c,$d)

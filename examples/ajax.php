@@ -1,6 +1,6 @@
-<?php
-	
-if(!file_exists($f = '../ajaxfw.php') && !file_exists($f = '../ajax.php')) {
+<?php  
+    
+if(!file_exists($f = '../cjax/ajax.php')){
 	die(
 	"Cjax Framework was not detected in the parent directory. Make sure the framework is placed in the upper directory.
 	<br />
@@ -11,7 +11,6 @@ if(!file_exists($f = '../ajaxfw.php') && !file_exists($f = '../ajax.php')) {
 define('AJAX_CD','examples/controllers');
 
 require_once $f;
-
 if(!$ajax->isAjaxRequest()) {
 	$ajax->insert('body', 
 	"<div><a href='http://cjax.sourceforge.net'><img src='http://cjax.sourceforge.net/media/logo.png' border=0/></a></div>

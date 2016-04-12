@@ -1,11 +1,8 @@
 <?php
 
 require_once "ajax.php";
-$ajax = ajax();
 
-//$ajax->log = true;
 $ajax->click("button1",$ajax->call("ajax.php?click_ajax_request/click_button/Hello!"));
-
 
 ?>
 <html>

@@ -3,7 +3,6 @@
 //core file, reference..
 require_once "ajax.php";
 //initiate CJAX..
-$ajax = ajax();
 
 //this example is almost identical to "propagate_dropdown" except a small change in the controler method.
 

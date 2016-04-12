@@ -3,7 +3,6 @@
 //core file, reference..
 require_once "ajax.php";
 //initiate CJAX..
-$ajax = ajax();
 
 //								/controllers/search.php:string()
 $ajax->keyup('search',$ajax->call('ajax.php?search/string/|search|','search_result'));

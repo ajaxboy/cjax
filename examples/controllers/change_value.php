@@ -1,10 +1,12 @@
 <?php
 
+use CJAX\Core\CJAX;
+
 class controller_change_value {
 	
 	function text($element_id,$current_value)
 	{
-		$ajax = ajax();
+		$ajax = CJAX::getInstance();
 		
 		$ajax->text1 = "Random number..".rand(100,1000);
 	}
@@ -12,7 +14,7 @@ class controller_change_value {
 	
 	function check($element_id,$current_value)
 	{
-		$ajax = ajax();
+		$ajax = CJAX::getInstance();
 		
 		if($current_value) {
 			$ajax->check1 = false;
@@ -23,7 +25,7 @@ class controller_change_value {
 	
 	function div($num = 0)
 	{
-		$ajax = ajax();
+		$ajax = CJAX::getInstance();
 		
 		$text = array();
 		

@@ -1,10 +1,12 @@
 <?php
 
+use CJAX\Core\CJAX;
+
 class dropdown {
 	
 	function propagate($selected)
 	{
-		$ajax = ajax();
+		$ajax = CJAX::getInstance();
 		$data = array();
 		
 		
@@ -40,7 +42,7 @@ class dropdown {
 	 */
 	function propagate_allow_input($selected)
 	{
-		$ajax = ajax();
+		$ajax = CJAX::getInstance();
 		$data = array();
 		
 		

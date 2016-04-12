@@ -2,8 +2,6 @@
 
 require 'ajax.php';
 
-$ajax =  ajax();
-
 if($ajax->isPlugin('uploadify')) {
 
 ## The  settings below use the exact same format as it does in the Jquery.uploadify plugin javascript format.
@@ -96,14 +94,14 @@ $ajax->Exec('see', $ajax->dialog($code, 'Code Used', array('width'=> '930px','to
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>Uploadify in PHP</title>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 	<?php  echo $ajax->init();?>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<script type="text/javascript" src="resources/send_form/view.js"></script>
 	<link rel="stylesheet" type="text/css" href="resources/send_form/view.css" media="all">
 </head>
 <body>
-<h2>//@uploadify;</h2>
+<h2>uploadify 1.6</h2>
 
 <div id='not_found'></div>
 <h4 id='see'><a href='#'>See Code Used</a></h4>

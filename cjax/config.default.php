@@ -28,7 +28,7 @@ $config->caching = false;
 /**
 * Allows the access to ajax.php from browser where otherwise it would  only allow access to ajax request or inclusion.
  */
-$config->ajax_view = false;
+$config->ajaxView = false;
 
 /**
  * Config displays javaScript debug information in firebug console.
@@ -41,7 +41,7 @@ $config->debug = false;
  * You may also enter an array of IPs
  * 
  */
-$config->ip_debug = '';
+$config->ipDebug = '';
 
 /**
  * Init URL
@@ -55,7 +55,7 @@ $config->ip_debug = '';
  * 
  * Eg: http://your/site/url (where ajax.php is located).
  */
-$config->init_url = '';
+$config->initUrl = '';
 
 /**
  * Use camel case in class names
@@ -79,7 +79,7 @@ $config->camelizeUcfirst = false;
  * Uploading plugins may upload files may access a default upload location
  * specify that path here. The path may or may not end with a slash.
  */
-$config->upload_dir = '';
+$config->uploadDir = '';
 
 
 

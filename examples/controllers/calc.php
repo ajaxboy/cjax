@@ -1,10 +1,12 @@
 <?php
 
+use CJAX\Core\CJAX;
+
 class Calc {
 	
 	function math($action, $buffer)
 	{
-		$ajax = ajax();
+		$ajax = CJAX::getInstance();
 		
 		$operators_signs = array('[plus]','p','m','x','d');
 		$operators = array('p','+','-','*','/');

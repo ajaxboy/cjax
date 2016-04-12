@@ -1,7 +1,6 @@
 <?php
 
 require_once "ajax.php";
-$ajax = ajax();
 
 $ajax->click("btnSubmit",$ajax->form("ajax.php?send_form/submit_form"));
 

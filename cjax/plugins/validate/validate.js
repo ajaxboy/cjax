@@ -1,6 +1,6 @@
 
 /**
- * Plugin: //@validate;
+ * Plugin: validate 1.6
  * Dependencies: Cjax 4.3+, Jquery, jquery.validate
  * 
  * Ref:

@@ -7,5 +7,5 @@
 	#RewriteBase /
 
 
-RewriteRule  ^/?ajax/(.*)$	ajax.php?$1 [NC,QSA,L]
+RewriteRule  ^/?ajax/(.*)$	cjax/ajax.php?$1 [NC,QSA,L]
 </IfModule>

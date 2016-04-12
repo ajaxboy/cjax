@@ -11,18 +11,20 @@
  * @author cj
  *
  */
-class controller_upload_file {
+ 
+use CJAX\Core\CJAX;
+ 
+class upload_file {
 
-	function post($files)
-	{
-		$ajax = ajax();
+	public function post($files){
+		$ajax = CJAX::getInstance();
 	
 		//files listed under 'files' array are files that were successfully uploaded
-		if($files) {
-			$ajax->wait(2, false);
-			
+		if($files){
+			$ajax->wait(2, false);			
 			$ajax->alert("Controller Response:".print_r($files,1));
 		}
+
 		//uncoment to see the response on the screen
 		//$ajax->overlayContent($ajax->dialog("<pre>".print_r($_REQUEST,1)."</pre>","Controller Response: upload_file/post "));
 	}
@@ -32,8 +34,7 @@ class controller_upload_file {
 	 * @deprecated
 	 * @param unknown_type $file_names
 	 */
-	function send_file($file_names = null)
-	{
+	public function send_file($file_names = null){
 		$ajax = CJAX::getInstance();
 		$dir = realpath(dirname(__file__).'/../'); //directory where the file is uploaded..
 		
@@ -53,12 +54,14 @@ class controller_upload_file {
 			$temp = (($file['tmp_name'])?$file['tmp_name']:null);
 
 			$temp = trim($temp,DIRECTORY_SEPARATOR);
-			if(@move_uploaded_file($temp,$dir.'/'.$file['name'])) {
+			if(@move_uploaded_file($temp, $dir.'/'.$file['name'])){
 				$ajax->success("File uploaded..",10);
-			} else {
+			} 
+            else{
 				$ajax->warning("Could not move file");
 			}
-		} else if ($ajax->request()) {
+		} 
+        elseif($ajax->request()){
 			$ajax->process("Uploading file..",1000);
 			//Ajax request
 			//PRE-POST FILE
@@ -66,22 +69,17 @@ class controller_upload_file {
 				$ajax->warning("Please select a file");
 				$ajax->focus('my_file');
 				exit();
-			}
-			
+			}			
 		}
 	}
 	
 	
-	function error()
-	{
-		
+	function error(){	
 		$upload_max = $ajax->toMB(ini_get('upload_max_filesize'));
 		$post_max = $ajax->toMB($pmax = ini_get('post_max_size'));// / 2;
 		$max_size = ($upload_max < $post_max) ? $upload_max : $post_max;
-		$cause = ($upload_max < $post_max) ? "upload_max_filesize " : "post_max_size ";
-		
+		$cause = ($upload_max < $post_max) ? "upload_max_filesize " : "post_max_size ";	
 		echo "Could not upload file. This server limits max upload to {$max_size}MB ($cause in php.ini). ";
-		
 	}
 	
 }

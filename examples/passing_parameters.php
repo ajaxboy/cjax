@@ -1,7 +1,6 @@
 <?php
 
 require_once "ajax.php";
-$ajax = ajax();
 
 //parameterts use alphabetical characters to pass parameters to the controller function.
 

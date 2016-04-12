@@ -2,93 +2,96 @@
 
 /**
  * 
- * //@uploader;
+ * Ajax Uploader 1.3
  * @author cj
  *
  */
-class _uploader
-{
+
+use CJAX\Core\CJAX; 
+ 
+class Uploader{
+
 	private $error;
 	private $post;
 	private $options;
-	private $files;
-	
-	private $upload_count = 0;
+	private $files;	
+	private $uploadCount = 0;
 	
 	/**
 	 * 
 	 * Upload Files
 	 */
-	function upload()
-	{
-		$ajax  = ajax();
+	public function upload(){
+		$ajax  = CJAX::getInstance();
 		$error = false;
-		$files_fount = false;
-		$files = array();
+		$filesFount = false;
+		$files = [];
 		
-		$ajax->cacheWrapper(array("<html><body>","</body></html>"));
+		$ajax->cacheWrapper(["<html><body>","</body></html>"]);
 		$options = $ajax->get('upload_options', true);
-		$this->options = $options;
-		
-		if(!$this->options->target) {
+		$this->options = $options;		
+		if(!$this->options->target){
 			$this->abort("No target directory.");
-		}
-		
-		if(!is_writable($options->target )) {
+		}		
+		if(!is_writable($options->target)){            
 			return $this->abort("Directory is not writable.");
-		}
-		
+		}		
 		$this->chkLength();
 		
-		if(!$_FILES) {
-			if(isset($_REQUEST['files']) && $_REQUEST['files']) {
+		if(!$_FILES){
+			if(isset($_REQUEST['files']) && $_REQUEST['files']){
 				if(count($_REQUEST['files']) > 1){
 					$this->error = "The files you tried to upload are too big or invalid.";
-				} else {
+				} 
+                else{
 					$this->error = "The file you tried to upload is too big or invalid.";
 				}
 			}
-		} else {
-			foreach($_FILES as $k => $v) {
-				if(is_array($v['error'])) {
-					foreach($v['error'] as $k2 => $err) {
+		} 
+        else{
+			foreach($_FILES as $k => $v){
+				if(is_array($v['error'])){
+					foreach($v['error'] as $k2 => $err){
 						$filename = $v['name'][$k2];
-						if(!$filename) {
+						if(!$filename){
 							continue;
 						}
 						$size = $v['size'][$k2];
-						if($filename) {
-							$files_fount = true;
+						if($filename){
+							$filesFount = true;
 						}
-						if($err) {
-							$this->error = $this->error($err,$filename, $size);
+						if($err){
+							$this->error = $this->error($err, $filename, $size);
 							continue;
-						} else {
-							if($filename && !$this->chkExt($filename)) {
+						} 
+                        else{
+							if($filename && !$this->chkExt($filename)){
 								break;
 							}
 							
-							if($f = $this->uploadFile($v['tmp_name'][$k2],$filename)) {
+							if($f = $this->uploadFile($v['tmp_name'][$k2],$filename)){
 								$files[] = $f;
 							}
 						}
 					}
-				} else {
+				} 
+                else{
 					$filename = $v['name'];
-					if(!$filename) {
+					if(!$filename){
 						continue;
 					}
-					if($filename && !$this->chkExt($filename)) {
+					if($filename && !$this->chkExt($filename)){
 						break;
 					}
-					if($v['error']) {
+					if($v['error']){
 						$this->error = $this->error($v['error'], $filename, $v['size']);
 						break;
-					} else {
-						if($v['name']) {
-							$files_fount = true;
+					} 
+                    else{
+						if($v['name']){
+							$filesFount = true;
 						}
-						if($f = $this->uploadFile($v['tmp_name'], $filename)) {
+						if($f = $this->uploadFile($v['tmp_name'], $filename)){
 							$files[] = $f;
 						}
 					}
@@ -99,36 +102,36 @@ class _uploader
 		
 		$this->debug($this->options);
 		
-		if(!$files_fount) {
-			if(!$this->options->files_require && !$this->upload_count)  {
+		if(!$filesFount){
+			if(!$this->options->files_require && !$this->uploadCount){
 				$this->flush();
 				$ajax->message();
 				return true;
 			}
-			if(!$this->error) {
+			if(!$this->error){
 				$this->error = "No Files Were selected";
 			}
 		}
 		
-		if(!$this->error) {
-			if($this->post) {
+		if(!$this->error){
+			if($this->post){
 				$ajax->ajaxVars($this->post);
 			}
-			if($this->options->preview) {
+			if($this->options->preview){
 				$preview = $this->options->preview;
-				$preview_url = $this->options->preview_url;
-				if($preview_url) {
-					$preview_url = rtrim($preview_url,'/').'/';
+				$previewUrl = $this->options->preview_url;
+				if($previewUrl) {
+					$previewUrl = rtrim($previewUrl,'/').'/';
 				}
+                
 				$range = range(1,  count($this->files));
-				array_walk($range, function(&$v) {
-					$v =  "#image{$v}#";
-					
+				array_walk($range, function(&$v){
+					$v =  "#image{$v}#";					
 				});
-				foreach($this->files as $k => $v) {
-					$this->files[$k] = $preview_url.$v;
+				foreach($this->files as $k => $v){
+					$this->files[$k] = $previewUrl.$v;
 				}
-				foreach($preview as $k => $v) {
+				foreach($preview as $k => $v){
 					$image = str_replace($range, $this->files, $v);
 					$ajax->update($k, $image);
 				}
@@ -136,55 +139,49 @@ class _uploader
 			
 			$_files = implode(', ',$files);
 			$message = $this->options->success_message;
-			if(!$message) {
+			if(!$message){
 				$message = "File(s) $_files successfully uploaded.";
-			} else {
+			} 
+            else{
 				$message = str_replace("@files", $_files, $message);
 			}
 			$ajax->success($message, 5);
-		} else {
-			
+		} 
+        else{			
 			$ajax->warning($this->error, 5);
 		}
 		
 	}
 	
-	public function flush()
-	{
-		CoreEvents::$lastCache = array();
-		CoreEvents::$cache = array();
+	public function flush(){
+		CoreEvents::$lastCache = [];
+		CoreEvents::$cache = [];
 	}
 	
 	/*
 	 * abort the uploads
 	 */
-	function abort($error)
-	{
-		$ajax = ajax();
-		
-		$ajax->error($error, 8);
-		
+	public function abort($error){
+		$ajax = CJAX::getInstance();		
+		$ajax->error($error, 8);		
 		exit();
 	}
 
-	function debug($options)
-	{
+	public function debug($options){
 		if($options && $options->debug) {
-			$ajax = ajax();
-			
-			$options->{"List Of Files Uploaded"} = $this->post;
-				
+			$ajax = CJAX::getInstance();			
+			$options->{"List Of Files Uploaded"} = $this->post;				
 			$settings['php.ini post_max_size'] = ini_get('post_max_size');
 			$settings['php.ini upload_max_filesize'] = ini_get('upload_max_filesize');
 			$settings['php.ini max_execution_time'] = ini_get('max_execution_time');
 			$settings['CONTENT_LENGTH'] = @$_SERVER['CONTENT_LENGTH'].' bytes';
 			
-			$debug_message = null;
+			$debugMessage = null;
 			if(is_string($options->debug)) {
-				$debug_message = $options->debug."<br /><br />";
+				$debugMessage = $options->debug."<br /><br />";
 			}
 			$ajax->dialog("
-				$debug_message
+				$debugMessage
 				To be able to upload files, the server has to be able to handle them. 
 				These are settings you can control in php.ini file. Any file(s) that exceeds these limitations
 				will not be uploaded.
@@ -205,10 +202,8 @@ class _uploader
 	 * Check file extension
 	 * @param unknown_type $filename
 	 */
-	function chkExt($filename)
-	{
-		$info = pathinfo($filename);
-		
+	public function chkExt($filename){
+		$info = pathinfo($filename);		
 		if($this->options->ext && is_array($this->options->ext)) {
 			$exts =  array_map('strtolower', $this->options->ext);
 			if(!in_array(strtolower($info['extension']), $exts)) {
@@ -222,81 +217,72 @@ class _uploader
 	/**
 	 * 
 	 * Upload File
-	 * @param unknown_type $tmp_name
+	 * @param unknown_type $tmpname
 	 * @param unknown_type $filename
 	 */
-	function uploadFile($tmp_name, $filename)
-	{
+	public function uploadFile($tmpname, $filename){
 		$info = pathinfo($filename);
 		$filename = $info['filename'];
 		
-		$old_filename = $filename;
-		if($prefix = $this->options->prefix) {
-			if($prefix=='time') {
+		$oldFilename = $filename;
+		if($prefix = $this->options->prefix){
+			if($prefix=='time'){
 				$prefix = time();
 			}
-			if($prefix=='rand') {
+			if($prefix=='rand'){
 				$prefix = rand(1, 10000000);
 			}
 			$filename = $prefix.'_'.$filename;
 		}
-		if($suffix = $this->options->suffix) {
-			if($suffix=='time') {
+		if($suffix = $this->options->suffix){
+			if($suffix=='time'){
 				$suffix = time();
 			}
-			if($suffix=='rand') {
+			if($suffix=='rand'){
 				$suffix = rand(1, 10000000);
 			}
 			$filename = $filename.'_'.$suffix;
 		}
 		
-		$filename = $filename.'.'.$info['extension'];
+		$filename = $filename.'.'.$info['extension'];		
+		$ajax = CJAX::getInstance();		
+		$this->post['a'][] = $filename;
+		$this->files[] = $filename;
 		
-		$ajax = ajax();
-		
-		$this->post['a'][] = $ajax->encode($filename);
-		
-			$this->files[] = $ajax->encode($filename);
-		
-		if(@move_uploaded_file($tmp_name,$this->options->target.$filename)) {
-			$this->upload_count++;
+		if(@move_uploaded_file($tmpname,$this->options->target.$filename)) {
+			$this->uploadCount++;
 			return $filename;
 		} else {
 			sleep(2);
 			//try again
-			if(!@copy($tmp_name,$this->options->target.$filename)) {
-				$this->upload_count++;
+			if(!@copy($tmpname,$this->options->target.$filename)) {
+				$this->uploadCount++;
 				$error = error_get_last();
 				$this->error = "Could not upload file $filename. {$error['message']}";
 			}
-		}
-		
+		}	
 	}
 
 	/**
 	 * 
 	 * Check request length
 	 */
-	function chkLength()
-	{
+	public function chkLength(){
 		if(isset($_SERVER['CONTENT_LENGTH']) && $_SERVER['CONTENT_LENGTH']) {
 		
-			$post_max = $_post_max = @ini_get('post_max_size');// / 8;
-			
-			$post_max = preg_replace("/([^0-9]+)/","", $post_max);
-		
-			switch (substr($_post_max,-1) )
-			{
-			case 'G':
-				$post_max = $post_max * 1024;
-			case 'M':
-				$post_max = $post_max * 1024;
-			case 'K':
-				$post_max = $post_max * 1024;
+			$postMax = $_postMax = @ini_get('post_max_size');// / 8;		
+			$postMax = preg_replace("/([^0-9]+)/","", $postMax);		
+			switch(substr($_postMax,-1)){
+			    case 'G':
+				    $postMax = $postMax * 1024;
+			    case 'M':
+				    $postMax = $postMax * 1024;
+			    case 'K':
+				    $postMax = $postMax * 1024;
 			}
 			
-			if($_SERVER['CONTENT_LENGTH'] > $post_max) {
-				$error = "Upload Failed. This server limits max upload to $_post_max (post_max_size in php.ini). ";
+			if($_SERVER['CONTENT_LENGTH'] > $postMax){
+				$error = "Upload Failed. This server limits max upload to $_postMax (post_max_size in php.ini). ";
 				$this->abort($error);
 			}
 		}
@@ -310,17 +296,16 @@ class _uploader
 	 * @param string $fileName
 	 * @param integer $size
 	 */
-	function error($errorNo,$fileName, $size = 0)
-	{
-		$ajax  = ajax();
+	public function error($errorNo, $fileName, $size = 0){
+		$ajax  = CJAX::getInstance();
 		$error = null;
 		
-		if($errorNo)  {
-			switch($errorNo) {
+		if($errorNo){
+			switch($errorNo){
 				case UPLOAD_ERR_INI_SIZE:
-					$_upload_max = @ini_get('upload_max_filesize');
+					$_uploadMax = @ini_get('upload_max_filesize');
 					
-					$error = "{$fileName} - File exceeds max upload limit of $_upload_max";
+					$error = "{$fileName} - File exceeds max upload limit of $_uploadMax";
 				break;
 				case UPLOAD_ERR_FORM_SIZE:
 					$error = "{$fileName} - The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form. ";
@@ -341,10 +326,9 @@ class _uploader
 					$error = "{$fileName} - A PHP extension stopped the file upload. PHP does not provide a way to ascertain which extension caused the file upload to stop;<br /> examining the list of loaded extensions with phpinfo() may help.";
 				break;
 				default:
-				$error = "$fileName Unkown Error Occurred.";
+				$error = "$fileName Unknown Error Occurred.";
 			}
-		}
-		
+		}		
 		return $error;
 	}
 }
