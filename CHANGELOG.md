@@ -380,26 +380,26 @@
 	Now no longer can someone access ajax.php directly in the browser. This is done for security reasons
 	and closes doors to further vulnerability.
 - New flag system was implemented
-	The new flag system allows for further costumization of the already flexibly ajax system.
-	The flag system allow for the usage of $ajax->setFlags(); functionality.
-	This functionally also triggered the addition of new constant flags defitions.
+	-The new flag system allows for further costumization of the already flexibly ajax system.
+	-The flag system allow for the usage of $ajax->setFlags(); functionality.
+	-This functionally also triggered the addition of new constant flags defitions.
 	Usage Example:
 	```php
 	$flags = array('FLAG_WAIT'=> CJAX::FLAG_NO_WAIT, 'FLAG_ELEMENT_GETTER'=> CJAX::FLAG_ELEMENT_BY_ID);
 	
 	$ajax->setFlags( flags , 3);
-	
-	FLAG_WAIT = skips any awaiting time set with $cjax->wait();
-	FLAG_ELEMENT_GETTER = tells the function that the element to be used next is to be gotten by itself class name not its id.
+	```
+
+	-FLAG_WAIT = skips any awaiting time set with $cjax->wait();
+	-FLAG_ELEMENT_GETTER = tells the function that the element to be used next is to be gotten by itself class name not its id.
 	We strongly recommand not replace ids for other type of property as it is not reliable. Try to set ids for all elements needed.
 	
-	These flags themselves are only two, but the system implemented allows for extensive usage of new flags. 
-	Including furter interaction with plugins.
-	
-	The example above shows how to set flags for the next set of commands, the flags are already defined constant
+	-These flags themselves are only two, but the system implemented allows for extensive usage of new flags. 
+	 Including further interaction with plugins.	
+	-The example above shows how to set flags for the next set of commands, the flags are already defined constant
 	you can find within CJAX,  the second parameter is the number of future commands it will affect.
 	If not specified, then it will set flags only for the next command without affecting the rest.
-    ```
+    
 
 ## CJAX 3.1 RC2 - February 18, 2011
 
