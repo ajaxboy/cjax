@@ -413,20 +413,20 @@
 	It is recommended to always assign id to all appropriate elements for faster, and more reliable results.
 - Example Package was extended
 	New example are available wihin the ajax package as some usage examples.
-	+simple Alert (this is one of the simplest usages, but could give a good starting point for someone wanting to do bigger things)
-	+bind_commands - shows how to bind nested command in one execute command.
-	+confirm_action
-	+simple value assignment
-	+overlay - rather than a command, this is a full functionality.
-	+messages - rather than a command, this is a full functionality.
-	+upload_file - rather than a command, this is a full functionality.
-	+ajax_call - example to create simple ajax calls.
-	+send_input - simple example how to send input to elements
-	+real_time - this is not command, this is a functionality sample.
-	+parameters - shows how to send an ajax call with paramenters
-	+post - post requests to the server.
-	+propagate dropdowns -  rather than a command, this sample is a functionality.
-	+send_form - how to submit a form using ajax.
+	- simple Alert (this is one of the simplest usages, but could give a good starting point for someone wanting to do bigger things)
+	- bind_commands - shows how to bind nested command in one execute command.
+	- confirm_action
+	- simple value assignment
+	- overlay - rather than a command, this is a full functionality.
+	- messages - rather than a command, this is a full functionality.
+	- upload_file - rather than a command, this is a full functionality.
+	- ajax_call - example to create simple ajax calls.
+	- send_input - simple example how to send input to elements
+	- real_time - this is not command, this is a functionality sample.
+	- parameters - shows how to send an ajax call with paramenters
+	- post - post requests to the server.
+	- propagate dropdowns -  rather than a command, this sample is a functionality.
+	- send_form - how to submit a form using ajax.
 	
 	for more samples look inside the samples directory in the CJAX package.
 	
