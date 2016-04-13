@@ -129,14 +129,12 @@
 
   ```php  
    $ajax->validate('buttonID', 'ajax.php?optional/pre/action', $rules)->uploader(
-	array(
-		'target' => 'directory/where/files/are/uploaded/to',
+	   ['target' => 'directory/where/files/are/uploaded/to',
 		'text'=> 'Uploading Files..',
 		'url' => 'ajax.php?optional/post/action', //form post after the files are uploaded
 		'form_id' => 'form_id',
 		'success_message' => 'Files Uploaded Successfully..',
-		'suffix' => time()
-		)
+		'suffix' => time()]
 	);
   ```
   
@@ -230,11 +228,13 @@
 
 ## CJAX 5.0-Beta2 - June 01, 2012
 
-- Support for PATH INFO  style URL
+- Support for PATH INFO  style URL, eg:
 
 	```php  
-	eg: ajax.php/controller/function	
+	ajax.php/controller/function	
+    ```
 	This adds to the already  plenty of supported URLS in the list:
+    ```php
 	ajax.php?$controller/$function
 	ajax.php?controller=$controller&function=$function
 	ajax.php/$controller/$function
@@ -242,7 +242,9 @@
 	With Mod-Rewrite:
 	```php 
 	ajax/$controller/$function
+    ```
 	or:
+    ```php 
 	*Anything*/$controller/$function
 	*Anything* - a word of your choosing by changing the  word "ajax" in file .htaccess
 	```
