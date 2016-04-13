@@ -87,7 +87,7 @@
 ## CJAX 5.1-Stable(Maintenance Release) - September 16, 2012
 
 - New usage for Exec events:
-
+  ```php
 	$ajax->click($element_id, $actions);
 	$ajax->change($element_id, $actions);
 	$ajax->keyup($element_id, $actions);
@@ -97,11 +97,11 @@
 	This is alternative replacement wrapper of the clasic:
 	
 	$ajax->Exec();
-	
+  ```
 - Multiple APIs now work on overlays callbacks
   for example you may use Cjax in overlays elements
   Eg:
-  
+  ```php  
 	$overlay = $ajax->overlay('resources/html/login.html');
 	
 	//work within the scope of the overlay (elements in resources/html/login.html)
@@ -116,7 +116,7 @@
 	$ajax->click('a_login', $overlay);
 	
   On 5.0, this was limited to 1 single API. Now you may add as many as you want.
-  
+  ```
 - Minor improvements & minor bugs fixed
 - Expanded the number of parameters you can pass from a to f to a to z.
 - Fixed "select" bug that chopped off last item in the array list in "select" ajax API.
@@ -124,8 +124,8 @@
 - Allow to require 'ajax.php' for codeIgnater, when before it had to be 'ajaxfw.php', (the old way still works)
 - Validate & Uploader plugins integration
   Plugin validate now integrates with plugin uploader.
+  ```php  
   Example:
-  
   $ajax->validate('buttonID', 'ajax.php?optional/pre/action', $rules)->uploader(
 	array(
 		'target' => 'directory/where/files/are/uploaded/to',
@@ -136,7 +136,7 @@
 		'suffix' => time()
 		)
 	);
-  
+  ```
   
 
 ## CJAX 5.0-Stable Gold - July 2, 2012
