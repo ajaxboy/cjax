@@ -59,7 +59,7 @@
 - Fixed minor problems with plugin data processor
 - Enhanced some range statements
 - Removed autoloading function
-- Added extra php settings check to check for error display
+- Added extra PHP settings check to check for error display
 - Added Strict Standard Check and tries to automatically turn it off if it is on.
 - Added PHP version check, so it shows a message if your php versions is not compatible.
 - Fixed some notices
@@ -228,8 +228,9 @@
 
 ## CJAX 5.0-Beta2 - June 01, 2012
 
-- Support for PATH INFO  style URL, eg:
+- Support for PATH INFO  style URL.
 
+  Eg:
 	```php  
 	ajax.php/controller/function	
     ```
@@ -285,9 +286,9 @@
 - New Plugin jQuery "Uploadify" PHP has been released
     - This plugin makes use of jQuery and jQuery.uploadify to bring this plugin to you in a full PHP environment.
 - Plugin jQuery validate has backward compatibility with 5.0
-- Import, - support to import Javascript and Css files, for example:
+- Import, - support to import Javascript and Css files
   	
-  Import files  asynchronously
+  Eg. Import files  asynchronously
 
 	```php
 	$ajax->import("http://path/To/Your/Javascript.js");
