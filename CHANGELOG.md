@@ -124,8 +124,8 @@
 - Allow to require 'ajax.php' for codeIgnater, when before it had to be 'ajaxfw.php', (the old way still works)
 - Validate & Uploader plugins integration
   Plugin validate now integrates with plugin uploader.
-  ```php  
   Example:
+  ```php  
   $ajax->validate('buttonID', 'ajax.php?optional/pre/action', $rules)->uploader(
 	array(
 		'target' => 'directory/where/files/are/uploaded/to',
@@ -229,7 +229,7 @@
 ## CJAX 5.0-Beta2 - June 01, 2012
 
 - Support for PATH INFO  style URL
-	
+	```php  
 	eg: ajax.php/controller/function
 	
 	This adds to the already  plenty of supported URLS in the list:
@@ -243,7 +243,7 @@
 	or:
 	*Anything*/$controller/$function
 	*Anything* - a word of your choosing by changing the  word "ajax" in file .htaccess
-	
+	```
 - Fixed issues with IE 7 not working
 	All basic functionality and ajax operations are operational in IE7, but  there might be other issues - see "known issues".
 - Other small improvements in request handling, and dealing with controllers that have constructors.
@@ -265,12 +265,9 @@
 ## CJAX 5.0-Beta - May 29, 2012
 
 - Extension of plugins API and plugins documentation
-
-	Plugins Javascript API has be released
-	
-	Plugins PHP API has been released
-	
-	There are so many new goodies for the plugin system that not many of them will get to be mentioned here.
+- Plugins Javascript API has be released
+- Plugins PHP API has been released
+- There are so many new goodies for the plugin system that not many of them will get to be mentioned here.
 	See "how to create a plugin" in the Examples zip for samples and documentation.
 	a "Example Plugin" has been released,  examples and documentation within the code on how to build a 
 	basic plugin with Javascript and advanced plugins using PHP.
@@ -290,7 +287,7 @@
 - Plugin jQuery validate has backward compatibility with 5.0
 - Import, - support to import Javascript and Css files:
 	Examples:
-	
+  ```php	
 	Import files  asynchronously
 	
 	$ajax->import("http://path/To/Your/Javascript.js");
@@ -307,7 +304,7 @@
 	$myplugin()->import("file.js"); 
 	would load file "file.js" located in "myplugin" directory under plugins.
 	all core functions inherited can be overwritten by plugins providing more power to each plugin.
-
+  ```
 - In your Ajax Controller, if you return an array or an object, it will be converted to json automatically.
 - Performance improvements were made to an already fast system, now it's lightning fast.
 	Test Speed? - try the recursive ajax request example included in the samples zip, and see how fast this framework works..    
@@ -387,7 +384,7 @@
 	The flag system allow for the usage of $ajax->setFlags(); functionality.
 	This functionally also triggered the addition of new constant flags defitions.
 	Usage Example:
-	
+	```php
 	$flags = array('FLAG_WAIT'=> CJAX::FLAG_NO_WAIT, 'FLAG_ELEMENT_GETTER'=> CJAX::FLAG_ELEMENT_BY_ID);
 	
 	$ajax->setFlags( flags , 3);
@@ -402,7 +399,7 @@
 	The example above shows how to set flags for the next set of commands, the flags are already defined constant
 	you can find within CJAX,  the second parameter is the number of future commands it will affect.
 	If not specified, then it will set flags only for the next command without affecting the rest.
-
+    ```
 
 ## CJAX 3.1 RC2 - February 18, 2011
 
