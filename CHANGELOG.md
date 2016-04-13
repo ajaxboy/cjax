@@ -87,17 +87,21 @@
 ## CJAX 5.1-Stable(Maintenance Release) - September 16, 2012
 
 - New usage for Exec events:
+
   ```php
 	$ajax->click($element_id, $actions);
 	$ajax->change($element_id, $actions);
 	$ajax->keyup($element_id, $actions);
 	$ajax->keydown($element_id, $actions);
 	$ajax->blur($element_id, $actions);
-  ```	
+  ```
+	
 	This is alternative replacement wrapper of the clasic:
+
   ```php	
 	$ajax->Exec();
   ```
+
 - Multiple APIs now work on overlays callbacks for example you may use Cjax in overlays elements.
  
   Eg:
