@@ -43,23 +43,17 @@ class CJAX extends Framework{
 		if(!isset($ajax->format) || !$ajax->format){
 			$ajax->format = new Format;		
 			$config = new Ext;
-			if(file_exists($f = CJAX_HOME."/"."config.php")) {
+			if(file_exists($f = CJAX_HOME."/"."config.php")){
 				include($f);
 				if(isset($config)){
-					$config = new ext($config);
+					$config = new Ext($config);
 				}
 			}
 			$ajax->config = $config;
 			
 			$ajax->initiate($ajax);
-			if(!$ajax->isAjaxRequest()){
-				//$ajax->flushCache();
-				if(defined('AJAX_CD')){
-					@setcookie ('AJAX_CD', AJAX_CD, null, '/');
-				} 
-                else{
-					//@setcookie ('AJAX_CD', null, time()-(3600*1000),'/');
-				}
+			if(!$ajax->isAjaxRequest() && defined('AJAX_CD')){
+				@setcookie('AJAX_CD', AJAX_CD, null, '/');
 			} 
             else{
 				if(isset($_COOKIE['AJAX_CD']) && !defined('AJAX_CD')){
@@ -74,24 +68,18 @@ class CJAX extends Framework{
 		}
         
 		if($ajax->config->ipDebug){
-			if(is_array($ajax->config->ipDebug)){
-				if(in_array(@$_SERVER['REMOTE_ADDR'], $ajax->config->ipDebug)){
-					$ajax->config->ipDebug = false;
-				}
+			if(is_array($ajax->config->ipDebug) && in_array(@$_SERVER['REMOTE_ADDR'], $ajax->config->ipDebug)){
+				$ajax->config->ipDebug = false;
 			} 
-            else{
-				if(@$_SERVER['REMOTE_ADDR']!=$ajax->config->ipDebug){
-					$ajax->config->ipDebug = false;
-				}
+            elseif(@$_SERVER['REMOTE_ADDR']!=$ajax->config->ipDebug){
+				$ajax->config->ipDebug = false;
 			}
 		}
 		
-		if($ajax->config->caching){
-			if(isset($_SERVER['REQUEST_URI'])){
-				$ajax->crc32 = crc32($_SERVER['REQUEST_URI']);
-				$cache = $ajax->readCache('cjax-'.$ajax->crc32);
-				$ajax->caching = $cache;
-			}
+		if($ajax->config->caching && isset($_SERVER['REQUEST_URI'])){
+			$ajax->crc32 = crc32($_SERVER['REQUEST_URI']);
+			$cache = $ajax->readCache('cjax-'.$ajax->crc32);
+			$ajax->caching = $cache;
 		}
 		if($ajax->config->debug){
 			@ini_set('display_errors', 1);
@@ -162,18 +150,14 @@ class CJAX extends Framework{
 	        }
         }
 
-        if(!$this->isAjaxRequest()){
-	        if(count(array_keys(debug_backtrace(false))) == 1 && !defined('AJAX_VIEW')){
-		        exit("Security Error. You cannot access this file directly.");
-        	}
+        if(!$this->isAjaxRequest() && count(array_keys(debug_backtrace(false))) == 1 && !defined('AJAX_VIEW')){
+	        exit("Security Error. You cannot access this file directly.");
         }
     }
 
     private function handlePlugin($isPlugin = null){
-	    if($plugin = $this->isPlugin($isPlugin)){
-		    if(!defined('AJAX_VIEW')){
-		        define('AJAX_VIEW', true);
-	        }
+	    if($plugin = $this->isPlugin($isPlugin) && !defined('AJAX_VIEW')){
+		    define('AJAX_VIEW', true);
 	    }        
     }
 
@@ -194,15 +178,11 @@ class CJAX extends Framework{
 				}
 		    }
 		} 
-        else{
-		    if(!$this->input('controller')){
-			    if(count($packet)==1){
-				    $url = explode('&',$_SERVER['QUERY_STRING']);
-				    if(count($url) ==1){
-					    $_REQUEST['controller'] = $packet[0];
-				    }
-			    }
-		    }
+        elseif(!$this->input('controller') && count($packet) == 1){
+			$url = explode('&',$_SERVER['QUERY_STRING']);
+			if(count($url) == 1){
+				$_REQUEST['controller'] = $packet[0];
+			}
 	    }        
     }
 }

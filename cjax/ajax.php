@@ -185,11 +185,9 @@ final class AJAX{
 			if(isset($_REQUEST[$v])){
 				if(is_array($_REQUEST[$v])){
 					foreach($_REQUEST[$v] as $k2 => $v2){
-						if(is_array($_REQUEST[$v][$k2])){
-							$args[$v][$k2] = array_map('urldecode', $_REQUEST[$v][$k2]);
-						} else{
-							$args[$v][$k2] = urldecode($_REQUEST[$v][$k2]);
-						}
+                        $args[$v][$k2] = (is_array($_REQUEST[$v][$k2]))
+                                         ? array_map('urldecode', $_REQUEST[$v][$k2])
+                                         : urldecode($_REQUEST[$v][$k2]);
 					}
 				} 
                else{
