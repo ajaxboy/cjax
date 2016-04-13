@@ -16,7 +16,7 @@
 *   Website: http://cjax.sourceforge.net                     $      
 *   Email: cjxxi@msn.com    
 *   Date: 2/12/2007                           $     
-*   File Last Changed:  03/11/2016            $     
+*   File Last Changed:  04/13/2016            $     
 **####################################################################################################    */  
 
 namespace CJAX\Core;
@@ -24,10 +24,14 @@ namespace CJAX\Core;
 class XmlItem{
 	
 	public $selector;
+    
 	public $coreEvents;
+    
 	public $id = null;
+    
 	public $name = null;
-	public $type = null;
+	
+    public $type = null;
 	
 	/**
 	 * 
@@ -49,16 +53,14 @@ class XmlItem{
 	public function __construct(CoreEvents $coreEvents, $xmlId, $name = null, $type = null){
         $this->coreEvents = $coreEvents;
 		$this->name = $name;
-		$this->id = (int) $xmlId;
+		$this->id = (int)$xmlId;
 		$this->type = $type;
 	}
 	
 	public function __set($setting, $value){
 		if($value instanceof Plugin){
-			if(method_exists($value, 'callbackHandler')){
-			    if($value->callbackHandler($value->xml,$this, $setting)){
-					return $value;
-				}
+			if(method_exists($value, 'callbackHandler') && $value->callbackHandler($value->xml,$this, $setting)){
+			    return $value;
 		    }
             
 			switch($setting){
@@ -69,9 +71,7 @@ class XmlItem{
 					if(isset(CoreEvents::$callbacks[$value->id])){					
 						$cb = CoreEvents::$callbacks[$value->id];
 						$cb = $this->coreEvents->processScache($cb);						
-						//die("s<Pre>".print_r($cb,1));
-						CoreEvents::$cache[$value->id]['callback'] = $this->coreEvents->mkArray($cb,'json', true);
-						
+						CoreEvents::$cache[$value->id]['callback'] = $this->coreEvents->mkArray($cb,'json', true);						
 						CoreEvents::$callbacks[$this->id][$value->id] = CoreEvents::$cache[$value->id];
 						$value->delete();
 					} 
@@ -148,27 +148,14 @@ class XmlItem{
 			$args = $_args;
 		}
 		$params = range('a','z');
-
 		$pParams = [];
 		if($args){
 			do{
-				if(is_array($args[key($args)])){
-					$pParams[current($params)] = $args[key($args)];
-				} 
-                else{
-					$pParams[current($params)] = $args[key($args)];
-				}
-				
+				$pParams[current($params)] = $args[key($args)];				
 			}while(next($args) && next($params));
-		}
-		
-		$data = [];
-		$data['do'] = '_fn';
-		$data['fn'] = $fn;
-		$data['fn_data'] = $pParams;
-		
-		$item = $ajax->xmlItem($ajax->xml($data),'xmlItem_fn');
-		return  $item;
+		}		
+		$data = ['do' => '_fn', 'fn' => $fn, 'fn_data' => $pParams];
+		return $ajax->xmlItem($ajax->xml($data),'xmlItem_fn');
 	}
 	
 	public function callback($xmlObj, $fn = null){
@@ -197,7 +184,7 @@ class XmlItem{
 	}
 	
 	public function xml($id = null){
-		$id  or $id = $this->id;
+		$id or $id = $this->id;
 		if(!is_null($id)){
 			return CoreEvents::$cache[$id];
 		}
