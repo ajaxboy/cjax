@@ -98,8 +98,8 @@
 	
 	$ajax->Exec();
   ```
-- Multiple APIs now work on overlays callbacks
-  for example you may use Cjax in overlays elements
+- Multiple APIs now work on overlays callbacks for example you may use Cjax in overlays elements.
+ 
   Eg:
   ```php  
 	$overlay = $ajax->overlay('resources/html/login.html');
@@ -124,7 +124,9 @@
 - Allow to require 'ajax.php' for codeIgnater, when before it had to be 'ajaxfw.php', (the old way still works)
 - Validate & Uploader plugins integration
   Plugin validate now integrates with plugin uploader.
+ 
   Example:
+
   ```php  
    $ajax->validate('buttonID', 'ajax.php?optional/pre/action', $rules)->uploader(
 	array(
@@ -148,20 +150,20 @@
 
 - Fixed some small bugs introduced in RC2	
 - Ajax Upload functionality was converted into a stand alone plugin "uploader"
-	While within the framework API this functionality fits well, this ajax functionality is constantly 
+	- While within the framework API this functionality fits well, this ajax functionality is constantly 
 	improved and updated so as a plugin gives more flexiblity to release and update faster.
 - New Plugin Autoload functions
-	Gives the autoload ability to plugins. So plugins can auto-execute themselves or run stuff without requiring for $ajax->[pluging]() to be initiated.
+	- Gives the autoload ability to plugins. So plugins can auto-execute themselves or run stuff without requiring for $ajax->[pluging]() to be initiated.
 - More optional settings introduced for further flexiblity.
 - Auth hook  introduced
-	If you require to validate user session or validate any user session validity  you may
+	- If you require to validate user session or validate any user session validity  you may
 	use this setting to deny or approve an ajax request.
 - Routing hook introduced
-	You may now route ajax request to other sections of your application, for example if your application
+	- You may now route ajax request to other sections of your application, for example if your application
 	 has a built addon or plugin system and you simply want to route ajax to other sections of the application, 
 	 you may route these requests with built-in support.
 - Include hook introduced
-	If you need to include dependencies in the ajax framework while in ajax request mode, there is now a section where
+	- If you need to include dependencies in the ajax framework while in ajax request mode, there is now a section where
 	you can reference these.
 - Caching is now supported for page load commands
 - New 'Overlay and client-side' validation sample released
@@ -230,15 +232,14 @@
 
 - Support for PATH INFO  style URL
 	```php  
-	eg: ajax.php/controller/function
-	
+	eg: ajax.php/controller/function	
 	This adds to the already  plenty of supported URLS in the list:
 	ajax.php?$controller/$function
 	ajax.php?controller=$controller&function=$function
 	ajax.php/$controller/$function
-	
+	```
 	With Mod-Rewrite:
-	
+	```php 
 	ajax/$controller/$function
 	or:
 	*Anything*/$controller/$function
@@ -278,7 +279,7 @@
  	- Removed low usability functions, to favor effiency and clean code.
 - Improved Cross domain ajax to fall back on fsockopen() if cURL is not found.
 - New Plugin jQuery "Uploadify" PHP has been released
-  This plugin makes use of jQuery and jQuery.uploadify to bring this plugin to you in a full PHP environment.
+    - This plugin makes use of jQuery and jQuery.uploadify to bring this plugin to you in a full PHP environment.
 - Plugin jQuery validate has backward compatibility with 5.0
 - Import, - support to import Javascript and Css files, for example:
   ```php	
@@ -421,7 +422,7 @@
 	- propagate dropdowns -  rather than a command, this sample is a functionality.
 	- send_form - how to submit a form using ajax.
 	
-	for more samples look inside the samples directory in the CJAX package.
+	For more samples look inside the samples directory in the CJAX package.
 	
 
 ## CJAX 3.1 RC1 - February, 2010
