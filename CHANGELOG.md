@@ -404,15 +404,14 @@
 ## CJAX 3.1 RC2 - February 18, 2011
 
 - Changed the usaged of $CJAX as official variable to $ajax - a more generic way.
-	CJAX class is still instanciated by calling CJAX::getInstance(). This will not change.
+	- CJAX class is still instanciated by calling CJAX::getInstance(). This will not change.
 - Implemented and optimized internal timer to be able to run for long instances.
-	The present internal timer was optimized and tested to run as per-need basis. This has been extended and optionmized
+	- The present internal timer was optimized and tested to run as per-need basis. This has been extended and optimized
 	to handle long periods to interpret and execute commands.
 - New function CJAX.get.byClassName(); 
-	Gets the first element which cointains a specific class, used when a element id is not available in the document.
-	It is recommended to always assign id to all appropriate elements for faster, and more reliable results.
-- Example Package was extended
-	New example are available wihin the ajax package as some usage examples.
+	- Gets the first element which cointains a specific class, used when a element id is not available in the document.
+	- It is recommended to always assign id to all appropriate elements for faster, and more reliable results.
+- Example Package was extended: New example are available within the ajax package as some usage examples.
 	- simple Alert (this is one of the simplest usages, but could give a good starting point for someone wanting to do bigger things)
 	- bind_commands - shows how to bind nested command in one execute command.
 	- confirm_action
@@ -423,7 +422,7 @@
 	- ajax_call - example to create simple ajax calls.
 	- send_input - simple example how to send input to elements
 	- real_time - this is not command, this is a functionality sample.
-	- parameters - shows how to send an ajax call with paramenters
+	- parameters - shows how to send an ajax call with parameters
 	- post - post requests to the server.
 	- propagate dropdowns -  rather than a command, this sample is a functionality.
 	- send_form - how to submit a form using ajax.
@@ -461,8 +460,8 @@ tested over time to be reliable and stable.
 - Cjax development was slow at this time but alot of new futures and bugs were  fixed. 
 - At this time some of the CJAX internal functions were also optimized for better reliability.
 - Deprecaded the usage of $ajax->call_js();
-	$ajax->call_js() is the inline printable version of $ajax->call() - which uses uses event listeners. 
-	At this time all ajax calls use event listeners.
+	- $ajax->call_js() is the inline printable version of $ajax->call() - which uses uses event listeners. 
+	- At this time all ajax calls use event listeners.
 
 
 
