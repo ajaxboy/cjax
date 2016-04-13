@@ -72,7 +72,7 @@
 - New Autocomplete plugin
 - Ability for wait() function to process milliseconds
 - Implemented new release "code name" policy: 
-    This means that a code name will be used for each release or the same code name for a series of releases.
+  - This means that a code name will be used for each release or the same code name for a series of releases.
 - Uploadify plugin was updated to uploadify 3.2
 - Fixed bug that cut off parameters if two slashes were passed in the URL.
 - Other improvements & small fixes
@@ -126,7 +126,7 @@
   Plugin validate now integrates with plugin uploader.
   Example:
   ```php  
-  $ajax->validate('buttonID', 'ajax.php?optional/pre/action', $rules)->uploader(
+   $ajax->validate('buttonID', 'ajax.php?optional/pre/action', $rules)->uploader(
 	array(
 		'target' => 'directory/where/files/are/uploaded/to',
 		'text'=> 'Uploading Files..',
@@ -157,7 +157,7 @@
 	If you require to validate user session or validate any user session validity  you may
 	use this setting to deny or approve an ajax request.
 - Routing hook introduced
-	 You may now route ajax request to other sections of your application, for example if your application
+	You may now route ajax request to other sections of your application, for example if your application
 	 has a built addon or plugin system and you simply want to route ajax to other sections of the application, 
 	 you may route these requests with built-in support.
 - Include hook introduced
@@ -209,7 +209,7 @@
 - Overlay url now supports callback option - you may pass a  callback within the settings
 	and the requested contents will pass through the callback. Then you may manipulated before it is shown on the  overlay.
 - Fixed some IE overlay formatting issues.
-	Additionally, IE now plays nice with most of the demos, if not all.
+	- Additionally, IE now plays nice with most of the demos, if not all.
 
 
 ## CJAX 5.0-RC1(Maintenance Release) - 05, 2012
@@ -245,21 +245,16 @@
 	*Anything* - a word of your choosing by changing the  word "ajax" in file .htaccess
 	```
 - Fixed issues with IE 7 not working
-	All basic functionality and ajax operations are operational in IE7, but  there might be other issues - see "known issues".
+	- All basic functionality and ajax operations are operational in IE7, but  there might be other issues - see "known issues".
 - Other small improvements in request handling, and dealing with controllers that have constructors.
-
-- Known Issues:
-	OveLay,overLayContent some formatting dis-perfections on IE7.
-	Other small bugs/issues on IE7. Some demos may not work on IE7.
-	Ajax Files Uploads works in IE7 but, it opens a new window uninvitedly.
-	
-
 - Fixed issue that if controller had the same name as the method function being called it would call the contructor, 
 	and as a result execute the twice. Made it so that it gracefully handles such requests, 
-	and  check if a constructor exists. If a method is not passed, it will fire the contructor.
-
+	and check if a constructor exists. If a method is not passed, it will fire the contructor.
 - Known Issues:
-	Some of the demos don't work on IE.
+	- OverLay,overLayContent some formatting dis-perfections on IE7.
+	- Other small bugs/issues on IE7. Some demos may not work on IE7.
+	- Ajax Files Uploads works in IE7 but, it opens a new window uninvitedly.
+	- Some of the demos don't work on IE.
 	
 
 ## CJAX 5.0-Beta - May 29, 2012
@@ -268,25 +263,24 @@
 - Plugins Javascript API has be released
 - Plugins PHP API has been released
 - There are so many new goodies for the plugin system that not many of them will get to be mentioned here.
-	See "how to create a plugin" in the Examples zip for samples and documentation.
-	a "Example Plugin" has been released,  examples and documentation within the code on how to build a 
+	- See "how to create a plugin" in the Examples zip for samples and documentation.
+	- An "Example Plugin" has been released,  examples and documentation within the code on how to build a 
 	basic plugin with Javascript and advanced plugins using PHP.
-	This package includes  two plugins, an advanced plugin featuring PHP and Javascript, and A basic one simply 
+	- This package includes  two plugins, an advanced plugin featuring PHP and Javascript, and A basic one simply 
 	in Javascript no php. Support for callbacks in Javascript Ajax - see samples in plugin docs. There is full debug
 	information available for plugins, use $ajax->debug = true; to see debug information in firebug console.
 	
     
 - Overall Core
-	Some of the  core functionality was re-written entirely to be flexible enough to provide entrance to a very powerful
-	plugin system, and overall improvements of the system. Now the API bridge system that connects JavaScript and PHP is even closer,
- 	Full support for local scope development for plugins, in both Javascript and PHP. 
- 	Removed low usability functions, to favor effiency and clean code.
+	- Some of the  core functionality was re-written entirely to be flexible enough to provide entrance to a very powerful
+	plugin system, and overall improvements of the system. Now the API bridge system that connects JavaScript and PHP is even closer.
+ 	- Full support for local scope development for plugins, in both Javascript and PHP. 
+ 	- Removed low usability functions, to favor effiency and clean code.
 - Improved Cross domain ajax to fall back on fsockopen() if cURL is not found.
 - New Plugin jQuery "Uploadify" PHP has been released
   This plugin makes use of jQuery and jQuery.uploadify to bring this plugin to you in a full PHP environment.
 - Plugin jQuery validate has backward compatibility with 5.0
-- Import, - support to import Javascript and Css files:
-	Examples:
+- Import, - support to import Javascript and Css files, for example:
   ```php	
 	Import files  asynchronously
 	
@@ -307,15 +301,15 @@
   ```
 - In your Ajax Controller, if you return an array or an object, it will be converted to json automatically.
 - Performance improvements were made to an already fast system, now it's lightning fast.
-	Test Speed? - try the recursive ajax request example included in the samples zip, and see how fast this framework works..    
+	- Test Speed? - try the recursive ajax request example included in the samples zip, and see how fast this framework works..    
 - The minimized version of the Javascript library is now by default used.
-	cjax.js the ajax Javascript library now also has enumerated version in file name, eg: cjax-5.0.js
+	- cjax.js the ajax Javascript library now also has enumerated version in file name, eg: cjax-5.0.js
 - Stability improvements - some changes were implemented to assure stability when executing functions of imported files.
 - Preload - a new preload functionality now exists, all imports are already set in preload mode.
-	All preloads gain high execution priority instantly.
+	- All preloads gain high execution priority instantly.
 - Ajax Uploads   - now supports multiple file uploads, takes any files you put in a form. 
-	It also handles arrays of files. Any files you throw in a form will be uploaded through AJAX.
-	Demo updated in the demos zip. New API function $ajax->upload() was added. No controller
+	- It also handles arrays of files. Any files you throw in a form will be uploaded through AJAX.
+	- Demo updated in the demos zip. New API function $ajax->upload() was added. No controller
 	is required all the processing is built in. Recognizes most errors. Suports custom settings in $ajax->upload(), 
 	the API documentation has be updated, see API for more info. 
 - $ajax->form() parameter form_id is no longer required if used in context of $ajax->Exec(), the form is automatically pulled from
@@ -357,18 +351,19 @@
 ## CJAX 4.1RC1 - May 3, 2012
 
 - Full support for friendly URLS
+  ```
   ajax.php?controller=$controller&function=$function&a=$arg1&b=$arg2
   ajax.php?$controller/$function/$arg1/$arg2
   ajax/$controller/$function/$arg1/$arg2  
-
+  ```
 - Changed how methods are called, although in testing it seems stable, this is considered a release candidate for additinal testing.
 
 
 ## CJAX 4.0 Stable release - May 2, 2012
 
 - Cjax development has been slow this year. The ajax framework has been  very stable.
-	Gone through over a year of testing and usage without major bugs found. A few minor bugs were fixed and
-	a few enhancements and improvements were made.
+	- Gone through over a year of testing and usage without major bugs found. A few minor bugs were fixed and
+	- a few enhancements and improvements were made.
 - Automatically detects Jquery can execute commands while the requests being made with jquery, automatically. 
 - Alternative integration with Codeignater has been done, no known bugs.
 
@@ -380,9 +375,9 @@
 	Now no longer can someone access ajax.php directly in the browser. This is done for security reasons
 	and closes doors to further vulnerability.
 - New flag system was implemented
-	-The new flag system allows for further costumization of the already flexibly ajax system.
-	-The flag system allow for the usage of $ajax->setFlags(); functionality.
-	-This functionally also triggered the addition of new constant flags defitions.
+	- The new flag system allows for further costumization of the already flexibly ajax system.
+	- The flag system allow for the usage of $ajax->setFlags(); functionality.
+	- This functionally also triggered the addition of new constant flags defitions.
 	Usage Example:
 	```php
 	$flags = array('FLAG_WAIT'=> CJAX::FLAG_NO_WAIT, 'FLAG_ELEMENT_GETTER'=> CJAX::FLAG_ELEMENT_BY_ID);
@@ -390,15 +385,14 @@
 	$ajax->setFlags( flags , 3);
 	```
 
-	-FLAG_WAIT = skips any awaiting time set with $cjax->wait();
-	-FLAG_ELEMENT_GETTER = tells the function that the element to be used next is to be gotten by itself class name not its id.
-	We strongly recommand not replace ids for other type of property as it is not reliable. Try to set ids for all elements needed.
-	
-	-These flags themselves are only two, but the system implemented allows for extensive usage of new flags. 
+	- FLAG_WAIT = skips any awaiting time set with $cjax->wait();
+	- FLAG_ELEMENT_GETTER = tells the function that the element to be used next is to be gotten by itself class name not its id.
+	- We strongly recommand not replace ids for other type of property as it is not reliable. Try to set ids for all elements needed.	
+	- These flags themselves are only two, but the system implemented allows for extensive usage of new flags. 
 	 Including further interaction with plugins.	
-	-The example above shows how to set flags for the next set of commands, the flags are already defined constant
+	- The example above shows how to set flags for the next set of commands, the flags are already defined constant
 	you can find within CJAX,  the second parameter is the number of future commands it will affect.
-	If not specified, then it will set flags only for the next command without affecting the rest.
+	- If not specified, then it will set flags only for the next command without affecting the rest.
     
 
 ## CJAX 3.1 RC2 - February 18, 2011
