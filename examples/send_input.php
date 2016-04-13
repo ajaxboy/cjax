@@ -35,19 +35,18 @@ echo $ajax->code("
 Controller:
 <?php 
 echo $ajax->code("
+use CJAX\\Core\\CJAX;    
 class controller_send_input {
 	
-	function send_text( \$text )
-	{
+	function send_text( \$text ){
 		
-		\$ajax = ajax();
+		\$ajax = CJAX::getInstance();
 		
 		\$ajax->success(\"This message was sent: \$text\",30);
 	}
 	
-	function send_checkbox( \$check )
-	{
-		\$ajax = ajax();
+	function send_checkbox( \$check ){
+		\$ajax = CJAX::getInstance();
 		
 		if(\$check) {
 			\$ajax->success(\"Is checked..\");

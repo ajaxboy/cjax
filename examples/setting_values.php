@@ -67,11 +67,11 @@ echo $ajax->code("
 Controller:
 <?php 
 echo $ajax->code("
+use CJAX\\Core\\CJAX;   
 class change_value {
 
-	function div()
-	{
-		\$ajax = ajax();
+	function div(){
+		\$ajax = CJAX::getInstance();
 		
 		//Some random strings .......
 		\$text[] = \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. \";
@@ -89,9 +89,8 @@ class change_value {
 		\$ajax->DIV_1 = \$text[rand(0, count(\$text)-1)];
 	}
 	
-	function text(\$current_value)
-	{
-		\$ajax = ajax();
+	function text(\$current_value){
+		\$ajax = CJAX::getInstance();
 		
 		\$ajax->text1 = \"Random number..\".rand(100,1000);
 	}
@@ -99,7 +98,7 @@ class change_value {
 	
 	function check(\$current_value)
 	{
-		\$ajax = ajax();
+		\$ajax = CJAX::getInstance();
 		
 		if(\$current_value) {
 			\$ajax->check1 = false;

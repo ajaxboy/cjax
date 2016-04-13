@@ -33,7 +33,7 @@ require_once 'ajax.php';
 		<br />
 		You may instantiate Cjax as follows:
 		<?php echo $ajax->code("
-\$ajax = ajax();
+\$ajax = CJAX::getInstance();
 		", false);?>
 		Once you have access to the $ajax object, simply in the HEAD of the HTML page do:
 		<?php echo $ajax->code("

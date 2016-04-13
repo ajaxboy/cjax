@@ -9,7 +9,8 @@
 
 // get instance of the framework (you first would need to include the ajax file)
 // require_once 'ajax.php';
-$ajax = ajax();
+use CJAX\Core\CJAX;
+$ajax = CJAX::getInstance();
 
 // call your plugin
 // please note that you do not need a class or a php file, to create  a plugin.

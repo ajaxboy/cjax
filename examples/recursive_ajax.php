@@ -39,17 +39,17 @@ echo $ajax->code("
 <h2>Controller</h2>
 <?php
 echo $ajax->code("
+use CJAX\\Core\\CJAX;    
 class recursive_ajax {
 	
-	function call(\$counter = 0,\$count)
-	{
+	function call(\$counter = 0,\$count){
 		//force valid inputs
 		\$counter = (int) \$counter;
 		\$count = (int) \$count;
 		
 		\$counter++;
 		
-		\$ajax = ajax();
+		\$ajax = CJAX::getInstance();
 		
 		//if you enter a number greate than 100
 		if(\$count > 100) {

@@ -46,12 +46,11 @@ Controller:
 <?php
 echo $ajax->code("
 
-
+use CJAX\\Core\\CJAX;
 class dropdown {
 	
-	function propagate(\$selected)
-	{
-		\$ajax = ajax();
+	function propagate(\$selected){
+		\$ajax = CJAX::getInstance();
 		\$data = array();
 		
 		

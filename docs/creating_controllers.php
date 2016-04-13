@@ -2,7 +2,8 @@
 
 require 'ajax.php';
 
-$ajax = ajax();
+use CJAX\Core\CJAX;
+$ajax = CJAX::getInstance();
 ?>
 <head>
 <?php echo $ajax->init();?>

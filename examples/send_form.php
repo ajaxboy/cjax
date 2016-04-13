@@ -33,11 +33,11 @@ echo $ajax->code("
 Controller:
 <?php 
 echo $ajax->code("
+use CJAX\\Core\\CJAX;    
 class send_form {
 	
-	function submit_form(\$form_fields)
-	{
-		\$ajax = ajax();
+	function submit_form(\$form_fields){
+		\$ajax = CJAX::getInstance();
 		
 		\$ajax->alert(\"Server Says....\\n\\t\\t\".print_r(\$form_fields,1));
 	}

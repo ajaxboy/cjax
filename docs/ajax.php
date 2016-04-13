@@ -1,10 +1,12 @@
 <?php
 
+use CJAX\Core\CJAX;
 if(!file_exists($f = '../ajaxfw.php') && !file_exists($f = '../ajax.php')) {
 	die("Ajax File was not found.");
 }
+
 require_once $f;
-$ajax  = ajax();
+$ajax = CJAX::getInstance();
 if(!$ajax->isAjaxRequest()) {
 	
 	$ajax->document('body.innerHTML', array('prepend'=>"

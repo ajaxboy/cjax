@@ -1,7 +1,9 @@
 <?php
 require '../ajax.php';
 
-$ajax = ajax();
+use CJAX\Core\CJAX;
+$ajax = CJAX::getInstance();
+
 ?>
 <html>
 <head>

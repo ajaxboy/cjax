@@ -1,11 +1,12 @@
 <?php
 
+use CJAX\Core\CJAX;
 //tell ajax where to find this sample's controller
 define('AJAX_CD', 'test/ajax_diverse/controllers');
 
 require_once '../../ajax.php';
 
-$ajax = ajax();
+$ajax = CJAX::getInstance();
 	
 $overlay = $ajax->overlay('form.html');
 

@@ -36,11 +36,11 @@ echo $ajax->code("
 Controller:
 <?php 
 echo $ajax->code("
+use CJAX\\Core\\CJAX;    
 class Keyup_update {
 	
-	function update(\$text)
-	{
-		\$ajax = ajax();
+	function update(\$text){
+		\$ajax = CJAX::getInstance();
 		
 		//update page title
 		\$ajax->document('title', \$text);

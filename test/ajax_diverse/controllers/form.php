@@ -1,19 +1,21 @@
 <?php
 
+use CJAX\Core\CJAX;
+
 class Form {
 	
 	function username($username)
 	{
-		$ajax = ajax();
+		$ajax = CJAX::getInstance();
 		$ajax->user_label = array('style' => array('color' => 'green'));
 		$ajax->user_label = "<b>$username</b> is available";
 	}
 	
 	function country($selected_value)
 	{
-        $ajax = ajax();
+        $ajax = CJAX::getInstance();
         
-        $data = array();
+        $data = [];
         $selected = null;
         
         switch ($selected_value) {
@@ -44,9 +46,9 @@ class Form {
 	
 	function state($selected)
 	{
-		$ajax = ajax();
+		$ajax = CJAX::getInstance();
 		
-		$data = array();
+		$data = [];
 		
 		switch($selected){
 			case 'tx':
@@ -70,20 +72,20 @@ class Form {
 	function city($selected)
 	{
 		if($selected=='other') {
-			$ajax = ajax();
+			$ajax = CJAX::getInstance();;
 			$ajax->select('city', array(), 'other',true);
 		}
 	}
 	
     function submit($post_data)
     {
-        $ajax = ajax();
+        $ajax = CJAX::getInstance();;
         $ajax->debug($post_data);
     }
     
     function dropdown($selected_value)
     {
-        $ajax = ajax();
+        $ajax = CJAX::getInstance();;
         
         switch ($selected_value) {
         	case 'classes':

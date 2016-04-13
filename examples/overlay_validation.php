@@ -78,12 +78,11 @@ $code = $ajax->code("
 \$ajax->click('link', \$overlay);
 
 //Controller
-
+use CJAX\\Core\\CJAX;
 class overlay_validation {
 	
-	function form()
-	{
-		\$ajax = ajax();
+	function form(){
+		\$ajax = CJAX::getInstance(;
 		//show posted variables
 		\$ajax->debug(\$_POST,'Post Debug Info',\"These are the fields posted.\");
 	}

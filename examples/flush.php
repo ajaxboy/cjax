@@ -22,11 +22,11 @@ echo $ajax->code("
 //so if you click the link again, it is clean and won't do anything.
 
 //controller
+use CJAX\\Core\\CJAX;
 class flush {
 
-	function flush_element() 
-	{
-		\$ajax = ajax();
+	function flush_element() {
+		\$ajax = CJAX::getInstance();
 		//Flus link1 HTML
 		\$ajax->flush('#link1');
 	}

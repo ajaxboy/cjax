@@ -22,11 +22,11 @@ $ajax->call("ajax.php?controller=messages&function=show_messages&a=HELLO WORLD")
 Controller:
 <?php 
 echo $ajax->code("
+use CJAX\\Core\\CJAX;    
 class controller_messages  {
 	
-	function show_messages(\$message)
-	{
-		\$ajax = ajax();
+	function show_messages(\$message){
+		\$ajax = CJAX::getInstance();
 		
 		\$ajax->process(\"You are about to see the type of messages you can display on the screen..\",5);
 		\$ajax->update(\"msgs\",\"You are about to see the type of messages you can display on the screen..\");

@@ -30,11 +30,12 @@ $code = $ajax->code("
 
 
 //Controller
+
+use CJAX\\Core\\CJAX;
 class ajax_login {
 	
-	function handler(\$username, \$password) 
-	{
-		\$ajax = ajax();
+	function handler(\$username, \$password){
+		\$ajax = CJAX::getInstance();
 		
 		if(!\$username) {
 			return  \$ajax->err = 'Enter your username.';
@@ -56,9 +57,8 @@ class ajax_login {
 		
 	}
 	
-	function logout()
-	{
-		\$ajax = ajax();
+	function logout(){
+		\$ajax = CJAX::getInstance();
 		\$ajax->flush('#a_login'); //clear previous click events from element
 		\$ajax->success(\"You haved logged out.\");
 		\$ajax->a_login = 'Login'; //changes the text back to 'login'
