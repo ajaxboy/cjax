@@ -93,9 +93,9 @@
 	$ajax->keyup($element_id, $actions);
 	$ajax->keydown($element_id, $actions);
 	$ajax->blur($element_id, $actions);
-	
+  ```	
 	This is alternative replacement wrapper of the clasic:
-	
+  ```php	
 	$ajax->Exec();
   ```
 - Multiple APIs now work on overlays callbacks for example you may use Cjax in overlays elements.
@@ -114,9 +114,9 @@
 	
 	//assign the overlay to an element so when you click on it, the overlay pops
 	$ajax->click('a_login', $overlay);
-	
+  ```	
   On 5.0, this was limited to 1 single API. Now you may add as many as you want.
-  ```
+
 - Minor improvements & minor bugs fixed
 - Expanded the number of parameters you can pass from a to f to a to z.
 - Fixed "select" bug that chopped off last item in the array list in "select" ajax API.
@@ -383,7 +383,6 @@
 
 ## CJAX 3.1 RC3 - February 19, 2011
 
-
 - Improved security. 
 	Now no longer can someone access ajax.php directly in the browser. This is done for security reasons
 	and closes doors to further vulnerability.
@@ -470,7 +469,6 @@ tested over time to be reliable and stable.
 - Deprecaded the usage of $ajax->call_js();
 	- $ajax->call_js() is the inline printable version of $ajax->call() - which uses uses event listeners. 
 	- At this time all ajax calls use event listeners.
-
 
 
 ## CJAX 1.0 - February, 2007
