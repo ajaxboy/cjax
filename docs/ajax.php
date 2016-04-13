@@ -1,7 +1,7 @@
 <?php
 
 use CJAX\Core\CJAX;
-if(!file_exists($f = '../ajaxfw.php') && !file_exists($f = '../ajax.php')) {
+if(!file_exists($f = '../cjax/ajax.php')) {
 	die("Ajax File was not found.");
 }
 
