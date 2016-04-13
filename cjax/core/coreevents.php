@@ -17,13 +17,11 @@
 *   Date: 2/12/2007                           $     
 *   File Last Changed:  04/12/2016           $     
 **####################################################################################################    */   
-
 /**
  * Load external classes
  *@package CoreEvents
  * @param string $c
  */
-
 namespace CJAX\Core;
 use StdClass;
  
@@ -32,6 +30,7 @@ class CoreEvents extends Format{
 	public $a,$b,$c,$d,$e,$f,$g,$h,$i, $j;
 	
 	public $config;
+
 	//acts more strict in the kind of information you provive
 	public $strict = false;
 
@@ -191,7 +190,6 @@ class CoreEvents extends Format{
 	 */
 	public $version = '6.0';
 
-
 	/**
 	 * Tells whether CJAX output has initciated or not, to void duplications
 	 *
@@ -207,6 +205,7 @@ class CoreEvents extends Format{
 	 * Sets the default way of making AJAX calls, it can be either get or post
 	 */
 	public $method;
+
 	/**
 	 * Stores the the waiting procedure for the next action
 	 */
@@ -237,13 +236,13 @@ class CoreEvents extends Format{
 	/*
 	 * sets up the default loading image
 	 */
-
 	protected static $flags = [];
 
 	public static $const = [];
 	
 	//holds he latest flag
 	public $_flag = null;
+
 	public $_flagCount = 0;
 	
 	public function xmlItem($xml, $name){
@@ -251,20 +250,14 @@ class CoreEvents extends Format{
 			die("XML:{$name} ".print_r($xml,1)." is not an integer.");
 		}
 		$_xml = new XmlItem($this, $xml, $name);
-		
-		if(!$this->xmlObjects){
-			$this->xmlObjects = new StdClass();
-		}
-		
-		$this->xmlObjects->{$_xml->id} = $_xml;
-	
+        $this->xmlObjects = ($this->xmlObjects)? $this->xmlObjects: new StdClass;
+		$this->xmlObjects->{$_xml->id} = $_xml;	
 		return $_xml;
 	}
 	
 	public function camelize($string, $ucfirst = true){
 		$string = str_replace(['-', '_'], ' ', $string);
-		$string = ucwords($string);
-		$string = str_replace(' ', '', $string); 
+		$string = str_replace(' ', '', ucwords($string)); 
 		return ($ucfirst)? ucfirst($string): lcfirst($string);
 	}
 	
@@ -275,7 +268,6 @@ class CoreEvents extends Format{
 	public function xmlObjects($id = null){
         return (is_null($id))? $this->xmlObjects: $this->xmlObjects->$id;
 	}
-
 	
 	public function flushCache($all = false){
 		if(!isset($_SESSION)){
@@ -385,7 +377,6 @@ class CoreEvents extends Format{
 				}
 			}
 		}
-
         $_preload = ($_preload)? $this->mkArray($this->processScache($_preload)): null;   
 		$_cache = $this->mkArray($this->processScache(self::$cache));		
 		if($ajax->config->debug){
@@ -448,7 +439,6 @@ class CoreEvents extends Format{
 		return $_cache;
 	}
 	
-
 	/**
 	 * Saves the cache
 	 *
@@ -487,14 +477,6 @@ class CoreEvents extends Format{
 	
 	public function _processScachePlugin($v,$caller = null){
 		if($v['data'] && is_array($v['data'])){
-			/*foreach($v['data'] as $k2 => $v2) {
-				if(is_array($v2)) {
-					$v['data'][$k2] = "<$k2>".$this->mkArray($v['data'][$k2])."</$k2>";
-				} else {
-					$v['data'][$k2] = "<$k2>$v2</$k2>";
-				}
-			}
-			$v['data'] =  implode($v['data']);*/
 			$v['data'] =  $this->mkArray($v['data']);
 		}
 		if(isset($v['extra'])){
@@ -634,12 +616,10 @@ class CoreEvents extends Format{
 				$xml['flag'] = $this->xmlIt($ajax->_flag);
 				$ajax->_flag = null;
 			} 
-            else{
-				if($ajax->_flag=='first'){
-					$this->setLastCache($xml);
-					$ajax->_flag = null;
-					return;
-				}
+            elseif($ajax->_flag == 'first'){
+				$this->setLastCache($xml);
+				$ajax->_flag = null;
+				return;
 			}
 		}
 		
@@ -651,7 +631,6 @@ class CoreEvents extends Format{
 		return $count;
 	}
 	
-	
 	public function cacheWrapper($wrapper = []){
 		if(is_array($wrapper)){
 			self::$wrapper = implode('(!xml!)',$wrapper);
@@ -660,40 +639,39 @@ class CoreEvents extends Format{
 	
 	public function fallbackPrint($out){
 		$ajax = CJAX::getInstance();
-		$path = $ajax->_path;
-				
-				$data = "
-init = function() {
-	if (arguments.callee.done) return;
-	arguments.callee.done = true;
-	_cjax = function() {
-		$out
-	}
-	window['DOMContentLoaded'] = true;
-	if(typeof CJAX != 'undefined') {
-		_cjax();
-	} else {
-		window['_CJAX_PROCESS'] = function() {
-			_cjax();
-		}
-	}
-}
-if (document.addEventListener) {
-	document.addEventListener('DOMContentLoaded', init, false);
-} else {
-	/* for Internet Explorer */
-	/*@cc_on @*/
-	/*@if (@_win32)
-	 document.write('<script defer src=\"{$path}cjax.js.php?json=1\"><'+'/script>');
-	/*@end @*/
-	window.onload = init;
-}";
+		$path = $ajax->_path;				
+		$data = "init = function() {
+	                 if (arguments.callee.done) return;
+	                 arguments.callee.done = true;
+	                 _cjax = function() {
+		                 $out
+	                 }
+	                 window['DOMContentLoaded'] = true;
+	                 if(typeof CJAX != 'undefined') {
+		                 _cjax();
+	                 } else {
+	                   	 window['_CJAX_PROCESS'] = function() {
+			                 _cjax();
+		                 }
+	                 }
+                 }
+                 if (document.addEventListener) {
+	                 document.addEventListener('DOMContentLoaded', init, false);
+                 } else {
+	                 /* for Internet Explorer */
+	                 /*@cc_on @*/
+	                 /*@if (@_win32)
+	                 document.write('<script defer src=\"{$path}cjax.js.php?json=1\"><'+'/script>');
+	                 /*@end @*/
+	                 window.onload = init;
+                 }";
 		return $data;
 	}
 
 	public function getCache(){
 		return self::$cache;
 	}
+
 	/**
 	 * Used for loading "fly" events
 	 *
@@ -703,10 +681,7 @@ if (document.addEventListener) {
 		if(!self::$_isShutdownCalled) {
 			register_shutdown_function(['CJAX\\Core\\CoreEvents','saveSCache']);
 			self::$_isShutdownCalled = true;
-			self::$useCache = true;
-			if(!headers_sent()) {
-				//flush();
-			}			
+			self::$useCache = true;		
 		}
 		
 		if($cacheId){
@@ -720,7 +695,6 @@ if (document.addEventListener) {
         else{
 			self::$cache[] = $add;
 		}
-
 		if($add == null){
 			return self::$cache;
 		}
@@ -736,9 +710,7 @@ if (document.addEventListener) {
 	
 	public function mkArray($array, $tag = 'json', $double = false){
 		$json = $this->encode($this->jsonEncode($array));		
-		if($double){
-			$json = $this->encode($json);
-		}		
+        $json = ($double)? $this->encode($json): $json;	
 		return "<{$tag}>{$json}</{$tag}>";
 	}
 
@@ -787,7 +759,6 @@ if (document.addEventListener) {
 		
 		if($ajax->initExtra){
 			$pluginPath = str_replace('/assets/js','/plugins',$jsPath);
-			//die($plugin_path);
 			foreach($ajax->initExtra as $k => $v) {
                 $script[] = (isset($v['plugin_dir']))? "\t<script type='text/javascript' src='".$pluginPath.$v['plugin_dir'].'/'.$v['file']."'></script>\n"
                                                      : "\t<script type='text/javascript' src='".$v['file']."'></script>\n";
@@ -818,9 +789,7 @@ if (document.addEventListener) {
         $this->_file = ($min && substr($min, 0, 2)=='..')
                         ? (strpos($min,'.js') !== false) ? null: "cjax-6.0.min.js"
                         : "cjax-6.0.min.js";
-		$href = $this->headRef ($this->jsdir, $min);
-		$this->isInit = $href;
-		//plugin::trigger('onInit');
+		$this->isInit = $href = $this->headRef($this->jsdir, $min);
 		return $href;
 	}
 
@@ -860,21 +829,15 @@ if (document.addEventListener) {
 		@stream_set_timeout($fp, 20);
 		if(!$fp){
 			die('Could not connect to remote server: '. $errstr);
-			return false;
 		}
 		if($errstr){
 			die('Error:#'.$errno.' '.$errstr);
 		}
 
-		if($fp){
-			$base = "/";			
-	        @fputs($fp, "GET {$base}{$file} HTTP/1.1\r\n");
-	        @fputs($fp, "HOST: {$host}\r\n");
-	        @fputs($fp, "Connection: close\r\n\r\n");
-		} 
-        else{
-			return false;
-		}
+		$base = "/";			
+	    @fputs($fp, "GET {$base}{$file} HTTP/1.1\r\n");
+	    @fputs($fp, "HOST: {$host}\r\n");
+	    @fputs($fp, "Connection: close\r\n\r\n");
 		$getInfo = false;
 		$data= [];
         
@@ -882,10 +845,8 @@ if (document.addEventListener) {
 			if($getInfo){
 				$data[] = fread($fp, 1024);
 			} 
-            else{
-				if(fgets($fp, 1024) == "\r\n"){
-					$getInfo = true;
-				}
+            elseif(fgets($fp, 1024) == "\r\n"){
+				$getInfo = true;
 			}
 		}
 		fclose($fp);		
@@ -911,9 +872,7 @@ if (document.addEventListener) {
 	
 	public function tapCache($crc32){
 		$cache = $this->readCache('cjax-'.$crc32);
-		if($cache) {
-			return $cache[$crc32];
-		}
+		return ($cache)? $cache[$crc32]: null;
 	}
 	
 	/**
@@ -935,11 +894,9 @@ if (document.addEventListener) {
  		}
  		$dir = rtrim($dir, '/').'/';
  		$file = $dir.$filename;
- 		if(file_exists($file)){
- 			if (!is_writable($file) && !chmod($filename, 0666)){
- 				echo "CJAX: Error! file ($file) is not writable, Not enough permission";
- 				exit;
- 			}
+ 		if(file_exists($file) && !is_writable($file) && !chmod($filename, 0666)){
+ 			echo "CJAX: Error! file ($file) is not writable, Not enough permission";
+ 			exit;
  		}
  		if(!$fp = @fopen($file, 'w')){
  			echo "CJAX: Error! file ($file) is not writable, Not enough permission";
@@ -982,8 +939,6 @@ if (document.addEventListener) {
 				break;
 			case 'first':
 			case 'last':
-				$this->_flag = 'first';				
-			    break;
 			case 'no_wait':
 				$this->_flag = 'first';
 				break;
@@ -1015,19 +970,15 @@ if (document.addEventListener) {
                                                 $_SERVER['HTTP_X_REQUESTED_WITH'] : null;
 			}
 		} 
-        else{
-			if(isset($_SERVER['HTTP_X_REQUESTED_WITH'])){
-				$headers['X-Requested-With'] = $_SERVER['HTTP_X_REQUESTED_WITH'];
-			}
+        elseif(isset($_SERVER['HTTP_X_REQUESTED_WITH'])){
+			$headers['X-Requested-With'] = $_SERVER['HTTP_X_REQUESTED_WITH'];
 		}
 		
-		if(!empty($headers)){
-			if($headers['X-Requested-With']=='CJAX FRAMEW0RK 6.0' || $headers['X-Requested-With']=='XMLHttpRequest'){
-				return true;
-			}
+		if(!empty($headers) && ($headers['X-Requested-With'] == 'CJAX FRAMEW0RK 6.0' || $headers['X-Requested-With'] == 'XMLHttpRequest')){
+		    return true;
 		}
 		//allow access to flash
-		if(isset($_SERVER['HTTP_USER_AGENT']) && $_SERVER['HTTP_USER_AGENT']=='Shockwave Flash'){
+		if(isset($_SERVER['HTTP_USER_AGENT']) && $_SERVER['HTTP_USER_AGENT'] == 'Shockwave Flash'){
 			return true;
 		}
 	}
@@ -1047,31 +998,23 @@ if (document.addEventListener) {
 	 				$arr = debug_backtrace(false);
 		 			$trace = $arr[1];
 		 			$class = $trace['class'];
-	 				$class = $class;
 	 				$callback[0] =$class;
 	 			}
 	 			if(!$params) $params = [];
-	 			$r = call_user_func_array($callback,$params);
+	 			$r = call_user_func_array($callback, $params);
 	 		} 
             else{
 	 			$r = call_user_func($callback);
 	 		}
-	 		exit();
+	 		exit;
 	 	}
         return ($this->isAjaxRequest())? true: false;
 	 }
 
 	public function setRequest($request = true){
-	 	if($request){
-		 	$_GET['cjax'] = time();
-		 	$_REQUEST['cjax'] = time();
-	 	} 
-        else{
-	 		$_GET['cjax'] = '';
-	 		$_REQUEST['cjax'] = '';
-	 	}
-	 }
-
+        $_GET['cjax'] = ($request)? time(): '';
+        $_REQUEST['cjax'] = ($request)? time(): '';
+	}
 
 	/**
 	 * Encode special data to void conflicts with javascript
@@ -1080,36 +1023,39 @@ if (document.addEventListener) {
 	 * @return encoded string
 	 */
 	public function encode($data){
-		$data = str_replace('+','[plus]', $data);
-		$data = urlencode($data);		
-		return $data; 
+		return urlencode(str_replace('+', '[plus]', $data));		
 	}
 
 	/**
-	* Converts an array into xml..
-	*/
+	 * Converts an array into xml..
+	 */
 	public function xmlIt($input = [], $tag = null){
 		$new = [];
 		if(is_array($input) && $input){
-			foreach($input as $k =>$v){
-				if($v){
-					if($tag){
-						$k = $tag;
-					}
-					if(is_array($v)){
-						foreach($v as $k2 => $v2){
-							$new[] =  $this->xmlIt($v2);
-						}
-					} 
-                    else{
-						$new[] =  "<$k>$v</$k>";
-					}
-				}
-			}
+            $new = $this->xmlInput($tag, $input);
 			return $xml = implode($new);
 		}
 	}
-
+    
+    private function xmlInput($tag, $input){
+        $new = [];
+        foreach($input as $k => $v){
+            if($v){
+                if($tag){
+                    $k = $tag;
+                }
+                if(is_array($v)){
+                    foreach($v as $k2 => $v2){
+                        $new[] =  $this->xmlIt($v2);
+                    }
+                } 
+                else{
+                    $new[] =  "<$k>$v</$k>";
+                }
+            }
+        }
+        return $new;    
+    }
 
 	public function save($setting, $value = null, $useCookie = false){
 		$ajax = CJAX::getInstance();
@@ -1126,19 +1072,17 @@ if (document.addEventListener) {
 				$this->cookie($setting, $value);
 			}
 		} 
-        else{
-			if(!$useCookie){
-				if($value === null && isset($_SESSION[$setting])){
-					unset($_SESSION[$setting]);
-				} 
-                else{
-					$_SESSION[$setting] = $value;
-				}
+        elseif(!$useCookie){
+			if($value === null && isset($_SESSION[$setting])){
+				unset($_SESSION[$setting]);
 			} 
             else{
-				$this->cookie($setting, $value);
+				$_SESSION[$setting] = $value;
 			}
-		}
+		} 
+        else{
+		    $this->cookie($setting, $value);
+        }
 	}
 	
 	public function cookie($setting, $value = null){
@@ -1198,38 +1142,26 @@ if (document.addEventListener) {
 		unset(self::$cache[$cacheId]);
 	}
 
-	public function warning($msg = null, $seconds = 4){
+	public function warning($msg = "Invalid Input", $seconds = 4){
 		$ajax = CJAX::getInstance();
-		if(!$msg){
-			$msg = "Invalid Input";
-		}
 		return $ajax->message($ajax->format->message($msg, Format::CSS_WARNING),$seconds);
 	}
 
-	public function success($msg = null, $seconds = 3){
+	public function success($msg = "Success!", $seconds = 3){
 		$ajax = CJAX::getInstance();
-		if(!$msg){
-			$msg = "Success!";
-		}
 		return $ajax->message($ajax->format->message($msg, Format::CSS_SUCCESS));
 	}
 
 	/*
 	 * Show loading indicator
 	 */
-	public function loading($msg = null){
+	public function loading($msg = "Loading..."){
 		$ajax = CJAX::getInstance();
-		if(!$msg){
-			$msg = "Loading...";
-		}
 		return $ajax->message($ajax->format->message($msg, Format::CSS_SUCCESS));
 	}
 
-	public function process($msg = null, $seconds = 3){
+	public function process($msg = "Processing...", $seconds = 3){
 		$ajax = CJAX::getInstance();
-		if(!$msg){
-			$msg = "Processing...";
-		}
 		return $ajax->message($ajax->format->message($msg, Format::CSS_PROCESS), $seconds);
 	}
 
@@ -1238,14 +1170,10 @@ if (document.addEventListener) {
 		return $ajax->message($ajax->format->message($msg, Format::CSS_INFO),$seconds);
 	}
 
-	public function error($msg = null, $seconds = 15){
+	public function error($msg = "Error!", $seconds = 15){
 		$ajax = CJAX::getInstance();
-		if(!$msg){
-			$msg = "Error!";
-		}
 		return $ajax->message($ajax->format->message($msg, Format::CSS_ERROR), $seconds);
 	}
-	
 	
 	public function _lastExecCount($count = 0){
 		if($count){
@@ -1254,7 +1182,6 @@ if (document.addEventListener) {
 		return self::$_lastExecCount;
 	}
 
-	// error handler function
 	/**
 	 * Yet to implement
 	 *
@@ -1283,7 +1210,6 @@ if (document.addEventListener) {
 				echo "Unknown error type: [$errno] $errstr<br />\n";
 			break;
 		}
-
 		/* Don't execute PHP internal error handler */
 		return true;
 	}
@@ -1306,14 +1232,11 @@ if (document.addEventListener) {
 	
 	public function initiate($ajax){
 		if(isset($_REQUEST['session_id'])){
-			$session_id = $_REQUEST['session_id'];
-			session_id($session_id);
+			session_id($_REQUEST['session_id']);
 			@session_start();
 		} 
-        else{
-			if(!$ajax->config->fallback && !isset($_SESSION)){
-				@session_start();
-			}
+        elseif(!$ajax->config->fallback && !isset($_SESSION)){
+		    @session_start();
 		}
 	}
 
@@ -1337,9 +1260,7 @@ if (document.addEventListener) {
 	}
 
 	public static function remotePath(){
-		$host = $_SERVER['HTTP_HOST'];
-		$sname = dirname($_SERVER["SCRIPT_NAME"]);
-		return 'http://'.$host.$sname.'/cjax';
+		return 'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER["SCRIPT_NAME"]).'/cjax';
 	}
 
 	public static function getFile($file = null){
@@ -1367,39 +1288,26 @@ if (document.addEventListener) {
 		if($errstr){
 			die('error:'.$errstr);
 		}
-
-		if($fp){
-			$base = "/";
-			@fputs($fp, "GET $base$file HTTP/1.1\r\n");
-			@fputs($fp, "HOST: $host\r\n");
-			@fputs($fp, "Connection: close\r\n\r\n");
-		} 
-        else{
-			return false;
-		}
+        
+		$base = "/";
+        @fputs($fp, "GET {$base}{$file} HTTP/1.1\r\n");
+        @fputs($fp, "HOST: {$host}\r\n");
+		@fputs($fp, "Connection: close\r\n\r\n");
 		$getInfo = false;
 		$data = [];
 		while(!feof($fp)){
-			if ($getInfo){
+			if($getInfo){
 				$data[] = fread($fp, 1024);
 			} 
-            else{
-				if(fgets($fp, 1024) == "\r\n"){
-					$getInfo = true;
-				} 
-                else{
-					//break;
-				}
-			}
+            elseif(fgets($fp, 1024) == "\r\n"){
+				$getInfo = true;
+			} 
 		}
 		fclose($fp);
 		return implode($data);
 	}
 	
-	public function input($value=null){
-		if($value === null){
-            $value= 'cjax';
-        }
+	public function input($value = 'cjax'){
 		$v = isset($_REQUEST[$value])? $_REQUEST[$value] : (isset($_GET[$value])? $_GET[$value]: null);		
 		if(!$v && isset($_COOKIE[$value]) && $_COOKIE[$value]){
 			$v = $_COOKIE[$value];
@@ -1407,14 +1315,7 @@ if (document.addEventListener) {
         
 		if(is_array($v)){
 			foreach($v as $k => $kv){
-				if(!is_array($kv)){
-					$return[$k] =  addslashes($kv);
-				} 
-                else{
-					foreach($kv as $kLevel => $vLevel2){
-						$return[$k][$kLevel] = $vLevel2;
-					}
-				}
+                $return[$k] = (is_array($kv))? $kv: addslashes($kv);
 			}
 			return $return;
 		}
@@ -1442,47 +1343,27 @@ if (document.addEventListener) {
 		return $value;
 	}
 	
-	public function code($data, $tags = true){
-		$cString = "#DD0000";
-		$cComment = "#FF8000";
-		$cKeyword = "#007700";
-		$cDefault = "#0000BB";
-		$cHtml = "#0000BB";
-		
-		@ini_set('highlight.string', $cString); // Set each colour for each part of the syntax
-		@ini_set('highlight.comment', $cComment); // Suppression has to happen as some hosts deny access to ini_set and there is no way of detecting this
-		@ini_set('highlight.keyword', $cKeyword);
-		@ini_set('highlight.default', $cDefault);
-		@ini_set('highlight.html', $cHtml);
+	public function code($data, $tags = true){	
+		@ini_set('highlight.string', "#DD0000"); // Set each colour for each part of the syntax
+		@ini_set('highlight.comment', "#FF8000"); // Suppression has to happen as some hosts deny access to ini_set and there is no way of detecting this
+		@ini_set('highlight.keyword', "#007700");
+		@ini_set('highlight.default', "#0000BB");
+		@ini_set('highlight.html', "#0000BB");
 			
-		//$data = str_replace([') { ', ' }', ";", "\r\n"], [") {\n", "\n}", ";\n", "\n"], $data); // Newlinefy all braces and change Windows linebreaks to Linux (much nicer!) 		
-		$data = str_replace("\n\n", "\n", $data);		
-		//$data = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $data); // Regex identifies all extra empty lines produced by the str_replace above. It is quicker to do it like this than deal with a more complicated regular expression above.
-		
+		$data = str_replace("\n\n", "\n", $data);	
 		$data = ($tags)? highlight_string("<?php \n" . $data . "\n?>", true)
                        : highlight_string($data, true); 		
 		return '<div id="code_highlighted">'.$data."</div>";
 	}
 	
-	public function jsCode($data, $tags = false, $output = null){
-		$cString = "#DD0000";
-		$cComment = "#FF8000";
-		$cKeyword = "green";
-		$cDefault = "#0000BB";
-		$cHtml = "#0000BB";
-		 		
-		@ini_set('highlight.string', $cString); // Set each colour for each part of the syntax
-		@ini_set('highlight.comment', $cComment); // Suppression has to happen as some hosts deny access to ini_set and there is no way of detecting this
-		@ini_set('highlight.keyword', $cKeyword);
-		@ini_set('highlight.default', $cDefault);
-		@ini_set('highlight.html', $cHtml);
-		
-		//$data = str_replace([') { ', ' }', ";", "\r\n"], [") {\n", "\n}", ";\n", "\n"], $data); // Newlinefy all braces and change Windows linebreaks to Linux (much nicer!) 
-		//$data = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $data); // Regex identifies all extra empty lines produced by the str_replace above. It is quicker to do it like this than deal with a more complicated regular expression above.
-		$data =  "<script>". highlight_string("\n" . $data ."\n"); 
-		
-		//$data = explode("\n", str_replace(["<br />"], ["\n"], $data));
-		
+	public function jsCode($data, $tags = false, $output = null){ 		
+		@ini_set('highlight.string', "#DD0000"); // Set each colour for each part of the syntax
+		@ini_set('highlight.comment', "#FF8000"); // Suppression has to happen as some hosts deny access to ini_set and there is no way of detecting this
+		@ini_set('highlight.keyword', "green");
+		@ini_set('highlight.default', "#0000BB");
+		@ini_set('highlight.html', "#0000BB");
+
+		$data =  "<script>". highlight_string("\n" . $data ."\n"); 		
         return ($tags)? str_replace(['?php', '?&gt;'], ['script type="text/javascript">', '&lt;/script&gt;'], $output)
                       : str_replace(['&lt;?php', '?&gt;'], ['', ''], $data);
 	}
