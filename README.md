@@ -4,7 +4,7 @@
 
 +    PHP 5.4+
 +    javascript enabled
-+    eval() enabled
++    curl, eval, ini_set functions enabled
 
 
 ## Links
