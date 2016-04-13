@@ -162,7 +162,7 @@ final class AJAX{
 		if(defined('AJAX_CD')){
 			$ajaxCd = AJAX_CD;
 		} 
-        else if(isset($_COOKIE['AJAX_CD']) && $_COOKIE['AJAX_CD']){
+        elseif(isset($_COOKIE['AJAX_CD']) && $_COOKIE['AJAX_CD']){
 			$ajaxCd = $_COOKIE['AJAX_CD'];
 		}
 		
