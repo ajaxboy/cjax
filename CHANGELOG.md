@@ -231,6 +231,7 @@
 ## CJAX 5.0-Beta2 - June 01, 2012
 
 - Support for PATH INFO  style URL
+
 	```php  
 	eg: ajax.php/controller/function	
 	This adds to the already  plenty of supported URLS in the list:
@@ -245,6 +246,7 @@
 	*Anything*/$controller/$function
 	*Anything* - a word of your choosing by changing the  word "ajax" in file .htaccess
 	```
+
 - Fixed issues with IE 7 not working
 	- All basic functionality and ajax operations are operational in IE7, but  there might be other issues - see "known issues".
 - Other small improvements in request handling, and dealing with controllers that have constructors.
@@ -282,24 +284,29 @@
     - This plugin makes use of jQuery and jQuery.uploadify to bring this plugin to you in a full PHP environment.
 - Plugin jQuery validate has backward compatibility with 5.0
 - Import, - support to import Javascript and Css files, for example:
-  ```php	
-	Import files  asynchronously
-	
+  	
+  Import files  asynchronously
+
+	```php
 	$ajax->import("http://path/To/Your/Javascript.js");
 	$ajax->import("http://path/To/Your/css.css");
-	
-	OR
-	
-	imports() - in contrast, waits for the previous files in list to fully load before loading the next one.
-	
+	```
+
+  OR imports() - in contrast, waits for the previous files in list to fully load before loading the next one.
+
+	```php
 	$ajax->imports(array("path/To/Your/file2.js","path/To/Your/file3.js",path/To/Your/file1.css"));
-	
-	For plugins - they all inherit local scope,  say:
-	
+	```
+
+	For plugins - they all inherit local scope, say:
+
+	```php
 	$myplugin()->import("file.js"); 
-	would load file "file.js" located in "myplugin" directory under plugins.
+    ```
+	
+    would load file "file.js" located in "myplugin" directory under plugins.
 	all core functions inherited can be overwritten by plugins providing more power to each plugin.
-  ```
+    
 - In your Ajax Controller, if you return an array or an object, it will be converted to json automatically.
 - Performance improvements were made to an already fast system, now it's lightning fast.
 	- Test Speed? - try the recursive ajax request example included in the samples zip, and see how fast this framework works..    
@@ -352,11 +359,13 @@
 ## CJAX 4.1RC1 - May 3, 2012
 
 - Full support for friendly URLS
-  ```
+
+  ```php
   ajax.php?controller=$controller&function=$function&a=$arg1&b=$arg2
   ajax.php?$controller/$function/$arg1/$arg2
   ajax/$controller/$function/$arg1/$arg2  
   ```
+
 - Changed how methods are called, although in testing it seems stable, this is considered a release candidate for additinal testing.
 
 
@@ -379,11 +388,12 @@
 	- The new flag system allows for further costumization of the already flexibly ajax system.
 	- The flag system allow for the usage of $ajax->setFlags(); functionality.
 	- This functionally also triggered the addition of new constant flags defitions.
+
 	Usage Example:
+
 	```php
-	$flags = array('FLAG_WAIT'=> CJAX::FLAG_NO_WAIT, 'FLAG_ELEMENT_GETTER'=> CJAX::FLAG_ELEMENT_BY_ID);
-	
-	$ajax->setFlags( flags , 3);
+	$flags = array('FLAG_WAIT'=> CJAX::FLAG_NO_WAIT, 'FLAG_ELEMENT_GETTER'=> CJAX::FLAG_ELEMENT_BY_ID);	
+	$ajax->setFlags(flags, 3);
 	```
 
 	- FLAG_WAIT = skips any awaiting time set with $cjax->wait();
