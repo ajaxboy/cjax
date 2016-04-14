@@ -42,10 +42,9 @@ echo $ajax->code("
 Controller:
 <?php
 echo $ajax->code("
-class Post {
-	
-	
-	function post_sample(){
+class Post{
+		
+	public function post_sample(){
 		echo 'Response is<pre>'.print_r(\$_POST,1).'</pre>';
 	}
 }

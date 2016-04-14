@@ -89,7 +89,7 @@ class overlay_validation {
 }
 ");
 
-$ajax->exec('code', $ajax->overlayContent($code, array('width'=> '950px','top'=> '40px')));
+$ajax->exec('code', $ajax->overlayContent($code, ['width'=> '950px','top'=> '40px']));
 ?>
 <head>
 <?php echo $ajax->init();?>

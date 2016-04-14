@@ -72,19 +72,19 @@ If you intend to update other properies in that element, use an array instead.
 <br />
 Example:
 <?php echo $ajax->code("
-\$ajax->element_id = array('width' => 200,'height'=> 100);
+\$ajax->element_id = ['width' => 200,'height'=> 100];
 ");?>
 <h3>Style Properties</h3>
 To update the style property of an element follow the same logic as before:
 <?php echo $ajax->code("
-\$ajax->element_id = array(
-	'style' => array(
+\$ajax->element_id = [
+	'style' => [
 		'width' => '200px',
 		'height' => '100px',
 		'borderStyle' => 'solid',
 		'borderWidth' => '1px'
-	)
-);
+	]
+];
 ");?>
 <h3>Properties Accumulate</h3>
 Changing properies of an element, and later changing them again will not undo the previous set of properties, it will accumulate.
@@ -94,15 +94,15 @@ All properies will be applied to the element,  you can however overwrite  specif
 In the example below all properties are taken into account, however the style property width and height will overwrite the previous width and height set.
 <?php echo $ajax->code("
 \$ajax->my_image = 'http://cjax.sourceforge.net/media/logo.png';
-\$ajax->my_image = array('width' => 200,'height'=> 100, 'alt' => 'this is a logo');
-\$ajax->my_image = array(
-	'style' => array(
+\$ajax->my_image = ['width' => 200,'height'=> 100, 'alt' => 'this is a logo'];
+\$ajax->my_image = [
+	'style' => [
 		'width' => '200px',
 		'height' => '100px',
 		'borderStyle' => 'solid',
 		'borderWidth' => '1px'
-	)
-);
+	]
+];
 ");?>
 
 

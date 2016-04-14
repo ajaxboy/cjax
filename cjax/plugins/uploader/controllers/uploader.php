@@ -2,7 +2,7 @@
 
 /**
  * 
- * Ajax Uploader 1.3
+ * Ajax Uploader 2.0
  * @author cj
  *
  */
@@ -12,10 +12,14 @@ use CJAX\Core\CJAX;
 class Uploader{
 
 	private $error;
+    
 	private $post;
-	private $options;
-	private $files;	
-	private $uploadCount = 0;
+	
+    private $options;
+	
+    private $files;	
+	
+    private $uploadCount = 0;
 	
 	/**
 	 * 

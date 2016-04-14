@@ -23,9 +23,9 @@ echo $ajax->code("
 
 //controller
 use CJAX\\Core\\CJAX;
-class flush {
+class flush{
 
-	function flush_element() {
+	public function flush_element() {
 		\$ajax = CJAX::getInstance();
 		//Flus link1 HTML
 		\$ajax->flush('#link1');

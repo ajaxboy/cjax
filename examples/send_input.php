@@ -36,21 +36,20 @@ Controller:
 <?php 
 echo $ajax->code("
 use CJAX\\Core\\CJAX;    
-class Send_input {
+
+class Send_input{
 	
-	function send_text( \$text ){
-		
-		\$ajax = CJAX::getInstance();
-		
+	public function send_text( \$text ){		
+		\$ajax = CJAX::getInstance();		
 		\$ajax->success(\"This message was sent: \$text\",30);
 	}
 	
-	function send_checkbox( \$check ){
-		\$ajax = CJAX::getInstance();
-		
-		if(\$check) {
+	public function send_checkbox( \$check ){
+		\$ajax = CJAX::getInstance();		
+		if(\$check){
 			\$ajax->success(\"Is checked..\");
-		} else {
+		} 
+        else{
 			\$ajax->warning(\"Is not checked..\");
 		}
 	}

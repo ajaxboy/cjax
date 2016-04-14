@@ -79,8 +79,7 @@ This is what hello_world.js looks like:
 <?php 
 echo $ajax->jsCode(
 "
-function hello_world(a,b,c)
-{
+function hello_world(a,b,c){
 	//sample of importing javascript into the scope
 	this.importFile('http://cjax.googlecode.com/svn/trunk/_extra/test_unit/plugins/js/test.js');
 	//sample of importing css to the page

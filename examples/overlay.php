@@ -87,7 +87,7 @@ echo $ajax->code("
 
 
 //Overlay #3
-\$ajax->click(\"#overlay_content\",\$ajax->overlayContent(\"Hello World\", ['top'=> '200px']));
+\$ajax->click(\"#overlay_content\",\$ajax->overlayContent(\"Hello World\", ['top' => '200px']));
 
 
 //Overlay #4

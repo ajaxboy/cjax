@@ -63,11 +63,9 @@ $code = $ajax->code("
 
 
 \$ajax->validate('btnSubmit', null, \$rules)->uploader(
-	[
-     'target' => 'upload/directory/',
+	['target' => 'upload/directory/',
 	 'url' => 'ajax.php?validation_uploader/post',
-	 'success_message' => 'Form submitted successfully.'
-	]
+	 'success_message' => 'Form submitted successfully.']
     );
 ");
 

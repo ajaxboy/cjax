@@ -2,7 +2,7 @@
 
 require_once "ajax.php";
 
-$ajax->click("btnSubmit",$ajax->form("ajax.php?send_form/submit_form"));
+$ajax->click("btnSubmit", $ajax->form("ajax.php?send_form/submit_form"));
 
 ### below is an HTML form.  All you need is the id of the button that submits the form, and all the code is needed is above. 
 ### look inside controllers/send_form.php for response code sample.
@@ -33,12 +33,12 @@ echo $ajax->code("
 Controller:
 <?php 
 echo $ajax->code("
-use CJAX\\Core\\CJAX;    
-class send_form {
+use CJAX\\Core\\CJAX;   
+
+class Send_form{
 	
-	function submit_form(\$form_fields){
-		\$ajax = CJAX::getInstance();
-		
+	public function submit_form(\$form_fields){
+		\$ajax = CJAX::getInstance();		
 		\$ajax->alert(\"Server Says....\\n\\t\\t\".print_r(\$form_fields,1));
 	}
 }

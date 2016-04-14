@@ -67,10 +67,11 @@ echo $ajax->code("
 Controller:
 <?php 
 echo $ajax->code("
-use CJAX\\Core\\CJAX;   
-class change_value {
+use CJAX\\Core\\CJAX;  
 
-	function div(){
+class Change_value{
+
+	public function div(){
 		\$ajax = CJAX::getInstance();
 		
 		//Some random strings .......
@@ -89,20 +90,19 @@ class change_value {
 		\$ajax->DIV_1 = \$text[rand(0, count(\$text)-1)];
 	}
 	
-	function text(\$current_value){
-		\$ajax = CJAX::getInstance();
-		
+	public function text(\$current_value){
+		\$ajax = CJAX::getInstance();		
 		\$ajax->text1 = \"Random number..\".rand(100,1000);
 	}
 	
 	
-	function check(\$current_value)
-	{
+	public function check(\$current_value){
 		\$ajax = CJAX::getInstance();
 		
-		if(\$current_value) {
+		if(\$current_value){
 			\$ajax->check1 = false;
-		} else {
+		} 
+        else{
 			\$ajax->check1 = true;
 		}
 	}

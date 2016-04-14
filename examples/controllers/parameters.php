@@ -4,7 +4,7 @@ use CJAX\Core\CJAX;
 
 class Parameters{
 	
-	public function send_params($a,$b,$c,$d){
+	public function send_params($a, $b, $c, $d){
 		$ajax = CJAX::getInstance();
 		
 		$params = "

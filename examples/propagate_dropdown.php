@@ -7,7 +7,7 @@ require_once "ajax.php";
 //this is as simple as it gets..
 
 
-$ajax->change("dropdown1",$ajax->call("ajax.php?dropdown/propagate/|dropdown1|"));
+$ajax->change("dropdown1", $ajax->call("ajax.php?dropdown/propagate/|dropdown1|"));
 
 ?>
 <html>
@@ -47,13 +47,12 @@ Controller:
 echo $ajax->code("
 
 use CJAX\\Core\\CJAX;
-class dropdown{
+class Dropdown{
 	
-	function propagate(\$selected){
+	public function propagate(\$selected){
 		\$ajax = CJAX::getInstance();
 		\$data = [];
-		
-		
+				
 		switch(\$selected) {
 			case 'options':
 				\$data[] = \"Option 1\";

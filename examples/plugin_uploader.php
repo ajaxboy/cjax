@@ -219,14 +219,14 @@ using your own controllers.
 <?php 
 $code = $ajax->code("
 
-\$options = array(
+\$options = [
 		'url' => 'ajax.php?upload_file/post', //submit request after files are uploaded
 		'suffix' => md5(time(). rand(1,10000000)), // makes files names universally unique
 		'debug' => true, //Remove if you are not debugging.
 		'success_message' => 'File(s) @files successfully uploaded.',//@files tag is replaced by files uploaded.
 		'ext' => array('jpg','gif', 'png','jpeg'),
 		'no_files' => 'Please select a file.'
-	);
+	];
 	
 //button id, upload directory
 \$ajax->uploader('btn_saveForm', 'your/upload/directory', \$options);
@@ -246,21 +246,21 @@ PS: Beta means that it could change drastically, so keep in mind that if you use
 <?php 
 $code = $ajax->code("
 
-\$options = array(
+\$options = [
 		'url' => 'ajax.php?upload_file/post', //submit request after files are uploaded
 		'suffix' => md5(time(). rand(1,10000000)), // makes files names universally unique
 		'debug' => true, //Remove if you are not debugging.
 		'success_message' => 'File(s) @files successfully uploaded.',//@files tag is replaced by files uploaded.
 		'ext' => array('jpg','gif', 'png','jpeg'),
 		'no_files' => 'Please select a file.'
-	);
+	];
 
 //button id, upload directory
 \$uploader = \$ajax->uploader('btn_saveForm', 'your/upload/directory', \$options);
 
 
 // a div with id placeholder, where the image will be previewed
-\$preview_data = array(\"placeholder\" => \"<img src='#image1#' />\");
+\$preview_data = [\"placeholder\" => \"<img src='#image1#' />\"];
 
 \$uploader->preview('url/to/your/uploaded/images', \$preview_data);
 

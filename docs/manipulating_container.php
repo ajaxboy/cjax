@@ -20,29 +20,30 @@ These style properties  are a small example, there is no limitation
 on which properties you may add, to see a full list of style properties <a target="_blank" href="dom_style_list.php">click here</a>.
 <?php
 echo $ajax->code("
-\$ajax->div_container = array(
-	'style' => array(
+\$ajax->div_container = [
+	'style' => [
 		'backgroundColor' => '#FF9E3E',
 		'width' => '300px',
 		'heigh' => '200px'
-));");
+    ]
+];");
 ?>
 You may also assign/set direct element properties that would otherwise go in their tag constructor.
 You may set element properties to any element as long that element has an id.
 <h5>Example</h5>
 <?php
 echo $ajax->code("
-\$ajax->html_table = array('width' => 600);
+\$ajax->html_table = ['width' => 600];
 
-\$ajax->td_id = array('width' => 200,'height' => 100, 'colspan' => 3);
+\$ajax->td_id = ['width' => 200,'height' => 100, 'colspan' => 3];
 
-\$ajax->tr_id = array('innerHTML' => '<td>some data</td>');
+\$ajax->tr_id = ['innerHTML' => '<td>some data</td>'];
 
 ");?>
 <h5>Example</h5>
 <?php
 echo $ajax->code("
-\$ajax->some_image = array('width' => 300,'height' => 200, 'src' => 'some/image/url');
+\$ajax->some_image = ['width' => 300,'height' => 200, 'src' => 'some/image/url'];
 
 //see 'Main Property' documentation for 'Elements Properties'
 //changes the src property of an image
@@ -74,7 +75,7 @@ echo $ajax->code("
 <?php 
 echo $ajax->code("
 //change the id of the DIV
-\$ajax->div_container = array('id' => 'New_div_id');
+\$ajax->div_container = ['id' => 'New_div_id'];
 
 //div_container does exist anymore, now is New_div_id
 \$ajax->New_div_id = \"Hello!\";

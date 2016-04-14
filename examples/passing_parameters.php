@@ -31,10 +31,9 @@ echo $ajax->code("
 In the controller you can access these parameters as such:
 <?php 
 echo $ajax->code("
-class parameters {
+class Parameters{
 
-	function send_params(\$a,\$b,\$c,\$d)
-	{
+	public function send_params(\$a,\$b,\$c,\$d){
 	
 	}
 }

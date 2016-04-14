@@ -67,7 +67,7 @@
 
 class Sample {
 	
-	function test(){
+	public function test(){
 		$ajax = CJAX::getInstance();
 		$ajax->success("Testing controller <b>sample</b>.  Works ok.");
 	}

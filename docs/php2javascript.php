@@ -71,7 +71,7 @@ Please Read about PHP2JS: <a href=''>Read</a>
 			window.alert()
 		</div>
 		<div style="float: left;width:200px">
-			$ajax->aler();
+			$ajax->alert();
 		</div>
 		<div style="float: left;width:200px">
 			View Sample

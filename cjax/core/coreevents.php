@@ -1,4 +1,5 @@
 <?php
+
 /** ################################################################################################**   
 * Copyright (c)  2008  CJ.   
 * Permission is granted to copy, distribute and/or modify this document   
@@ -17,11 +18,7 @@
 *   Date: 2/12/2007                           $     
 *   File Last Changed:  04/12/2016           $     
 **####################################################################################################    */   
-/**
- * Load external classes
- *@package CoreEvents
- * @param string $c
- */
+
 namespace CJAX\Core;
 use StdClass;
  

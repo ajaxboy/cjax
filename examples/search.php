@@ -5,7 +5,7 @@ require_once "ajax.php";
 //initiate CJAX..
 
 //								/controllers/search.php:string()
-$ajax->keyup('search',$ajax->call('ajax.php?search/string/|search|','search_result'));
+$ajax->keyup('search', $ajax->call('ajax.php?search/string/|search|','search_result'));
 
 ?>
 <html>
@@ -36,10 +36,10 @@ Controller:
 <?php 
 echo $ajax->Code("
 //controllers/search.php
-class search{
-	
-	
-	function string(\$string){
+
+class Search{
+		
+	public function string(\$string){
 		// Fill up array with some data
 		\$a[]=\"Anna\";
 		\$a[]=\"Amanda\";

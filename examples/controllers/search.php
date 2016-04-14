@@ -45,16 +45,12 @@ class Search{
 		$a[]="Yakecan";
 		
 		
-		$out = [];
-		
+		$out = [];	
 		foreach($a as $v){
 			if(substr(strtolower($v), 0, strlen($string)) == strtolower($string)){
 				$out[] = $v;
 			}
-		}
-		
-		die('<pre>'.print_r($out,1).'<pre>');
-		
-	}
-	
+		}		
+		die('<pre>'.print_r($out,1).'<pre>');		
+	}	
 }

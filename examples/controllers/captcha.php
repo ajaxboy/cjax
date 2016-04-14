@@ -22,11 +22,15 @@ class Captcha{
 	}
 
 	public function drop(DragEvent $event, $ball = null){
-        if(!$ball) return;
+        if(!$ball){
+            return;
+        }
 		$ajax = CJAX::getInstance();
         $data = $event->getData();
         $target = $event->getTarget();
-        if($target != "box") return;
+        if($target != "box"){
+            return;
+        }
         if($data == $ball){ 
 	        $ajax->notes = "<span style='color:blue;'>You have selected the correct ball, congratulations!</span>";
             $ajax->process("You have passed the captcha test, the page will refresh in 5 seconds."); 

@@ -32,9 +32,9 @@ $code = $ajax->code("
 //Controller
 
 use CJAX\\Core\\CJAX;
-class ajax_login {
+class ajax_login{
 	
-	function handler(\$username, \$password){
+	public function handler(\$username, \$password){
 		\$ajax = CJAX::getInstance();
 		
 		if(!\$username) {

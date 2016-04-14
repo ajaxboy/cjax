@@ -85,7 +85,7 @@ This is just an example of what you can do with the Cjax Framework.
 <?php 
 
 echo $ajax->code("
-\$buttons = array(0,1,2,3,4,5,6,7,8,9,'p','m','x','c','e','d');
+\$buttons = [0,1,2,3,4,5,6,7,8,9,'p','m','x','c','e','d'];
 
 do {
 	\$button = current(\$buttons);
@@ -105,7 +105,7 @@ class Calc {
 		\$ajax = CJAX::getInstance();
 		
 		\$operators_signs = array('[plus]','p','m','x','d');
-		\$operators = array('p','+','-','*','/');
+		\$operators = ['p','+','-','*','/'];
 		
 		\$pre_buffer = \$buffer;
 		\$buffer = \$ajax->buffer = \$buffer.\$action;

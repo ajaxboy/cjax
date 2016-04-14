@@ -5,8 +5,8 @@ use CJAX\Core\CJAX;
 class Recursive_ajax{
 	
 	public function call($counter, $count){
-		$counter = (int) $counter;
-		$count = (int) $count;
+		$counter = (int)$counter;
+		$count = (int)$count;
 		
 		$counter++;
 		

@@ -14,7 +14,8 @@ require_once "ajax.php";
 $ajax->click("link1", [
     $ajax->call("ajax.php?bind/link2"), 
     $ajax->alert("Hello World 1"), 
-    $ajax->alert("Hello World 2")]);//default event is "click"
+    $ajax->alert("Hello World 2")]
+);//default event is "click"
 		
 
 //different event.. "blur"
@@ -55,7 +56,8 @@ echo $ajax->code("
 \$ajax->click(\"link1\", [
 			\$ajax->call(\"ajax.php?bind/link2\"),
 			\$ajax->alert(\"Hello World 1\"),
-			\$ajax->alert(\"Hello World 2\")]);
+			\$ajax->alert(\"Hello World 2\")]
+    );
 		
 
 //different event.. \"blur\"
@@ -63,8 +65,7 @@ echo $ajax->code("
 		\$ajax->call(\"ajax.php?bind/link2\"),
 		\$ajax->alert(\"Hello World 3\"),
 		\$ajax->alert(\"Hello World 4\")]
-);
-
+    );
 ");
 ?>
 

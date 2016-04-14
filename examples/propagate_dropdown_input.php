@@ -48,8 +48,10 @@ Controller:
 <?php
 echo $ajax->code("
 use CJAX\\Core\\CJAX;
+
 class dropdown {
-	function propagate_allow_input(\$selected){
+
+	public function propagate_allow_input(\$selected){
 		\$ajax = CJAX::getInstance();
 		\$data = [];
 			

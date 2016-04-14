@@ -66,14 +66,14 @@ Lets say you have a div with id "my_div" on your HTML page. You want to change t
 
 To update the style property of an element follow the same logic as before:
 <?php echo $ajax->code("
-\$ajax->my_div = array(
-	'style' => array(
+\$ajax->my_div = [
+	'style' => [
 		'width' => '200px',
 		'height' => '100px',
 		'borderStyle' => 'solid',
 		'borderWidth' => '1px'
-	)
-);
+	]
+];
 ");?>
 
 Changing properies of an element, and later changing them again will not undo the previous set of properties, it will accumulate.
@@ -83,15 +83,15 @@ All properies will be applied to the element,  you can however overwrite  specif
 In the example below all properties are taken into account, however the style property width and height will overwrite the previous width and height set.
 <?php echo $ajax->code("
 \$ajax->my_image = 'http://cjax.sourceforge.net/media/logo.png';
-\$ajax->my_image = array('width' => 200,'height'=> 100, 'alt' => 'this is a logo');
-\$ajax->my_image = array(
-	'style' => array(
+\$ajax->my_image = ['width' => 200,'height'=> 100, 'alt' => 'this is a logo'];
+\$ajax->my_image = [
+	'style' => [
 		'width' => '200px',
 		'height' => '100px',
 		'borderStyle' => 'solid',
 		'borderWidth' => '1px'
-	)
-);
+	]
+];
 ");?>
 
 

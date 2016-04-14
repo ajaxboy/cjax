@@ -21,12 +21,11 @@ ajax.php?test/test/123/someID
 ");?>
 
 The above URL passes two parameters 123 and someID, test/test indicates the controller and the method.  
-Anything after the method will translate into paratemeters. You may pass up to 26 parameteres respectively symbolizing the English Alphabeth.
+Anything after the method will translate into parameters. You may pass up to 26 parameters respectively symbolizing the English Alphabeth.
 <?php echo $ajax->code("
-class test  {
+class test{
 
-    function test(\$arg1, \$arg2)
-    {
+    public function test(\$arg1, \$arg2){
         echo \$arg1;
         echo '<br />';
         echo \$arg2;
@@ -48,10 +47,9 @@ The above URL uses alphabetic letters to pass parameters, and has the same effec
 but gives you the flexiblity to pass any order and additional parameters with different names that can be accessible
 through $_GET or $_REQUEST.
 <?php echo $ajax->code("
-class test  {
+class test{
 
-    function test(\$a, \$b, \$c)
-    {
+    public function test(\$a, \$b, \$c){
         echo \$a;
         echo '<br />';
         echo \$b;

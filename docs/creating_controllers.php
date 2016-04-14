@@ -18,11 +18,10 @@ how they work in other known PHP Frameworks.
 Create a file test.php inside controllers directory, and add method/function <b>test</b>. This would work for url:
 ajax.php?test/test. You may also start the class name with an undercore "_", if you experience conflicts with class names.
 <?php echo $ajax->code("
-class test  {
+class test{
 
 
-    function test()
-    {
+    public function test(){
 
     }
 
@@ -30,17 +29,16 @@ class test  {
 ");?>
 If you return an array, or an object, the response will automatically be converted into json format object.
 <?php echo $ajax->code("
-class test  {
+class test{
 
 
-    function test()
-    {
+    public function test(){
     
-    	\$test_array = array(
+    	\$test_array = [
     		'test1' => 'test1',
     		'test2' => 'test2',
     		'test3 => 'test3'
-    	);
+    	];
     	
 		return \$test_array;
     }

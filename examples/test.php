@@ -1,6 +1,6 @@
 <?php 
 
-require_once  'ajax.php';
+require_once 'ajax.php';
 
 
 //** Press Enter, a, b c,  and the call go through **//

@@ -2,21 +2,19 @@
 
 use CJAX\Core\CJAX;
 
-class Ajax_login {
+class Ajax_login{
 	
-	function user($username)
-	{
+	public function user($username){
 		echo "<b>$username</b> is available";
 	}
 	
-	function handler($username, $password) 
-	{
+	public function handler($username, $password) {
 		$ajax = CJAX::getInstance();
 		
-		if(!$username) {
+		if(!$username){
 			return  $ajax->err = 'Enter your username.';
 		}
-		if(!$password) {
+		if(!$password){
 			return $ajax->err = 'Enter your password.';
 		}
 		
@@ -27,16 +25,13 @@ class Ajax_login {
 		
 		$ajax->login_div = "Hello $username!, Logout Now.."; 
 		$ajax->insert('#login_div','#a_login', true); 
-		
-		
-		
+				
 		$ajax->click('#a_login', $ajax->call('ajax.php?ajax_login/logout'));
 		$ajax->a_login = 'Logout';
 		
 	}
 	
-	function logout()
-	{
+	public function logout(){
 		$ajax = CJAX::getInstance();
 		$ajax->flush('#a_login');
 		$ajax->success("You haved logged out.");
@@ -44,7 +39,7 @@ class Ajax_login {
 		$ajax->insert('#login_now_area','#a_login');
 		$ajax->login_div = 'Login Again..';
 		
-		$overlay = $ajax->overlay('resources/html/login.html', array('left'=> '400px'));
+		$overlay = $ajax->overlay('resources/html/login.html', ['left'=> '400px']);
 		$link = $ajax->exec('button1',$ajax->form('ajax.php?ajax_login/handler','form1'));
 		$overlay->callback($link);
 		$ajax->click('a_login', $overlay);

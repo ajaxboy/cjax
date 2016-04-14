@@ -40,7 +40,7 @@ class Validate extends Plugin{
 		
 	}
 	
-	function onLoad($buttonId, $postUrl, $rules = [], $importJs = false){
+	public function onLoad($buttonId, $postUrl, $rules = [], $importJs = false){
 		$ajax = CJAX::getInstance();
 		$this->callback($ajax->click($buttonId,$ajax->form($postUrl)));	
 		

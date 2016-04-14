@@ -101,7 +101,7 @@ $ajax->exec('see', $ajax->dialog($code, 'Code Used', array('width'=> '930px','to
 	<link rel="stylesheet" type="text/css" href="resources/send_form/view.css" media="all">
 </head>
 <body>
-<h2>uploadify 1.6</h2>
+<h2>uploadify 2.0</h2>
 
 <div id='not_found'></div>
 <h4 id='see'><a href='#'>See Code Used</a></h4>

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * uploadify 1.6
+ * uploadify 2.0
  * 
  * Plugin Controller
  * 
@@ -46,7 +46,7 @@ class uploadify extends Plugin{
 		
 		
 		//updates 3rd paramaters in the plugin
-		$this->set('c',  session_id());
+		$this->set('c', session_id());
 	}
 	
 	/**
@@ -57,7 +57,7 @@ class uploadify extends Plugin{
 	 */
 	public function __set($setting, $value){
 		//upload directory
-		if($setting=='target'){
+		if($setting == 'target'){
 			if($dir = CJAX::getInstance()->config->uploadify_dir){
 				$value = $dir;
 			}
@@ -83,7 +83,7 @@ class uploadify extends Plugin{
 		 * sure we are using  the right extensions.
 		 * see controlles/uploadify.php
 		 */
-		if($setting=='fileTypeExts'){
+		if($setting == 'fileTypeExts'){
 			$exts = preg_replace(["/^\*\./","/\*|\;/"],'',$value);
 			$exts = explode('.',$exts);
 				

@@ -37,9 +37,9 @@ Controller:
 <?php 
 echo $ajax->code("
 use CJAX\\Core\\CJAX;    
-class Keyup_update {
+class Keyup_update{
 	
-	function update(\$text){
+	public function update(\$text){
 		\$ajax = CJAX::getInstance();
 		
 		//update page title

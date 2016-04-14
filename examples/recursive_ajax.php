@@ -39,10 +39,11 @@ echo $ajax->code("
 <h2>Controller</h2>
 <?php
 echo $ajax->code("
-use CJAX\\Core\\CJAX;    
+use CJAX\\Core\\CJAX; 
+
 class recursive_ajax {
 	
-	function call(\$counter = 0,\$count){
+	public function call(\$counter = 0,\$count){
 		//force valid inputs
 		\$counter = (int) \$counter;
 		\$count = (int) \$count;

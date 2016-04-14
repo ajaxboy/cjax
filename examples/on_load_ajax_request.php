@@ -32,7 +32,7 @@ Controller:
 <?php 
 
 echo $ajax->code("
-class Ajax_request {
+class Ajax_request{
 	
 	public function on_the_fly(){
 		\$ajax = CJAX::getInstance();

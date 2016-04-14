@@ -154,10 +154,10 @@ class ExamplePlugin extends Plugin{
 	 * 
 	 * The parameters of the contructor will be passed.
 	 * 
-	 * @param unknown_type $upload_id
-	 * @param unknown_type $options
+	 * @param unknown_type $arg
+	 * @param unknown_type $ar2
 	 */
-	function onLoad($arg = null, $ar2 = array()){
+	function onLoad($arg = null, $ar2 = []){
 		
 	}
 	

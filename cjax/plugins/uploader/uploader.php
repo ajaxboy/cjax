@@ -2,7 +2,7 @@
 
 /**
  * 
- * Ajax Uploader 1.3
+ * Ajax Uploader 2.0
  * @author cj
  *
  */

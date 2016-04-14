@@ -8,10 +8,10 @@
  * @author cj
  *
  */
+
 class ExamplePlugin{
-	
-	
-	function docs(){
+		
+	public function docs(){
 		/**
 		 * If you Return an array or an object then it will  be returned as json.
 		 * 
