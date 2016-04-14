@@ -26,9 +26,6 @@ namespace CJAX\Core;
 
 class Framework Extends CoreEvents{
 	
-    private static $overLay = [];
-
-    
 	public function click($elementId, $actions = []){
         return ($actions)? $this->exec($elementId, $actions): $this->__call('click', $elementId);
 	}
