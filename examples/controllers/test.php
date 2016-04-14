@@ -2,14 +2,13 @@
 
 use CJAX\Core\CJAX;
 
-class _test {
+class Test{
 	
-	function test2()
-	{
+	public function test2(){
 		echo "This is response of test/test2, generic test controller.";
 	}
 	
-	function remote($key){
+	public function remote($key){
         $ajax = CJAX::getInstance();
 		$ajaxEvent = json_decode($_COOKIE['cjaxevent'], TRUE);
         $ajaxEventMessage = "<br>";
@@ -17,12 +16,10 @@ class _test {
             if($key == "timeStamp") $value = date("Y-m-d H:i:s", $value/1000);
             $ajaxEventMessage .= "{$key}: {$value};<br>";
         }
-
 		$ajax->success("You pressed key: {$key}. It is associated with event: {$ajaxEventMessage}");
     }
 	
-	function formHandler()
-	{
+	public function formHandler(){
 		$this->debug($_POST);
 	}
 }

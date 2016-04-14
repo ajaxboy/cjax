@@ -2,10 +2,9 @@
 
 use CJAX\Core\CJAX;
 
-class controller_parameters {
+class Parameters{
 	
-	function send_params($a,$b,$c,$d)
-	{
+	public function send_params($a,$b,$c,$d){
 		$ajax = CJAX::getInstance();
 		
 		$params = "

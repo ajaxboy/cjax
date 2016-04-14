@@ -2,10 +2,9 @@
 
 use CJAX\Core\CJAX;
 
-class recursive_ajax {
+class Recursive_ajax{
 	
-	function call($counter, $count)
-	{
+	public function call($counter, $count){
 		$counter = (int) $counter;
 		$count = (int) $count;
 		
@@ -13,7 +12,7 @@ class recursive_ajax {
 		
 		$ajax = CJAX::getInstance();
 		
-		if($count > 100) {
+		if($count > 100){
 			$ajax->focus('count');
 			$ajax->warning("Too many requests can add overhead to our servers, please try reducing the number.", 5);
 			$ajax->count = 30;
@@ -23,10 +22,10 @@ class recursive_ajax {
 		//update div
 		$ajax->div_counter = "Call# $counter of $count..";
 		
-		if($counter>=$count) {
+		if($counter>=$count){
 			$ajax->div_counter ="$counter recursive AJAX requests were made.";
-		} else {
-		
+		} 
+        else{		
 			//fire call
 			$ajax->call("ajax.php?recursive_ajax/call/$counter/$count");
 		}

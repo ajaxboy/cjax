@@ -2,10 +2,9 @@
 
 use CJAX\Core\CJAX;
 
-class controller_keyup_update {
+class Keyup_update{
 	
-	function update($text)
-	{
+	public function update($text){
 		$ajax = CJAX::getInstance();
 		
 		$ajax->document('title', $text);

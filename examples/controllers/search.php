@@ -1,10 +1,8 @@
 <?php
 
-class search {
-	
-	
-	function string($string)
-	{
+class Search{
+		
+	public function string($string){
 		// Fill up array with some data
 		$a[]="Anna";
 		$a[]="Amanda";
@@ -47,10 +45,10 @@ class search {
 		$a[]="Yakecan";
 		
 		
-		$out = array();
+		$out = [];
 		
-		foreach($a as $v) {
-			if(substr(strtolower($v), 0, strlen($string)) == strtolower($string)) {
+		foreach($a as $v){
+			if(substr(strtolower($v), 0, strlen($string)) == strtolower($string)){
 				$out[] = $v;
 			}
 		}

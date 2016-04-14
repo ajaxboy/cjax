@@ -24,7 +24,7 @@ Code Used:
 <?php 
 echo $ajax->code("
 	//Press enter, a, b or c, and the ajax request will go throgh.  
-	\$ajax->keypress('url', \$ajax->call(\"ajax.php?test/remote/|url|\"), array(13,97,98,99));
+	\$ajax->keypress('url', \$ajax->call(\"ajax.php?test/remote/|url|\"), [13,97,98,99]);
 	
 	//press enter and request will go through:
 	\$ajax->keypress('url', \$ajax->call(\"ajax.php?test/remote/|url|\"), 13);

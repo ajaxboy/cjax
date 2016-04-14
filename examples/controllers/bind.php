@@ -2,23 +2,18 @@
 
 use CJAX\Core\CJAX;
 
-class controller_bind  {
+class Bind{
 	
-	function link1()
-	{
+	public function link1(){
 		
 	}
 	
-	function link2()
-	{
+	public function link2(){
 		
 	}
 	
-	function bind_elements()
-	{
-		$ajax = CJAX::getInstance();
-		
-		$ajax->info("same command..");
-		
+	public function bind_elements(){
+		$ajax = CJAX::getInstance();		
+		$ajax->info("same command..");		
 	}
 }

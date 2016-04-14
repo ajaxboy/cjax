@@ -2,14 +2,12 @@
 
 use CJAX\Core\CJAX;
 
-class dropdown {
+class Dropdown{
 	
-	function propagate($selected)
-	{
+	public function propagate($selected){
 		$ajax = CJAX::getInstance();
-		$data = array();
-		
-		
+		$data = [];
+			
 		switch($selected) {
 			case 'options':
 				$data[] = "Option 1";
@@ -40,10 +38,9 @@ class dropdown {
 	 * 
 	 * @param $selected
 	 */
-	function propagate_allow_input($selected)
-	{
+	public function propagate_allow_input($selected){
 		$ajax = CJAX::getInstance();
-		$data = array();
+		$data = [];
 		
 		
 		switch($selected) {

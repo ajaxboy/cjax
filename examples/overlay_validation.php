@@ -5,26 +5,26 @@ require_once 'ajax.php';
 
 //$ajax->log = true;
 
-$rules = array(
-	'rules' => array(
-		'a[name]' => array(
+$rules = [
+	'rules' => [
+		'a[name]' => [
 			'required' => true,
 			'minlength'  => 5,
-		),
-		'a[last_name]' => array(
+		],
+		'a[last_name]' => [
 			'required' => true,
 			'minlength'  => 5,
-		)
-	),
-	'messages' => array(
-		'a[name]' => array(
+		]
+	],
+	'messages' => [
+		'a[name]' => [
 			'required' => 'Please enter your name',
-		),
-		'a[last_name]' => array(
+		],
+		'a[last_name]' => [
 			'required' => 'Enter your last name',
-		)
-	)
-);
+		]
+	]
+];
 
 $overlay = $ajax->overLay('resources/html/test_form.html');
 //surging from $overlay ensures that it is ran after the html has been generated.
@@ -50,26 +50,26 @@ $code = $ajax->code("
 
 #Sample #1
 //initial action to the 'launch' link
-\$rules = array(
-	'rules' => array(
-		'a[name]' => array(
+\$rules = [
+	'rules' => [
+		'a[name]' => [
 			'required' => true,
 			'minlength'  => 5,
-		),
-		'a[last_name]' => array(
+		],
+		'a[last_name]' => [
 			'required' => true,
 			'minlength'  => 5,
-		)
-	),
-	'messages' => array(
-		'a[name]' => array(
+		]
+	],
+	'messages' => [
+		'a[name]' => [
 			'required' => 'Please enter your name',
-		),
-		'a[last_name]' => array(
+		],
+		'a[last_name]' => [
 			'required' => 'Enter your last name',
-		)
-	)
-);
+		]
+	]
+];
 
  
 \$overlay = \$ajax->overLay('resources/html/test_form.html');

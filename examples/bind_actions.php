@@ -11,21 +11,17 @@ require_once "ajax.php";
 
 //multiple commands can be binded..
 //defeault event is "click"
-$ajax->click("link1", 
-		array(
-			$ajax->call("ajax.php?bind/link2"),
-			$ajax->alert("Hello World 1"),
-			$ajax->alert("Hello World 2"),
-		));//default event is "click"
+$ajax->click("link1", [
+    $ajax->call("ajax.php?bind/link2"), 
+    $ajax->alert("Hello World 1"), 
+    $ajax->alert("Hello World 2")]);//default event is "click"
 		
 
 //different event.. "blur"
-$ajax->blur("link2", 
-	array(
-		$ajax->call("ajax.php?bind/link2"),
-		$ajax->alert("Hello World 3"),
-		$ajax->alert("Hello World 4")
-	)
+$ajax->blur("link2", [
+    $ajax->call("ajax.php?bind/link2"),
+	$ajax->alert("Hello World 3"),
+	$ajax->alert("Hello World 4")]
 );
 	
 ?>
@@ -56,21 +52,17 @@ Code Used:
 
 echo $ajax->code("
 //default event is \"click\"
-\$ajax->click(\"link1\", 
-		array(
+\$ajax->click(\"link1\", [
 			\$ajax->call(\"ajax.php?bind/link2\"),
 			\$ajax->alert(\"Hello World 1\"),
-			\$ajax->alert(\"Hello World 2\"),
-		));
+			\$ajax->alert(\"Hello World 2\")]);
 		
 
 //different event.. \"blur\"
-\$ajax->blur(\"link2\", 
-	array(
+\$ajax->blur(\"link2\", [
 		\$ajax->call(\"ajax.php?bind/link2\"),
 		\$ajax->alert(\"Hello World 3\"),
-		\$ajax->alert(\"Hello World 4\"),
-	)
+		\$ajax->alert(\"Hello World 4\")]
 );
 
 ");

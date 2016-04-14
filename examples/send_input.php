@@ -36,7 +36,7 @@ Controller:
 <?php 
 echo $ajax->code("
 use CJAX\\Core\\CJAX;    
-class controller_send_input {
+class Send_input {
 	
 	function send_text( \$text ){
 		

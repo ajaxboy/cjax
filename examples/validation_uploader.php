@@ -5,71 +5,70 @@ require_once 'ajax.php';
 
 //$ajax->log = true;
 
-$rules = array(
-	'rules' => array(
-		'file1' => array(
+$rules = [
+	'rules' => [
+		'file1' => [
 			'required' => true
-		),
-		'file2' => array(
+		],
+		'file2' => [
 			'required' => true
-		),
+		],
 	
-	),
-	'messages' => array(
-		'file1' => array(
+	],
+	'messages' => [
+		'file1' => [
 			'required' => 'Please select a file'
-			),
-		'file2' => array(
+			],
+		'file2' => [
 			'required' => 'Please select a file'
-			)
-		)
-);
+			]
+		]
+];
 
 	
 $ajax->validate('btnSubmit', null, $rules)->uploader(
-	array(
-		'target' => './',//$ajax->config->uploader_dir.'validation_uploader/',
-		'text'=> 'Submitting Form..',
-		'url' => 'ajax.php?validation_uploader/post',
-		'success_message' => 'Form submitted successfully.',
-		'form_id' => 'form1',
-		'suffix' => time()
-		)
-	);
+	['target' => './',//$ajax->config->uploader_dir.'validation_uploader/',
+	 'text'=> 'Submitting Form..',
+	 'url' => 'ajax.php?validation_uploader/post',
+	 'success_message' => 'Form submitted successfully.',
+	 'form_id' => 'form1',
+	 'suffix' => time()
+	]
+);
 
 
 ## Display the code that is used
 $code = $ajax->code("
 //5.1+
 
-\$rules = array(
-	'rules' => array(
-		'file1' => array(
+\$rules = [
+	'rules' => [
+		'file1' => [
 			'required' => true
-		),
-		'file2' => array(
+		],
+		'file2' => [
 			'required' => true
-		),
+		],
 	
-	),
-	'messages' => array(
-		'file1' => array(
+	],
+	'messages' => [
+		'file1' => [
 			'required' => 'Please select a file'
-			),
-		'file2' => array(
+			],
+		'file2' => [
 			'required' => 'Please select a file'
-			)
-		)
-);
+			]
+		]
+];
 
 
 \$ajax->validate('btnSubmit', null, \$rules)->uploader(
-	array(
-		'target' => 'upload/directory/',
-		'url' => 'ajax.php?validation_uploader/post',
-		'success_message' => 'Form submitted successfully.'
-		)
-	);
+	[
+     'target' => 'upload/directory/',
+	 'url' => 'ajax.php?validation_uploader/post',
+	 'success_message' => 'Form submitted successfully.'
+	]
+    );
 ");
 
 $ajax->exec('code', $ajax->overlayContent($code, array('width'=> '950px','top'=> '40px')));

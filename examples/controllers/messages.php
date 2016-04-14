@@ -2,10 +2,9 @@
 
 use CJAX\Core\CJAX;
 
-class controller_messages  {
+class Messages{
 	
-	function show_messages($message)
-	{
+	public function show_messages($message){
 		$ajax = CJAX::getInstance();
 		
 		$ajax->process("You are about to see the type of messages you can display on the screen..",5);

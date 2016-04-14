@@ -1,14 +1,12 @@
 <?php
 
-class validation_uploader  {
+class Validation_uploader{
 	
-	function pre()
-	{
+	public function pre(){
 		die('pre!');
 	}
 	
-	function post()
-	{
+	public function post(){
 		die('post!');
 	}
 }

@@ -1,9 +1,8 @@
 <?php
 
-class helper {
+class Helper{
 	
-	function api()
-	{
+	public function api(){
 		echo 'success';
 	}
 }

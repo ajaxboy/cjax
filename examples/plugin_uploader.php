@@ -10,13 +10,13 @@ $uploader = $ajax->uploader('btn_saveForm', 'examples/resources/images/uploads/'
 	 'suffix' => md5(time(). rand(1,10000000)), // makes files names universally unique,
      'debug' => true,       
      'success_message' => 'File(s) @files successfully uploaded.', //@files tag is replaced by files uploaded.
-	 'ext' => array('jpg','gif', 'png','jpeg'),
+	 'ext' => ['jpg','gif', 'png','jpeg'],
 	 'no_files' => 'Please select a file']
 );
 
-$uploader->preview('resources/images/uploads', array(
+$uploader->preview('resources/images/uploads', [
 	"placeholder"=> "<img style='max-width: 250px;' src='#image1#' />"
-));
+]);
 
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">

@@ -2,10 +2,9 @@
 
 use CJAX\Core\CJAX;
 
-class click_ajax_request {
+class click_ajax_request{
 	
-	function click_button($message)
-	{
+	public function click_button($message){
 		$ajax = CJAX::getInstance();
 	    $ajaxEvent = json_decode($_COOKIE['cjaxevent'], TRUE);
         $ajaxEventMessage = "<br>";

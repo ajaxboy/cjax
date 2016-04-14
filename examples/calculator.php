@@ -4,7 +4,7 @@ require_once 'ajax.php';
 
 //add ajax call to each button, so when you click it it fires and sends the desired operation.
 
-$buttons = array(0,1,2,3,4,5,6,7,8,9,'p','m','x','c','e','d');
+$buttons = [0,1,2,3,4,5,6,7,8,9,'p','m','x','c','e','d'];
 
 do {
 	$button = current($buttons);

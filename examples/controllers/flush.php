@@ -2,10 +2,9 @@
 
 use CJAX\Core\CJAX;
 
-class flush  {
+class Flush{
 	
-	function flush_element()
-	{
+	public function flush_element(){
 		$ajax = CJAX::getInstance();
 		
 		$ajax->flush('#link1');

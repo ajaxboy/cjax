@@ -2,13 +2,10 @@
 
 use CJAX\Core\CJAX;
 
-class controller_confirm {
+class Confirm{
 	
-	function confirm_action()
-	{
-		
-		$ajax = CJAX::getInstance();
-		
+	public function confirm_action(){		
+		$ajax = CJAX::getInstance();		
 		$ajax->success("Do something..");
 	}
 	

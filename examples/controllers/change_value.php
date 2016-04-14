@@ -2,32 +2,29 @@
 
 use CJAX\Core\CJAX;
 
-class controller_change_value {
+class Change_value{
 	
-	function text($element_id,$current_value)
-	{
-		$ajax = CJAX::getInstance();
-		
+	public function text($element_id,$current_value){
+		$ajax = CJAX::getInstance();		
 		$ajax->text1 = "Random number..".rand(100,1000);
 	}
 	
 	
-	function check($element_id,$current_value)
-	{
+	public function check($element_id,$current_value){
 		$ajax = CJAX::getInstance();
 		
-		if($current_value) {
+		if($current_value){
 			$ajax->check1 = false;
-		} else {
+		} 
+        else{
 			$ajax->check1 = true;
 		}
 	}
 	
-	function div($num = 0)
-	{
+	public function div($num = 0){
 		$ajax = CJAX::getInstance();
 		
-		$text = array();
+		$text = [];
 		
 	//Some random strings .......
 		$text[] = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ";

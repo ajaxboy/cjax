@@ -2,7 +2,7 @@
 
 use CJAX\Core\CJAX;
 
-class ajax_login {
+class Ajax_login {
 	
 	function user($username)
 	{

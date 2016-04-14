@@ -2,13 +2,10 @@
 
 use CJAX\Core\CJAX;
 
-class controller_alert {
+class Alert{
 	
-	function fire_alert($message)
-	{
-		
-		$ajax = CJAX::getInstance();
-		
+	public function fire_alert($message){		
+		$ajax = CJAX::getInstance();		
 		$ajax->alert($message);
 	}
 }

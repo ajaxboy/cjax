@@ -14,7 +14,7 @@
  
 use CJAX\Core\CJAX;
  
-class upload_file {
+class Upload_file{
 
 	public function post($files){
 		$ajax = CJAX::getInstance();
@@ -68,13 +68,14 @@ class upload_file {
 			if(!$_REQUEST['my_file']) {
 				$ajax->warning("Please select a file");
 				$ajax->focus('my_file');
-				exit();
+				exit;
 			}			
 		}
 	}
 	
 	
-	function error(){	
+	function error(){
+        $ajax = CJAX::getInstance();
 		$upload_max = $ajax->toMB(ini_get('upload_max_filesize'));
 		$post_max = $ajax->toMB($pmax = ini_get('post_max_size'));// / 2;
 		$max_size = ($upload_max < $post_max) ? $upload_max : $post_max;

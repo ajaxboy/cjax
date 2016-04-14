@@ -32,10 +32,9 @@ Controller:
 <?php 
 
 echo $ajax->code("
-class controller_ajax_request {
+class Ajax_request {
 	
-	function on_the_fly()
-	{
+	public function on_the_fly(){
 		\$ajax = CJAX::getInstance();
 		
 		\$ajax->update('container','This text was updated through ajax...');

@@ -7,7 +7,7 @@ if($ajax->isPlugin('uploadify')) {
 ## The  settings below use the exact same format as it does in the Jquery.uploadify plugin javascript format.
 	
 	//Paths are relative to uploadify plugin directory.
-	$uploadify = $ajax->uploadify('.upload', array(
+	$uploadify = $ajax->uploadify('.upload', [
 		'height' => 22,
 		'checkExisting' => true, //or false
 		'fileTypeDesc' => 'Images Files',
@@ -27,7 +27,7 @@ if($ajax->isPlugin('uploadify')) {
 		'onError' => "function() {
 			uploadify.error('An error occurred!');
 		}"
-	));
+	]);
 	
 	
 	//Example of overwritting options, you may overwrite any available options
@@ -54,7 +54,7 @@ if($ajax->isPlugin('uploadify')) {
 $code =  $ajax->code("
 
 //Paths are relative to uploadify plugin directory.
-\$uploadify = \$ajax->uploadify('.upload', array(
+\$uploadify = \$ajax->uploadify('.upload', [
 	'height' => 22,
 	'checkExisting' => true, //or false
 	'fileTypeDesc' => 'Images Files',
@@ -74,7 +74,7 @@ $code =  $ajax->code("
 	'onError' => \"function() {
 		uploadify.error('An error occurred!');
 	}\"
-));
+]);
 
 		
 //Example of overwritting options, you may overwrite any available options

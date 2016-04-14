@@ -36,11 +36,10 @@ Controller:
 <?php 
 echo $ajax->Code("
 //controllers/search.php
-class search {
+class search{
 	
 	
-	function string(\$string)
-	{
+	function string(\$string){
 		// Fill up array with some data
 		\$a[]=\"Anna\";
 		\$a[]=\"Amanda\";
@@ -83,7 +82,7 @@ class search {
 		\$a[]=\"Yakecan\";
 		
 		
-		\$out = array();
+		\$out = [];
 		
 		foreach(\$a as \$v) {
 			if(substr(strtolower(\$v), 0, strlen(\$string)) == strtolower(\$string)) {

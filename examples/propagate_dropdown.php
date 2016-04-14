@@ -47,11 +47,11 @@ Controller:
 echo $ajax->code("
 
 use CJAX\\Core\\CJAX;
-class dropdown {
+class dropdown{
 	
 	function propagate(\$selected){
 		\$ajax = CJAX::getInstance();
-		\$data = array();
+		\$data = [];
 		
 		
 		switch(\$selected) {
