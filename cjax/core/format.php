@@ -54,10 +54,8 @@ class Format{
 	 * @return STRING
 	 */
 	public function prompt($msg, $title = null, $id = 'cjax_prompt_box'){
-		self::$prompts++;
-		
-		$string = null;
-		
+		self::$prompts++;		
+		$string = null;	
 		if($type = CJAX::CSS_INFO){
 			$css = "information";
 		} 
@@ -66,18 +64,15 @@ class Format{
 		}
 		
 
-		$msgId = $id.self::$prompts;
-		
+		$msgId = $id.self::$prompts;		
 		if($title){
 			$string ="<div onmousedown=\"CJAX.drag(event,'$msgId')\" class='$css bar' style='padding: 5px 5px 0px 4px;font-weight: bold;'>$title <a href='javascript:void(0)' onclick=\"CJAX.remove('$msgId');\"/><div style='position: relative; float: right; top: -4px' class='cjax_close'></div></a></div>";
-		}
-		
-		$string = "<div id='$msgId' class='cjax_prompt_box_class'>$string
-		               <div>$msg
-                           <div style='clear:both'></div>
-		               </div>
-		           </div>";
-		return $string;
+		}		
+		return "<div id='$msgId' class='cjax_prompt_box_class'>$string
+		            <div>$msg
+                        <div style='clear:both'></div>
+		            </div>
+		        </div>";
 	}
 
 	
@@ -100,9 +95,7 @@ class Format{
         elseif($type==self::CSS_LOADING){
 			$css  = " cjax_process cjax_loading_f";
 		}
-		$data ="<div class='cjax_message cjax_message_type$css'>$text</div>\n";
-		
-		return $data;
+		return "<div class='cjax_message cjax_message_type$css'>$text</div>\n";
 	}
 	
 }

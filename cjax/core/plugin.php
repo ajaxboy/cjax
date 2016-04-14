@@ -37,7 +37,8 @@ class Plugin extends Ext{
 	 * Instances to plugins
 	 */
 	private static $_instances = [];
-	/**
+	
+    /**
 	 * 
 	 * entries Ids from plugns
 	 * @var unknown_type
@@ -50,10 +51,12 @@ class Plugin extends Ext{
 	 * @var unknown_type
 	 */
 	private static $_instancesExist = [];
+    
 	/**
 	* Plugins parameters
 	 */
 	private static $_instancesParams = [];
+    
 	/**
 	* Default controllers directory to each plugin
 	 */
@@ -84,6 +87,7 @@ class Plugin extends Ext{
 	public $dir;
     
 	public static $initiatePlugins = [];
+    
 	public $loading;
 	/**
 	 * 
@@ -129,10 +133,14 @@ class Plugin extends Ext{
 	 * @var integer
 	 */
 	public $_id;
+    
 	public $id;
-	private static $_dirs = [];
-	private static $_initiated;
-	private static $readDir = [];
+	
+    private static $_dirs = [];
+	
+    private static $_initiated;
+	
+    private static $readDir = [];
 	
 	/**
 	 * 
@@ -166,8 +174,7 @@ class Plugin extends Ext{
  	 * can preload the plugin file if plugin is not being fired.
  	 */
 	public function preload(){
-		$file = $this->file($this->loading);
-		$file = preg_replace('/.+\/+/', '', $file);
+		$file = preg_replace('/.+\/+/', '', $this->file($this->loading));
 		$this->import($file);
 	}
 	
@@ -200,12 +207,10 @@ class Plugin extends Ext{
 	}
 	
 	public function trigger($event, $params = []){
-		$ajax = CJAX::getInstance();
-		
+		$ajax = CJAX::getInstance();		
 		if(self::$_instancesExist){
 			foreach(self::$_instancesExist as $k => $v){				
-				$plugin = $ajax->plugin($v);
-				
+				$plugin = $ajax->plugin($v);				
 				if(!$plugin || !self::hasClass($k)){
 					continue;
 				}
@@ -230,7 +235,7 @@ class Plugin extends Ext{
 			$pluginName = $plugin->loading;
 		}
 		if(isset(self::$_aborted[$pluginName])){
-			return  true;
+			return true;
 		}
 	}
 	
@@ -277,7 +282,7 @@ class Plugin extends Ext{
 			$data['file'] = $file;
 		}
 		
-		$data['time'] = (int) $loadTime;
+		$data['time'] = (int)$loadTime;
 			
 			
 		if($onInit){
@@ -363,8 +368,7 @@ class Plugin extends Ext{
 		if(is_array($value)){
 			$value  = $coreEvents->mkArray($value);
 		}
-		$item['extra'][$setting] = $value;
-		
+		$item['extra'][$setting] = $value;		
 		$coreEvents->UpdateCache($instanceId, $item);
 	}
 	
@@ -384,18 +388,14 @@ class Plugin extends Ext{
 		
 		if(!is_null($instanceId)){
 			$item = CoreEvents::$cache[$instanceId];
-			$item['data'][$setting] = $value;
-			
+			$item['data'][$setting] = $value;			
 			CoreEvents::UpdateCache($instanceId, $item);
 		} 
-        else{
-			
+        else{			
 			if(!isset(self::$_instancesIds[$this->loading])){
 				return;
-			}
-			
-			$instances  = self::$_instancesIds[$this->loading];
-		
+			}			
+			$instances  = self::$_instancesIds[$this->loading];		
 			if(!$instances){
 				return false;
 			}
@@ -436,8 +436,7 @@ class Plugin extends Ext{
 				}
 				
 				$_plugin->dir = $pluginObject->dir($plugin);
-				$_plugin->loading = $plugin;
-				
+				$_plugin->loading = $plugin;				
 				self::$_loadingPrefix = null;
 			} 
             else{
@@ -479,20 +478,12 @@ class Plugin extends Ext{
 	}
 	
 	public function instanceTriggers($_plugin , $params){
-		$ajax = CJAX::getInstance();
-		if(!$ajax->isAjaxRequest()){
-			if(method_exists($_plugin, 'onLoad')){
-				if($params) {
-					call_user_func_array([$_plugin,'onLoad'], $params);
-				}
-			}	
+		$ajax = CJAX::getInstance();        
+		if(!$ajax->isAjaxRequest() && method_exists($_plugin, 'onLoad') && $params){
+			call_user_func_array([$_plugin, 'onLoad'], $params);	
 		} 
-        else{
-			if(method_exists($_plugin, 'onAjaxLoad')){
-				if($params){
-					call_user_func_array([$_plugin,'onAjaxLoad'],  $params);
-				}
-			}						
+        elseif(method_exists($_plugin, 'onAjaxLoad') && $params){
+			call_user_func_array([$_plugin, 'onAjaxLoad'],  $params);				
 		}
 	}
 	
@@ -516,12 +507,10 @@ class Plugin extends Ext{
 		if(!$plugin){
 			$plugin = new Plugin;
 			return self::$instance = $plugin;
-		}
-		
+		}		
 		if($plugin = self::getPluginInstance($plugin, $params, $instanceId)){
 			return $plugin;
-		}
-		
+		}		
 	}
 	
 	public static function initiatePlugins(){
@@ -529,8 +518,7 @@ class Plugin extends Ext{
 			return self::$initiatePlugins;
 		}
 		$base = CJAX_HOME;    
-		$plugins = $base."/plugins/";
-		
+		$plugins = $base."/plugins/";		
 		self::$initiatePlugins = self::readDir($plugins);
 	}
 	
@@ -549,9 +537,8 @@ class Plugin extends Ext{
 		}
 		if($prefix){
 			$setting = $prefix.'_'.$setting;
-		}
-		$ajax = CJAX::getInstance();		
-		return $ajax->save($setting, $value, $this->cookie);
+		}	
+		return CJAX::getInstance()->save($setting, $value, $this->cookie);
 	}
 	
 	/**
@@ -568,8 +555,7 @@ class Plugin extends Ext{
 		if($prefix){
 			$setting = $prefix.'_'.$setting;
 		}
-		$ajax = CJAX::getInstance();
-		return $ajax->getSetting($setting, $prefix);
+		return CJAX::getInstance()->getSetting($setting, $prefix);
 	}
 
 	public function  __get($setting){
@@ -580,8 +566,7 @@ class Plugin extends Ext{
 	 * get the full path of a plugin
 	 */
 	public function file($name){
-		$pluginName = self::$initiatePlugins[$name]->file;		
-		return $pluginName;
+		return self::$initiatePlugins[$name]->file;		
 	}
 	
 	public function init(){
@@ -596,20 +581,16 @@ class Plugin extends Ext{
 		if(!$plugName){
 			$plugName = $this->loading;
 		}
-		$dir = self::$_dirs[$plugName];
-		return $dir;
+		return self::$_dirs[$plugName];
 	}
 	
 	public static function readDir($resource){
 		if(self::$readDir){
 			return self::$readDir;
 		}
-		$resource = str_replace("\\","/",$resource);
-		$dirs = scandir($resource);
-		unset($dirs[0],$dirs[1]);	
+		$dirs = scandir(str_replace("\\","/",$resource));
+		unset($dirs[0], $dirs[1]);	
 		$new = [];
-
-		$ajax = CJAX::getInstance();
 		
 		foreach($dirs as $k => $v){
 			$name = preg_replace("/\..+$/", '', $v);		
@@ -627,35 +608,11 @@ class Plugin extends Ext{
 					require_once $f;
 					$class = $v;
 					$parent = get_parent_class($class);
-					if(!class_exists($class)) {
+					if(!class_exists($class) || $parent != 'plugin'){
 						$class = 'plugin_'.$v;
-					} 
-                    elseif($parent!='plugin'){
-						$class = 'plugin_'.$v;
-					}
-					
+					} 					
 					if(class_exists($class)){
-						$vars = get_class_vars($class);
-						
-						if(isset($vars['file'])){
-							$obj->file = $vars['file'];
-							$obj->method = preg_replace(["/\..+$/","/\.js$/"], '', $obj->file);
-						}
-						self::$_instancesExist[$v] = $class;
-					
-						if(method_exists($class, 'autoload')){
-							call_user_func([$class,'autoload']);
-						}
-						if(!$ajax->isAjaxRequest()){
-							if(method_exists($class, 'PageAutoload')){
-								call_user_func([$class,'PageAutoload']);
-							}
-						} 
-                        else{
-							if(method_exists($class, 'AjaxAutoload')){
-								call_user_func([$class,'AjaxAutoload']);
-							}
-						}
+                        $this->loadClass($obj, $class);
 					}
 				}
 				$obj->file = "{$v}/{$obj->file}";
@@ -669,4 +626,28 @@ class Plugin extends Ext{
 		}
 		return self::$readDir = $new;
 	}
+    
+    private static function loadClass($obj, $class){
+        $ajax = CJAX::getInstance();
+        $vars = get_class_vars($class);
+        if(isset($vars['file'])){
+            $obj->file = $vars['file'];
+            $obj->method = preg_replace(["/\..+$/","/\.js$/"], '', $obj->file);
+        }
+        self::$_instancesExist[$v] = $class;
+
+        if(method_exists($class, 'autoload')){
+            call_user_func([$class,'autoload']);
+        }
+        if(!$ajax->isAjaxRequest()){
+            if(method_exists($class, 'PageAutoload')){
+                call_user_func([$class,'PageAutoload']);
+            }
+        } 
+        else{
+            if(method_exists($class, 'AjaxAutoload')){
+                call_user_func([$class,'AjaxAutoload']);
+            }
+        }        
+    }
 }
