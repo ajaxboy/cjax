@@ -16,7 +16,7 @@ $ajax->keyup('search',$ajax->call('ajax.php?search/string/|search|','search_resu
 <h2>Search</h2>
 <br />
 Try typing a letter, it should find all finding starting with that letter.
-This is just a  demonstration, funcationality is intended to be adapted with a database. The backend controller is test data only.
+This is just a  demonstration, functionality is intended to be adapted with a database. The backend controller is test data only.
 <br /><br />
 Type Something <input type='text' id='search' />
 <div id='search_result'>
@@ -29,7 +29,7 @@ echo $ajax->code("
 //first bild text element search to the ajax request
 //pass |search|, passes the value of search field.
 //search_result is the contained div
-//keyup is the event (see: \$ajax->Exec() in API table)
+//keyup is the event (see: \$ajax->exec() in API table)
 \$ajax->keyup('search',\$ajax->call('ajax.php?search/string/|search|','search_result'));
 ");?>
 Controller:

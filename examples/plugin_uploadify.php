@@ -88,7 +88,7 @@ $code =  $ajax->code("
 //replace the above line to the directory where you want the uploads to go
 
 ");
-$ajax->Exec('see', $ajax->dialog($code, 'Code Used', array('width'=> '930px','top'=> 20)));
+$ajax->exec('see', $ajax->dialog($code, 'Code Used', array('width'=> '930px','top'=> 20)));
 
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">

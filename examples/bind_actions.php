@@ -38,7 +38,7 @@ $ajax->blur("link2",
 <body>
 <h2>Bind multiple events into one event</h2>
 <br />
-You may bind as many commands as needed inside the Exec() binder function.<br />
+You may bind as many commands as needed inside the exec() binder function.<br />
 
 <br />
 the following is on "click" event..

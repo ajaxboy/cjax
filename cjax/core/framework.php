@@ -30,26 +30,23 @@ class Framework Extends CoreEvents{
 
     
 	public function click($elementId, $actions = []){
-		if(!$actions){
-			return $this->__call('click', $elementId);
-		}
-		return $this->Exec($elementId, $actions);
+        return ($actions)? $this->exec($elementId, $actions): $this->__call('click', $elementId);
 	}
 	
 	public function change($elementId, $actions){
-		return $this->Exec($elementId, $actions, 'change');
+		return $this->exec($elementId, $actions, 'change');
 	}
 	
 	public function blur($elementId, $actions){
-		return $this->Exec($elementId, $actions, 'blur');
+		return $this->exec($elementId, $actions, 'blur');
 	}
 	
 	public function keyup($elementId, $actions){
-		return $this->Exec($elementId, $actions, 'keyup');
+		return $this->exec($elementId, $actions, 'keyup');
 	}
 
 	public function keydown($elementId, $actions){
-		return $this->Exec($elementId, $actions, 'keydown');
+		return $this->exec($elementId, $actions, 'keydown');
 	}
 	
 	public function keypress($elementId, $actions, $key = null){
@@ -66,83 +63,85 @@ class Framework Extends CoreEvents{
 			$actions->key = $_keys;
 			$actions->buffer = ['key' => $_keys];
 		}
-		return $this->Exec($elementId, $actions, 'keypress');
+		return $this->exec($elementId, $actions, 'keypress');
 	}
 
     public function rightclick($elementId, $actions){
-		return $this->Exec($elementId, $actions, 'contextmenu');        
+		return $this->exec($elementId, $actions, 'contextmenu');        
     }
     
     public function doubleclick($elementId, $actions){
-        return $this->Exec($elementId, $actions, 'dblclick');      
+        return $this->exec($elementId, $actions, 'dblclick');      
     }
     
     public function mouseover($elementId, $actions){
-		return $this->Exec($elementId, $actions, 'mouseover');        
+		return $this->exec($elementId, $actions, 'mouseover');        
     }
 
     public function mouseout($elementId, $actions){
-		return $this->Exec($elementId, $actions, 'mouseout');        
+		return $this->exec($elementId, $actions, 'mouseout');        
     }
 
     public function mouseenter($elementId, $actions){
-		return $this->Exec($elementId, $actions, 'mouseenter');        
+		return $this->exec($elementId, $actions, 'mouseenter');        
     }
 
     public function mouseleave($elementId, $actions){
-		return $this->Exec($elementId, $actions, 'mouseleave');        
+		return $this->exec($elementId, $actions, 'mouseleave');        
     }
 
     public function mousedown($elementId, $actions){
-		return $this->Exec($elementId, $actions, 'mousedown');        
+		return $this->exec($elementId, $actions, 'mousedown');        
     }
 
     public function mouseup($elementId, $actions){
-		return $this->Exec($elementId, $actions, 'mouseup');        
+		return $this->exec($elementId, $actions, 'mouseup');        
     }
 
     public function mousemove($elementId, $actions){
-		return $this->Exec($elementId, $actions, 'mousemove');        
+		return $this->exec($elementId, $actions, 'mousemove');        
     }
     
     public function drag($elementId, $actions, $dataTransfer = null){
-        if($dataTransfer) $actions = $this->dataTransfer($actions, $dataTransfer);
-        return $this->Exec($elementId, $actions, 'drag');     
+        $actions = ($dataTransfer)? $this->dataTransfer($actions, $dataTransfer): $actions;
+        return $this->exec($elementId, $actions, 'drag');     
     }
     
     public function dragend($elementId, $actions, $dataTransfer = null){
-        if($dataTransfer) $actions = $this->dataTransfer($actions, $dataTransfer);
-        return $this->Exec($elementId, $actions, 'dragend');     
+        $actions = ($dataTransfer)? $this->dataTransfer($actions, $dataTransfer): $actions;
+        return $this->exec($elementId, $actions, 'dragend');     
     }
     
     public function dragenter($elementId, $actions, $dataTransfer = null){
-        if($dataTransfer) $actions = $this->dataTransfer($actions, $dataTransfer);
-        return $this->Exec($elementId, $actions, 'dragenter');     
+        $actions = ($dataTransfer)? $this->dataTransfer($actions, $dataTransfer): $actions;
+        return $this->exec($elementId, $actions, 'dragenter');     
     } 
     
     public function dragleave($elementId, $actions, $dataTransfer = null){
-        if($dataTransfer) $actions = $this->dataTransfer($actions, $dataTransfer);
-        return $this->Exec($elementId, $actions, 'dragleave');     
+        $actions = ($dataTransfer)? $this->dataTransfer($actions, $dataTransfer): $actions;
+        return $this->exec($elementId, $actions, 'dragleave');     
     }    
     
     public function dragover($elementId, $actions, $dataTransfer = null){
-        if($dataTransfer) $actions = $this->dataTransfer($actions, $dataTransfer);
-        return $this->Exec($elementId, $actions, 'dragover');     
+        $actions = ($dataTransfer)? $this->dataTransfer($actions, $dataTransfer): $actions;
+        return $this->exec($elementId, $actions, 'dragover');     
     }      
     
     public function dragstart($elementId, $actions, $dataTransfer = null){
-        if($dataTransfer) $actions = $this->dataTransfer($actions, $dataTransfer);
-        return $this->Exec($elementId, $actions, 'dragstart');     
+        $actions = ($dataTransfer)? $this->dataTransfer($actions, $dataTransfer): $actions;
+        return $this->exec($elementId, $actions, 'dragstart');     
     }     
     
     public function drop($elementId, $actions, $dataTransfer = null){
-        if($dataTransfer) $actions = $this->dataTransfer($actions, $dataTransfer);
-        return $this->Exec($elementId, $actions, 'drop');     
+        $actions = ($dataTransfer)? $this->dataTransfer($actions, $dataTransfer): $actions;
+        return $this->exec($elementId, $actions, 'drop');     
     }     
 	
     private function dataTransfer($actions, $dataTransfer =nulll){
 		if(is_array($dataTransfer) && $actions instanceof XmlItem){
-            if($dataTransfer['dragImage']) $dataTransfer['dragImage'] = (object)$dataTransfer['dragImage'];
+            if($dataTransfer['dragImage']){
+                $dataTransfer['dragImage'] = (object)$dataTransfer['dragImage'];
+            }
 			$actions->dataTransfer = $dataTransfer;
 			$actions->buffer = ['dataTransfer' => $dataTransfer];
 		}
@@ -150,27 +149,15 @@ class Framework Extends CoreEvents{
     }
 
 	public function __get($setting){
-		/*$value = self::input($setting);
-		if(!$value) {
-			if($a = self::input('a')){
-				if(isset($a[$setting])){
-					$value = $a[$setting];
-				}
-			}
-		}
-		if($value && function_exists('cleanInput')){
-			$value = cleanInput($value);
-		} 
-		return $value;*/
+
 	}
 	
 	public function __call($method, $args){
 		$params = range('a','z');
-
 		$pParams = [];
 		if($args){
 			if(!is_array($args)){
-				$args = array($args);
+				$args = [$args];
 			}
 			foreach($args as $v){
 				$pParams[current($params)] =  $v;
@@ -183,12 +170,9 @@ class Framework Extends CoreEvents{
             $pluginClass = new Plugin;
 			if($pParams) {
 				$params = func_get_args();
-				$data['do'] = $pluginClass->method($method);
-				$data['is_plugin'] = $method;
-				$data['data'] = $pParams;
-				$data['file'] = $pluginClass->file($method);
-				$data['filename'] = preg_replace("/.*\//",'', $data['file']);
-				
+                $data = ['do' => $pluginClass->method($method), 'is_plugin' => $method,
+                         'data' => $pParams, 'file' => $pluginClass->file($method)];
+				$data['filename'] = preg_replace("/.*\//",'', $data['file']);				
 				$entryId = $this->xmlItem($this->xml($data), $method)->id;
 			}
 			$plugin = Plugin::getPluginInstance($method, $params , $entryId);
@@ -198,11 +182,7 @@ class Framework Extends CoreEvents{
 			return $plugin;
 		} 
         else{
-			$data = [];
-			$data['do'] = '_fn';
-			$data['fn'] = $method;
-			$data['fn_data'] = $pParams;
-			
+			$data = ['do' => '_fn', 'fn' => $method, 'fn_data' => $pParams];			
 			$item = $this->xmlItem($this->xml($data),'fn');
 			$item->selector = $method;
 			return  $item;
@@ -221,10 +201,8 @@ class Framework Extends CoreEvents{
 	 * @param unknown_type $call_id
 	 */
 	public function prevent($pluginName, $id, $count = 1){
-		$data['do'] = 'prevent';
-		$data['count'] = $count;
-		$data['uniqid'] = $id;
-		$data['plugin_name'] = $pluginName;
+        $data = ['do' => 'prevent', 'count' => $count, 
+                 'uniqid' => $id, 'plugin_name' => $pluginName];
 		$this->xml($data);
 	}
 	
@@ -235,7 +213,7 @@ class Framework Extends CoreEvents{
 	 * @param $actions
 	 * @param $event
 	 */
-	public function Exec($selector , $actions , $event = "click"){
+	public function exec($selector, $actions, $event = "click"){
 		if(!$this->getCache()){
 			return false;
 		}
@@ -252,37 +230,8 @@ class Framework Extends CoreEvents{
 
 		if($actions && is_array($actions)){			
 			$cache = CoreEvents::$cache;
-			
-			foreach($actions as $k => $v){
-				if(is_object($v) && ($v instanceof XmlItem || $v instanceof Plugin)){
-					if($v instanceof Plugin){
-						$v->element_id = $selector;
-						$v->xml->element_id = $selector;
-						if(method_exists($v, 'onEvent')){
-							call_user_func('onEvent', $v, $selector);
-						}
-					}
-					
-					if(isset(CoreEvents::$callbacks[$v->id]) && CoreEvents::$callbacks[$v->id]){
-						$v->attach(CoreEvents::$callbacks[$v->id]);
-						foreach(CoreEvents::$callbacks[$v->id] as $k2 => $v2){
-							unset(CoreEvents::$cache[$k2]);
-						}
-						
-					}
-					$_actions[$v->id] = $v->xml();
-					$v->delete();
-				} 
-                else{
-					if(is_object($v)){
-						//some functions return the ajax object?
-						continue;
-					}
-					$_actions[$v] = CoreEvents::$cache[$v];
-					unset(CoreEvents::$cache[$v]);
-				}
-			}
-			return $this->AddEventTo($selector, $_actions, $event);
+			$_actions = $this->execActions($actions, $selector);
+			return $this->addEventTo($selector, $_actions, $event);
 		}
 			
 		if($actions instanceof XmlItem || $actions instanceof Plugin){
@@ -301,16 +250,50 @@ class Framework Extends CoreEvents{
 				$item['callback'] = $this->mkArray($item['callback'],'json', true);
 			}
 			$actions->delete();
-			return $this->AddEventTo($selector, [$actions->id => $item],$event);
+			return $this->addEventTo($selector, [$actions->id => $item],$event);
 		} 
         else{
 			$_actions = CoreEvents::$cache[$actions];
 			$_actions['event'] = $event;
 			$this->removeLastCache(1);
-			return $this->AddEventTo($selector, [$actions => $_actions],$event);
+			return $this->addEventTo($selector, [$actions => $_actions],$event);
 		}
 	}
 	
+    private function execActions($actions, $selector){
+        $_actions = [];
+        foreach($actions as $k => $v){
+            if(is_object($v) && ($v instanceof XmlItem || $v instanceof Plugin)){
+                if($v instanceof Plugin){
+                    $v->element_id = $selector;
+                    $v->xml->element_id = $selector;
+                    if(method_exists($v, 'onEvent')){
+                        call_user_func('onEvent', $v, $selector);
+                    }
+                }
+
+                if(isset(CoreEvents::$callbacks[$v->id]) && CoreEvents::$callbacks[$v->id]){
+                    $v->attach(CoreEvents::$callbacks[$v->id]);
+                    foreach(CoreEvents::$callbacks[$v->id] as $k2 => $v2){
+                        unset(CoreEvents::$cache[$k2]);
+                    }
+
+                }
+                $_actions[$v->id] = $v->xml();
+                $v->delete();
+            } 
+            else{
+                if(is_object($v)){
+                    //some functions return the ajax object?
+                    continue;
+                }
+                $_actions[$v] = CoreEvents::$cache[$v];
+                unset(CoreEvents::$cache[$v]);
+            }
+        }
+        return $_actions;        
+    }
+    
 	/**
 	 * 
 	 *  Uses call() to post stuff
@@ -328,7 +311,7 @@ class Framework Extends CoreEvents{
 	
 	/**
 	 * 
-	 * Making several requests without Exec event.
+	 * Making several requests without exec event.
 	 * This is an alternative to call() when the requests go so fast and need just a little timeout to work properly.
 	 * 
 	 * @param unknown_type $url
@@ -336,7 +319,7 @@ class Framework Extends CoreEvents{
 	 * @param unknown_type $confirm
 	 */
 	public function callc($url, $containerId = null, $confirm = null){
-		$this->wait(200, true);// 200 milliseconds
+		$this->wait(200, true); // 200 milliseconds
 		return $this->call($url, $containerId, $confirm);
 	}
 	
@@ -368,7 +351,9 @@ class Framework Extends CoreEvents{
 			}
 		}
 
-		if($containerId) $out['container_id'] = $containerId;
+		if($containerId){
+            $out['container_id'] = $containerId;
+        }
 		if(is_bool($ajax->text) && $ajax->text === false){
 			$out['text'] = "no_text";
 		} 
@@ -376,13 +361,13 @@ class Framework Extends CoreEvents{
 			$out['text'] = "{$ajax->text}";
 		}
 		
-		if($confirm) $out['confirm'] = $confirm;
-
+		if($confirm){
+            $out['confirm'] = $confirm;
+        }
 		if($ajax->loading){
 			$out['is_loading'] = true;
-		}
-		
-		return $this->xmlItem($this->xml($out),'call','api');
+		}		
+		return $this->xmlItem($this->xml($out), 'call', 'api');
 	}
 	
 	
@@ -395,10 +380,10 @@ class Framework Extends CoreEvents{
 			switch($value->name){
 				case 'call':
 					$value->container_id = $setting;
-				break;
+				    break;
 				case 'form':
-					$this->Exec($setting, $value->id);
-				break;
+					$this->exec($setting, $value->id);
+				    break;
 			}
 			return $this->simpleCommit();
 		} 
@@ -417,11 +402,10 @@ class Framework Extends CoreEvents{
 	 * @param unknown_type $vars
 	 */
 	public function ajaxVars($vars){
-		$data['do'] = 'ajaxVars';
 		if(is_array($vars)){
 			$vars = http_build_query($vars);
 		}
-		$data['vars'] = $vars;
+        $data = ['do' => 'ajaxVars', 'vars' => $vars];
 		$this->xml($data);
 	}
 		
@@ -449,22 +433,14 @@ class Framework Extends CoreEvents{
 	 * @param string $value
 	 */
 	public function property($elementId, $value = '', $clearDefault = false, $selectText = false){
-		$options = [];
-		$options['do']  = 'property';
-		$options['element_id'] = $elementId;
-		$options['clear_text'] = $clearDefault;
-		$options['select_text'] = $selectText;
-		$options['value'] = $value;
-		//$options['options'] = $this->mkArray($options);		
+		$options = ['do' => 'property', 'element_id' => $elementId, 'clear_text' => $clearDefault,
+                    'select_text' => $selectText, 'value' => $value];
 		return $this->xml($options);
 	}
 
 	public function select($element, $options = array(), $selected = null, $allowInput = false){
-		$select['do'] = 'select';
-		$select['element_id'] = $element;
-		$select['selected'] = $selected;
-		$select['options'] = $options;
-		$select['allow_input'] = $allowInput;		
+        $select = ['do' => 'select', 'element_id' => $element, 'selected' => $selected,
+                   'options' => $options, 'allow_input' => $allowInput];	
 		return $this->xml($select);
 	}
 
@@ -479,9 +455,7 @@ class Framework Extends CoreEvents{
      */
     public function form($url, $formId = null, $containerId = null, $confirm = null){
         $ajax = CJAX::getInstance();       
-        $out = [];        
-        $out['do'] = '_form';
-        $out['url'] = $url;
+        $out = ['do' => '_form', 'url' => $url];        
         if($formId) $out['form_id'] = $formId;
         if(!is_null($containerId)){
         	$out['container'] = $containerId;
@@ -506,8 +480,7 @@ class Framework Extends CoreEvents{
         else{
         	$out['post'] = 1;
         }
-        $xml = $this->xmlItem($this->xml($out), 'form', 'api');       
-        return $xml;
+        return $this->xmlItem($this->xml($out), 'form', 'api');       
     }
 
 
@@ -517,9 +490,7 @@ class Framework Extends CoreEvents{
 	 * @param unknown_type $style
 	 */
 	public function style($elementId, $style = []){
-		$data['do'] = 'style';
-		$data['element'] = $elementId;
-		$data['style'] = $this->mkArray($style);
+        $data = ['do' => 'style', 'element' => $elementId, 'style' => $this->mkArray($style)];
 		return $this->xml($data);
 	}
 
@@ -536,7 +507,7 @@ class Framework Extends CoreEvents{
 		$options['color'] = '#FF8040'
 	 */
 	public function overLay($url = null, $options = [], $useCache = false){
-		$data['do'] = '_overLay';
+        $data = ['do' => '_overLay'];
 		if(!isset($options['click_close'])){
 			$options['click_close'] = true;
 		}
@@ -558,8 +529,7 @@ class Framework Extends CoreEvents{
 		$data['cache'] = $useCache;
 		if($url){
 			$data['template'] = $this->template('overlay.html');
-		}
-		
+		}		
 		return $this->xmlItem($this->xml($data), 'overlay', 'api');
 	}
 
@@ -577,8 +547,7 @@ class Framework Extends CoreEvents{
 	 * @param $options
 	 */
 	public function overlayContent($content = null, $options = null){
-		$data['do'] = '_overLayContent';
-		$data['content'] = $content;
+        $data = ['do' => '_overLayContent', 'content' => $content];
 		if(!isset($options['click_close'])){
 			$options['click_close'] = true;
 		}
@@ -590,7 +559,6 @@ class Framework Extends CoreEvents{
 			$data['options'] = $this->mkArray($options);
 		}
 		$data['template'] = $this->encode($this->template('overlay.html'));
-
 		return $this->xmlItem($this->xml($data), 'overlayContent', 'api');
 	}
 
@@ -602,10 +570,8 @@ class Framework Extends CoreEvents{
 	 * then it will dissapear.
 	 */
 	public function message($message, $seconds = 3, $containerId = 'cjax_message'){
-		$data['do'] = '_message';
-		$data['message'] = $message;
-		$data['time'] =  $seconds;
-		$data['message_id'] = $containerId;
+        $data = ['do' => '_message', 'message' => $message, 
+                 'time' => $seconds, 'message_id' => $containerId];
 		return $this->xml($data);
 	}
 	
@@ -615,19 +581,15 @@ class Framework Extends CoreEvents{
 	 * @param mixed_type $file
 	 * @param unknown_type $loadTime
 	 */
-	public function import($file , $loadTime = 0){
-		$data['do'] = '_import';
-		$data['time'] = (int) $loadTime;
-		$data['is_import'] = 1;
+	public function import($file, $loadTime = 0){
+        $data = ['do' => '_import', 'time' => (int)$loadTime, 'is_import' => 1];
 		if(!is_array($file)){
 			$data['file'] = $file;
 		} 
         else{
 			$data = array_merge($data, $file);
-		}
-		
+		}		
 		return $this->xml($data);
-		//return $this->xmlItem($this->xml($data), 'import') ;
 	}
 	
 	/**
@@ -658,17 +620,15 @@ class Framework Extends CoreEvents{
 	/**
 	 * Add event to elements
 	 * --
-	 * AddEventTo();
+	 * addEventTo();
 	 *
 	 * @param string $element
 	 * @param string|array $actions
 	 * @param string $event
 	 */
-	public function AddEventTo($element, $actions, $event = 'onclick'){
-		$data['do'] = 'AddEventTo';
-		$data['element_id'] = $element;
-		$data['event'] = $event;
-		$data['events'] = $actions;		
+	public function addEventTo($element, $actions, $event = 'onclick'){
+        $data = ['do' => 'AddEventTo', 'element_id' => $element, 
+                 'event' => $event, 'events' => $actions];	
 		return $this->xmlItem($this->xml($data), 'AddEventTo', 'api');
 	}
 
@@ -702,10 +662,8 @@ class Framework Extends CoreEvents{
 	 * 
 	 * Removes waiting times
 	 */
-	public function waitReset(){
-		$data['do'] = '_wait';	
-		$data['time_reset'] = 1;	
-		return $this->xml($data);		
+	public function waitReset(){	
+		return $this->xml(['do' => '_wait', 'time_reset' => 1]);		
 	}
 	
 	/**
@@ -723,9 +681,7 @@ class Framework Extends CoreEvents{
 	 * @param string $obj
 	 */
 	public function remove($obj){
-		$data['do'] = 'remove';
-		$data['element_id'] = $obj;
-		$this->xml($data);
+		$this->xml(['do' => 'remove', 'element_id' => $obj]);
 	}
 
 	/**
@@ -734,9 +690,7 @@ class Framework Extends CoreEvents{
 	 *
 	 * @param string $url [URL]
 	 */
-	public function location($url = null){
-		$data['do'] = 'location';
-		$data['url'] = $url;		
-		return $this->xml($data);
+	public function location($url = null){		
+		return $this->xml(['do' => 'location', 'url' => $url]);
 	}
 }

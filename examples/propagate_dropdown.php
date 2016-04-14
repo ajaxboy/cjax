@@ -35,7 +35,7 @@ Code Used:
 <?php
 echo $ajax->code("
 
-\$ajax->Exec(\"dropdown1\",\$ajax->call(\"ajax.php?dropdown/propagate/|dropdown1|\",\"change\"));
+\$ajax->exec(\"dropdown1\",\$ajax->call(\"ajax.php?dropdown/propagate/|dropdown1|\",\"change\"));
 
 //OR as of 5.1
 

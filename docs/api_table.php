@@ -195,7 +195,7 @@ require_once 'ajax.php';
 
 <tr>
 	<td>
-	$ajax->Exec()
+	$ajax->exec()
 	</td>
 	<td>
 	$element_id - required mixed[string,array]

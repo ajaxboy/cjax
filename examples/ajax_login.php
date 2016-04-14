@@ -3,7 +3,7 @@
 require_once 'ajax.php';
 
 //forces $ajax->form() to fire AFTER the overlay has fully loaded and shown
-//Makes sure that $ajax->Exec/$ajax->form() is triggerd after the overlay is created by being attached to the actual overlay
+//Makes sure that $ajax->exec/$ajax->form() is triggerd after the overlay is created by being attached to the actual overlay
 $overlay = $ajax->overlay('resources/html/login.html');
 
 
@@ -67,7 +67,7 @@ class ajax_login {
 		
 		//This is exactly the example as the first line in the Initial code but with different syntax
 		\$overlay = \$ajax->overlay('resources/html/login.html');
-		\$link = \$ajax->Exec('button1',\$ajax->form('ajax.php?ajax_login/handler','form1'));
+		\$link = \$ajax->exec('button1',\$ajax->form('ajax.php?ajax_login/handler','form1'));
 		\$overlay->callback(\$link);
 		\$ajax->click('a_login', \$overlay);
 	}

@@ -16,7 +16,7 @@ it will trigger the request.
 <?php 
 
 echo $ajax->code("
-\$ajax->Exec('your_anchor_id_here' , \$ajax->call(\"url/goes/here\"));
+\$ajax->exec('your_anchor_id_here' , \$ajax->call(\"url/goes/here\"));
 ");
 ?>
 </body>

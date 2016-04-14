@@ -123,7 +123,7 @@ class Uploader extends Plugin{
 			$xml = $ajax->form($options['url'], $options['form_id']);
 		} 
         else{
-			$xml = $ajax->Exec($btnId, $ajax->form($options['url'], $options['form_id']));
+			$xml = $ajax->exec($btnId, $ajax->form($options['url'], $options['form_id']));
 		}
 		$this->options = $options;
 		$this->callback($xml);

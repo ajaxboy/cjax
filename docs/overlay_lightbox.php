@@ -70,7 +70,7 @@ may enter any of the overlay functions.
 <h4>Example</h4>
 <?php 
 echo $ajax->code("
-\$ajax->Exec(\"button_id_here\", OVERLAY_CODE ));
+\$ajax->exec(\"button_id_here\", OVERLAY_CODE ));
 ");
 ?>
 

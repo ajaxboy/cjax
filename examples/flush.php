@@ -1,7 +1,7 @@
 <?php
 require_once 'ajax.php';
 
-$ajax->Exec('#link1', $ajax->call('ajax.php?flush/flush_element'));
+$ajax->exec('#link1', $ajax->call('ajax.php?flush/flush_element'));
 
 ?>
 <html>
@@ -16,7 +16,7 @@ Flush, will clear  all events set to that element. This allows you to re-use stu
 <?php 
 echo $ajax->code("
 //add an ajax request to #link1
-\$ajax->Exec('#link1', \$ajax->call('ajax.php?flush/flush_element'));
+\$ajax->exec('#link1', \$ajax->call('ajax.php?flush/flush_element'));
 
 //in the controller we flush it..
 //so if you click the link again, it is clean and won't do anything.

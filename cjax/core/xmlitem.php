@@ -41,7 +41,7 @@ class XmlItem{
 	public $buffer = [];
     
 	//**ADD all existing built-in functions
-	private $api = ['overlay', 'overlayContent', 'call', 'form', 'import', 'AddEventTo', 'Exec', 
+	private $api = ['overlay', 'overlayContent', 'call', 'form', 'import', 'addEventTo', 'exec', 
                     'click', 'change', 'update', 'property', 'keyup', 'keydown', 'keypress', 'mouseover', 
                     'mouseout', 'mouseenter', 'mouseleave', 'mousedown', 'mouseup', 'mousemove',
                     'drag', 'dragend', 'dragenter', 'dragleave', 'dragover', 'dragstart', 'drop',

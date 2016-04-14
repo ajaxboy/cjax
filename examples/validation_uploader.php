@@ -72,7 +72,7 @@ $code = $ajax->code("
 	);
 ");
 
-$ajax->Exec('code', $ajax->overlayContent($code, array('width'=> '950px','top'=> '40px')));
+$ajax->exec('code', $ajax->overlayContent($code, array('width'=> '950px','top'=> '40px')));
 ?>
 <!DOCTYPE html>
 <html lang="en">

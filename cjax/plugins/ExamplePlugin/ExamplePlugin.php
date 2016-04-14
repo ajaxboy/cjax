@@ -176,7 +176,7 @@ class ExamplePlugin extends Plugin{
 	
 	/**
 	 * 
-	 * This function is ran within Exec when plugin  passed as paramenter.
+	 * This function is ran within exec when plugin  passed as paramenter.
 	 * Serves mainly to obtain the element_id being used.
 	 * 
 	 * As of  5.3 +

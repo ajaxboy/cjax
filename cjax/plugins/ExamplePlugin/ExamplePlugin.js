@@ -55,7 +55,7 @@ function ExamplePlugin(arg1, arg2)
 	 * 
 	 * Lets say in your controller you use
 	 * 
-	 * $ajax->Exec('button', $ajax->form('url','form_id'));
+	 * $ajax->exec('button', $ajax->form('url','form_id'));
 	 * 
 	 * The above Api will submit a form attached to a button,
 	 * 
