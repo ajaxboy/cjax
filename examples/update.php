@@ -2,7 +2,7 @@
 
 require_once "ajax.php";
 
-$ajax->click("button1",$ajax->call("ajax.php?update/update_box"));
+$ajax->click("button1",$ajax->call("ajax.php?update/updateBox"));
 ?>
 <html>
 <head>
@@ -28,7 +28,7 @@ $ajax->click("button1",$ajax->call("ajax.php?update/update_box"));
 Code used:
 <?php 
 echo $ajax->code("
-\$ajax->update('content1',\$text);
+\$ajax->update('content1', \$text);
 //OR
 \$ajax->content1 = \$text;
 ");?>

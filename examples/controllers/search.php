@@ -1,8 +1,9 @@
 <?php
 
 namespace Examples\Controllers;
+use CJAX\Core\AJAXController;
 
-class Search{
+class Search extends AJAXController{
 		
 	public function string($string){
 		// Fill up array with some data

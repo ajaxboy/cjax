@@ -1,12 +1,11 @@
 <?php
 
 namespace Examples\Controllers;
-use CJAX\Core\CJAX;
+use CJAX\Core\AJAXController;
 
-class Dropdown{
+class Dropdown extends AJAXController{
 	
 	public function propagate($selected){
-		$ajax = CJAX::getInstance();
 		$data = [];
 			
 		switch($selected) {
@@ -29,7 +28,7 @@ class Dropdown{
 		}
 		
 		//setcookie('data','testesttest',time()+1000*10);
-		$ajax->select('dropdown2',$data);
+		$this->ajax->select('dropdown2', $data);
 		
 	}
 	
@@ -39,11 +38,9 @@ class Dropdown{
 	 * 
 	 * @param $selected
 	 */
-	public function propagate_allow_input($selected){
-		$ajax = CJAX::getInstance();
+	public function propagateAllowInput($selected){
 		$data = [];
-		
-		
+
 		switch($selected) {
 			case 'options':
 				$data[] = "Option 1";
@@ -52,8 +49,7 @@ class Dropdown{
 				$data[] = "Option 4";
 				$data[] = "Option 5";
 			break;
-			case 'states':
-				
+			case 'states':			
 				$data[] = "Texas";
 				$data[] = "Florida";
 				$data[] = "New York";
@@ -63,7 +59,6 @@ class Dropdown{
 			break;
 		}
 		
-		$ajax->select('dropdown2',$data,'Enter Something',true);
-		
+		$this->ajax->select('dropdown2', $data, 'Enter Something', true);		
 	}
 }

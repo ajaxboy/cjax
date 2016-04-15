@@ -2,13 +2,12 @@
 
 require_once "ajax.php";
 
-$ajax->click("button1",$ajax->call("ajax.php?click_ajax_request/click_button/Hello!"));
+$ajax->click("button1",$ajax->call("ajax.php?clickajaxrequest/clickButton/Hello!"));
 
 ?>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <title>Simple ajax request binded to a button</title>
 <?php echo $ajax->init();?>
 </head>
@@ -23,7 +22,7 @@ $ajax->click("button1",$ajax->call("ajax.php?click_ajax_request/click_button/Hel
 Code Used:
 <?php
 echo $ajax->code("
-\$ajax->click(\"button1\",\$ajax->call(\"ajax.php?click_ajax_request/click_button/Hello!\"));
+\$ajax->click(\"button1\",\$ajax->call(\"ajax.php?clickajaxrequest/clickButton/Hello!\"));
 ");
 ?>
 </body>

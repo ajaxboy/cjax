@@ -7,7 +7,7 @@ require_once "ajax.php";
 // 1. test field
 // 2. URL to be requested.
 // 3. Event. onKeyUp event is used.
-$ajax->keyup("text1", $ajax->call("ajax.php?keyup_update/update/|text1|"));
+$ajax->keyup("text1", $ajax->call("ajax.php?keyupupdate/update/|text1|"));
 ?>
 <html>
 <head>
@@ -30,23 +30,22 @@ Type Something... <input type='text' id='text1'>
 Code Used:
 <?php 
 echo $ajax->code("
-\$ajax->keyup(\"text1\", \$ajax->call(\"ajax.php?keyup_update/update/|text1|\"));"
+\$ajax->keyup(\"text1\", \$ajax->call(\"ajax.php?keyupupdate/update/|text1|\"));"
 );
 ?>
 Controller:
 <?php 
 echo $ajax->code("
-use CJAX\\Core\\CJAX;    
-class Keyup_update{
+namespace Examples\\Controllers;
+use CJAX\\Core\\AJAXController; 
+   
+class KeyupUpdate extends AJAXController{
 	
 	public function update(\$text){
-		\$ajax = CJAX::getInstance();
-		
 		//update page title
-		\$ajax->document('title', \$text);
-		
+		\$this->ajax->document('title', \$text);		
 		//update div
-		\$ajax->div_response = \$text;
+		\$this->ajax->div_response = \$text;
 	}
 }
 );");

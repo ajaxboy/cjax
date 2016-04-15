@@ -4,7 +4,7 @@ require_once "ajax.php";
 
 //displays a confirmation box before executing an ajax call.
 
-$ajax->click("button1", $ajax->call("ajax.php?confirm/confirm_action", null, "Are you sure?"));
+$ajax->click("button1", $ajax->call("ajax.php?confirm/confirmAction", null, "Are you sure?"));
 ?>
 <html>
 <head>
@@ -20,7 +20,7 @@ Code Used:
 <?php 
 
 echo $ajax->code("
-\$ajax->click(\"button1\",\$ajax->call(\"ajax.php?confirm/confirm_action\",null,\"Are you sure?\"));
+\$ajax->click(\"button1\",\$ajax->call(\"ajax.php?confirm/confirmAction\",null,\"Are you sure?\"));
 ");
 ?>
 

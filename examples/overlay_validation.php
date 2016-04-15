@@ -28,25 +28,25 @@ $rules = [
 
 $overlay = $ajax->overLay('resources/html/test_form.html');
 //surging from $overlay ensures that it is ran after the html has been generated.
-$overlay->validate('button1','ajax.php?overlay_validation/form', $rules);
+$overlay->validate('button1','ajax.php?overlayvalidation/form', $rules);
 
 //die("cache<pre>".print_r(CoreEvents::$cache,1). "cbs<pre>".print_r(CoreEvents::$callbacks,1));
 
 //ensure that it validation is ran after the html form is generated.
-//$overlay->callback = $ajax->validate('button1','ajax.php?overlay_validation/form', $rules);
+//$overlay->callback = $ajax->validate('button1','ajax.php?overlayvalidation/form', $rules);
 
 $ajax->click('link', $overlay);
 
 
 
-$ajax->click('link2', $ajax->call('ajax.php?overlay_validation/overlay2'));
+$ajax->click('link2', $ajax->call('ajax.php?overlayvalidation/overlay2'));
 
 ## Display the code that is used
 $code = $ajax->code("
 //5.0-RC3+
 //Total 3 lines of code!, (not including the customs rules)
 
-//Note: For sample#2 look inside the controller: examples/controllers/overlay_validation.php:overlay_validation::overlay2();
+//Note: For sample#2 look inside the controller: examples/controllers/overlayvalidation.php:OverlayValidation::overlay2();
 
 #Sample #1
 //initial action to the 'launch' link
@@ -73,18 +73,19 @@ $code = $ajax->code("
 
  
 \$overlay = \$ajax->overLay('resources/html/test_form.html');
-\$overlay->validate('button1','ajax.php?overlay_validation/form', \$rules);
+\$overlay->validate('button1','ajax.php?overlayvalidation/form', \$rules);
 
 \$ajax->click('link', \$overlay);
 
 //Controller
-use CJAX\\Core\\CJAX;
-class overlay_validation {
+namespace Examples\\Controllers;
+use CJAX\\Core\\AJAXController;
+
+class OverlayValidation extends AJAXController{
 	
-	function form(){
-		\$ajax = CJAX::getInstance(;
+	public function form(){
 		//show posted variables
-		\$ajax->debug(\$_POST,'Post Debug Info',\"These are the fields posted.\");
+		\$this->ajax->debug(\$_POST,'Post Debug Info',\"These are the fields posted.\");
 	}
 }
 ");

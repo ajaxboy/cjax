@@ -26,7 +26,7 @@ if($ajax->isPlugin('validate')) {
 		]
 	];
 	
-	$validate = $ajax->validate('btn_saveForm', 'ajax.php?send_form/validate', $rules);
+	$validate = $ajax->validate('btn_saveForm', 'ajax.php?sendform/validate', $rules);
 	
 	$rule  = [
 		'required' => [true , 'This field is required!'],
@@ -64,7 +64,7 @@ $rules = $ajax->code("
 
 
 $code = $ajax->code("
-\$validate = \$ajax->validate('btn_saveForm', 'ajax.php?send_form/validate', \$rules);
+\$validate = \$ajax->validate('btn_saveForm', 'ajax.php?sendform/validate', \$rules);
 ");
 
 $ajax->exec('code', $ajax->overlayContent($code, ['width'=> '800px', 'top'=>30]));

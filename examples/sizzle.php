@@ -4,9 +4,9 @@ require_once "ajax.php";
 
 $ajax->config->sizzle = true; 
 
-$ajax->click(".bt", $ajax->call("ajax.php?click_ajax_request/click_button/"));
+$ajax->click(".bt", $ajax->call("ajax.php?clickajaxrequest/clickButton/"));
 
-$ajax->click(".buttons", $ajax->call("ajax.php?click_ajax_request/click_button/|data.button_number|/"));
+$ajax->click(".buttons", $ajax->call("ajax.php?clickajaxrequest/clickButton/|data.button_number|/"));
 ?>
 <html>
 <head>
@@ -82,7 +82,7 @@ bind your elements with the assigned actions.
 echo $ajax->code("
 <?php
 
-\$ajax->click(\".bt\",\$ajax->call(\"ajax.php?click_ajax_request/click_button\"));
+\$ajax->click(\".bt\",\$ajax->call(\"ajax.php?clickajaxrequest/clickButton\"));
 
 ?>
 
@@ -108,7 +108,7 @@ prefix will be the keyword you need to pass in the url by passing data.[Keyword 
 echo $ajax->code("
 <?php
 
-\$ajax->click(\".buttons\",\$ajax->call(\"ajax.php?click_ajax_request/click_button/|data.button_number|\"));
+\$ajax->click(\".buttons\",\$ajax->call(\"ajax.php?clickajaxrequest/clickButton/|data.button_number|\"));
 
 ?>
 

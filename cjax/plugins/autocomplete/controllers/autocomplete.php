@@ -1,8 +1,9 @@
 <?php
 
 namespace CJAX\Plugins\Autocomplete\Controllers;
+use CJAX\Core\AJAXController;
 
-class Autocomplete{
+class Autocomplete extends AJAXController{
 	
     protected function generateOutput($search, array $data = []){
         $output = [];

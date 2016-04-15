@@ -4,11 +4,11 @@
 require_once "ajax.php";
 //initiate CJAX..
 
-$ajax->click("button1",$ajax->call("ajax.php?change_value/text/text1/|text1|"));
+$ajax->click("button1",$ajax->call("ajax.php?changevalue/text/text1/|text1|"));
 
-$ajax->click("button2",$ajax->call("ajax.php?change_value/check/check1/|check1|"));
+$ajax->click("button2",$ajax->call("ajax.php?changevalue/check/check1/|check1|"));
 
-$ajax->click("button3",$ajax->call("ajax.php?change_value/div/|rand|"));
+$ajax->click("button3",$ajax->call("ajax.php?changevalue/div/|rand|"));
 ?>
 <html>
 <head>
@@ -47,11 +47,11 @@ Code used:
 echo $ajax->code("
 <?php
 
-\$ajax->click(\"button1\",\$ajax->call(\"ajax.php?change_value/text/|text1|\"));
+\$ajax->click(\"button1\",\$ajax->call(\"ajax.php?changevalue/text/|text1|\"));
 
-\$ajax->click(\"button2\",\$ajax->call(\"ajax.php?change_value/check/|check1|\"));
+\$ajax->click(\"button2\",\$ajax->call(\"ajax.php?changevalue/check/|check1|\"));
 
-\$ajax->click(\"button3\",\$ajax->call(\"ajax.php?change_value/div/\");
+\$ajax->click(\"button3\",\$ajax->call(\"ajax.php?changevalue/div/\");
 
 
 ?>
@@ -67,12 +67,12 @@ echo $ajax->code("
 Controller:
 <?php 
 echo $ajax->code("
-use CJAX\\Core\\CJAX;  
+namespace Examples\\Controllers;
+use CJAX\\Core\\AJAXController;  
 
-class Change_value{
+class ChangeValue extends AJAXController{
 
 	public function div(){
-		\$ajax = CJAX::getInstance();
 		
 		//Some random strings .......
 		\$text[] = \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. \";
@@ -87,23 +87,20 @@ class Change_value{
 		\$text[] = \"web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many\";
 		\$text[] = \"web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\";
 		
-		\$ajax->DIV_1 = \$text[rand(0, count(\$text)-1)];
+		\$this->ajax->DIV_1 = \$text[rand(0, count(\$text)-1)];
 	}
 	
 	public function text(\$current_value){
-		\$ajax = CJAX::getInstance();		
-		\$ajax->text1 = \"Random number..\".rand(100,1000);
+		\$this->ajax->text1 = \"Random number..\".rand(100,1000);
 	}
 	
 	
 	public function check(\$current_value){
-		\$ajax = CJAX::getInstance();
-		
 		if(\$current_value){
-			\$ajax->check1 = false;
+			\$this->ajax->check1 = false;
 		} 
         else{
-			\$ajax->check1 = true;
+			\$this->ajax->check1 = true;
 		}
 	}
 }

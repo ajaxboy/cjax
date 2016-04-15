@@ -29,7 +29,7 @@ $rules = [
 $ajax->validate('btnSubmit', null, $rules)->uploader(
 	['target' => './',//$ajax->config->uploader_dir.'validation_uploader/',
 	 'text'=> 'Submitting Form..',
-	 'url' => 'ajax.php?validation_uploader/post',
+	 'url' => 'ajax.php?validationuploader/post',
 	 'success_message' => 'Form submitted successfully.',
 	 'form_id' => 'form1',
 	 'suffix' => time()
@@ -64,12 +64,12 @@ $code = $ajax->code("
 
 \$ajax->validate('btnSubmit', null, \$rules)->uploader(
 	['target' => 'upload/directory/',
-	 'url' => 'ajax.php?validation_uploader/post',
+	 'url' => 'ajax.php?validationuploader/post',
 	 'success_message' => 'Form submitted successfully.']
     );
 ");
 
-$ajax->exec('code', $ajax->overlayContent($code, array('width'=> '950px','top'=> '40px')));
+$ajax->exec('code', $ajax->overlayContent($code, ['width'=> '950px','top'=> '40px']));
 ?>
 <!DOCTYPE html>
 <html lang="en">

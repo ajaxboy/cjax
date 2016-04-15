@@ -1,30 +1,25 @@
 <?php
 
 namespace Examples\Controllers;
-use CJAX\Core\CJAX;
+use CJAX\Core\AJAXController;
 
-class Change_value{
+class ChangeValue extends AJAXController{
 	
-	public function text($element_id,$current_value){
-		$ajax = CJAX::getInstance();		
-		$ajax->text1 = "Random number..".rand(100,1000);
+	public function text($element_id, $current_value){
+		$this->ajax->text1 = "Random number..".rand(100,1000);
 	}
 	
 	
-	public function check($element_id,$current_value){
-		$ajax = CJAX::getInstance();
-		
+	public function check($element_id, $current_value){
 		if($current_value){
-			$ajax->check1 = false;
+			$this->ajax->check1 = false;
 		} 
         else{
-			$ajax->check1 = true;
+			$this->ajax->check1 = true;
 		}
 	}
 	
 	public function div($num = 0){
-		$ajax = CJAX::getInstance();
-		
 		$text = [];
 		
 	//Some random strings .......
@@ -40,6 +35,6 @@ class Change_value{
 		$text[] = "web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many";
 		$text[] = "web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).";
 		
-		$ajax->DIV_1 = $text[rand(0, count($text)-1)];
+		$this->ajax->DIV_1 = $text[rand(0, count($text)-1)];
 	}
 }

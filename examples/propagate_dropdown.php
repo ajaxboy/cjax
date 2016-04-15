@@ -45,12 +45,12 @@ echo $ajax->code("
 Controller:
 <?php
 echo $ajax->code("
+namespace Examples\\Controllers;
+use CJAX\\Core\\AJAXController;
 
-use CJAX\\Core\\CJAX;
-class Dropdown{
+class Dropdown extends AJAXController{
 	
 	public function propagate(\$selected){
-		\$ajax = CJAX::getInstance();
 		\$data = [];
 				
 		switch(\$selected) {
@@ -61,8 +61,7 @@ class Dropdown{
 				\$data[] = \"Option 4\";
 				\$data[] = \"Option 5\";
 			break;
-			case 'states':
-				
+			case 'states':				
 				\$data[] = \"Texas\";
 				\$data[] = \"Florida\";
 				\$data[] = \"New York\";
@@ -72,7 +71,7 @@ class Dropdown{
 			break;
 		}
 		
-		\$ajax->select('dropdown2',\$data);
+		\$this->ajax->select('dropdown2',\$data);
 		
 	}
 }

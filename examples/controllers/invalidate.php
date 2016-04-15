@@ -1,16 +1,15 @@
 <?php
 
 namespace Examples\Controllers;
-use CJAX\Core\CJAX;
+use CJAX\Core\AJAXController;
 
-class Invalidate{
+class Invalidate extends AJAXController{
 	
 	/**
 	 *
 	 * this is part of the "invalid" plugin which displays an dynamic invalid message.
 	 */
 	public function invalid(){
-		$ajax = CJAX::getInstance();		
-		$ajax->invalid(['text1'=> 'Enter Value..', 'text2'=> 'Enter Value..', 'text3'=> 'Enter Value..']);
+		$this->ajax->invalid(['text1'=> 'Enter Value..', 'text2'=> 'Enter Value..', 'text3'=> 'Enter Value..']);
 	}
 }

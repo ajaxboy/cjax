@@ -1,18 +1,16 @@
 <?php
 
 namespace Examples\Controllers;
-use CJAX\Core\CJAX;
+use CJAX\Core\AJAXController;
 
-class Calc{
+class Calc extends AJAXController{
 	
 	public function math($action, $buffer){
-		$ajax = CJAX::getInstance();
-		
 		$operators_signs = ['[plus]','p','m','x','d'];
 		$operators = ['p','+','-','*','/'];
 		
 		$pre_buffer = $buffer;
-		$buffer = $ajax->buffer = $buffer.$action;
+		$buffer = $this->ajax->buffer = $buffer.$action;
 		$buffer = str_replace($operators_signs, $operators, $buffer);
 		
 		switch($action) {
@@ -22,16 +20,16 @@ class Calc{
 			case 'x'://times
 			    break;
 			case 'c': //clear
-				$ajax->buffer = null;
-				$ajax->result = 0;
+				$this->ajax->buffer = null;
+				$this->ajax->result = 0;
 			    break;
 			case 'e': //equal
 				$buffer = rtrim($buffer,"e=+-\/*");
 				
 				eval("\$action = ({$buffer});");
 				
-				$ajax->result = $action;
-				$ajax->buffer = $action;
+				$this->ajax->result = $action;
+				$this->ajax->buffer = $action;
 			    break;
 			default: //number
 				
@@ -44,7 +42,7 @@ class Calc{
                 else {
 					$action =  preg_replace("/.+[^0-9]/", '', $buffer);
 				}
-				$ajax->result = $action;
+				$this->ajax->result = $action;
 		
 		}
 	}

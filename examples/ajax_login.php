@@ -7,7 +7,7 @@ require_once 'ajax.php';
 $overlay = $ajax->overlay('resources/html/login.html');
 
 
-$overlay->click('button1', $ajax->form('ajax.php?ajax_login/handler'));
+$overlay->click('button1', $ajax->form('ajax.php?ajaxlogin/handler'));
 
 
 $ajax->click('a_login', $overlay);
@@ -18,11 +18,11 @@ $code = $ajax->code("
 
 //Loads file resources/html/login.html onto the overlay
 //Adds event listerner to button1 so when you click it
-//it submit/posts the form to url 'ajax.php?ajax_login/handler'
+//it submit/posts the form to url 'ajax.php?ajaxlogin/handler'
 
 \$overlay = \$ajax->overlay('resources/html/login.html');
 
-\$overlay->click('#button1', \$ajax->form('ajax.php?ajax_login/handler'));
+\$overlay->click('#button1', \$ajax->form('ajax.php?ajaxlogin/handler'));
 
 //assigns the overlay to the click event on achor element 'a_login'
 //so when you click the link the overlay is displayed
@@ -31,50 +31,49 @@ $code = $ajax->code("
 
 //Controller
 
-use CJAX\\Core\\CJAX;
-class ajax_login{
+namespace Examples\\Controllers;
+use CJAX\\Core\\AJAXController;
+
+class AjaxLogin extends AJAXController{
 	
-	public function handler(\$username, \$password){
-		\$ajax = CJAX::getInstance();
-		
+	public function handler(\$username, \$password){		
 		if(!\$username) {
-			return  \$ajax->err = 'Enter your username.';
+			return  \$this->ajax->err = 'Enter your username.';
 		}
 		if(!\$password) {
-			return \$ajax->err = 'Enter your password.';
+			return \$this->ajax->err = 'Enter your password.';
 		}
 		
-		\$ajax->success(\"Hello \$username, You haved successfully logged in.\");
+		\$this->ajax->success(\"Hello \$username, You haved successfully logged in.\");
 		
-		\$ajax->flush('#a_login'); //clear previous click events from element
-		\$ajax->overlay();//clear overlay from the screen
+		\$this->ajax->flush('#a_login'); //clear previous click events from element
+		\$this->ajax->overlay();//clear overlay from the screen
 		
-		\$ajax->login_div = \"Hello \$username!, Logout Now..\"; 
-		\$ajax->insert('#login_div','#a_login',true); // places the login button inside the login_div container
+		\$this->ajax->login_div = \"Hello \$username!, Logout Now..\"; 
+		\$this->ajax->insert('#login_div','#a_login',true); // places the login button inside the login_div container
 		
-		\$ajax->click('#a_login', \$ajax->call('ajax.php?ajax_login/logout')); // adds the ajax link to a_login
-		\$ajax->a_login = 'Logout';  //changes the login text to logout
+		\$this->ajax->click('#a_login', \$ajax->call('ajax.php?ajax_login/logout')); // adds the ajax link to a_login
+		\$this->ajax->a_login = 'Logout';  //changes the login text to logout
 		
 	}
 	
 	function logout(){
-		\$ajax = CJAX::getInstance();
-		\$ajax->flush('#a_login'); //clear previous click events from element
-		\$ajax->success(\"You haved logged out.\");
-		\$ajax->a_login = 'Login'; //changes the text back to 'login'
-		\$ajax->insert('#login_now_area','#a_login'); //moves the logout link to the bottom
-		\$ajax->login_div = 'Login Again..'; //updates the login_div container text
+		\$this->ajax->flush('#a_login'); //clear previous click events from element
+		\$this->ajax->success(\"You haved logged out.\");
+		\$this->ajax->a_login = 'Login'; //changes the text back to 'login'
+		\$this->ajax->insert('#login_now_area','#a_login'); //moves the logout link to the bottom
+		\$this->ajax->login_div = 'Login Again..'; //updates the login_div container text
 		
 		//This is exactly the example as the first line in the Initial code but with different syntax
-		\$overlay = \$ajax->overlay('resources/html/login.html');
-		\$link = \$ajax->exec('button1',\$ajax->form('ajax.php?ajax_login/handler','form1'));
+		\$overlay = \$this->ajax->overlay('resources/html/login.html');
+		\$link = \$this->ajax->exec('button1',\$this->ajax->form('ajax.php?ajaxlogin/handler','form1'));
 		\$overlay->callback(\$link);
-		\$ajax->click('a_login', \$overlay);
+		\$this->ajax->click('a_login', \$overlay);
 	}
 }
 ");
 
-$ajax->click('code', $ajax->overlayContent($code,array('width'=> '1000px','top'=>50)));
+$ajax->click('code', $ajax->overlayContent($code, ['width'=> '1000px','top'=>50]));
 ?>
 <html>
 <head>

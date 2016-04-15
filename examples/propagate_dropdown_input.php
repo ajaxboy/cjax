@@ -7,7 +7,7 @@ require_once "ajax.php";
 //this example is almost identical to "propagate_dropdown" except a small change in the controler method.
 
 
-$ajax->change("dropdown1",$ajax->call("ajax.php?dropdown/propagate_allow_input/|dropdown1|"));
+$ajax->change("dropdown1",$ajax->call("ajax.php?dropdown/propagateAllowInput/|dropdown1|"));
 
 ?>
 <html>
@@ -40,19 +40,19 @@ This example is almost identical to the other example "propagate dropdown", exce
 Code used:
 <?php
 echo $ajax->code("
-\$ajax->change(\"dropdown1\",\$ajax->call(\"ajax.php?dropdown/propagate_allow_input/|dropdown1|\"),\"change\");
+\$ajax->change(\"dropdown1\",\$ajax->call(\"ajax.php?dropdown/propagateAllowInput/|dropdown1|\"),\"change\");
 ");
 ?>
 
 Controller:
 <?php
 echo $ajax->code("
-use CJAX\\Core\\CJAX;
+namespace Examples\\Controllers;
+use CJAX\\Core\\AJAXController;
 
-class dropdown {
+class Dropdown extends AJAXController{
 
-	public function propagate_allow_input(\$selected){
-		\$ajax = CJAX::getInstance();
+	public function propagateAllowInput(\$selected){
 		\$data = [];
 			
 		switch(\$selected) {
@@ -74,7 +74,7 @@ class dropdown {
 			break;
 		}
 		
-		\$ajax->select('dropdown2',\$data,true);
+		\$this->ajax->select('dropdown2',\$data,true);
 			
 	}
 }

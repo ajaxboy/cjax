@@ -1,8 +1,9 @@
 <?php
 
 namespace Examples\Controllers;
+use CJAX\Core\AJAXController;
 
-class Pagination{
+class Pagination extends AJAXController{
 	
 	public function show($page = 0){
 		$total_number_of_items = 50;

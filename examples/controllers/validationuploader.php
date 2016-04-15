@@ -1,8 +1,9 @@
 <?php
 
 namespace Examples\Controllers;
+use CJAX\Core\AJAXController;
 
-class Validation_uploader{
+class ValidationUploader extends AJAXController{
 	
 	public function pre(){
 		die('pre!');

@@ -1,16 +1,15 @@
 <?php
 
 namespace Examples\Controllers;
-use CJAX\Core\CJAX;
+use CJAX\Core\AJAXController;
 
-class Flush{
+class Flush extends AJAXController{
 	
-	public function flush_element(){
-		$ajax = CJAX::getInstance();
+	public function flushElement(){
 		
-		$ajax->flush('#link1');
+		$this->ajax->flush('#link1');
 		
-		$ajax->info("Element has been flushed.. if you click it nothing will happen.",5);
+		$this->ajax->info("Element has been flushed.. if you click it nothing will happen.",5);
 		
 	}
 	

@@ -6,21 +6,25 @@
 - Namespace, closure and short array syntax used in the framework, PHP version now requires 5.4.0+
 - Fixed strict standard errors resulted from calling instance methods statically for PHP 5.5 and 5.6 compatibility
 - Added autoloader for CJAX classes, no need for require/include statements
+- Added base abstract AJAX Controller class, every concrete AJAX controller class should extend this class
 - Added functionality to pass javascript event object to PHP through cookie
 - Added event classes that represent valid javascript event objects to use in AJAX controllers
 - Support for Mouse events
 - Support for Drag-Drop events
 - Added documentation for CJAX API in PHPDocumentator style
-- Redesigned folder structure for CJAX
+- Updated folder structure for CJAX
 - Updated examples and Added new examples for Mouse and Drag-Drop events
 - Updated readme.md, changelog.md
 - Upgraded versions for third party libraries such as sizzle
+- Removed unused and deprecated files, classes and code
 - Other fixes and improvements.
+
 
 ## CJAX 5.8 - Oct 6, 2013
 
 - Updated examples and readme.md.
 - Other fixes and improvements.
+
 
 ## CJAX 5.7 - Oct 3, 2013
 
@@ -28,6 +32,7 @@
 - Fixed issue when passing multiple url values
 - Fixed issue in processing that was introduced in previous release
 - Added support for main properties for tables tr,td,thead,tbody, etc.
+
 
 ## CJAX 5.6 - September 19, 2013
 

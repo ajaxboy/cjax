@@ -8,9 +8,9 @@
  */
 
 namespace CJAX\Plugins\Uploader\Controllers;
-use CJAX\Core\CJAX;
+use CJAX\Core\AJAXController;
  
-class Uploader{
+class Uploader extends AJAXController{
 
 	private $error;
     
@@ -27,12 +27,11 @@ class Uploader{
 	 * Upload Files
 	 */
 	public function upload(){
-		$ajax  = CJAX::getInstance();
 		$filesFount = false;
 		$files = [];
 		
-		$ajax->cacheWrapper(["<html><body>","</body></html>"]);
-		$options = $ajax->get('upload_options', true);
+		$this->ajax->cacheWrapper(["<html><body>","</body></html>"]);
+		$options = $this->ajax->get('upload_options', true);
 		$this->options = $options;		
 		if(!$this->options->target){
 			$this->abort("No target directory.");
@@ -109,7 +108,7 @@ class Uploader{
 		if(!$filesFount){
 			if(!$this->options->files_require && !$this->uploadCount){
 				$this->flush();
-				$ajax->message();
+				$this->ajax->message();
 				return true;
 			}
 			if(!$this->error){
@@ -119,7 +118,7 @@ class Uploader{
 		
 		if(!$this->error){
 			if($this->post){
-				$ajax->ajaxVars($this->post);
+				$this->ajax->ajaxVars($this->post);
 			}
 			if($this->options->preview){
 				$preview = $this->options->preview;
@@ -137,7 +136,7 @@ class Uploader{
 				}
 				foreach($preview as $k => $v){
 					$image = str_replace($range, $this->files, $v);
-					$ajax->update($k, $image);
+					$this->ajax->update($k, $image);
 				}
 			}
 			
@@ -149,10 +148,10 @@ class Uploader{
             else{
 				$message = str_replace("@files", $_files, $message);
 			}
-			$ajax->success($message, 5);
+			$this->ajax->success($message, 5);
 		} 
         else{			
-			$ajax->warning($this->error, 5);
+			$this->ajax->warning($this->error, 5);
 		}
 		
 	}
@@ -166,14 +165,12 @@ class Uploader{
 	 * abort the uploads
 	 */
 	public function abort($error){
-		$ajax = CJAX::getInstance();		
-		$ajax->error($error, 8);		
-		exit();
+		$this->ajax->error($error, 8);		
+		exit;
 	}
 
 	public function debug($options){
-		if($options && $options->debug) {
-			$ajax = CJAX::getInstance();			
+		if($options && $options->debug) {	
 			$options->{"List Of Files Uploaded"} = $this->post;				
 			$settings['php.ini post_max_size'] = ini_get('post_max_size');
 			$settings['php.ini upload_max_filesize'] = ini_get('upload_max_filesize');
@@ -184,7 +181,7 @@ class Uploader{
 			if(is_string($options->debug)) {
 				$debugMessage = $options->debug."<br /><br />";
 			}
-			$ajax->dialog("
+			$this->ajax->dialog("
 				$debugMessage
 				To be able to upload files, the server has to be able to handle them. 
 				These are settings you can control in php.ini file. Any file(s) that exceeds these limitations

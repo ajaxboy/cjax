@@ -1,13 +1,12 @@
 <?php
 
 namespace Examples\Controllers;
-use CJAX\Core\CJAX;
+use CJAX\Core\AJAXController;
 
-class Confirm{
+class Confirm extends AJAXController{
 	
-	public function confirm_action(){		
-		$ajax = CJAX::getInstance();		
-		$ajax->success("Do something..");
+	public function confirmAction(){		
+		$this->ajax->success("Do something..");
 	}
 	
 }

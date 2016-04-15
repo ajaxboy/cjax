@@ -8,7 +8,7 @@ require_once "ajax.php";
 //sending parameters to the backend controller is simple. They go in alphabetical order.
 //Exampe:  a will be the first paramenter, b the second, 3 the 3rd, and so on..
 
-$ajax->call("ajax.php?controller=parameters&function=send_params&a=test&b=test2&c=test3&d=test4");
+$ajax->call("ajax.php?controller=parameters&function=sendParams&a=test&b=test2&c=test3&d=test4");
 ?>
 <html>
 <head>
@@ -24,16 +24,19 @@ $ajax->call("ajax.php?controller=parameters&function=send_params&a=test&b=test2&
 Code used:
 <?php 
 echo $ajax->code("
-\$ajax->call(\"ajax.php?controller=parameters&function=send_params&a=test&b=test2&c=test3&d=test4\");
+\$ajax->call(\"ajax.php?controller=parameters&function=sendParams&a=test&b=test2&c=test3&d=test4\");
 ");?>
 
 <h4>Controller</h4>
 In the controller you can access these parameters as such:
 <?php 
 echo $ajax->code("
-class Parameters{
+namespace Examples\\Controllers;
+use CJAX\\Core\\AJAXController; 
 
-	public function send_params(\$a,\$b,\$c,\$d){
+class Parameters extends AJAXController{
+
+	public function sendParams(\$a,\$b,\$c,\$d){
 	
 	}
 }

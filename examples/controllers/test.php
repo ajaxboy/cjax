@@ -10,14 +10,13 @@ class Test{
 	}
 	
 	public function remote($key){
-        $ajax = CJAX::getInstance();
 		$ajaxEvent = json_decode($_COOKIE['cjaxevent'], TRUE);
         $ajaxEventMessage = "<br>";
         foreach($ajaxEvent as $key => $value){
             if($key == "timeStamp") $value = date("Y-m-d H:i:s", $value/1000);
             $ajaxEventMessage .= "{$key}: {$value};<br>";
         }
-		$ajax->success("You pressed key: {$key}. It is associated with event: {$ajaxEventMessage}");
+		$this->ajax->success("You pressed key: {$key}. It is associated with event: {$ajaxEventMessage}");
     }
 	
 	public function formHandler(){

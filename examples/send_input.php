@@ -2,9 +2,9 @@
 
 require_once "ajax.php";
 
-$ajax->click("button1",$ajax->call("ajax.php?send_input/send_text/|text1|"));
+$ajax->click("button1",$ajax->call("ajax.php?sendinput/sendText/|text1|"));
 
-$ajax->click("button2",$ajax->call("ajax.php?send_input/send_checkbox/|check1|"));
+$ajax->click("button2",$ajax->call("ajax.php?sendinput/sendCheckbox/|check1|"));
 
 ?>
 <html>
@@ -28,29 +28,28 @@ $ajax->click("button2",$ajax->call("ajax.php?send_input/send_checkbox/|check1|")
 Code used:
 <?php 
 echo $ajax->code("
-\$ajax->click(\"button1\",\$ajax->call(\"ajax.php?send_input/send_text/|text1|\"));
+\$ajax->click(\"button1\",\$ajax->call(\"ajax.php?sendinput/sendText/|text1|\"));
 
-\$ajax->click(\"button2\",\$ajax->call(\"ajax.php?send_input/send_checkbox/|check1|\"));
+\$ajax->click(\"button2\",\$ajax->call(\"ajax.php?sendinput/sendCheckbox/|check1|\"));
 ");?>
 Controller:
 <?php 
 echo $ajax->code("
-use CJAX\\Core\\CJAX;    
+namespace Examples\\Controllers;
+use CJAX\\Core\\AJAXController;    
 
-class Send_input{
+class SendInput extends AJAXController{
 	
-	public function send_text( \$text ){		
-		\$ajax = CJAX::getInstance();		
-		\$ajax->success(\"This message was sent: \$text\",30);
+	public function sendText(\$text){		
+		\$this->ajax->success(\"This message was sent: \$text\",30);
 	}
 	
-	public function send_checkbox( \$check ){
-		\$ajax = CJAX::getInstance();		
+	public function sendCheckbox(\$check){
 		if(\$check){
-			\$ajax->success(\"Is checked..\");
+			\$this->ajax->success(\"Is checked..\");
 		} 
         else{
-			\$ajax->warning(\"Is not checked..\");
+			\$this->ajax->warning(\"Is not checked..\");
 		}
 	}
 }

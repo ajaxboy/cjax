@@ -7,7 +7,7 @@ require_once "ajax.php";
 //overlay using cache
 //Elemene ID, URL
 //no settings  ( default settings)
-$ajax->click("#overlay_cache",$ajax->overlay("ajax.php?overlay/view_overlay",array(),true));
+$ajax->click("#overlay_cache",$ajax->overlay("ajax.php?overlay/viewOverlay", [], true));
 
 
 
@@ -20,7 +20,7 @@ $settings['left'] = '20%';
 $settings['transparent'] = '60%'; // from 1 transparent to 100 solid, how transparent should it be? default is 80.
 $settings['color'] = '#FF8040'; //color will only work if the setting above (transparent) is present. 
 $settings['click_close'] = true;// click anywhere on the screen to close the overlay
-$ajax->click("#overlay_no_cache",$ajax->overlay("ajax.php?overlay/view_overlay",$settings));
+$ajax->click("#overlay_no_cache",$ajax->overlay("ajax.php?overlay/viewOverlay",$settings));
 
 
 //pass content..
@@ -74,7 +74,7 @@ Code used:
 <?php 
 echo $ajax->code("
 //Overlay #1
-\$ajax->click(\"#overlay_cache\",\$ajax->overlay(\"ajax.php?overlay/view_overlay\",array(),true));
+\$ajax->click(\"#overlay_cache\",\$ajax->overlay(\"ajax.php?overlay/viewOverlay\", [], true));
 
 
 //Overlay #2
@@ -83,7 +83,7 @@ echo $ajax->code("
 \$settings['transparent'] = '60%'; //transparency percentange
 \$settings['color'] = '#FF8040'; //change color
 \$settings['click_close'] = true;// click anywhere on the screen to close the overlay
-\$ajax->click(\"#overlay_no_cache\",\$ajax->overlay(\"ajax.php?overlay/view_overlay\",\$settings));
+\$ajax->click(\"#overlay_no_cache\",\$ajax->overlay(\"ajax.php?overlay/viewOverlay\",\$settings));
 
 
 //Overlay #3

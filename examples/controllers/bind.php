@@ -1,9 +1,9 @@
 <?php
 
 namespace Examples\Controllers;
-use CJAX\Core\CJAX;
+use CJAX\Core\AJAXController;
 
-class Bind{
+class Bind extends AJAXController{
 	
 	public function link1(){
 		
@@ -13,8 +13,7 @@ class Bind{
 		
 	}
 	
-	public function bind_elements(){
-		$ajax = CJAX::getInstance();		
-		$ajax->info("same command..");		
+	public function bindElements(){
+		$this->ajax->info("same command..");		
 	}
 }

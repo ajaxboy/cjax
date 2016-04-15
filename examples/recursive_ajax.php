@@ -2,8 +2,8 @@
 
 require_once "ajax.php";
 
-//call method ajax_request::on_the_fly()  in controllers/ajax_request.php
-$ajax->click("button1",$ajax->call("ajax.php?recursive_ajax/call/0/|count|"));
+//call method AjaxRequest::onTheFly()  in controllers/ajaxrequest.php
+$ajax->click("button1",$ajax->call("ajax.php?recursiveajax/call/0/|count|"));
 ?>
 <html>
 <head>
@@ -27,7 +27,7 @@ Code used:
 <?php
 echo $ajax->code("
 <?php
-\$ajax->click(\"button1\",\$ajax->call(\"ajax.php?recursive_ajax/call/0/|count|\"));
+\$ajax->click(\"button1\",\$ajax->call(\"ajax.php?recursiveajax/call/0/|count|\"));
 ?>
 
 <!--HTML-->
@@ -39,9 +39,10 @@ echo $ajax->code("
 <h2>Controller</h2>
 <?php
 echo $ajax->code("
-use CJAX\\Core\\CJAX; 
+namespace Examples\\Controllers;
+use CJAX\\Core\\AJAXController; 
 
-class recursive_ajax {
+class RecursiveAJAX extends AJAXController{
 	
 	public function call(\$counter = 0,\$count){
 		//force valid inputs
@@ -50,31 +51,29 @@ class recursive_ajax {
 		
 		\$counter++;
 		
-		\$ajax = CJAX::getInstance();
-		
 		//if you enter a number greate than 100
 		if(\$count > 100) {
 			
 			//focus on textbox
-			\$ajax->focus('count');
+			\$this->ajax->focus('count');
 			
 			//show warning
-			\$ajax->warning(\"Too many requests can add overhead to our servers, please try reducing the number.\");
+			\$this->ajax->warning(\"Too many requests can add overhead to our servers, please try reducing the number.\");
 			
 			//update textbox
-			\$ajax->count = 30;
+			\$this->ajax->count = 30;
 			return;
 		}
 		
 		//update div
-		\$ajax->div_counter = \"Call# \$counter..\";
+		\$this->ajax->div_counter = \"Call# \$counter..\";
 		
 		if(\$counter>=\$count) {
-			\$ajax->div_counter = \"\$counter recursive AJAX requests were made.\";
+			\$this->ajax->div_counter = \"\$counter recursive AJAX requests were made.\";
 		} else {
 		
 		//fire call
-			\$ajax->call(\"ajax.php?recursive_ajax/call/\$counter/\$count\");
+			\$this->ajax->call(\"ajax.php?recursive_ajax/call/\$counter/\$count\");
 		}
 
 	}

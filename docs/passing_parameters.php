@@ -24,7 +24,11 @@ The above URL passes two parameters 123 and someID, test/test indicates the cont
 Anything after the method will translate into parameters. You may pass up to 26 parameters respectively symbolizing the English Alphabeth.
 <?php echo $ajax->code("
 namespace Controllers;
-class Test{
+use CJAX\\Core\\AJAXController;
+
+
+class Test extends AJAXController{
+
 
     public function test(\$arg1, \$arg2){
         echo \$arg1;
@@ -49,7 +53,11 @@ but gives you the flexiblity to pass any order and additional parameters with di
 through $_GET or $_REQUEST.
 <?php echo $ajax->code("
 namespace Controllers;
-class Test{
+use CJAX\\Core\\AJAXController;
+
+
+class Test extends AJAXController{
+
 
     public function test(\$a, \$b, \$c){
         echo \$a;

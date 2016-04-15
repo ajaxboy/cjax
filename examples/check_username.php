@@ -3,12 +3,12 @@
 require_once 'ajax.php';
 
 
-$ajax->keyup('username', $ajax->call('ajax.php?ajax_login/user/|username|','span_container'));
+$ajax->keyup('username', $ajax->call('ajax.php?ajaxlogin/user/|username|','span_container'));
 	
 
 
 $code = $ajax->code("
-\$ajax->keyup('username', \$ajax->call('ajax.php?ajax_login/user/|username|','span_container'));
+\$ajax->keyup('username', \$ajax->call('ajax.php?ajaxlogin/user/|username|','span_container'));
 ");
 
 $ajax->exec('code', $ajax->overlayContent($code, ['width'=> '1000px','top' => 50]));

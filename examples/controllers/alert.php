@@ -1,12 +1,11 @@
 <?php
 
 namespace Examples\Controllers;
-use CJAX\Core\CJAX;
+use CJAX\Core\AJAXController;
 
-class Alert{
+class Alert extends AJAXController{
 	
-	public function fire_alert($message){		
-		$ajax = CJAX::getInstance();		
-		$ajax->alert($message);
+	public function fireAlert($message){			
+		$this->ajax->alert($message);
 	}
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Uploadify Plugin
+ * Uploadify Plugin 2.0
  * 
  * Ajax Controller
  * 
@@ -18,14 +18,12 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 */
 
 namespace CJAX\Plugins\Uploadify\Controllers;
-use CJAX\Core\CJAX;
+use CJAX\Core\AJAXController;
 
-class Uploadify{
+class Uploadify extends AJAXController{
 	
 	public function fileExists(){
-		$ajax = CJAX::getInstance();
-		$plugin = $ajax->uploadify();
-				
+		$plugin = $this->ajax->uploadify();				
 		if(file_exists($plugin->target . $_POST['filename'])){
 			echo 1;
 		} 
@@ -35,8 +33,7 @@ class Uploadify{
 	}
 	
 	public function upload(){
-		$ajax = CJAX::getInstance();		
-		$plugin = $ajax->uploadify();		
+		$plugin = $this->ajax->uploadify();		
 		$exts = $plugin->get('exts');		
 		$target = $plugin->get('target');		
 		$targetFolder = $target;
@@ -54,9 +51,9 @@ class Uploadify{
 				$fileTypes = ['jpg','jpeg','gif','png']; // File extensions
 			}
 			$fileParts = pathinfo($_FILES['Filedata']['name']);
-			if(in_array($fileParts['extension'],$fileTypes)){
+			if(in_array($fileParts['extension'], $fileTypes)){
 				echo $targetFile;
-				if(move_uploaded_file($tempFile,$targetFile)){
+				if(move_uploaded_file($tempFile, $targetFile)){
 					echo '1';
 				} 
                 else{

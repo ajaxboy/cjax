@@ -10,8 +10,9 @@
  */
 
 namespace CJAX\Plugin\ExamplePlugin\Controllers;
+use CJAX\Core\AJAXController;
 
-class ExamplePlugin{
+class ExamplePlugin extends AJAXController{
 		
 	public function docs(){
 		/**

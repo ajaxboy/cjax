@@ -13,7 +13,7 @@ $vars = [
 ];
 
 $ajax->post = $vars;
-$ajax->call("ajax.php?post/post_sample",'div_response');
+$ajax->call("ajax.php?post/postSample",'div_response');
 ?>
 <html>
 <head>
@@ -36,15 +36,18 @@ echo $ajax->code("
 ];
 
 \$ajax->post = \$vars;
-\$ajax->call(\"ajax.php?post/post_sample\",'div_response');
+\$ajax->call(\"ajax.php?post/postSample\",'div_response');
 ");
 ?>
 Controller:
 <?php
 echo $ajax->code("
-class Post{
+namespace Examples\\Controllers;
+use CJAX\\Core\\AJAXController;
+
+class Post extends AJAXController{
 		
-	public function post_sample(){
+	public function postSample(){
 		echo 'Response is<pre>'.print_r(\$_POST,1).'</pre>';
 	}
 }

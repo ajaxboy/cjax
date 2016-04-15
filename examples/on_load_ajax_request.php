@@ -2,8 +2,8 @@
 
 require_once "ajax.php";
 
-//call method ajax_request::on_the_fly()  in controllers/ajax_request.php
-$ajax->call("ajax.php?ajax_request/on_the_fly");
+//call method AJAXRequest::onTheFly()  in controllers/ajaxrequest.php
+$ajax->call("ajax.php?ajaxrequest/onTheFly");
 ?>
 <html>
 <head>
@@ -23,7 +23,7 @@ $ajax->call("ajax.php?ajax_request/on_the_fly");
 Code used:
 <?php 
 echo $ajax->code("
-\$ajax->call(\"ajax.php?ajax_request/on_the_fly\");
+\$ajax->call(\"ajax.php?ajaxrequest/onTheFly\");
 ");?>
 <br />
 <br />
@@ -32,20 +32,20 @@ Controller:
 <?php 
 
 echo $ajax->code("
-class Ajax_request{
+use CJAX\Core\AJAXController;
+class AJAXRequest extends AJAXController{
 	
-	public function on_the_fly(){
-		\$ajax = CJAX::getInstance();
+	public function onTheFly(){
+
+		\$this->ajax->update('container', 'This text was updated through ajax...');
 		
-		\$ajax->update('container','This text was updated through ajax...');
+		\$this->ajax->wait(2);
 		
-		\$ajax->wait(2);
+		\$this->ajax->update('container2', 'This text too...');
 		
-		\$ajax->update('container2','This text too...');
+		\$this->ajax->wait(3);
 		
-		\$ajax->wait(3);
-		
-		\$ajax->update('container2','Updated...');
+		\$this->ajax->update('container2', 'Updated...');
 	}
 }
 ");
