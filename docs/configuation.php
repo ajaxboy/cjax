@@ -39,7 +39,7 @@ Having issues on page load not loading some times?
 	<br /><br />
 	</li>
 	<li>
-	$config->ajax_view - true or false
+	$config->ajaxView - true or false
 	<br /><br />
 	Allows direct access to ajax.php.
 	<br /><br />
@@ -51,13 +51,13 @@ Having issues on page load not loading some times?
 	<br /><br />
 	</li>
 	<li>
-	$config->ip_debug
+	$config->ipDebug
 	<br /><br />
 Allows $config->debug to selective ips addresses. You may enter an id or an array with multiple ips.
 	<br /><br />
 	</li>
 	<li>
-	$config->init_url
+	$config->initUrl
 	<br /><br />
 
  Init URL

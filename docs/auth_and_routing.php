@@ -21,9 +21,7 @@ where you can create your custom code to route ajax requests to other parts of y
 Returning true indicates that the session is valid. If your return false the request will not proceed and will present an error.
 <?php 
 echo $ajax->code("
-function validate(\$controller = null, \$function = null, \$args = array())
-{
-	
+function validate(\$controller = null, \$function = null, \$args = []){
 	return true;
 }");
 ?>
@@ -37,8 +35,7 @@ Returning "true" in the intercept function would tell the framework not to persu
 taken lead of the request. Returning false would give back the control to the framework and continue the request as it normally would.
 <?php 
 echo $ajax->code("
-function intercept(\$controller = null, \$function = null , \$args = array(), \$requestObj = null)
-{
+function intercept(\$controller = null, \$function = null , \$args = [], \$requestObj = null){
 	return false;
 }"
 );

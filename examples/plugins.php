@@ -971,6 +971,7 @@ This function is capable of intercepting APIs and prevent them from being fired,
 <?php echo  $ajax->Code("
 
 //plugins/myplugin/myplugin.php
+namespace CJAX\\Plugins\\Myplugin;
 class Myplugin extends Plugin{
 	public function filter(\$cache){
 		return \$cache;

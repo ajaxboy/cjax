@@ -44,11 +44,11 @@ In the following example we are assigning a few actions to that element's click.
 <h4>Example</h4>
 <?php 
 echo $ajax->code("
-\$ajax->exec('element_id', array(
+\$ajax->exec('element_id', [
 	\$ajax->overlayContent('Hello'),
 	\$ajax->alert('Hello'),
 	\$ajax->info('Hello'),
-));
+]);
 ");
 ?>
 <h3>Bind action(s) to multiple elements</h3>
@@ -58,9 +58,8 @@ Cjax also has the  ability to bind multiple elements to one action or more actio
 The following statement would assign the same action to multiple elements.
 <?php 
 echo $ajax->code("
-	\$ajax->exec(array('element_1','element_2'), \$ajax->call('url/to/action'));
+	\$ajax->exec(['element_1','element_2'], \$ajax->call('url/to/action'));
 ");
 
 ?>
 </body>
-

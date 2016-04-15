@@ -20,7 +20,7 @@ require_once 'ajax.php';
 		<pre>		 /
 		 cjax/
 		 controllers/
-         htaccess.txt
+                 htaccess.txt
 		 testing.php
 		</pre>
 		</div>
