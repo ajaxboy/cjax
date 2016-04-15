@@ -5,6 +5,7 @@ require_once "ajax.php";
 ?>
 <html>
 <head>
+<title>Creating a Plugin</title>
 <?php echo $ajax->init();?>
 <link rel="stylesheet" type="text/css" href="resources/css/table.css" media="all">
 </head>
@@ -34,17 +35,17 @@ ob_start()
 	<br />
 	</ol>
 	</li>
-	<li>Add a function <b>YourPlugin</b> in  YourPlugin.js <ol> <?php echo $ajax->jsCode(" function YourPlugin() {}")?></ol></li> 
-	<li>Call your plugin <?php echo $ajax->code('$ajax->YourPlugin()', false);?></li>  
-	<li>Replace "YourPlugin" with the name you would like your plugin to have</li>
+	<li>Add a function <b>YourPlugin</b> in  YourPlugin.js <ol> <?php echo $ajax->jsCode(" function YourPlugin() {}")?><br /></ol></li> 
+	<li>Call your plugin <ol><br /><?php echo $ajax->code('$ajax->yourPlugin()', false);?><br /></ol></li>  
+	<li>Replace "YourPlugin" with the name you would like your plugin to have</li><br />
 	<li>Pass parameters 
-		<ol>
-		You may pass strings or arrays through function parameters through your php plugin call.
-		 <?php echo $ajax->code("\$ajax->YourPlugin('pass strings', array('pass'=>'arrays'))", false);?> 
+		<ol><br />
+		You may pass strings or arrays through function parameters through your php plugin call.<br />
+		 <?php echo $ajax->code("\$ajax->yourPlugin('pass strings', ['pass'=>'arrays'])", false);?> 
 		</ol>
 		<ol>
 		<br />
-		Acess parameters in your JavaScript Plugin:
+		Access parameters in your JavaScript Plugin:
 		<?php echo $ajax->jsCode("
 	//cjax/plugins/YourPlugin.js
 	function YourPlugin(string, array) {
@@ -57,7 +58,7 @@ ob_start()
 	}")?>
 		</ol>
 		<ol>
-		
+		    <br />
 			Arrays are converted to  Json objects, that is how you would access them.
 		</ol>
 	</li>
@@ -68,10 +69,10 @@ echo $ajax->format->_dialog(ob_get_clean(),"Creating Plugins");
 ?>
 
 <?php ob_start();?>
-<h2>Hello World Plugin</h2>
-PHP Code used to call plugin:
+<h2>Hello World Plugin</h2><br /><br />
+PHP Code used to call plugin:<br />
 <?php 
-echo $ajax->code("\$ajax->hello_world('hello', 'world!',array('test'));");
+echo $ajax->code("\$ajax->hello_world('hello', 'world!', ['test']);");
 ?>
 
 <br />
@@ -96,7 +97,7 @@ echo $ajax->format->_dialog(ob_get_clean(),"Hello World Sample Plugin");
 
 
 <h2>Plugins JavaScript API</h2>
-<table class='table'>
+<table class='table' style="margin-top:5px; margin-left:20px;">
 <thead>
 	<tr>
 	<th>API</th>
@@ -169,7 +170,7 @@ this.importFile('js/myFile2.js', function() {
 		-
 	</td>
 	<td width="250">
-		Returns file name, eg.  myPlugin.js
+		Returns file name, eg.  myplugin.js
 	</td>
 	<td width="300">
 		<?php echo $ajax->jsCode("alert('File: '+this.file);");?>
@@ -559,41 +560,48 @@ ob_start()
 	<br />
 	</ol>
 	</li>
-	<li>Add a class <b>YourPlugin</b> in  YourPlugin.php <ol> 
-	<?php echo $ajax->Code("
-	class  YourPlugin {
+	<li>Declare namespace <b>CJAX\Plugins\YourPlugin</b> in  YourPlugin.php <ol> <br />
+	<?php echo $ajax->Code("    namespace CJAX\\Plugins\\YourPlugin;")?><br /></ol></li> 
+	<li>Add a class <b>YourPlugin</b> in  YourPlugin.php <ol> <br />
+	<?php echo $ajax->Code("    namespace CJAX\Plugins\YourPlugin;
+	class YourPlugin{
 	
-	}
-	")?></ol></li> 
-	<li>Add a function <b>__construct</b> <ol> <?php 
-	 echo $ajax->Code("
-	class  YourPlugin {
+	}")?><br /></ol></li> 
+	<li>Add a <b>constructor</b> for your plugin<ol><br /> <?php 
+	 echo $ajax->Code("    namespace CJAX\Plugins\YourPlugin;
+	class YourPlugin{
 		
-		function __construct()
-		{
+		public function __construct(){
 		
 		}
-	}
-	")?>
+	}")?><br />
 	</ol>
 	</li> 
-	<li>Call your plugin <?php echo $ajax->code('$ajax->YourPlugin()', false);?>
+	<li>Call your plugin <ol><br /><?php echo $ajax->code('$ajax->yourPlugin()', false);?><br /></ol>
 		<ol>
 			When you call your plugin, the contructor is automatically triggered, all parameters
 			passed  in your plugin will be passed in the constructor as well.
-			<br /> There are more trigger functions that trigger themselves, look in the PHP plugin API below.
+			<br /> There are more trigger functions that trigger themselves, look in the PHP plugin API below.<br />
 		</ol>
-	</li>  
+	</li>  <br />
 	<li>Replace "YourPlugin" with the name of your plugin</li>
 </ul>
 
 <h2>Ajax Controllers for plugins</h2>
 <br /><br />
-Firstly to start using Ajax Controllers in your plugin, you'd need to create a "controllers" directory in your plugin.
-Then you are ready to go. The ajax framework through ajax.php automatically detends your plugin if you pass the plugin name as controller.
-For example:  ajax.php?myPlugin/funtion1 will automatically go into your plugin and look for controllers/myPlugin.php.
-Class name is controller_myPlugin and function funtion1 (or any function name you pass through second parameter in the URL).
-
+<ul>
+    <li>Firstly to start using Ajax Controllers in your plugin, you'd need to create a "controllers" directory in your plugin and then create a controller class. 
+ <ol><br /> <?php 
+	 echo $ajax->Code("    namespace CJAX\Plugins\YourPlugin\Controllers;
+	class YourPlugin{
+		
+	}")?><br />
+	</ol>Note the namespace for plugin controllers is: CJAX\Plugins\YourPlugin\Controllers.
+    </li><br />
+    <li>Then you are ready to go. The ajax framework through ajax.php automatically detends your plugin if you pass the plugin name as controller.</li><br />
+    <li>For example:  ajax.php?yourplugin/funtion1 will automatically go into your plugin and look for controllers/yourplugin.php.</li><br />
+    <li>Class name is YourPlugin and function function1 (or any function name you pass through second parameter in the URL).</li>
+</ul>
 
 <?php 
 echo $ajax->format->_dialog(ob_get_clean(),"Creating a PHP Class for plugin");
@@ -602,7 +610,7 @@ echo $ajax->format->_dialog(ob_get_clean(),"Creating a PHP Class for plugin");
 <br />
 <br />
 <h2>Plugins PHP API</h2>
-<table class='table'>
+<table class='table' style="margin-top:5px; margin-left:20px;">
 <thead>
 	<tr>
 	<th>API</th>
@@ -639,9 +647,9 @@ echo $ajax->format->_dialog(ob_get_clean(),"Creating a PHP Class for plugin");
 	</td>
 	<td width="300">
 <?php echo  $ajax->Code("
-\$myPlugin->import('file.js');
-\$myPlugin->import('file.css');
-\$myPlugin->import('file2.js');
+\$myplugin->import('file.js');
+\$myplugin->import('file.css');
+\$myplugin->import('file2.js');
 ",false);?>
 	</td>
 </tr>
@@ -667,7 +675,7 @@ echo $ajax->format->_dialog(ob_get_clean(),"Creating a PHP Class for plugin");
 	</td>
 	<td width="300">
 <?php echo  $ajax->Code("
-\$myPlugin->imports('file.js','file2.js','file3.js');
+\$myplugin->imports('file.js','file2.js','file3.js');
 ",false);?>
 	</td>
 </tr>
@@ -693,7 +701,7 @@ echo $ajax->format->_dialog(ob_get_clean(),"Creating a PHP Class for plugin");
 	<td width="300">
 <?php echo  $ajax->Code("
 
-\$myPluing->waitfor('some_file.js');
+\$myplugin->waitfor('some_file.js');
 
 
 ",false);?>
@@ -724,22 +732,22 @@ echo $ajax->format->_dialog(ob_get_clean(),"Creating a PHP Class for plugin");
 	<td width="300">
 <?php echo  $ajax->Code("
 //Setting Paratemers
-\$myPlugin->set('a','this is parameter one in your script');
-\$myPlugin->set('b','this is parameter two in your script');
+\$myplugin->set('a','this is parameter one in your script');
+\$myplugin->set('b','this is parameter two in your script');
 
 --access parameters
 
-function myPlugin(a,b) {
+function myplugin(a,b) {
 
 }
 
 //Setting Variables
-\$myPlugin->set('test1','this is a variable');
-\$myPlugin->set('test2','this is another variable');
+\$myplugin->set('test1','this is a variable');
+\$myplugin->set('test2','this is another variable');
 
 --access  variables in your plugin
 
-function myPlugin(a,b,c) {
+function myplugin(a,b,c) {
 
 	alert(this.test1);
 	alert(this.test2);
@@ -770,12 +778,12 @@ function myPlugin(a,b,c) {
 	<td width="300">
 <?php echo  $ajax->Code("
 
-\$myPluing = \$ajax->myPluing(\$arg1, \$arg2);
+\$myplugin = \$ajax->myplugin(\$arg1, \$arg2);
 
-//plugins/myPlugin/myPlugin.php
-class myPlugin extends plugin {
-	function onAjaxLoad(\$arg1, \$arg2)
-	{
+//plugins/myplugin/myplugin.php
+namespace CJAX\\Plugins\\Myplugin;
+class Myplugin extends Plugin{
+	public function onAjaxLoad(\$arg1, \$arg2){
 	
 	}
 }
@@ -804,12 +812,12 @@ class myPlugin extends plugin {
 	<td width="300">
 <?php echo  $ajax->Code("
 
-\$myPluing = \$ajax->myPluing(\$arg1, \$arg2);
+\$myplugin = \$ajax->myplugin(\$arg1, \$arg2);
 
-//plugins/myPlugin/myPlugin.php
-class myPlugin extends plugin {
-	function onLoad(\$arg1, \$arg2)
-	{
+//plugins/myplugin/myplugin.php
+namespace CJAX\\Plugins\\Myplugin;
+class Myplugin extends Plugin{
+	public function onLoad(\$arg1, \$arg2){
 	
 	}
 }
@@ -840,12 +848,12 @@ class myPlugin extends plugin {
 	<td width="300">
 <?php echo  $ajax->Code("
 
-\$myPluing = \$ajax->myPluing(\$arg1, \$arg2);
+\$myplugin = \$ajax->myplugin(\$arg1, \$arg2);
 
-//plugins/myPlugin/myPlugin.php
-class myPlugin extends plugin {
-	function onAjaxLoad(\$arg1, \$arg2)
-	{
+//plugins/myplugin/myplugin.php
+namespace CJAX\\Plugins\\Myplugin;
+class Myplugin extends Plugin{
+	public function onAjaxLoad(\$arg1, \$arg2){
 	
 	}
 }
@@ -876,7 +884,7 @@ class myPlugin extends plugin {
 	<td width="300">
 <?php echo  $ajax->Code("
 
-\$myPluing->save('my_variable','the_value');
+\$myplugin->save('my_variable','the_value');
 
 
 ",false);?>
@@ -903,7 +911,7 @@ class myPlugin extends plugin {
 	<td width="300">
 <?php echo  $ajax->Code("
 
-\$myPluing->get('my_variable');
+\$myplugin->get('my_variable');
 
 
 ",false);?>
@@ -933,7 +941,7 @@ This function is capable of intercepting APIs and prevent them from being fired,
 	<td width="300">
 <?php echo  $ajax->Code("
 
-\$myPluing->prevent();
+\$myplugin->prevent();
 
 
 ",false);?>
@@ -962,10 +970,9 @@ This function is capable of intercepting APIs and prevent them from being fired,
 	<td width="300">
 <?php echo  $ajax->Code("
 
-//plugins/myPlugin/myPlugin.php
-class myPlugin extends plugin {
-	function filter(\$cache)
-	{
+//plugins/myplugin/myplugin.php
+class Myplugin extends Plugin{
+	public function filter(\$cache){
 		return \$cache;
 	}
 }
