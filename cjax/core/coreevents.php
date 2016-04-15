@@ -1360,7 +1360,7 @@ class CoreEvents extends Format{
 		@ini_set('highlight.default', "#0000BB");
 		@ini_set('highlight.html', "#0000BB");
 
-		$data =  "<script>". highlight_string("\n" . $data ."\n"); 		
+		$data =  "<script>". highlight_string("\n" . $data ."\n")."</script>"; 		
         return ($tags)? str_replace(['?php', '?&gt;'], ['script type="text/javascript">', '&lt;/script&gt;'], $output)
                       : str_replace(['&lt;?php', '?&gt;'], ['', ''], $data);
 	}
