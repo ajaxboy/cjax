@@ -9,32 +9,45 @@
  * 
  * Lets create a controller named "sample" 
  * 
- * 1. create a new file inside controllers directory 
+ * 1. Create a new file inside controllers directory 
  *  name that file sample.php
  *  
  *  so far you have controllers/sample.php
  * 
- * 2. You will need to have a class inside this file and the class should be named controller_sample.
- *  (or controller_(whatever your controller name is)
+ * 2. You will need to have a class inside this file and the class should be named Sample.
  *  
  *  so far you have in controllers/sample.php
  *  
- *  class controller_sample {
+ *  class Sample{
  *  
  *  }
  * 
- * 3.  create a function and name it whatever you like, in this example we will name it "test"
+ * 3. Declare namespace for your controller class(ie. Controllers), and make your controller extend from base AJAXController.
+ * 
+ *  so far you have in controllers/sample.php
+ * 
+ *  namespace Controllers;
+ *  use CJAX\Core\AJAXController;
+ *
+ *  class Sample{
+ *  
+ *  }
+ * 
+ * 4.  create a function and name it whatever you like, in this example we will name it "test"
  * 
  * so far you have
  * 
- *  class controller_sample {
+ *  namespace Controllers;
+ *  use CJAX\Core\AJAXController;
+ *
+ *  class Sample extends AJAXController{
  *  
- *  	function test()
- *  	{
+ *  	public function test(){
  *  
  *  	}
  * 	}
- * 4. request  URL should be:
+ *
+ * 5. request  URL should be:
  *  ajax.php?controller=sample&function=test
  *  
  *  Sending parameters:
@@ -47,10 +60,12 @@
  *  
  *  So far you have:
  *  
- *  class controller_sample  {
+ *  namespace Controllers;
+ *  use CJAX\Core\AJAXController;  
+ *
+ *  class Sample extends AJAXController{
  *	
- *		function test($a, $b , $c)
- *		{
+ *		public function test($a, $b , $c){
  *			echo "$a $b, $c";
  *		}
  *		
@@ -66,13 +81,12 @@
  */
 
 namespace Controllers;
+use CJAX\Core\AJAXController;
 
-class Sample {
+class Sample extends AJAXController{
 	
 	public function test(){
-		$ajax = CJAX::getInstance();
-		$ajax->success("Testing controller <b>sample</b>.  Works ok.");
+		$this->ajax->success("Testing controller <b>sample</b>.  Works ok.");
 	}
 
 }
-
