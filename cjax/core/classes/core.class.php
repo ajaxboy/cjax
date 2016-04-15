@@ -1647,7 +1647,7 @@ if (document.addEventListener) {
 		
 		//$data = str_replace(array(') { ', ' }', ";", "\r\n"), array(") {\n", "\n}", ";\n", "\n"), $data); // Newlinefy all braces and change Windows linebreaks to Linux (much nicer!) 
 		//$data = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $data); // Regex identifies all extra empty lines produced by the str_replace above. It is quicker to do it like this than deal with a more complicated regular expression above.
-		$data =  "<script>". highlight_string("\n" . $data ."\n"); 
+		$data =  "<script>". highlight_string("\n" . $data ."\n"). "</script>"; 
 		
 		//$data = explode("\n", str_replace(array("<br />"), array("\n"),$data));
 		
