@@ -26,18 +26,18 @@ ob_start()
 
 <h2>Steps for creating a plugin</h2>
 <ul>
-	<li>Create a Javascript file under cjax/plugins/YourPlugin.js
+	<li>Create a Javascript file under cjax/plugins/yourplugin.js
 	<ol>
 	<br />
 	        Or you may also create a directory inside plugins directory like so:  
-        cjax/plugins/YourPlugin/YourPlugin.js,  In case you want to add additional css,         images, or other media, etc.
+        cjax/plugins/yourplugin/yourplugin.js,  In case you want to add additional css, images, or other media, etc.
 	<br />
 	<br />
 	</ol>
 	</li>
-	<li>Add a function <b>YourPlugin</b> in  YourPlugin.js <ol> <?php echo $ajax->jsCode(" function YourPlugin() {}")?><br /></ol></li> 
+	<li>Add a function <b>yourPlugin</b> in  yourplugin.js <ol> <?php echo $ajax->jsCode(" function yourPlugin() {}")?><br /></ol></li> 
 	<li>Call your plugin <ol><br /><?php echo $ajax->code('$ajax->yourPlugin()', false);?><br /></ol></li>  
-	<li>Replace "YourPlugin" with the name you would like your plugin to have</li><br />
+	<li>Replace "yourPlugin" with the name you would like your plugin to have</li><br />
 	<li>Pass parameters 
 		<ol><br />
 		You may pass strings or arrays through function parameters through your php plugin call.<br />
@@ -47,8 +47,8 @@ ob_start()
 		<br />
 		Access parameters in your JavaScript Plugin:
 		<?php echo $ajax->jsCode("
-	//cjax/plugins/YourPlugin.js
-	function YourPlugin(string, array) {
+	//cjax/plugins/yourplugin.js
+	function yourPlugin(string, array) {
 		alert(string);
 		
 		//alerts all the items in your array.
