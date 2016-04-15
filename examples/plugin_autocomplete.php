@@ -3,12 +3,12 @@
 require_once 'ajax.php';
 
 
-$ajax->keyup('#text1', $ajax->autocomplete('ajax.php?autocomplete/update'));
+$ajax->keyup('#text1', $ajax->autocomplete('ajax.php?countries/update'));
 ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<?php echo $ajax->init();?>
+	<?php echo $ajax->init(false);?>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Plugin Autocomplete - Cjax Plugin</title>
 </head>
@@ -31,7 +31,7 @@ Code Used:
 <?php 
 
 echo $ajax->code("
-\$ajax->keyup('#text1', \$ajax->autocomplete('ajax.php?autocomplete/update'));
+\$ajax->keyup('#text1', \$ajax->autocomplete('ajax.php?countries/update'));
 ");
 ?>
 </body>

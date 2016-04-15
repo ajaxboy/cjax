@@ -37,7 +37,6 @@ final class AJAX{
 		if($this->ajax->config->camelize){
 			$rawClass = $this->ajax->camelize($rawClass, $this->ajax->config->camelizeUcfirst);
 		}
-		$classExists = false;
 		$requestObject = null;
 		$altController = null;
 		
@@ -47,8 +46,7 @@ final class AJAX{
             $method = new ReflectionMethod($this->ajax, 'crossdomain');
 			return $this->_response($method->invokeArgs($this->ajax, $this->_event($method, $args)));
 		}	
-
-        if($plugin = $this->ajax->plugin($controller, true)){
+        if($plugin = $this->ajax->plugin($controller, true)){ 
             if(method_exists($plugin, $function)){
                 $method = new ReflectionMethod($plugin, $function);
                 return $this->_response($method->invokeArgs($plugin, $this->_event($method, $args)));
@@ -61,19 +59,14 @@ final class AJAX{
             }
         }
 
-		$isFile = $this->_files($controller, $altController);		
-		if($isFile){
-			$classExists = $this->_class($controller);
-			$requestObject = $this->_controller($classExists, $controller, $function);
-		}
+		$isFile = $this->_files($controller, $altController);	
+        $requestObject = ($isFile)? $this->_controller($controller, $function): $requestObject;	
         if($this->_auth($controller, $function, $args, $requestObject)){
             return;
         }
-        
-		if(!$function){
-			$function = $rawClass;
-		}
-        $this->_exists($isFile, $rawClass, $classExists, $requestObject, $controller, $function);        
+    
+        $function = ($function)? $function: $rawClass;
+        $this->_exists($isFile, $controller, $rawClass, $requestObject, $controller, $function);        
         $method = new ReflectionMethod($requestObject, $function);
         $this->_response($method->invokeArgs($requestObject, $this->_event($method, $args)));
 	}
@@ -99,17 +92,17 @@ final class AJAX{
 		}          
     }
     
-    private function _exists($isFile, $rawClass, $classExists, $requestObject, $controller, $function){
+    private function _exists($isFile, $class, $rawClass, $requestObject, $controller, $function){
 		if(!$isFile){
 			header("Content-disposition:inline; filename='{$controller}.php'");
 			header("HTTP/1.0 404 Not Found");
 			header("Status: 404 Not Found");
 			$this->abort("Controller File: {$controller}.php not found");
 		}
-		if(!$classExists){
+		if(!$class){
 			$this->abort("Controller Class \"{$rawClass}\" could not be found.");
 		}
-		if(!method_exists($requestObject,$function)){
+		if(!method_exists($requestObject, $function)){
 			$this->abort("Controller Method/Function: {$rawClass}::{$function}() was not found");
 		}        
     }
@@ -216,49 +209,19 @@ final class AJAX{
 	}
 	
 	
-	private function _controller($class, $rawController, $function){
+	private function _controller($class, $function){
 		if(!$class){
 			return false;
 		}
-		if(method_exists($class, $rawController)){
-			//prevent constructor
-			$_class = 'empty_'.$class;
-			eval('class ' . $_class . ' extends '. $class .'{}');
-			if(!$function){
-				if(method_exists($class, $class)){
-					$obj = new $_class;
-					$function = $class;
-				} 
-                else{
-					return new $class;
-				}
-			} 
-            else{
-				$obj = new $_class();
-			}
-		} 
-        else{
-			$obj = new $class;
-		}
-		return $obj;
-	}
 
-	private function _class($controller){
-		if($this->ajax->config->camelize){
-			$controller = $this->ajax->camelize($controller, $this->ajax->config->camelizeUcfirst);
-		}
-		$_classes = [];
-		$_classes[] = 'controller_'.$controller;
-		$_classes[] = '_'.$controller;
-		$_classes[] = $controller;
-		
-		do{
-			$c = $_classes[key($_classes)];			
-			if(class_exists($c)){
-				return $c;
-			}
-		}while(next($_classes));
-		return $c;
+        if($this->ajax->plugin($class, true)){
+            $class = "CJAX\\Plugins\\{$class}\\Controllers\\{$class}";
+        }
+        else{
+            $className = ucwords(AJAX_CD."/".$class, "/");
+            $class = str_replace("/", "\\", $className);
+        }
+	    return new $class;
 	}
     
     public static function main(){

@@ -1,5 +1,7 @@
 <?php
 
+namespace Examples\Controllers;
+
 class Post{
 		
 	public function post_sample(){

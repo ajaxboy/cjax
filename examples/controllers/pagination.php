@@ -1,5 +1,7 @@
 <?php
 
+namespace Examples\Controllers;
+
 class Pagination{
 	
 	public function show($page = 0){

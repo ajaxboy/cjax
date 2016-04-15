@@ -65,6 +65,8 @@
  *
  */
 
+namespace Controllers;
+
 class Sample {
 	
 	public function test(){

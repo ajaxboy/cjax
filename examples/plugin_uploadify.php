@@ -37,7 +37,7 @@ if($ajax->isPlugin('uploadify')) {
 		
 	#####UPLOAD DIRECTORY#######
 	//enter your upload directory path here, make sure is writeable (chmoded)
-	$uploadify->target = $_SERVER['DOCUMENT_ROOT'];
+	$uploadify->target = "../examples/resources/images/uploads";
 	//replace the above line to the directory where you want the uploads to go
 } else {
 	$data = "
@@ -84,7 +84,7 @@ $code =  $ajax->code("
 
 //UPLOAD DIRECTORY
 //if you remove this line, it will  be by default uploaded to the plugin uploads/ directory . (if writable)
-\$uploadify->target = \$_SERVER['DOCUMENT_ROOT'];
+\$uploadify->target = '../examples/resources/images/uploads';
 //replace the above line to the directory where you want the uploads to go
 
 ");
@@ -101,7 +101,7 @@ $ajax->exec('see', $ajax->dialog($code, 'Code Used', array('width'=> '930px','to
 	<link rel="stylesheet" type="text/css" href="resources/send_form/view.css" media="all">
 </head>
 <body>
-<h2>uploadify 2.0</h2>
+<h2>uploadify 1.6</h2>
 
 <div id='not_found'></div>
 <h4 id='see'><a href='#'>See Code Used</a></h4>

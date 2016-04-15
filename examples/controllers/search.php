@@ -1,5 +1,7 @@
 <?php
 
+namespace Examples\Controllers;
+
 class Search{
 		
 	public function string($string){

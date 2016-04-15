@@ -1,20 +1,10 @@
 <?php
 
-/**
- * 
- * This controller is deprecated. 
- * The upload functionality has been re-written, please look at the API documentation referencing $ajax->upload()
- * for more info. For new location of the upload code see  cjax/core/file/iframe.php
- * 
- * 
- * @deprecated
- * @author cj
- *
- */
- 
+namespace Examples\Controllers;
 use CJAX\Core\CJAX;
+use CJAX\Plugins\Uploader\Controllers\Uploader;
  
-class Upload_file{
+class UploadFile extends Uploader{
 
 	public function post($files){
 		$ajax = CJAX::getInstance();
@@ -34,7 +24,7 @@ class Upload_file{
 	 * @deprecated
 	 * @param unknown_type $file_names
 	 */
-	public function send_file($file_names = null){
+	public function sendfile($file_names = null){
 		$ajax = CJAX::getInstance();
 		$dir = realpath(dirname(__file__).'/../'); //directory where the file is uploaded..
 		
@@ -74,7 +64,7 @@ class Upload_file{
 	}
 	
 	
-	function error(){
+	public function triggerError(){
         $ajax = CJAX::getInstance();
 		$upload_max = $ajax->toMB(ini_get('upload_max_filesize'));
 		$post_max = $ajax->toMB($pmax = ini_get('post_max_size'));// / 2;

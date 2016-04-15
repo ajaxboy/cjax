@@ -1,5 +1,7 @@
 <?php
 
+namespace Examples\Controllers;
+
 class Validation_uploader{
 	
 	public function pre(){

@@ -1,5 +1,6 @@
 <?php
 
+namespace Examples\Controllers;
 use CJAX\Core\CJAX;
 
 class Calc{

@@ -1,5 +1,7 @@
 <?php
 
+namespace Examples\Controllers;
+
 class Overlay{
 	
 	public function view_overlay(){

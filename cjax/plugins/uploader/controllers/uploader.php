@@ -7,7 +7,8 @@
  *
  */
 
-use CJAX\Core\CJAX; 
+namespace CJAX\Plugins\Uploader\Controllers;
+use CJAX\Core\CJAX;
  
 class Uploader{
 

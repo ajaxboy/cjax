@@ -2,11 +2,10 @@
 
 require_once "ajax.php";
 
-
 //button id, upload directory
 $uploader = $ajax->uploader('btn_saveForm', 'examples/resources/images/uploads/',
 	//settings are optional
-	['url' => 'ajax.php?upload_file/post', //post request after files are uploaded
+	['url' => 'ajax.php?uploadfile/post', //post request after files are uploaded
 	 'suffix' => md5(time(). rand(1,10000000)), // makes files names universally unique,
      'debug' => true,       
      'success_message' => 'File(s) @files successfully uploaded.', //@files tag is replaced by files uploaded.

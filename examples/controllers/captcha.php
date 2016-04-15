@@ -1,5 +1,7 @@
 <?php
 
+namespace Examples\Controllers;
+
 use CJAX\Core\CJAX;
 use CJAX\Event\DragEvent;
 
