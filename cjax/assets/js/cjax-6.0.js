@@ -1,3 +1,4 @@
+
 /** ################################################################################################**   
 * Copyright (c)  2008  CJ.   
 * Permission is granted to copy, distribute and/or modify this document   
@@ -14,7 +15,7 @@
 *   Website: http://cjax.sourceforge.net                     $      
 *   Email: cjxxi@msn.com    
 *   Date: 2/12/2007                           $     
-*   File Last Changed:  04/06/2016            $     
+*   File Last Changed:  04/18/2016            $     
 **####################################################################################################    */   
 
 /**
@@ -346,7 +347,6 @@ function CJAX_FRAMEWORK() {
 				if(typeof fn=='object') {
 					_processFn(fn);
 				} else  {
-					
 					element = CJAX.$(data.a);
 					
 					if(element) {
@@ -357,7 +357,9 @@ function CJAX_FRAMEWORK() {
 							_processFn(fn,'custom');
 						}
 					} else {
-						console.log("Element", data.a, "could not be found.");
+		          	    if(CJAX.debug) {
+						    console.log("Element", data.a, "could not be found.");
+                        }
 					}
 				}
 			}

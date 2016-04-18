@@ -9,12 +9,12 @@ require_once $f;
 $ajax = CJAX::getInstance();
 if(!$ajax->isAjaxRequest()) {
 	
-	$ajax->document('body.innerHTML', ['prepend'=>"
+	$ajax->document('body.innerHTML', array('prepend'=>"
 	<div>
 	<a href='http://cjax.sourceforge.net'>
 	<img src='http://cjax.sourceforge.net/media/logo.png' border=0/>
 	</a>
-	</div>"]);
+	</div>"));
 	
 	$ajax->import('resources/css/table.css');
 

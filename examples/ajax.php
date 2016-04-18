@@ -19,7 +19,7 @@ if(!$ajax->isAjaxRequest()) {
 	
 	$ajax->append('body', 
 	"<h3>Download</h3>
-	This demo/sample is part of a collection of 30+ <a target='_blank' href='http://cjax.sourceforge.net/examples'>demos</a> acompanied in <a target='_blank' href='http://cjax.sourceforge.net/'>AjaxFw</a> You may download
+	This demo/sample is part of a collection of 50+ <a target='_blank' href='http://cjax.sourceforge.net/examples'>demos</a> acompanied in <a target='_blank' href='http://cjax.sourceforge.net/'>AjaxFw</a> You may download
 	these demos <a target='_blank' href='http://sourceforge.net/projects/cjax/files/Demos/'>here</a>. See Docs <a target='_blank' href='http://cjax.sourceforge.net/docs/'>here</a>.
 	<br /><br /><br />
 	");

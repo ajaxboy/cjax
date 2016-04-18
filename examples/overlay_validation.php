@@ -96,7 +96,7 @@ $ajax->exec('code', $ajax->overlayContent($code, ['width'=> '950px','top'=> '40p
 <?php echo $ajax->init();?>
 <title>Ajax Overlay and Validation</title>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
 </head>
 <h2>Ajax Overlay and Validation</h2>

@@ -1,9 +1,9 @@
 <?php
 
 namespace Examples\Controllers;
-use CJAX\Core\CJAX;
+use CJAX\Core\AJAXController;
 
-class Test{
+class Test extends AJAXController{
 	
 	public function test2(){
 		echo "This is response of test/test2, generic test controller.";

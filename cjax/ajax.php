@@ -16,7 +16,7 @@
 *   Website: http://cjax.sourceforge.net                     $      
 *   Email: cjxxi@msn.com    
 *   Date: 2/12/2007                           $     
-*   File Last Changed:  04/06/2016            $     
+*   File Last Changed:  04/18/2016            $     
 **####################################################################################################    */   
 
 require_once __DIR__."/autoloader.php";
@@ -221,7 +221,7 @@ final class AJAX{
             $className = ucwords(AJAX_CD."/".$class, "/");
             $class = str_replace("/", "\\", $className);
         }
-	    return new $class;
+	    return new $class($this->ajax);
 	}
     
     public static function main(){

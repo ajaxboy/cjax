@@ -49,8 +49,7 @@ else{
 		}		
 		$source = 'CJAX.process_all("'.$_cache.'","'.$preload.'", '.$debug.', true);';
 	}
-	
-	
+
 	if(!$source){
 		echo "//no source available";
 	} 

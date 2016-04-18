@@ -76,7 +76,7 @@ $ajax->exec('code', $ajax->overlayContent($code, ['width'=> '950px','top'=> '40p
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Validation and Uploader</title>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="resources/send_form/view.css" media="all">
 <script type="text/javascript" src="resources/send_form/view.js"></script>
 <?php echo $ajax->init();?>
