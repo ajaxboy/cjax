@@ -104,4 +104,4 @@ $ajax->click('#element_id' , $ajax->overlay('some/splash/html'));
 </html>
 ```
 
-## 40+ more examples here: http://cjax.sourceforge.net/examples/
+## 50+ more examples here: http://cjax.sourceforge.net/examples/

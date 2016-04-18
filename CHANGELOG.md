@@ -9,8 +9,8 @@
 - Added base abstract AJAX Controller class, every concrete AJAX controller class should extend this class
 - Added functionality to pass javascript event object to PHP through cookie
 - Added event classes that represent valid javascript event objects to use in AJAX controllers
-- Added Support for Mouse events
-- Added Support for Drag-Drop events
+- Added support for Mouse events
+- Added support for Drag-Drop events
 - Added plugin Dracula(Dragula) for CJAX
 - Added documentation for CJAX API in PHPDocumentator style
 - Updated folder structure for CJAX
