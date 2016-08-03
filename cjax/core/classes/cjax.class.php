@@ -1,5 +1,21 @@
 <?php
-//@app_header;
+/** ################################################################################################**
+ * Copyright (c)  2008  CJ.
+ * Permission is granted to copy, distribute and/or modify this document
+ * under the terms of the GNU Free Documentation License, Version 1.2
+ * or any later version published by the Free Software Foundation;
+ * Provided 'as is' with no warranties, nor shall the autor be responsible for any mis-use of the same.
+ * A copy of the license is included in the section entitled 'GNU Free Documentation License'.
+ *
+ *   ajax made easy with cjax
+ *   -- DO NOT REMOVE THIS --
+ *   -- AUTHOR COPYRIGHT MUST REMAIN INTACT -
+ *   Written by: CJ Galindo
+ *   Website: http://cjax.sourceforge.net                     $
+ *   Email: cjxxi@msn.com
+ *   Date: 2/12/2007                           $
+ *   File Last Changed:  10/05/2013            $
+ **####################################################################################################    */
 
 /**
  * Load core events
@@ -7,7 +23,7 @@
 require_once 'core.class.php';
 require_once 'xmlItem.class.php';
 class CJAX_FRAMEWORK Extends CoreEvents {
-	
+
 	function click($element_id, $actions = array())
 	{
 		if(!$actions) {
@@ -15,17 +31,20 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		}
 		return $this->Exec($element_id, $actions);
 	}
-	
+
 	function change($element_id, $actions)
 	{
 		return $this->Exec($element_id, $actions,'change');
 	}
-	
+
 	function blur($element_id, $actions)
 	{
+		if(!$actions) {
+			return $this->__call('blur', $element_id);
+		}
 		return $this->Exec($element_id, $actions,'blur');
 	}
-	
+
 	function keyup($element_id, $actions)
 	{
 		return $this->Exec($element_id, $actions,'keyup');
@@ -35,7 +54,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	{
 		return $this->Exec($element_id, $actions,'keydown');
 	}
-	
+
 	function keypress($element_id, $actions, $key = null)
 	{
 		if($key && is_a($actions,'xmlItem')) {
@@ -52,7 +71,17 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		}
 		return $this->Exec($element_id, $actions,'keypress');;
 	}
-	
+
+	function toggle($container_id, $label1 =  'Show', $label2 = 'Hide')
+	{
+		$data['do'] = 'toggle';
+		$data['container_id'] = $container_id;
+		$data['label1'] = $label1;
+		$data['label2'] = $label2;
+
+		return $this->xmlItem($this->xml($data),'toggle','api');
+	}
+
 	public function __get($setting)
 	{
 		/*$value = self::input($setting);
@@ -65,10 +94,10 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		}
 		if($value && function_exists('cleanInput')) {
 			$value = cleanInput($value);
-		} 
+		}
 		return $value;*/
 	}
-	
+
 	public function __call($method, $args)
 	{
 		$list = array();
@@ -94,7 +123,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 				$data['data'] = $pParams;
 				$data['file'] = plugin::file($method);
 				$data['filename'] = preg_replace("/.*\//",'', $data['file']);
-				
+
 				$entry_id = $this->xmlItem($this->xml($data), $method)->id;
 			}
 			$plugin = plugin::getPluginInstance($method, $params , $entry_id);
@@ -107,22 +136,22 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 			$data['do'] = '_fn';
 			$data['fn'] = $method;
 			$data['fn_data'] = $pParams;
-			
+
 			$item = $this->xmlItem($this->xml($data),'fn');
 			$item->selector = $method;
 			return  $item;
 		}
 	}
-	
+
 	function waitFor($file, $wait_for_file)
 	{
 		$xml = $this->import($file);
-		
+
 		$xml->waitfor = $wait_for_file;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * Prevent other APIS and saving them to stack that can be retrived by plugins.
 	 * @param unknown_type $count
 	 * @param unknown_type $call_id
@@ -135,10 +164,10 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		$data['plugin_name'] = $plugin_name;
 		$this->xml($data);
 	}
-	
+
 	/**
 	 * Bind events to elements
-	 * 
+	 *
 	 * @param $selector
 	 * @param $actions
 	 * @param $event
@@ -158,11 +187,11 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 			$this->event = $event;
 		}
 		$_actions =  array();
-		
+
 		if($actions && is_array($actions)) {
-			
+
 			$cache = CoreEvents::$cache;
-			
+
 			foreach($actions as $k => $v) {
 				if(is_object($v) && (is_a($v, 'xmlItem') || is_a($v,'plugin'))) {
 					if(is_a($v,'plugin')) {
@@ -172,11 +201,15 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 							call_user_method('onEvent', $v, $selector);
 						}
 					}
-					$_actions[$v->id] = $v->xml();
+
 					if(isset(CoreEvents::$callbacks[$v->id]) && CoreEvents::$callbacks[$v->id]) {
-						$_actions[$v->id]['callback'] = CoreEvents::processScache(CoreEvents::$callbacks[$v->id]);
-						$_actions[$v->id]['callback'] = CoreEvents::mkArray($v[$v->id],'json', true);
+						$v->attach(CoreEvents::$callbacks[$v->id]);
+						foreach(CoreEvents::$callbacks[$v->id] as $k2 => $v2) {
+							unset(CoreEvents::$cache[$k2]);
+						}
+
 					}
+					$_actions[$v->id] = $v->xml();
 					$v->delete();
 				} else {
 					if(is_object($v))  {
@@ -189,7 +222,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 			}
 			return $this->AddEventTo($selector,$_actions, $event);
 		}
-			
+
 		if(is_a($actions,'xmlItem') || is_a($actions,'plugin')) {
 			if(is_a($actions,'plugin')) {
 				$actions->element_id = $selector;
@@ -198,6 +231,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 					call_user_method('onEvent', $actions, $selector);
 				}
 			}
+
 			$item = $actions->xml();
 			$item['event'] = $event;
 			if(isset(CoreEvents::$callbacks[$actions->id]) && CoreEvents::$callbacks[$actions->id]) {
@@ -213,9 +247,9 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 			return $this->AddEventTo($selector, array($actions => $_actions),$event);
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 *  Uses call() to post stuff
 	 */
 	function post($url, $vars = array())
@@ -227,13 +261,13 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		}
 		$this->call($url);
 	}
-	
-	
+
+
 	/**
-	 * 
+	 *
 	 * Making several requests without Exec event.
 	 * This is an alternative to call() when the requests go so fast and need just a little timeout to work properly.
-	 * 
+	 *
 	 * @param unknown_type $url
 	 * @param unknown_type $container_id
 	 * @param unknown_type $confirm
@@ -243,8 +277,40 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		$this->wait(200, true);// 200 milliseconds
 		return $this->call($url, $container_id, $confirm);
 	}
-	
-    /**
+
+	private function urlAccess($url = array(), &$options = array())
+	{
+		$controller = $url[0];
+		$method = $url[1];
+		$params = (isset($url[2])) ? $url[2] : null;
+
+		$_options = (isset($url[3])) ? $url[3] : null;
+
+		$_params = null;
+		if($params && !is_array($params)) {
+			$params = array($params);
+		}
+		if($params) {
+
+			foreach($params as $v) {
+				$_params[] =  '|' . $v . '|';
+			}
+			$_params  =  '/' .implode('/', $_params);
+		}
+
+		if($_options) {
+			//merged any passed options, this gets pulled back and sent to ajax options.
+			$options = array_merge($options, $_options);
+		}
+
+		is_file($f = './ajax.php') || is_file($f = '../ajax.php') || is_file($f = '../../ajax.php');
+
+		$url = sprintf('%s?%s/%s%s', $f, $controller, $method, $_params);
+
+		return $url;
+	}
+
+	/**
 	 * Create Ajax calls
 	 *
 	 * @param required string $url
@@ -254,14 +320,21 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	 */
 	public function call($url, $container_id=null, $confirm=null)
 	{
+		$out = array();
+		$out['do'] = '_call';
+
+		if(is_array($url)) {
+			$out['options'] = array();
+			$url = $this->urlAccess($url, $out['options']);
+		}
 		$ajax = CJAX::getInstance();
-		
+
 		if(preg_match('/^https?/', $url)) {
 			$out['crossdomain'] = true;
 		}
-		$out['do'] = '_call';
+
 		$out['url'] = $url;
-		
+
 		if($ajax->post)  {
 			if(is_array($ajax->post)) {
 				$args = http_build_query($ajax->post);
@@ -278,17 +351,17 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		} else if($ajax->text) {
 			$out['text'] = "{$ajax->text}";
 		}
-		
+
 		if($confirm) $out['confirm'] = $confirm;
 
 		if($ajax->loading) {
 			$out['is_loading'] = true;
 		}
-		
+
 		return $this->xmlItem($this->xml($out),'call','api');
 	}
-	
-	
+
+
 	public function __set($setting, $value)
 	{
 		if($this->isPlugin($setting)) {
@@ -299,10 +372,10 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 			switch($value->name) {
 				case 'call':
 					$value->container_id = $setting;
-				break;
+					break;
 				case 'form':
 					$this->Exec($setting, $value->id);
-				break;
+					break;
 			}
 			return self::simpleCommit();
 		} else {
@@ -311,12 +384,12 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 			return $xml;
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * is used to pass extra variables to POST ajax.
 	 * currently used in iframe uploads
-	 * 
+	 *
 	 * @param unknown_type $vars
 	 */
 	function ajaxVars($vars)
@@ -328,15 +401,15 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		$data['vars'] = $vars;
 		$this->xml($data);
 	}
-		
+
 	public function dialog($content, $title = null,$options = array())
 	{
 		$content = $this->format->_dialog($content, $title);
 		return $this->overlayContent($content, $options);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * Show overlay dialog provided information
 	 * @param unknown_type $data
 	 * @param unknown_type $title
@@ -348,7 +421,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		}
 		$this->dialog($extra.'<pre>'.print_r($data,1).'</pre>', $title, array('top'=> 100));
 	}
-	
+
 	/**
 	 * *set value to an element
 	 * @param string $element_id
@@ -363,7 +436,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		$options['select_text'] = $select_text;
 		$options['value'] = $value;
 		//$options['options'] = $this->mkArray($options);
-		
+
 		return $this->xml($options);
 	}
 
@@ -374,54 +447,54 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		$select['selected'] = $selected;
 		$select['options'] = $options;
 		$select['allow_input'] = $allow_input;
-		
+
 		return $this->xml($select);
 	}
 
-    /**
-     * Submit a form
-     *
-     * @param require string $url  url where the request will be sent to
-     * @param require string $form_id  the form id
-     * @param optional string $container_id = null  alternative element where to load the response
-     * @param optional string $confirm  ask before sending the request
-     * @return unknown
-     */
-    public function form($url, $form_id = null,$container_id = null,$confirm=null)
-    {
-        $ajax = CJAX::getInstance();
-        
-        $out = array();
-        
-        $out['do'] = '_form';
-        $out['url'] = $url;
-        if($form_id) $out['form_id'] = $form_id;
-        if(!is_null($container_id)) {
-        	$out['container'] = $container_id;
-        }
+	/**
+	 * Submit a form
+	 *
+	 * @param require string $url  url where the request will be sent to
+	 * @param require string $form_id  the form id
+	 * @param optional string $container_id = null  alternative element where to load the response
+	 * @param optional string $confirm  ask before sending the request
+	 * @return unknown
+	 */
+	public function form($url, $form_id = null,$container_id = null,$confirm=null)
+	{
+		$ajax = CJAX::getInstance();
 
-    	if(!is_null($ajax->text)) {
+		$out = array();
+
+		$out['do'] = '_form';
+		$out['url'] = $url;
+		if($form_id) $out['form_id'] = $form_id;
+		if(!is_null($container_id)) {
+			$out['container'] = $container_id;
+		}
+
+		if(!is_null($ajax->text)) {
 			$out['text'] = $ajax->text;
 		} elseif($ajax->text===false) {
 			$out['text'] = 'Loading...';
 		}
 
-         if($confirm) {
-         	$out['confirm'] = $confirm;
-         }
+		if($confirm) {
+			$out['confirm'] = $confirm;
+		}
 
-        if(is_array($ajax->post)) {
-        	$args = http_build_query($ajax->post);
-        	$out['args'] = $args;
-        	$out['post'] = true;
-        } else {
-        	$out['post'] = 1;
-        }
+		if(is_array($ajax->post)) {
+			$args = http_build_query($ajax->post);
+			$out['args'] = $args;
+			$out['post'] = true;
+		} else {
+			$out['post'] = 1;
+		}
 
-        $xml = $this->xmlItem($this->xml($out),'form','api');
-        
-        return $xml;
-    }
+		$xml = $this->xmlItem($this->xml($out),'form','api');
+
+		return $xml;
+	}
 
 
 	/**
@@ -446,12 +519,15 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	 * @param $options
 	 * Accepted  $options Example
 	 *  $options['top'] = '50px';
-		$options['left'] = '100px';
-		$options['transparent'] = '60%'; // from 1 transparent to 100 solid, how transparent should it be? default is 80.
-		$options['color'] = '#FF8040'
+	$options['left'] = '100px';
+	$options['transparent'] = '60%'; // from 1 transparent to 100 solid, how transparent should it be? default is 80.
+	$options['color'] = '#FF8040'
 	 */
 	function overLay($url = null, $options = array(), $use_cahe = false)
 	{
+		if(is_array($url)) {
+			$url = $this->urlAccess($url);
+		}
 		$data['do'] = '_overLay';
 		if(!isset($options['click_close'])) {
 			$options['click_close'] = true;
@@ -474,7 +550,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		if($url) {
 			$data['template'] = $this->template('overlay.html');
 		}
-		
+
 		return $this->xmlItem($this->xml($data),'overlay','api');
 	}
 
@@ -484,10 +560,10 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	 *
 	 * Options -
 	 * Examples:
- 	    $options['transparent']	=	10;
-		$options['color']	=	'#425769';
-		$options['top'] = 200;
-		$options['left'] = "50%";
+	$options['transparent']	=	10;
+	$options['color']	=	'#425769';
+	$options['top'] = 200;
+	$options['left'] = "50%";
 	 * @param $content
 	 * @param $options
 	 */
@@ -500,7 +576,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		if(!isset($options['click_close'])) {
 			$options['click_close'] = true;
 		}
-		
+
 		if($options && is_array($options)) {
 			foreach($options as $k => $v ) {
 				$data[$k] = $v;
@@ -527,9 +603,9 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		$data['message_id'] = $container_id;
 		return $this->xml($data);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * import css and javascript files
 	 * @param mixed_type $file
 	 * @param unknown_type $max_time
@@ -544,13 +620,13 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		} else  {
 			$data = array_merge($data , $file);
 		}
-		
+
 		return $this->xml($data);
 		return $this->xmlItem($this->xml($data), 'import') ;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * import more than one file, waiting for the previous to load.
 	 * @param mixed_type $file
 	 * @param unknown_type $max_time
@@ -560,7 +636,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		$data['do'] = '_imports';
 		$data['files'] = $this->xmlIt($files,'file');
 		$data['is_import'] = 1;
-		
+
 		$this->first();
 		return $this->xml($data);
 	}
@@ -575,7 +651,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	{
 		return $this->property($element_id, $data);
 	}
-	
+
 	/**
 	 * Add event to elements
 	 * --
@@ -591,7 +667,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		$data['element_id'] = $element;
 		$data['event'] = $event;
 		$data['events'] = $actions;
-		
+
 		return $this->xmlItem($this->xml($data),'AddEventTo','api');
 	}
 
@@ -599,7 +675,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	 * Will execute a command in a specified amouth of time
 	 * e.g $ajax->wait(5);
 	 * Will wait 5 seconds before executes the next CJAX command
-	 * 
+	 *
 	 *
 	 * @param integer $seconds
 	 * @param boolean $expand  - make other commands wait for this timeout and if there is a timeout add to it.
@@ -620,23 +696,23 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		$this->_flag = $data;
 		return $this;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * Removes waiting times
 	 */
 	public function waitReset()
 	{
 		$data['do'] = '_wait';
-		
+
 		$data['time_reset'] = 1;
-		
-		return $this->xml($data);		
+
+		return $this->xml($data);
 	}
-	
+
 	/**
 	 * Flag function
-	 * 
+	 *
 	 * Set command execution in high  priority preload mode.
 	 */
 	public function preload()
@@ -666,7 +742,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	{
 		$data['do'] = 'location';
 		$data['url'] = $url;
-		
+
 		return self::xml($data);
 	}
 
