@@ -1,11 +1,7 @@
-/**
- * 
- */
-
 
 var autoCompleteHelper = {};
 autoCompleteHelper = function() {
-	this.minChars = 2;
+	this.minChars = 1;
 	this.field = null;
 	this.item_id = 0;
 	this.helper = null;
@@ -22,6 +18,23 @@ autoCompleteHelper.prototype = {
 			this.field.onfocus = this.onFieldIn;
 			this.field.onblur = this.onFieldOut;
 		}
+	},
+	refresh: function(data, element) {
+		var list = new String('');
+
+
+		if(element.value.length >= this.minChars) {
+
+			for (x in data) {
+				list += '<a class=\'ACOption\' href="javascript:AC.select(\'' + data[x] + '\');">' + data[x] + '</a>';
+			}
+		}
+
+		clearTimeout(AC.item_id);
+
+		this.helper.innerHTML = list;
+		this.showHelper();
+		this.positionHelper();
 	},
 	element: function(element) {
 		if(this.field !=element) {
@@ -42,7 +55,7 @@ autoCompleteHelper.prototype = {
 		var list = "";
 		var value = AC.field.value;
 		var data = AC.data;
-		
+
 		if(value.length >= this.minChars) {
 			for(x in data) {
 				if(value.toLowerCase() == data[x].substr(0, value.length).toLowerCase()) {
@@ -90,10 +103,12 @@ autoCompleteHelper.prototype = {
 		this.helper.style.display = "block";
 	},
 	hideHelper:function() {
-		this.helper.style.display = "none";
-	}, 
+		setTimeout(function() {
+			this.helper.style.display = "none";
+		}, 20);
+	},
 	data: function() {
-		
+
 	}
 };
 
