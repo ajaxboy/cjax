@@ -124,7 +124,7 @@ class xmlItem {
 			$_args = array_merge($_args, $args);
 			$args = $_args;
 		}
-		$params = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
+		$params = range('a','z');
 
 		$pParams = array();
 		if($args) {
