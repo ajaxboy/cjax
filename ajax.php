@@ -221,16 +221,12 @@ class ajax  {
 		$_classes[] = 'controller_'.$controller;
 		$_classes[] = '_'.$controller;
 		$_classes[] = $controller;
-		
-		//backward compatiblity with > 5.0-RC2
-		$_classes[] = 'controller_'.$raw_controller;
-		$_classes[] = '_'.$raw_controller;
 		$_classes[] = $raw_controller;
 		
 		do {
 			$c = $_classes[key($_classes)];
 			
-			if(class_exists($c)) {
+			if(class_exists($c, false)) {
 				return $c;
 			}
 		} while(next($_classes));
