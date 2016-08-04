@@ -74,7 +74,7 @@ $ajax->click('#element_id' , $ajax->call('controller/the_function/'));
 ## Example #2 - Ajax Form
 ```php
 <?php
-$ajax->click('#element_id' , $ajax->form('controller/the_function/'));
+$ajax->click('#element_id' , $ajax->form('controller/method'));
 ?>
 <!doctype html>
 <html>
@@ -94,9 +94,12 @@ $ajax->click('#element_id' , $ajax->form('controller/the_function/'));
 ```
 
 ## Example #3 - Ajax Overlay, Lightbox
+
+What this line of code does?  It add a click event to element #anchor, when you click this anchor it will trigger an ajax request and load external html from a file or a controller. It will display a lightbox (a new window) displaying the contents gathered from the controller.  All this , with one line of code,  beat that!.
+
 ```php
 <?php
-$ajax->click('#element_id' , $ajax->overlay('some/splash/html'));
+$ajax->click('#anchor' , $ajax->overlay('controller/splashHTML'));
 ?>
 <!doctype html>
 <html>
@@ -104,7 +107,7 @@ $ajax->click('#element_id' , $ajax->overlay('some/splash/html'));
 		<?php echo $ajax->init();?>
 	</head>
 	<body>
-		<a id='element_id' href='#'>Click Show Overlay</a>
+		<a id='anchor' href='#'>Click Show Overlay</a>
 	</body>
 </html>
 ```
