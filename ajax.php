@@ -239,7 +239,7 @@ class ajax  {
 	}
 }
 define('AJAX_CONTROLLER',1);
-require_once (AJAX_WD . '/cjax.php');
+require_once (rtrim(AJAX_WD, '/') . '/cjax.php');
 $ajax = ajax();
 $controller = $ajax->input('controller');
 if($controller) {
