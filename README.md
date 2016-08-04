@@ -30,7 +30,7 @@ help to develop Ajax applications in record time, saving you up to 60% of develo
 simple to use Cjax API.
   
 Cjax is simplistic and uses Convention  Over Configuration model approach. With its MVC design makes it quite easy to integrate
-into existing PHP-Frameworks (such as Zend, CodeIgnater, cakePHP, Yii, etc).
+into existing PHP-Frameworks (such as Zend, CodeIgnater, cakePHP, Yii, etc). However it does not require a framework, it can very well work on itself, on any site.
 
 In most cases all you need is one line of code. Cjax carries a plugin system (as well as the core) that makes PHP and JavaScript look like lovers, meaning that
 it is the most seemless integration of PHP and JavaScript that you can find.
