@@ -1,16 +1,19 @@
 <?php
 //@app_header;
 
-//if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
-//    die('You are using PHP'.PHP_VERSION.'. Currently, Cjax uses PHP 5.2 OR PHP5.3 to operate.');
-//}
-		
+
 if(!defined('AJAX_CD')) {
 	//if you experience a file not found error, and  AJAX_CD hasn't been defined anywhere
 	//enter a relateive path to the base directory where the controllers are.
 	define('AJAX_CD', 'controllers');
 }
-	
+if(!defined('AJAX_WD')) {
+	//directory where cjax directory is located
+	//this allows you to move the cjax/ directory else where.
+	//keep in mind that it need to remain accessibly through the url.
+	define('AJAX_WD', dirname(__file__).'/cjax');
+}
+
 /**
  * //@ajax_php;
  **/
@@ -29,7 +32,7 @@ class ajax  {
 		$class_exists = false;
 		$requestObject = null;
 		$alt_controller = null;
-		
+
 		if(preg_match("/[^a-zA-Z0-9_]/", $controller)) {
 			$this->abort("Invalid Controller: $controller");
 		}
@@ -236,8 +239,8 @@ class ajax  {
 	}
 }
 define('AJAX_CONTROLLER',1);
-require_once (dirname(__file__)).'/cjax/cjax.php';
-$ajax = CJAX::getInstance();
+require_once (AJAX_WD . '/cjax.php');
+$ajax = ajax();
 $controller = $ajax->input('controller');
 if($controller) {
 	new ajax($controller);
