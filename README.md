@@ -38,6 +38,7 @@ In most cases all you need is one line of code. Cjax carries a plugin system (as
 it is the most seemless integration of PHP and JavaScript that you can find.
 
 Unlike others libraries that try to mimic Cjax, for cjax there is no 'client' side involved, there is no inlines codes, there is no process request, all you need is your php code and that's it.
+ 
 
 
 
@@ -115,3 +116,18 @@ Of course you can just download and see the examples work on your dev enviroment
 ## Full API Documentation
 
 http://cjax.sourceforge.net/docs/ 
+
+
+
+### Q/A For critics:
+
+#### Does cjax add a bunch of code/footprint to my page?
+No!, absolutely no!. Cjax works with PHP Sessions, it saves a variable to keep track of your ajax actions. This variable in array format, is converted into an xml string, this string is processed by Cjax's engine, once interpreted it serves the desired functionality, cjax uses the best methods to interact with the DOM elements, it doesn't require any code on the page. There is absolutely zero code printed on the page!, and that is why Cjax is the fastest!.
+
+#### Is Cjax in competition with jQuery?
+A few people have asked this question, there is a large explation for it. But I will sumarize in a brief. 
+
+Cjax works well with jQuery. Although Cjax and jQuery can do a few of the same things, they are not exclusive to each other, you can use both. Cjax doesn't require it, or needs it, but it will work in friendly terms with it, ajax controllers will even process ajax requests made with jQuery as if you made it with Cjax itself.
+
+#### Why do I need to write server side code, if I can just write client side?
+Well this is true, but then you know there are other projects like node.js that lets you write client side code entirely, and no one is complaining. There are different ways to do different thigns. There are other projects out there that in some way have similarities to Cjax, but they do it wrong, they add pages footprint, they make you add inline codes on item, or simply they want to try to be a client side library on the server side,  fortunately Cjax does none of these things, it is a unique well established ajax framework (over 10 years old), these are some pre-comceptions some people may have, but they just have to try it and investigate better to see that Cjax is not just any library, Cjax will go through great extents to make sure you write the less amount of code, and will use not only the best practices to get things done, in fact is the only piece of software in the world known to use even listerner from the server side.
