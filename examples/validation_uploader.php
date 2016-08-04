@@ -87,7 +87,7 @@ $ajax->Exec('code', $ajax->overlayContent($code, array('width'=> '950px','top'=>
 <body>
 <h2>Validation and Uploader Integration - Cjax 5.1+</h2>
 <br />
-This sample makes use of two different CJAX Plugins "validation" and "uploader" to create a full form-submittion functionality. 
+This sample makes use of two different CJAX Plugins "validation" and "uploader" to create a full form-submission functionality.
 The validation plugin makes use of Jquery and
 Jquery.validate plugin, the uploader plugin is independent.
 <br />
