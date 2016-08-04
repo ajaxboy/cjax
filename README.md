@@ -17,9 +17,9 @@
 
 ## Instructions
 
-*NEW Instruction*
+*NEW Instructions*
 
-Download from zip from git 
+Download zip from git 
 
 or 
 
