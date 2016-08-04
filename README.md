@@ -72,9 +72,12 @@ $ajax->click('#element_id' , $ajax->call('controller/the_function/'));
 ```
 
 ## Example #2 - Ajax Form
+
+What I love about Cjax, that you take a look a that line of code, and you know exactly what it is doing, even if you didn't know PHP. On this example,  #form_anchor is the element id. You can assign an ajax form to it through the $ajax object, and boom you got an ajax form, you can really assign the form to anything on the page with an id, and when you click it, it submits the form through ajax, to the specified ajax controller, and yes you can even upload files!.
+
 ```php
 <?php
-$ajax->click('#element_id' , $ajax->form('controller/method'));
+$ajax->form_anchor = $ajax->form('controller/method');
 ?>
 <!doctype html>
 <html>
@@ -87,7 +90,7 @@ $ajax->click('#element_id' , $ajax->form('controller/method'));
 		<br />
 		Field #2 <input type='text' id='field1' name='field2' />
 		<br />
-		<a id='element_id' href='#'>Click me To Submit Form</a>
+		<a id='form_anchor' href='#'>Click me To Submit Form</a>
 	</form>
 	</body>
 </html>
