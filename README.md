@@ -3,12 +3,12 @@
 ## Requirements
 
 +    PHP 5.2+
-+    Strict Standards turned off
 
 
-## Links
+## 5.9
 
- Official Site: http://cjax.sourceforge.net/
+Version 5.9  brings scalabity improvements to work on heave duty ajax projects. It inproves upon caching and processing core functionality. So you defintely one this version (currently on the master branch)
+
 
 ## Instructions / Download 
 
@@ -21,6 +21,8 @@ or
 git clone https://github.com/ajaxboy/cjax.git
 
 boom! you are set. First thing you want to do is go to the examples directory on your install. Review the examples, and the code samples, and start using, as simple as that. Have any question? Open an issue here on the issues tab. 
+
+Review the examples below on this readme. If you can understand these examples from the get-go, you're absoletely going to love Cjax because there isn't much more needed to be done, except adding a ajax controller.
 
 
 ## Introduction
