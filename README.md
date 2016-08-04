@@ -39,17 +39,17 @@ it is the most seemless integration of PHP and JavaScript that you can find.
 
 Unlike others libraries that try to mimic Cjax, for cjax there is no 'client' side involved, there is no inlines codes, there is no process request, all you need is your php code and that's it.
 
-Cjax is so easy to use that even a 12 year old could figure it out, go ahead, give it a try.
-
 ## Example code
 
-Check the a lot of examples and code at http://cjax.sourceforge.net/examples/
+Check out the live examples/demos at http://cjax.sourceforge.net/examples/
+
+Of course you can just download and see the examples work on your dev enviroment, that is even better.
 
 ## Full API Documentation
 
-http://cjax.sourceforge.net/docs/ (Also anyone can contribute/folk to the docs on this repo).
+http://cjax.sourceforge.net/docs/ 
 
-## Documentation
+## Examples, More Examples
 
 It's really simple as
 
