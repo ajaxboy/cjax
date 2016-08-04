@@ -18,6 +18,11 @@ $ajax->click(".buttons", $ajax->call("ajax.php?click_ajax_request/click_button/|
 <?php echo $ajax->init();?>
 </head>
 <body>
+<header>
+	<div style='padding: 15px;'>
+		<a href='http://cjax.sourceforge.net'><img src='http://cjax.sourceforge.net/media/logo.png' border=0/></a>
+	</div>
+</header>
 <!-- START NAVIGATION -->
 <div id="nav"><div id="nav_inner"></div></div>
 <div id="nav2"><a name="top">&nbsp;</a></div>
