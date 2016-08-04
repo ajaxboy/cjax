@@ -17,7 +17,16 @@
 
 ## Instructions
 
-This reposition is for Fork and contributions only, for downloads go to: http://cjax.sourceforge.net/. We build the releases internally because there are different packages that derive from this project (examples, plugins, docs, and 2 versions of Cjax).
+*NEW Instruction*
+
+Download from zip from git 
+
+or 
+
+git clone https://github.com/ajaxboy/cjax.git
+
+boom! you are set. First thing you want to do is go to the examples directory on your install. Review the examples, and the code samples, and start using, as simple as that. Have any question? Open an issue here on the issues tab. 
+
 
 ## Introduction
 
