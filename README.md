@@ -125,7 +125,7 @@ $ajax->click('#anchor_id' , $ajax->call(array('JsoncController','JsonData')));
 		<?php echo $ajax->init();?>
 	</head>
 	<body>
-		<a id='anchor_id' href='#'>Click Show Overlay</a>
+		<a id='anchor_id' href='#'>Click to get Jason object</a>
 	</body>
 </html>
 
