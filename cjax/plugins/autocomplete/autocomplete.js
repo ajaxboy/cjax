@@ -22,38 +22,39 @@ function autocomplete(url , fulll_load, limit)
 
 	var element = CJAX.$(CJAX.xml('element_id',CJAX._plugins['autocomplete']));
 	var str = element.value;
+	if(str == '') {
+		//nothing typed in
+		return true;
+	}
 
 	url = url.replace(/\/+$/,"");//remove any slashes at the end
 
-	if(str) {
+	if(fulll_load) {
 
-		if(fulll_load) {
+		element.setAttribute('disabled','disabled');
+		autocomplete.get(url, function(data) {
+			element.removeAttribute('disabled');
 
-			element.setAttribute('disabled','disabled');
-			autocomplete.get(url, function(data) {
-				element.removeAttribute('disabled');
+			limit = limit? limit: 15;
 
-				limit = limit? limit: 15;
+			//convert json into js array
+			new_data = Object.keys(data).map(function (key) {return data[key]})
+			//search string
+			new_data  = new_data.filter(/./.test.bind(new RegExp(str,'i')));
 
-				//convert json into js array
-				new_data = Object.keys(data).map(function (key) {return data[key]})
-				//search string
-				new_data  = new_data.filter(/./.test.bind(new RegExp(str,'i')));
+			//how many records
+			new_data = new_data.slice(0, limit)
 
-				//how many records
-				new_data = new_data.slice(0, limit)
+			if(new_data) {
+				AC.refresh(new_data, element);
+			}
+		},'json');
+	} else {
 
-				if(new_data) {
-					AC.refresh(new_data, element);
-				}
-			},'json');
-		} else {
-
-			this.get(url+='/'+str, function(data) {
-				if(data) {
-					AC.refresh(data, element);
-				}
-			},'json');
-		}
+		this.get(url+='/'+str, function(data) {
+			if(data) {
+				AC.refresh(data, element);
+			}
+		},'json');
 	}
 }
