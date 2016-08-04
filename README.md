@@ -56,9 +56,12 @@ It's really simple as
 ## The CJax's way, one line of php code does it all
 
 ## Example #1 - Ajax Call
+
+Self explanatory really, $ajax, element_id .. call.. ajax controller umm need I say more?.
+
 ```php
 <?php
-$ajax->click('#element_id' , $ajax->call('controller/the_function/'));
+$ajax->click('#element_id' , $ajax->call('controller/method'));
 ?>
 <!doctype html>
 <html>
