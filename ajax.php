@@ -108,7 +108,7 @@ class ajax  {
 	function abort($err)
 	{
 		ajax()->error($err);
-		exit($err);
+		exit(0);
 	}
 
 	protected function _response($response)
