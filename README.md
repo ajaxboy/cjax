@@ -107,6 +107,43 @@ $ajax->click('#anchor' , $ajax->overlay('controller/splashHTML'));
 </html>
 ```
 
+
+
+### Example #4 - Get Json Object with Cjax
+
+In this example, we introduce you to Ajax Controllers. An ajax controller is php file dedicated to serving ajax requests for any purposer on your application or website. In fact the entire directory is dedicated to ajax requests. To reach this ajax controller, you go through a dispatcher file called ajax.php. The dispatcher will route your request to the controller.
+
+To get a json object, simply return an array from your ajax method.
+
+```php
+<?php
+$ajax->click('#anchor_id' , $ajax->call(array('JsoncController','JsonData')));
+?>
+<!doctype html>
+<html>
+	<head>
+		<?php echo $ajax->init();?>
+	</head>
+	<body>
+		<a id='anchor_id' href='#'>Click Show Overlay</a>
+	</body>
+</html>
+
+
+File:  controllers/JsonData.php
+
+Class JsoncController {
+	
+	public function JsonData() {
+	
+		return $_SERVER;;
+	}
+	
+}
+
+
+```
+
 ## Example code
 
 Check out the live examples/demos at http://cjax.sourceforge.net/examples/
