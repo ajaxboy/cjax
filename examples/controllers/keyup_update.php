@@ -1,6 +1,6 @@
 <?php
 
-class controller_keyup_update {
+class keyup_update {
 	
 	function update($text)
 	{

@@ -1,6 +1,6 @@
 <?php
 
-class controller_ajax_request {
+class AjaxRequest {
 	
 	function on_the_fly()
 	{

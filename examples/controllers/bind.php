@@ -1,6 +1,6 @@
 <?php
 
-class controller_bind  {
+class Bind  {
 	
 	function link1()
 	{

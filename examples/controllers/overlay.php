@@ -1,6 +1,6 @@
 <?php
 
-class controller_overlay {
+class overlay {
 	
 	function view_overlay()
 	{

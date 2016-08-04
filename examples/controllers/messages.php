@@ -1,6 +1,6 @@
 <?php
 
-class controller_messages  {
+class messages  {
 	
 	function show_messages($message)
 	{

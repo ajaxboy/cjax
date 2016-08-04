@@ -1,6 +1,6 @@
 <?php
 
-class controller_change_value {
+class change_value {
 	
 	function text($element_id,$current_value)
 	{

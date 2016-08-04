@@ -1,6 +1,6 @@
 <?php
 
-class controller_confirm {
+class confirm {
 	
 	function confirm_action()
 	{

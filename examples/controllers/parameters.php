@@ -1,6 +1,6 @@
 <?php
 
-class controller_parameters {
+class parameters {
 	
 	function send_params($a,$b,$c,$d)
 	{

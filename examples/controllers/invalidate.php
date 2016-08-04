@@ -1,6 +1,6 @@
 <?php
 
-class controller_invalidate {
+class invalidate {
 	
 	/**
 	 *

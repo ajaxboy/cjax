@@ -11,7 +11,7 @@
  * @author cj
  *
  */
-class controller_upload_file {
+class upload_file {
 
 	function post($files)
 	{

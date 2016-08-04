@@ -1,6 +1,6 @@
 <?php
 
-class controller_send_input {
+class send_input {
 	
 	function send_text( $text )
 	{

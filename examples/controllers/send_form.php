@@ -1,6 +1,6 @@
 <?php
 
-class controller_send_form {
+class send_form {
 	
 	function validate()
 	{
