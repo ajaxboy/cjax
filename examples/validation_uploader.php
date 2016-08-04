@@ -114,7 +114,7 @@ Used in sample:
 	<a target='_blank' href='plugin_validate.php'>Cjax Plugin Jquery Validate</a>
 	</li>
 	<li>
-	<a target='_blank' href='plugin_upload_files.php'>Uploader Plugin</a>
+	<a target='_blank' href='plugin_uploader.php'>Uploader Plugin</a>
 	</li>
 </ul>
 
