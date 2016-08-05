@@ -33,6 +33,11 @@ $uploader->preview('../', array(
 	<script type="text/javascript" src="resources/send_form/view.js"></script>
 </head>
 <body>
+<header>
+	<div style='padding: 15px;'>
+		<a href='http://cjax.sourceforge.net'><img src='http://cjax.sourceforge.net/media/logo.png' border=0/></a>
+	</div>
+</header>
 <!-- START NAVIGATION -->
 <div id="nav"><div id="nav_inner"></div></div>
 <div id="nav2"><a name="top">&nbsp;</a></div>
@@ -53,7 +58,7 @@ $uploader->preview('../', array(
 <tr>
 <td id="breadcrumb">
 <a href="http://cjax.sourceforge.net/">Project Home</a> &nbsp;&#8250;&nbsp;
-<a href="http://cjax.sourceforge.net/examples/">Demos</a> &nbsp;&#8250;&nbsp;
+<a href="./">Demos</a> &nbsp;&#8250;&nbsp;
 Uploader
 </td>
 <td id="searchbox"><form method="get" action="http://www.google.com/search">
