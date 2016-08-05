@@ -1,6 +1,9 @@
 <?php
+//core file, reference..
+require_once "ajax.php";
 
-require_once 'ajax.php';
+$ajax = ajax();
+
 
 //add ajax call to each button, so when you click it it fires and sends the desired operation.
 
@@ -31,60 +34,73 @@ $ajax->click('button0', $ajax->call('ajax.php?calc/math/0/|buffer|'));
 $ajax->click('buttone', $ajax->call('ajax.php?calc/math/e/|buffer|'));
 $ajax->click('buttond', $ajax->call('ajax.php?calc/math/d/|buffer|'));
 */
+
 ?>
-<html>
+<!doctype html>
 <head>
-<title>Ajax Calculator</title>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<?php echo $ajax->init();?>
+	<link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
+	<title>Ajax Calculator</title>
+	<?php echo $ajax->init();?>
 </head>
 <body>
-<h3>Ajax Calculator</h3>
-This is a fully functional ajax calculator, for each operation fires an ajax call and uses the ajax controller to process it.
-<br />
-Although it is not a scientific calculator, it is the most advanced ajax calculator powered by an Ajax Framework, most just do simple addition of 2 numbers.
-<br />
-This is just an example of what you can do with the Cjax Framework.
-<br /><br />
-<form name="calc">
-	<table border=4>
+<header>
+	<div style='padding: 15px;'>
+		<a href='http://cjax.sourceforge.net'><img src='http://cjax.sourceforge.net/media/logo.png' border=0/></a>
+	</div>
+</header>
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+	<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+		<tr>
+			<td><h1>Cjax Framework</h1></td>
+			<td id="breadcrumb_right"><a href="#">Demos</a></td>
+		</tr>
+	</table>
+</div>
+<!-- END NAVIGATION -->
+
+
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
 	<tr>
-		<td>
-		<input id='result' type="text"  name="input" size="16" value="0">
-		<input id='buffer' type="hidden"   name="buffer">
-		<br>
+		<td id="breadcrumb">
+			<a href="http://cjax.sourceforge.net/">Project Home</a> &nbsp;&#8250;&nbsp;
+			<a href="./">Demos</a> &nbsp;&#8250;&nbsp;
+			Ajax Calculator
 		</td>
-	</tr>
-	<tr>
-		<td>
-		<input id='button1' class='button' type="button" name="one"   value="  1  " />
-		<input id='button2' class='button' type="button" name="two"   value="  2  " />
-		<input id='button3' class='button' type="button" name="three" value="  3  " />
-		<input id='buttonp' class='button' type="button" name="plus"  value="  +  " />
-		<br>
-		<input id='button4' class='button' type="button" name="four"  value="  4  " />
-		<input id='button5' class='button' type="button" name="five"  value="  5  " />
-		<input id='button6' class='button' type="button" name="six"   value="  6  " />
-		<input id='buttonm' class='button' type="button" name="minus" value="  -  " />
-		<br>
-		<input id='button7' class='button' type="button" name="seven" value="  7  " />
-		<input id='button8' class='button' type="button" name="eight" value="  8  " />
-		<input id='button9' class='button' type="button" name="nine"  value="  9  " />
-		<input id='buttonx' class='button' type="button" name="times" value="  x  " />
-		<br>
-		<input id='buttonc' class='button' type="button" name="clear" value="  c  " />
-		<input id='button0' class='button' type="button" name="zero"  value="  0  " />
-		<input id='buttone' class='button' type="button" name="doit"  value="  =  " />
-		<input id='buttond' class='button' type="button" name="div"   value="  /  " />
-		<br>
-		</td>
+		<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="cjax.sourceforge.net/" />Search Project User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
 	</tr>
 </table>
-</form>
-<h4>Code Used</h4>
-<?php 
+<!-- END BREADCRUMB -->
 
-echo $ajax->code("
+<br clear="all" />
+
+<div id="content">
+
+
+	<!-- Text -->
+	This is a fully functional ajax calculator, for each operation fires an ajax call and uses the ajax controller to process it.
+	<br />
+	Although it is not a scientific calculator, it is the most advanced ajax calculator powered by an Ajax Framework, most just do simple addition of 2 numbers.
+	<br />
+	This is just an example of what you can do with the Cjax Framework.
+	<br /><br />
+
+
+	<br />
+
+	<h3>Examples</h3>
+
+
+	<!-- Code Used -->
+
+	<h4>Code Used</h4>
+	<?php
+
+	echo $ajax->code("
 \$buttons = array(0,1,2,3,4,5,6,7,8,9,'p','m','x','c','e','d');
 
 do {
@@ -92,24 +108,24 @@ do {
 	\$ajax->click(\"button{\$button}\", \$ajax->call(\"ajax.php?calc/math/{\$button}/|buffer|\"));
 } while(\$buttons && next(\$buttons));
 ");
-?>
-<h4>Controller</h4>
-<?php 
+	?>
+	<h4>Controller</h4>
+	<?php
 
-echo $ajax->code("
+	echo $ajax->code("
 class Calc {
-	
+
 	function math(\$action, \$buffer)
 	{
 		\$ajax = ajax();
-		
+
 		\$operators_signs = array('[plus]','p','m','x','d');
 		\$operators = array('p','+','-','*','/');
-		
+
 		\$pre_buffer = \$buffer;
 		\$buffer = \$ajax->buffer = \$buffer.\$action;
 		\$buffer = str_replace(\$operators_signs, \$operators, \$buffer);
-		
+
 		switch(\$action) {
 			case 'm'://minus
 			case 'p'://plus
@@ -122,14 +138,14 @@ class Calc {
 			break;
 			case '=': //equal
 				\$buffer = rtrim(\$buffer,\"=+-\/*\");
-				
+
 				eval(\"\\\$action = ({\$buffer});\");
-				
+
 				\$ajax->result = \$action;
 				\$ajax->buffer = \$action;
 			break;
 			default: //number
-				
+
 				//get previous operator used, if not then keep putting numbers together
 				\$prev = rtrim(\$pre_buffer, \$action);
 				\$prev = preg_replace(\"/[0-9]/\", '', \$prev);
@@ -139,11 +155,69 @@ class Calc {
 					\$action =  preg_replace(\"/.+[^0-9]/\", '', \$buffer);
 				}
 				\$ajax->result = \$action;
-		
+
 		}
 	}
 }
-");
-?>
+", true, true);
+	?>
+
+
+	<!-- HTML -->
+
+	<form name="calc">
+		<table border=4>
+			<tr>
+				<td>
+					<input id='result' type="text"  name="input" size="16" value="0">
+					<input id='buffer' type="hidden"   name="buffer">
+					<br>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input id='button1' class='button' type="button" name="one"   value="  1  " />
+					<input id='button2' class='button' type="button" name="two"   value="  2  " />
+					<input id='button3' class='button' type="button" name="three" value="  3  " />
+					<input id='buttonp' class='button' type="button" name="plus"  value="  +  " />
+					<br>
+					<input id='button4' class='button' type="button" name="four"  value="  4  " />
+					<input id='button5' class='button' type="button" name="five"  value="  5  " />
+					<input id='button6' class='button' type="button" name="six"   value="  6  " />
+					<input id='buttonm' class='button' type="button" name="minus" value="  -  " />
+					<br>
+					<input id='button7' class='button' type="button" name="seven" value="  7  " />
+					<input id='button8' class='button' type="button" name="eight" value="  8  " />
+					<input id='button9' class='button' type="button" name="nine"  value="  9  " />
+					<input id='buttonx' class='button' type="button" name="times" value="  x  " />
+					<br>
+					<input id='buttonc' class='button' type="button" name="clear" value="  c  " />
+					<input id='button0' class='button' type="button" name="zero"  value="  0  " />
+					<input id='buttone' class='button' type="button" name="doit"  value="  =  " />
+					<input id='buttond' class='button' type="button" name="div"   value="  /  " />
+					<br>
+				</td>
+			</tr>
+		</table>
+	</form>
+
+	<br />
+</div>
+<!-- END CONTENT -->
+
+<div id="myfooter">
+	<p>
+		Previous Topic:&nbsp;&nbsp;<a href="#">Previous Class</a>
+		&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+		<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+		<a href="http://cjax.sourceforge.net/examples">Demos Home</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+		<!-- Next Topic:&nbsp;&nbsp;<a href="#">Next Class</a> -->
+	</p>
+	<p>
+		<a href="http://codeigniter.com">CodeIgniter</a> &nbsp;&middot;&nbsp; Copyright &#169; 2006 - 2012 &nbsp;&middot;&nbsp;
+		<a href="http://cjax.sourceforge.net/">Cjax</a>
+	</p>
+</div>
+
 </body>
 </html>

@@ -63,9 +63,63 @@ $ajax->click('#link_confirm', $ajax->call(array('call','confirm'), null,'Are you
 
 <div id="content">
 
-    The call() <span class="keyword">method</span> allows you to make ajax requests to Cjax controllers.
+    The call() <span class="keyword">method</span> allows you to make ajax requests to ajax controllers.
     You can pass multiple parameters to this method.
 
+    <br />
+
+
+    <p>Call() takes the following parameters</p>
+
+
+    <table cellspacing="1" cellpadding="0" border="0" class="tableborder" style="width:100%">
+        <tbody><tr>
+            <th>Variable</th>
+            <th>Required</th>
+            <th>Type</th>
+            <th>Options</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td class="td"><strong>$url</strong></td>
+            <td class="td">Yes</td>
+            <td class="td">Mixed</td>
+            <td class="td">
+                string <span class="param">$url</span>
+                <br />
+                <kbd>array 5.9+</kbd>
+                <br />
+                as an array the options are as follow:
+                <br />
+                string <span class="param">controller</span>, string <span class="param">method</span>, mixed <span class="param">parameters</span>, array <span class="param">options</span>
+                <br />
+                parameters - can pass a string with one or an array with more element ids, for its value.
+                <br />
+                options - cache =  true/false
+            </td>
+            <td class="td">This url is fetched with ajax</td>
+        </tr>
+        <tr>
+            <td class="td"><strong>$container_id</strong></td>
+            <td class="td">No</td>
+            <td class="td">String</td>
+            <td class="td">div, span, p, td, etc
+                <br />
+                You must echo your desire content from the controller/method.
+            </td>
+            <td class="td">
+                Update a specific container with this pararement, any text the ajax call comes back with in the response
+                will be automatically propagated to this container.
+            </td>
+        </tr>
+        <tr>
+            <td class="td"><strong>$confirm</strong></td>
+            <td class="td">No</td>
+            <td class="td">String</td>
+            <td class="td">string $message</td>
+            <td class="td">Need to ask "Are you sure?" Before triggering the call() ?</td>
+        </tr>
+        </tbody></table>
     <br />
 
     <h3>Examples</h3>
@@ -73,10 +127,14 @@ $ajax->click('#link_confirm', $ajax->call(array('call','confirm'), null,'Are you
 
     <h5>Simple Usage</h5>
 
-    You can use the call() method without any other code. . It will trigger the ajax request in the instant.
+    You can use the call() method without any other parameters. It will trigger the ajax request in the instant.
     <?php
     echo $ajax->code("
 	\$ajax->call(\"ajax.php?controller/method\");
+
+
+	//As of 5.9 you can do this way
+	\$ajax->call(array(\"controller\",\"method\"));
 	");
     ?>
     <h5>More Usages</h5>
@@ -226,58 +284,6 @@ $ajax->click('#link_confirm', $ajax->call(array('call','confirm'), null,'Are you
     <br />
     <br />
 
-
-    <p>Call() takes the follow parameters</p>
-
-
-    <table cellspacing="1" cellpadding="0" border="0" class="tableborder" style="width:100%">
-        <tbody><tr>
-            <th>Variable</th>
-            <th>Required</th>
-            <th>Type</th>
-            <th>Options</th>
-            <th>Description</th>
-        </tr>
-        <tr>
-            <td class="td"><strong>$url</strong></td>
-            <td class="td">Yes</td>
-            <td class="td">Mixed</td>
-            <td class="td">
-                string <span class="param">$url</span>
-                <br />
-                <kbd>array 5.9+</kbd>
-                <br />
-                as an array the options are as follow:
-                <br />
-                string <span class="param">controller</span>, string <span class="param">method</span>, mixed <span class="param">parameters</span>, array <span class="param">options</span>
-                <br />
-                parameters - can pass a string with one or an array with more element ids, for its value.
-                <br />
-                options - cache =  true/false
-            </td>
-            <td class="td">This url is fetched with ajax</td>
-        </tr>
-        <tr>
-            <td class="td"><strong>$container_id</strong></td>
-            <td class="td">No</td>
-            <td class="td">String</td>
-            <td class="td">div, span, p, td, etc
-            <br />
-                You must echo your desire content from the controller/method.
-            </td>
-            <td class="td">
-                Update a specific container with this pararement, any text the ajax call comes back with in the response
-            will be automatically propagated to this container.
-            </td>
-        </tr>
-        <tr>
-            <td class="td"><strong>$confirm</strong></td>
-            <td class="td">No</td>
-            <td class="td">String</td>
-            <td class="td">string $message</td>
-            <td class="td">Need to ask "Are you sure?" Before triggering the call() ?</td>
-        </tr>
-        </tbody></table>
 
     <br />
 </div>

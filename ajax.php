@@ -217,9 +217,9 @@ class ajax  {
 	{
 		$raw_controller = $controller;
 		$ajax = ajax();
-		if($ajax->config->camelize) {
-			$controller = $ajax->camelize($controller, $ajax->config->camelizeUcfirst);
-		}
+
+		$controller = $ajax->camelize($controller, $ajax->config->camelizeUcfirst);
+
 		$_classes = array();
 		$_classes[] = 'controller_'.$controller;
 		$_classes[] = '_'.$controller;

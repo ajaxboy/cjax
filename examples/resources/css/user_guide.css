@@ -19,8 +19,8 @@ body {
 }
 
 br {
- padding: 10px;
- margin: 5px;
+ padding: 5px;
+ margin: 6px 0px 0px 2px;
 }
 
 .param, param {
@@ -32,6 +32,10 @@ br {
 .keyword {
  color: #3253B6;
  font-weight: bold;
+}
+
+code {
+ border-radius: 5px;
 }
 
 

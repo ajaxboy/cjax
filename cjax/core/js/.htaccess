@@ -5,5 +5,5 @@ Allow from all
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 	#RewriteBase /
-RewriteRule  ^/?(cjax\.*js)$	$1 [NC,QSA,L]
+#RewriteRule  ^/?(cjax.*js)$	$1 [NC,QSA,L]
 </IfModule>
