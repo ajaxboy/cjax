@@ -3,7 +3,7 @@
 
 
 include_once 'core/cjax_config.php';
-$ajax = CJAX::getInstance();
+$ajax = ajax();
 
 /**
  * Handle mod_rewrite redirects

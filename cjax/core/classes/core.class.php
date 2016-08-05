@@ -1607,9 +1607,9 @@ if (document.addEventListener) {
 		return $value;
 	}
 
-	function code($data, $tags = true)
+	function code($data, $tags = true, $extra = null)
 	{
-		$flush_on_closing_brace =  true;
+		$flush_on_closing_brace = true;
 		$c_string = "#DD0000";
 		$c_comment = "#FF8000";
 		$c_keyword = "#007700";
@@ -1623,7 +1623,6 @@ if (document.addEventListener) {
 		@ini_set('highlight.html', $c_html);
 
 
-
 		//$data = str_replace(array(') { ', ' }', ";", "\r\n"), array(") {\n", "\n}", ";\n", "\n"), $data); // Newlinefy all braces and change Windows linebreaks to Linux (much nicer!)
 
 		$data = str_replace("\n\n", "\n", $data);
@@ -1631,13 +1630,21 @@ if (document.addEventListener) {
 		//$data = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $data); // Regex identifies all extra empty lines produced by the str_replace above. It is quicker to do it like this than deal with a more complicated regular expression above.
 
 
-		if(!$tags) {
-			$data = highlight_string( $data , true); ; // Add nice and friendly <script> tags around highlighted text
+		if (is_bool($tags)) {
+			if (!$tags) {
+				$data = highlight_string($data, true);; // Add nice and friendly <script> tags around highlighted text
+			} else {
+				$data = highlight_string("<?php \n" . $data . "\n?>", true);
+			}
 		} else {
-			$data = highlight_string("<?php \n" . $data . "\n?>", true);
+			$data = highlight_string($data, true);; // Add nice and friendly <script> tags around highlighted text
 		}
 
-		return '<div id="code_highlighted">'.$data."</div>";
+		if (is_bool($extra) && $extra) {
+			$extra = "<div class='try_it'><img src='resources/images/try_it.png' /></div><h4>Try it</h4>";
+		}
+
+		return sprintf('<div id="code_highlighted">%s%s</div>', $data, $extra);
 	}
 
 	function jsCode($data, $tags = false)

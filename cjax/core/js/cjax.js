@@ -33,7 +33,6 @@ function CJAX_FRAMEWORK() {
 		handlerFormRequest: function(url, serial, args) {},
 		handlerConfirm: function(question, callback) {}
 	};
-	var _FUNCTION;
 	var __base__;
 	var __root__;
 	this.uri; //full uri to cjax.js
@@ -2845,7 +2844,7 @@ function CJAX_FRAMEWORK() {
 		if(!CJAX.method) return false;
 		var PREFIX = 'CJAX.';
 		var SUBFIX = CJAX.method;
-		var f = _FUNCTION = PREFIX+CJAX.method;
+		var f  = PREFIX+CJAX.method;
 
 		var seconds = 0;
 
@@ -2924,7 +2923,7 @@ function CJAX_FRAMEWORK() {
 			}
 			return;
 		} else {
-			alert("CJAX XML-Processor#1:"+_FUNCTION+' function not found.');
+			alert("CJAX XML-Processor#1:"+SUBFIX+' function not found.');
 		}
 	};
 
@@ -3720,7 +3719,7 @@ function CJAX_FRAMEWORK() {
 		var url = cache.url;
 		url = url.replace(/\&amp\;/gi,"&");
 
-		var _confirm = cache.confirm;
+		var _confirm = CJAX.decode(cache.confirm);
 		var stamp = cache.stamp;
 		var crossdomain = cache.crossdomain;
 		var data = cache.data;
@@ -3783,6 +3782,7 @@ function CJAX_FRAMEWORK() {
 				return false;
 			}
 		}
+
 		if(CJAX.ajaxSettings.cache || options.cache) {
 
 			if(response = CJAX.util.cachedURL(url)) {
@@ -3794,7 +3794,8 @@ function CJAX_FRAMEWORK() {
 				if(cache.callback.complete) {
 					cache.callback.complete(response);
 				}
-				CJAX.loading();
+
+				CJAX.process_all(response);
 				return response;
 			}
 		}
@@ -3951,6 +3952,9 @@ function CJAX_FRAMEWORK() {
 		switch(status)
 		{
 			case 200: {
+
+				CJAX.util.cacheURL(url,response);
+
 				switch(dataType) {
 					case 'json':
 
@@ -3976,7 +3980,7 @@ function CJAX_FRAMEWORK() {
 					CJAX.callback_success[url](response);
 				}
 
-				CJAX.util.cacheURL(url,response);
+
 
 				if(options.callback.success) {
 					options.callback.success(response);
@@ -4276,35 +4280,35 @@ function CJAX_FRAMEWORK() {
 						} else {
 							element = CJAX.$(id);
 						}
-
 						if(!element) {
-							continue;
-						}
+							_value = id;
+						} else {
 
-						switch(element.type) {
-							case 'checkbox':
-								_value = element.checked? 1: 0;
-								break;
-							case 'radio':
-								var radios = document.getElementsByName(id);
-								if(radios) {
-									var element;
-									var check = '';
+							switch (element.type) {
+								case 'checkbox':
+									_value = element.checked ? 1 : 0;
+									break;
+								case 'radio':
+									var radios = document.getElementsByName(id);
+									if (radios) {
+										var element;
+										var check = '';
 
-									for(var i = 0; i < radios.length; i++) {
-										element = radios[i];
-										if(element.checked) {
-											check = element.value;
-											break;
+										for (var i = 0; i < radios.length; i++) {
+											element = radios[i];
+											if (element.checked) {
+												check = element.value;
+												break;
+											}
 										}
-									}
 
-									_value = check;
-								}
-								break;
-							case 'text':
-							default:
-								_value = element.value;
+										_value = check;
+									}
+									break;
+								case 'text':
+								default:
+									_value = element.value;
+							}
 						}
 					}
 				}

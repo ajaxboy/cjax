@@ -101,7 +101,17 @@ class CJAX extends CJAX_FRAMEWORK {
 		}
 		
 		if(!$js_dir = $ajax->config->js_path) {
-			if(@is_dir('cjax/')) {
+
+			$core_dir = str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname(__FILE__));
+			$core_dir = ltrim($core_dir,'/');
+			$count_back = strlen(preg_replace('/[^\/]/','', $core_dir));
+			$back_dir = rtrim(str_pad('', $count_back , '../'),'/') . '/';
+
+			if(is_dir($back_dir . $core_dir)) {
+				$js_dir = $back_dir . $core_dir . '/js/';
+			} else if(is_dir($core_dir)) {
+				$js_dir =  $core_dir . '/js/';
+			} else if(@is_dir('cjax/')) {
 				$js_dir  = "cjax/core/js/";
 			} else if(@is_dir('core/js/')) {
 				$js_dir  = "core/js/";
