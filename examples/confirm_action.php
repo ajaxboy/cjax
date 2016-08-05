@@ -52,7 +52,7 @@ $ajax->click("button1",$ajax->call("ajax.php?confirm/confirm_action",null,"Are y
 <div id="content">
 
 
-    Template Text
+    Confirm whether the action about to be performed is really desired.
     <br />
 
     <h3>Examples</h3>
