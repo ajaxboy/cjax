@@ -1,7 +1,10 @@
 <?php
-
+//core file, reference..
 require_once "ajax.php";
+
 $ajax = ajax();
+
+
 
 //parameterts use alphabetical characters to pass parameters to the controller function.
 
@@ -11,35 +14,104 @@ $ajax = ajax();
 
 $ajax->call("ajax.php?controller=parameters&function=send_params&a=test&b=test2&c=test3&d=test4");
 ?>
-<html>
+<!doctype html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Cjax Framework sending parameters to controller</title>
-<?php echo $ajax->init();?>
+    <link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
+    <title>Ajax send parameters</title>
+    <?php echo $ajax->init();?>
 </head>
 <body>
-<h2>Ajax send parameters</h2>
-<div id='params'></div>
-<br />
-<br />
-Code used:
-<?php 
-echo $ajax->code("
+<header>
+    <div style='padding: 15px;'>
+        <a href='http://cjax.sourceforge.net'><img src='http://cjax.sourceforge.net/media/logo.png' border=0/></a>
+    </div>
+</header>
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+        <tr>
+            <td><h1>Cjax Framework</h1></td>
+            <td id="breadcrumb_right"><a href="#">Demos</a></td>
+        </tr>
+    </table>
+</div>
+<!-- END NAVIGATION -->
+
+
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+    <tr>
+        <td id="breadcrumb">
+            <a href="http://cjax.sourceforge.net/">Project Home</a> &nbsp;&#8250;&nbsp;
+            <a href="./">Demos</a> &nbsp;&#8250;&nbsp;
+            Ajax send parameters
+        </td>
+        <td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="cjax.sourceforge.net/" />Search Project User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+    </tr>
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+<div id="content">
+
+
+    <!-- Text -->
+    All parameters in alphabetic letters are atuomatically converted into function arguments.
+
+
+
+    <br />
+
+    <h3>Examples</h3>
+
+
+    <!-- Code Used -->
+    <br />
+
+    Code used:
+    <?php
+    echo $ajax->code("
 \$ajax->call(\"ajax.php?controller=parameters&function=send_params&a=test&b=test2&c=test3&d=test4\");
 ");?>
 
-<h4>Controller</h4>
-In the controller you can access these parameters as such:
-<?php 
-echo $ajax->code("
+    <h4>Controller</h4>
+    In the controller you can access these parameters as such:
+    <?php
+    echo $ajax->code("
 class parameters {
 
 	function send_params(\$a,\$b,\$c,\$d)
 	{
-	
+
 	}
 }
-");?>
-All parameters in alphabetic letters are atuomatically converted into function arguments.
+", true, true);?>
+
+
+    <!-- HTML -->
+    <div id='params'></div>
+
+    <br />
+</div>
+<!-- END CONTENT -->
+
+<div id="myfooter">
+    <p>
+        Previous Topic:&nbsp;&nbsp;<a href="#">Previous Class</a>
+        &nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        <a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        <a href="http://cjax.sourceforge.net/examples">Demos Home</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        <!-- Next Topic:&nbsp;&nbsp;<a href="#">Next Class</a> -->
+    </p>
+    <p>
+        <a href="http://codeigniter.com">CodeIgniter</a> &nbsp;&middot;&nbsp; Copyright &#169; 2006 - 2012 &nbsp;&middot;&nbsp;
+        <a href="http://cjax.sourceforge.net/">Cjax</a>
+    </p>
+</div>
+
 </body>
 </html>

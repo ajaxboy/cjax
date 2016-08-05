@@ -1,6 +1,6 @@
 <?php
 
-class validation {
+class overlay_validation {
 	
 	function form()
 	{

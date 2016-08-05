@@ -1,9 +1,9 @@
 <?php
+//core file, reference..
+require_once "ajax.php";
 
-require_once 'ajax.php';
+$ajax = ajax();
 
-
-//$ajax->log = true;
 
 $rules = array(
 	'rules' => array(
@@ -41,97 +41,165 @@ $ajax->click('link', $overlay);
 
 $ajax->click('link2', $ajax->call('ajax.php?overlay_validation/overlay2'));
 
-## Display the code that is used
-$code = $ajax->code("
-//5.0-RC3+
-//Total 3 lines of code!, (not including the customs rules)
-
-//Note: For sample#2 look inside the controller: examples/controllers/overlay_validation.php:overlay_validation::overlay2();
-
-#Sample #1
-//initial action to the 'launch' link
-\$rules = array(
-	'rules' => array(
-		'a[name]' => array(
-			'required' => true,
-			'minlength'  => 5,
-		),
-		'a[last_name]' => array(
-			'required' => true,
-			'minlength'  => 5,
-		)
-	),
-	'messages' => array(
-		'a[name]' => array(
-			'required' => 'Please enter your name',
-		),
-		'a[last_name]' => array(
-			'required' => 'Enter your last name',
-		)
-	)
-);
-
- 
-\$overlay = \$ajax->overLay('resources/html/test_form.html');
-\$overlay->validate('button1','ajax.php?overlay_validation/form', \$rules);
-
-\$ajax->click('link', \$overlay);
-
-//Controller
-
-class overlay_validation {
-	
-	function form()
-	{
-		\$ajax = ajax();
-		//show posted variables
-		\$ajax->debug(\$_POST,'Post Debug Info',\"These are the fields posted.\");
-	}
-}
-");
-
-$ajax->Exec('code', $ajax->overlayContent($code, array('width'=> '950px','top'=> '40px')));
 ?>
+<!doctype html>
 <head>
-<?php echo $ajax->init();?>
-<title>Ajax Overlay and Validation</title>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+	<link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+	<title>Ajax Overlay and Validation</title>
+	<?php echo $ajax->init();?>
 </head>
-<h2>Ajax Overlay and Validation</h2>
-<br />
-This sample makes use of different CJAX APIs to create a Overlay/validation functionality. The validation plugin makes use of
-Jquery.validate plugin.
-<br />
-<br />
+<body>
+<header>
+	<div style='padding: 15px;'>
+		<a href='http://cjax.sourceforge.net'><img src='http://cjax.sourceforge.net/media/logo.png' border=0/></a>
+	</div>
+</header>
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"></div></div>
+<div id="nav2"><a name="top">&nbsp;</a></div>
+<div id="masthead">
+	<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+		<tr>
+			<td><h1>Cjax Framework</h1></td>
+			<td id="breadcrumb_right"><a href="#">Demos</a></td>
+		</tr>
+	</table>
+</div>
+<!-- END NAVIGATION -->
 
-This sample can be downloaded along with 20+ demos here: <a href='http://cjax.sourceforge.net/examples/'>http://cjax.sourceforge.net/examples/</a>
-<br /><br />
 
-<br />
-<a id='code' href='#'>View Code Used</a>
 
-<br />
-<br />
-Used in sample:
-<ul>
-	<li>
-	<a target='_blank' href='click_ajax_request.php'>$ajax->call()</a>
-	</li>
-	<li>
-	<a target='_blank' href='overlay.php'>$ajax->overLay()</a> (Used in Sample #1)
-	</li>
-	<li>
-	<a target='_blank' href='overlay.php'>$ajax->overlayContent()</a> (Used in Sample #2)
-	</li>
-	<li>
-	<a target='_blank' href='plugin_validate.php'>Cjax Plugin Jquery Validate</a>
-	</li>
-</ul>
-<a id='link' href='#'>Launch Sample #1</a>
-<br />
-<br />
-<a id='link2' href='#'>Launch Sample #2</a>
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+	<tr>
+		<td id="breadcrumb">
+			<a href="http://cjax.sourceforge.net/">Project Home</a> &nbsp;&#8250;&nbsp;
+			<a href="./">Demos</a> &nbsp;&#8250;&nbsp;
+			Ajax Overlay and Validation
+		</td>
+		<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="cjax.sourceforge.net/" />Search Project User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+	</tr>
+</table>
+<!-- END BREADCRUMB -->
 
-<br />
+<br clear="all" />
+
+<div id="content">
+
+
+	<!-- Text -->
+	<br />
+	This sample makes use of different CJAX APIs to create a Overlay/validation functionality. The validation plugin makes use of
+	Jquery.validate plugin.
+	<br />
+	<br />
+
+	This sample can be downloaded along with 20+ demos here: <a href='http://cjax.sourceforge.net/examples/'>http://cjax.sourceforge.net/examples/</a>
+	<br /><br />
+
+
+	<br />
+
+	<h3>Examples</h3>
+
+
+	<!-- Code Used -->
+	<?php
+	echo $ajax->code("
+	//5.0-RC3+
+	//Total 3 lines of code!, (not including the customs rules)
+
+	//Note: For sample#2 look inside the controller: examples/controllers/overlay_validation.php:overlay_validation::overlay2();
+
+	#Sample #1
+	//initial action to the 'launch' link
+	\$rules = array(
+		'rules' => array(
+			'a[name]' => array(
+				'required' => true,
+				'minlength'  => 5,
+				),
+				'a[last_name]' => array(
+				'required' => true,
+				'minlength'  => 5,
+				)
+				),
+				'messages' => array(
+				'a[name]' => array(
+				'required' => 'Please enter your name',
+				),
+				'a[last_name]' => array(
+				'required' => 'Enter your last name',
+			)
+		)
+	);
+
+
+	\$overlay = \$ajax->overLay('resources/html/test_form.html');
+	\$overlay->validate('button1','ajax.php?overlay_validation/form', \$rules);
+
+	\$ajax->click('link', \$overlay);
+
+	//Controller
+
+	class overlay_validation {
+
+		function form()
+		{
+			\$ajax = ajax();
+			//show posted variables
+			\$ajax->debug(\$_POST,'Post Debug Info',\"These are the fields posted.\");
+		}
+	}
+	", true, true);
+?>
+	<!-- HTML -->
+
+	<br />
+
+	<a id='link' href='#'>Launch Sample #1</a>
+	<br />
+	<br />
+	<a id='link2' href='#'>Launch Sample #2</a>
+
+	<br />
+
+	<br />
+
+	<br />
+	Used in sample:
+	<ul>
+		<li>
+			<a target='_blank' href='click_ajax_request.php'>$ajax->call()</a>
+		</li>
+		<li>
+			<a target='_blank' href='overlay.php'>$ajax->overLay()</a> (Used in Sample #1)
+		</li>
+		<li>
+			<a target='_blank' href='overlay.php'>$ajax->overlayContent()</a> (Used in Sample #2)
+		</li>
+		<li>
+			<a target='_blank' href='plugin_validate.php'>Cjax Plugin Jquery Validate</a>
+		</li>
+	</ul>
+</div>
+<!-- END CONTENT -->
+
+<div id="myfooter">
+	<p>
+		Previous Topic:&nbsp;&nbsp;<a href="#">Previous Class</a>
+		&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+		<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+		<a href="http://cjax.sourceforge.net/examples">Demos Home</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+		<!-- Next Topic:&nbsp;&nbsp;<a href="#">Next Class</a> -->
+	</p>
+	<p>
+		<a href="http://codeigniter.com">CodeIgniter</a> &nbsp;&middot;&nbsp; Copyright &#169; 2006 - 2012 &nbsp;&middot;&nbsp;
+		<a href="http://cjax.sourceforge.net/">Cjax</a>
+	</p>
+</div>
+
+</body>
+</html>
