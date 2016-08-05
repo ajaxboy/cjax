@@ -108,7 +108,7 @@ $ajax->blur("link2",
 	)
 	);
 
-	");
+	", true, true);
     ?>
 
     <!-- HTML -->
