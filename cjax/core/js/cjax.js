@@ -55,9 +55,7 @@ function CJAX_FRAMEWORK() {
 	this.commands = {};
 	this.callback_success = {};
 	this.callback_error = null;
-	this.callback_cache = {};
 	this.processCallback = null;//execute something after process_all
-	this.deferredActions = {};
 	this.left_delimeter = "<";
 	this.right_delimeter = ">";
 	this.split_delimiter = "|";
@@ -68,7 +66,7 @@ function CJAX_FRAMEWORK() {
 	this.IS_POST = false;
 	this.ie;// is IE? -_-
 	this.cache_calls = {};
-	this.chache_templates = [];
+	this.calls_in_progress = {};
 	this.dir;
 	this.files = false;
 	this.styles = [];
@@ -472,11 +470,14 @@ function CJAX_FRAMEWORK() {
 				}
 				return data;
 			},
-			cacheURL: function(cache_url, data) {
+			cacheURL: function(cache_url, data, dataType) {
 				if(typeof cache_url != 'undefined') {
 					var lower_url = cache_url.toLowerCase().replace(/[^\w\s]/gi,'');
 
-					CJAX.cache_calls[lower_url] = data;
+					CJAX.cache_calls[lower_url] = {
+						response: data,
+						dataType: dataType
+					};
 				}
 			},
 			cachedURL: function(cache_url) {
@@ -484,6 +485,21 @@ function CJAX_FRAMEWORK() {
 					var lower_url = cache_url.toLowerCase().replace(/[^\w\s]/gi, '');
 
 					return CJAX.cache_calls[lower_url];
+				}
+			},
+			cacheState: function(cache_url, state) {
+				var lower_url = cache_url.toLowerCase().replace(/[^\w\s]/gi, '');
+
+				CJAX.calls_in_progress[lower_url] = {
+					url: cache_url,
+					state: state
+				};
+			},
+			cachedState: function(cache_url) {
+				if(typeof cache_url != 'undefined') {
+					var lower_url = cache_url.toLowerCase().replace(/[^\w\s]/gi, '');
+
+					return CJAX.calls_in_progress[lower_url];
 				}
 			},
 			isXML: function(data) {
@@ -3785,19 +3801,39 @@ function CJAX_FRAMEWORK() {
 
 		if(CJAX.ajaxSettings.cache || options.cache) {
 
-			if(response = CJAX.util.cachedURL(url)) {
+			if(cached_data = CJAX.util.cachedURL(url)) {
+
+				var new_response = cached_data.response;
 				CJAX.ajaxSettings.cache = false;
 
-				if(cache.callback.success) {
-					cache.callback.success(response);
-				}
-				if(cache.callback.complete) {
-					cache.callback.complete(response);
+				if(cached_data.dataType == 'json') {
+					new_response = CJAX.util.jsonEval(new_response);
+				} else {
+					CJAX.process_all(new_response);
 				}
 
-				CJAX.process_all(response);
-				return response;
+				if(cache.callback.success) {
+					cache.callback.success(new_response);
+				}
+				if(cache.callback.complete) {
+					cache.callback.complete(new_response);
+				}
+
+				return new_response;
 			}
+		}
+
+		if(CJAX.ajaxSettings.cache || options.cache) {
+			var cached_state = CJAX.util.cachedState(url)
+
+			if(cached_state) {
+				//the first call to be cached is in progress, but
+				//an action occured to process that same call again
+				//and the first call is not completed, and it hasn't been cached
+				//this calcels out these extra calls, until the first call is completed
+				return true;
+			}
+			this.util.cacheState(url, 'in_progress');
 		}
 
 		CJAX.HTTP_REQUEST_INSTANCE = CJAX.AJAX ();
@@ -3949,16 +3985,17 @@ function CJAX_FRAMEWORK() {
 			dataType = CJAX.ajaxSettings.dataType;
 		}
 
+		CJAX.util.cacheURL(url,response, dataType);
+
 		switch(status)
 		{
 			case 200: {
-
-				CJAX.util.cacheURL(url,response);
 
 				switch(dataType) {
 					case 'json':
 
 						response = CJAX.util.jsonEval(response);
+
 						break;
 					default:
 					case 'text/html':
