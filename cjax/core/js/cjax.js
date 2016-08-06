@@ -12,8 +12,6 @@
  *   Written by: CJ Galindo
  *   Website: http://cjax.sourceforge.net                     $
  *   Email: cjxxi@msn.com
- *   Date: 2/12/2007                           $
- *   File Last Changed:  10/05/2013            $
  **####################################################################################################    */
 
 /**
@@ -4195,17 +4193,17 @@ function CJAX_FRAMEWORK() {
 	this.info	=	function(message, seconds)
 	{
 		if(typeof message=='undefined') {
-			var message = 'Success!';
+			var message = CJAX.defaultMessages.info;;
 		}
 		if(typeof seconds =='undefined') {
 			var seconds = CJAX.default_timeout;
 		}
-		$out  = [];
-		$out.push("<data><div class='cjax_message cjax_message_type cjax_info'>"+message+"</div></data>");
-		if(seconds) {
-			$out.push('<time>'+seconds+'</time>');
-		}
-		CJAX._message($out.toString());
+		options = {
+			message: "<data><div class='cjax_message cjax_message_type cjax_info'>"+message+"</div></data>",
+			time : seconds
+		};
+
+		CJAX.message(options);
 	};
 
 	this.loading	=	function(message)
