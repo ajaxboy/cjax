@@ -71,7 +71,7 @@ class CJAX extends CJAX_FRAMEWORK {
 			
 			$ajax->initiate($ajax);
 			if(!$ajax->isAjaxRequest()) {
-				//$ajax->flushCache();
+				$ajax->flushCache();
 				if(defined('AJAX_CD')) {
 					@setcookie ('AJAX_CD', AJAX_CD, null, '/');
 				} else {
