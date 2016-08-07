@@ -21,14 +21,12 @@ autoCompleteHelper.prototype = {
 	refresh: function(data, element) {
 		var list = new String('');
 
-
 		if(element.value.length >= this.minChars) {
 
 			for (x in data) {
 				list += '<a class=\'ACOption\' href="javascript:AC.select(\'' + data[x] + '\',\'' + x + '\');">' + data[x] + '</a>';
 			}
 		}
-
 
 		this.helper.innerHTML = list;
 		this.showHelper();
@@ -53,8 +51,6 @@ autoCompleteHelper.prototype = {
 		this.field.value = item;
 		this.hideHelper();
 
-
-		params.c
 		var params = CJAX.plugins.autocomplete.params;
 		if(params.c && typeof params.c == 'string') {
 			if(params.d) {

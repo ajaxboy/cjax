@@ -18,7 +18,7 @@ CJAX.importFile({
 	}
 });
 
-function autocomplete(url , fulll_load, limit)
+function autocomplete(url , fulll_load)
 {
 	CJAX.ajaxSettings.cache = true;
 
@@ -33,11 +33,11 @@ function autocomplete(url , fulll_load, limit)
 
 	if(fulll_load) {
 
+		var limit = 10;
+
 		element.setAttribute('disabled','disabled');
 		autocomplete.get(url, function(data) {
 			element.removeAttribute('disabled');
-
-			limit = limit? limit: 15;
 
 			//convert json into js array
 			new_data = Object.keys(data).map(function (key) {return data[key]})
