@@ -47,7 +47,7 @@ if(isset($_REQUEST['json'])) {
 	if(!$source) {
 		echo "//no source available";
 	} else {
+		$ajax->flushCache(true);
 		print $source;
 	}
 }
-$ajax->flushCache();

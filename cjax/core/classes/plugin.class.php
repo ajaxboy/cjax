@@ -543,7 +543,6 @@ class plugin extends ext {
 		if(self::$initiatePlugins) {
 			return self::$initiatePlugins;
 		}
-		$base = CJAX_HOME;    
 		$plugins = CJAX_HOME."/plugins/";
 		
 		self::$initiatePlugins = self::readDir($plugins);

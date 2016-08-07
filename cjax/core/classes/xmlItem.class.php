@@ -88,8 +88,6 @@ class xmlItem {
 						$value->delete();
 					}
 					
-					
-					//die('sss<pre>'.print_r(CoreEvents::$cache,1) . "ddd<pre".print_r(CoreEvents::$callbacks,1));
 					return;
 				break;
 				default:

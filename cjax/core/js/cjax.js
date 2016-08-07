@@ -2236,8 +2236,6 @@ function CJAX_FRAMEWORK() {
 		var default_load_timeout = 50;
 		var buff;
 
-		//CJAX._plugins = {};
-
 		//preload
 		if(preload) {
 
