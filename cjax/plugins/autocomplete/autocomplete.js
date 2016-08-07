@@ -8,11 +8,13 @@
 
 
 CJAX.importFile({
-	files: 'css/style.css,helper.js',
+	files: 'helper.js,css/style.css',
 	plugin:'autocomplete',
 	callback: function() {
 		var element = CJAX.xml('element_id',CJAX._plugins['autocomplete']);
-		AC.init(element);
+		setTimeout(function() {
+			AC.init(element);
+		}, 200);
 	}
 });
 
