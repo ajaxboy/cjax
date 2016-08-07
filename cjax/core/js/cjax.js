@@ -3831,7 +3831,7 @@ function CJAX_FRAMEWORK() {
 				//this calcels out these extra calls, until the first call is completed
 				return true;
 			}
-			this.util.cacheState(url, 'in_progress');
+			CJAX.util.cacheState(url, 'in_progress');
 		}
 
 		CJAX.HTTP_REQUEST_INSTANCE = CJAX.AJAX ();
