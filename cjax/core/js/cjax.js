@@ -12,6 +12,8 @@
  *   Written by: CJ Galindo
  *   Website: http://cjax.sourceforge.net                     $
  *   Email: cjxxi@msn.com
+ *   Date: 2/12/2007                           $
+ *   File Last Changed:  10/05/2013            $
  **####################################################################################################    */
 
 /**
@@ -53,7 +55,9 @@ function CJAX_FRAMEWORK() {
 	this.commands = {};
 	this.callback_success = {};
 	this.callback_error = null;
+	this.callback_cache = {};
 	this.processCallback = null;//execute something after process_all
+	this.deferredActions = {};
 	this.left_delimeter = "<";
 	this.right_delimeter = ">";
 	this.split_delimiter = "|";
@@ -65,6 +69,7 @@ function CJAX_FRAMEWORK() {
 	this.ie;// is IE? -_-
 	this.cache_calls = {};
 	this.calls_in_progress = {};
+	this.chache_templates = [];
 	this.dir;
 	this.files = false;
 	this.styles = [];
@@ -485,13 +490,20 @@ function CJAX_FRAMEWORK() {
 					return CJAX.cache_calls[lower_url];
 				}
 			},
-			cacheState: function(cache_url, state) {
+			cacheState: function(cache_url, settings) {
 				var lower_url = cache_url.toLowerCase().replace(/[^\w\s]/gi, '');
 
-				CJAX.calls_in_progress[lower_url] = {
-					url: cache_url,
-					state: state
-				};
+				if(CJAX.calls_in_progress[lower_url]) {
+
+					for(x in settings) {
+						CJAX.calls_in_progress[lower_url][x] = settings[x];
+					}
+				} else {
+					CJAX.calls_in_progress[lower_url] = {
+						url: cache_url,
+						message: settings.message
+					};
+				}
 			},
 			cachedState: function(cache_url) {
 				if(typeof cache_url != 'undefined') {
@@ -2291,17 +2303,13 @@ function CJAX_FRAMEWORK() {
 									CJAX.importPlugin(file, function() {
 
 										if(CJAX.lib.isFn(window[plugin_method])) {
-
 											if(CJAX._pluginsData[plugin_method]) {
 												for(x in CJAX._pluginsData[plugin_method]) {
 													CJAX._pluginsData[plugin_method][x]();
 												}
 											}
 										}
-
-										console.log('AAAAAAAAAAAAAAAAAAAAAAA');
 									});
-									console.log('bbbbbbb');
 								}
 
 							}
@@ -2915,9 +2923,19 @@ function CJAX_FRAMEWORK() {
 
 				switch(CJAX.method) {
 					case '_call':
+						if(typeof  cache != 'object') {
+							cache = CJAX.util.objectify(cache, 'cjax');
+							if(cache) {
+								cache.options = CJAX.util.json(cache.options);
+							}
+						}
 						xml_data = cache;
 						break;
 				}
+				if(CJAX.debug) {
+					console.log('Call executed.');
+				}
+
 
 				if(seconds){
 					setTimeout(function() {
@@ -3709,9 +3727,6 @@ function CJAX_FRAMEWORK() {
 	 * url,rel,confirm
 	 */
 	this._call		=		function( xcache , options, callback ) {
-		if(CJAX.debug) {
-			console.log('Call executed.');
-		}
 		var selector;
 		var cache = xcache;
 		if(typeof xcache != 'object' || xcache.cjax) {
@@ -3727,7 +3742,6 @@ function CJAX_FRAMEWORK() {
 			options = cache.options;
 		}
 
-
 		var msg = null, x, response;
 
 		var url = cache.url;
@@ -3737,7 +3751,7 @@ function CJAX_FRAMEWORK() {
 		var stamp = cache.stamp;
 		var crossdomain = cache.crossdomain;
 		var data = cache.data;
-		var dataType = cache.dataType;
+		var dataType = cache.options.dataType;
 
 		var is_loading  =  cache.is_loading;
 		if(!is_loading) is_loading = false;
@@ -3804,7 +3818,7 @@ function CJAX_FRAMEWORK() {
 				var new_response = cached_data.response;
 				CJAX.ajaxSettings.cache = false;
 
-				if(cached_data.dataType == 'json') {
+				if(cached_data.dataType == 'json' || options.dataType == 'json') {
 					new_response = CJAX.util.jsonEval(new_response);
 				} else {
 					CJAX.process_all(new_response);
@@ -3829,9 +3843,10 @@ function CJAX_FRAMEWORK() {
 				//an action occured to process that same call again
 				//and the first call is not completed, and it hasn't been cached
 				//this calcels out these extra calls, until the first call is completed
+				console.log(cached_state);
 				return true;
 			}
-			CJAX.util.cacheState(url, 'in_progress');
+			CJAX.util.cacheState(url, {message: 'in_progress'});
 		}
 
 		CJAX.HTTP_REQUEST_INSTANCE = CJAX.AJAX ();
@@ -3868,7 +3883,7 @@ function CJAX_FRAMEWORK() {
 			CJAX.HTTP_REQUEST_INSTANCE.onreadystatechange = function () {
 				if(CJAX.HTTP_REQUEST_INSTANCE.readyState) {
 					if(CJAX.HTTP_REQUEST_INSTANCE.readyState < 4) {
-						//
+						CJAX.util.cacheState(url, {readyState: CJAX.HTTP_REQUEST_INSTANCE.readyState});
 					} else {
 						CJAX.loading();
 						response = CJAX._handlerRequestStatus(url, CJAX.HTTP_REQUEST_INSTANCE.status , cache, container);
@@ -3913,7 +3928,8 @@ function CJAX_FRAMEWORK() {
 		var options = {};
 
 		if(callback && !CJAX.lib.isFn(callback)) {
-			options.dataType = callback;
+			options.options = {};
+			options.options.dataType = callback;
 		}
 		options.url = $url;
 		if(/^https?/.test(options.url)) {
@@ -3966,24 +3982,26 @@ function CJAX_FRAMEWORK() {
 		return  full_url;
 	};
 
-	this._handlerRequestStatus		=		function(url, status, options , container)
+	this._handlerRequestStatus		=		function(url, status, cache , container)
 	{
 		CJAX.default_timeout = 5;
 		var response =  CJAX.HTTP_REQUEST_INSTANCE.responseText;
-		if(!options) {
-			options = {};
 
+		if(!cache.callback) {
+			cache.callback = {};
 		}
-		if(!options.callback) {
-			options.callback = {};
+		if(!cache.options) {
+			cache.options = {};
 		}
-		var dataType = options.dataType;
+
+		var dataType = cache.options.dataType;
 
 		if(!dataType) {
 			dataType = CJAX.ajaxSettings.dataType;
 		}
 
 		CJAX.util.cacheURL(url,response, dataType);
+		CJAX.util.cacheState(url, {status: status});
 
 		switch(status)
 		{
@@ -4015,10 +4033,8 @@ function CJAX_FRAMEWORK() {
 					CJAX.callback_success[url](response);
 				}
 
-
-
-				if(options.callback.success) {
-					options.callback.success(response);
+				if(cache.callback.success) {
+					cache.callback.success(response);
 				} else if(CJAX.ajaxSettings.success && typeof CJAX.ajaxSettings.success=='function') {
 					CJAX.ajaxSettings.success(response);
 				}
@@ -4253,8 +4269,9 @@ function CJAX_FRAMEWORK() {
 
 	this.error	=	function(message, seconds)
 	{
+
 		if(typeof message=='undefined') {
-			var message = CJAX.defaultMessages.error;
+			var message = CJAX.defaultMessages.success;;
 		}
 		if(typeof seconds =='undefined') {
 			var seconds = CJAX.default_timeout;
@@ -4264,7 +4281,7 @@ function CJAX_FRAMEWORK() {
 			time : seconds
 		};
 
-		CJAX._message(options);
+		CJAX.message(options);
 	};
 
 	/**
@@ -4480,4 +4497,3 @@ function CJAX_FRAMEWORK() {
 
 var CJAX = new CJAX_FRAMEWORK();
 CJAX.initiate();
-
