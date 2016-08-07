@@ -1,4 +1,16 @@
 
+
+CJAX 5.9
+Improvements to the core system
+Improved overall scalability and heavy duty usage
+Improved caching system and integrated smart caching, fully integrated with $ajax->call()
+Improved Examples
+
+
+
+CJAX 5.7, 5.8
+Small improvements and fixes.  This release seems to be the most estable yet, and no major issues have been reported.
+
 CJAX 5.6
 
 September 19, 2013
