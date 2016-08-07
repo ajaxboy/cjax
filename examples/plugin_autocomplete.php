@@ -83,22 +83,24 @@ $ajax->keyup('#text1', $ajax->autocomplete('ajax.php?autocomplete/update'));
 	<kbd>Note: These new features should be considered beta, which means, they could change in the future.</kbd>
 	<br />
 
-	Two more parameters. boolean <span class="param">$full_load</span> and  string <span class="param">$url2</span>
+	Two more optional parameters. boolean <span class="param">$full_load</span> and  string <span class="param">$url2</span>
 
 	<h5>$full_load</h5>
 
 	Realizing that every time you type a key, triggers an ajax call to the server, you may want to instead load all data at
 	once, and not request the server as much.
 	True / False, this options lets you load all the data at once. Intead of making an ajax request for each letter you
-	type, you can dump a full array  of data once.  When used this way, only one ajax call to the server is made.
+	type, you can dump a full array  of data once, this data is then cached.  When used this way, only one ajax call to the server is made.
 	When you type more, the data obtained is filtered to serve the other keys you type.
 	<br /><br />
+	Additionally, you can -
 	<br />
-	<b>Preload</b>: Need to load huge amount of data? No problem. You can preload it. This can ensure that the
-	autocomplete acts really fast even with very huge amounts of data.
+	<br />
+	<b>Preload</b>: Need to load large amount of data? No problem. You can preload it. This can ensure that the
+	autocomplete acts really fast even with very large amounts of data.
 	<br />
 	With the new caching capabilities, you can take advantage of these caching capabilities by preloading
-	the data you want to use, when the autocomplete kicks in all the data will be already be in place.
+	the data you want to use. When the autocomplete kicks in all the data will be already be in place.
 	You can take advanage of this by  <a href="call.php">making an ajax request</a> to the same url you are using for the
 	autocomplete, and using the cache flag in the call() <span class="keyword">method</span>.
 	This wil cache data, when the autocomplete triggers the request, it will be served from cache, without making any other ajax request.
