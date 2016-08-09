@@ -310,7 +310,7 @@ class CoreEvents extends cjaxFormat {
 		CoreEvents::$lastCache = array();
 	}
 
-	function callbacks($cache, $test = false)
+	static function callbacks($cache, $test = false)
 	{
 		if(CoreEvents::$callbacks) {
 			foreach(CoreEvents::$callbacks as $k => $v) {
@@ -380,7 +380,7 @@ class CoreEvents extends cjaxFormat {
 		return $out;
 	}
 
-	function commit()
+	static function commit()
 	{
 		if(!self::$cache && !self::$actions) {
 			return;
@@ -503,7 +503,7 @@ class CoreEvents extends cjaxFormat {
 	 */
 	public static function saveSCache()
 	{
-		$ajax = CJAX::getInstance();
+		$ajax = ajax();
 
 		if($ajax->log) {
 			if(self::$cache){
@@ -511,7 +511,7 @@ class CoreEvents extends cjaxFormat {
 			}
 		}
 
-		if(self::isAjaxRequest()) {
+		if($ajax->isAjaxRequest()) {
 
 			print self::out();
 			return;
@@ -592,7 +592,7 @@ class CoreEvents extends cjaxFormat {
 		return $event;
 	}
 
-	function processScache($_cache)
+	static function processScache($_cache)
 	{
 		foreach($_cache as $k => $v) {
 			$v['uniqid'] = $k;
@@ -708,7 +708,7 @@ class CoreEvents extends cjaxFormat {
 
 		self::cache($xml);
 
-		if(!self::isAjaxRequest()) {
+		if(!$ajax->isAjaxRequest()) {
 			self::simpleCommit();
 		}
 		$count = self::lastEntryId();
@@ -801,7 +801,7 @@ if (document.addEventListener) {
 		return $template;
 	}
 
-	function json_encode($array)
+	static function json_encode($array)
 	{
 		if(version_compare('5.3', phpversion(),'>')) {
 			return json_encode($array);
@@ -809,12 +809,12 @@ if (document.addEventListener) {
 		return json_encode($array,JSON_FORCE_OBJECT);
 	}
 
-	public function mkArray($array, $tag = 'json', $double = false)
+	public static function mkArray($array, $tag = 'json', $double = false)
 	{
-		$json = self::encode(self::json_encode($array));
+		$json = ajax()->encode(self::json_encode($array));
 
 		if($double) {
-			$json = self::encode($json);
+			$json = ajax()->encode($json);
 		}
 
 		return "<$tag>".$json."</$tag>";
@@ -1180,7 +1180,8 @@ if (document.addEventListener) {
 	 */
 	function request($callback = null, &$params = null)
 	{
-		$r = self::isAjaxRequest();
+		$ajax = ajax();
+		$r = $ajax->isAjaxRequest();
 		if($r && $callback) {
 			if(is_array($callback) ) {
 				if(substr($callback[0],0,4)=='self') {
@@ -1197,7 +1198,7 @@ if (document.addEventListener) {
 			}
 			exit();
 		}
-		if(!self::isAjaxRequest()) {
+		if(!$ajax->isAjaxRequest()) {
 			return false;
 		}
 		return true;
@@ -1221,7 +1222,7 @@ if (document.addEventListener) {
 	 * @param string $data
 	 * @return encoded string
 	 */
-	function encode($data)
+	public function encode($data)
 	{
 		$data = str_replace('+','[plus]', $data);
 		$data = urlencode($data);

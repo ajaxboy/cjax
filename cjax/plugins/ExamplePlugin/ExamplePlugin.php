@@ -142,7 +142,7 @@ class ExamplePlugin extends plugin {
 	 * 
 	 * @see plugin::set()
 	 */
-	function set($setting, $value)
+	function set($setting, $value , $instance_id = null)
 	{
 		return parent::set($setting, $value);
 	}
@@ -195,7 +195,7 @@ class ExamplePlugin extends plugin {
 	 * 
 	 * @see plugin::save()
 	 */
-	function save($setting, $value)
+	function save($setting, $value, $prefix = null)
 	{
 		return parent::save($setting, $value);
 	}
@@ -204,7 +204,7 @@ class ExamplePlugin extends plugin {
 	 * Get plugin  setting  saved with  save();
 	 * @see plugin::get()
 	 */
-	function get($setting)
+	function get($setting,$prefix = null)
 	{
 		return parent::get($setting);
 	}
@@ -224,7 +224,7 @@ class ExamplePlugin extends plugin {
 	 * only use this if you are experiecing issues with the file not being loaded on time.
 	 * 
 	 */
-	function import($file, $load_time = 0)
+	function import($file , $load_time = 0, $on_init = false)
 	{
 		return parent::import($file, $load_time);
 	}
@@ -243,7 +243,7 @@ class ExamplePlugin extends plugin {
 	 * $this->imports(array('file.css','file2.js','file3.js'); et.
 	 * 
 	 */
-	function imports($files = array())
+	function imports($files = array(), &$data = array())
 	{
 		
 	}
