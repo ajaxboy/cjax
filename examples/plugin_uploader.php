@@ -125,9 +125,6 @@ Works with just one line of code! everything else is optional. See Summary secti
 	<div style="float:left; width: 40%;">
 	<div style="margin-left: 10px;">
 		<h3>Summary</h3>
-		<p>This plugin is the former $ajax->upload() API, converted into an stand alone plugin (We like to keep it lightweight). If you were using the
-		$ajax->upload() APi, you must now download the plugin 'uploader'.</p>
-		
 		<p>This plugin is straight forward, upload files through ajax, with some good features. This plugin is also versatile, allows for unique file names (so that
 		if more than once person uploads a file with the same name, it won't conflict), it also has PRE (Before)-URL  allows to contact the server before the file(s) are uploaded
 		lets say you wanted to do some operation or check for something before a file is uploaded, create directories structures etc.  URL, is after files have been uploaded operation,
