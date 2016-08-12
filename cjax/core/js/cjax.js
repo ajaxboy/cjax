@@ -458,20 +458,29 @@ function CJAX_FRAMEWORK() {
 		return {
 			//turn an entire cjax xml string, into an object.
 			objectify: function(xml, parent) {
+
 				var data = {};
 				var items = xml.match(/<([\w]+)>(.+?)<\/\1>/gi);
+				var event;
 
-				if(items) {
-					for(x in items) {
-						event = items[x].match(/<([\w]+)>(.+?)<\/\1>/i);
-						if(parent) {
-							return CJAX.util.objectify(event[2]);
-						} else {
-							data[event[1]] = event[2];
+				try {
+					if (items) {
+						for (x in items) {
+							event = items[x].match(/<(.+)>(.+)<\/\1>/i);
+
+							if (parent) {
+								return CJAX.util.objectify(event[2]);
+							} else {
+								if(event){
+									data[event[1]] = event[2];
+								}
+							}
 						}
 					}
+					return data;
+				}catch(e) {
+					//stupid IE???
 				}
-				return data;
 			},
 			cacheURL: function(cache_url, data, dataType) {
 				if(typeof cache_url != 'undefined') {
@@ -1297,7 +1306,7 @@ function CJAX_FRAMEWORK() {
 			},
 			loadCallback: function(element, $callback, caller) {
 				if(!element) {
-					console.log('Script was not found', caller);
+					console.log('Script was not found',  caller);
 					return ;
 				}
 				if(element.loaded) {
