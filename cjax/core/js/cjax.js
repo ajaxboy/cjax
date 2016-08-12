@@ -2778,25 +2778,47 @@ function CJAX_FRAMEWORK() {
 					time = file.time;
 				}
 				var files = file.files.split(',');
-				var last_number = CJAX.util.count(files) -1;
-				var last_file = files[last_file];
-				if(file.callback) {
-					delete files[last_file];
+				var new_files = {};
+
+				for(x in files) {
+					new_files[x] = {};
+					new_files[x].file = files[x];
 				}
-				testFile = function(_file , cb) {
-					if(/^https?/.test(_file)) {
-						return CJAX.importFile(files[_file], cb);
+
+				var last_number = CJAX.util.count(files) -1;
+
+				if(!file.callbacks) {
+					if(file.callback) {
+						new_files[last_number].callback = file.callback;
+					}
+				} else {
+
+					for(x in file.callbacks) {
+						new_files[x].callback = file.callbacks[x];
+					}
+				}
+
+				testFile = function(fileData) {
+					var f =  fileData.file;
+					var callback = fileData.callback;
+
+
+					if(/^https?/.test(f)) {
+						return CJAX.importFile(f, callback);
 					} else if(file.plugin) {
-						return CJAX.importFile(CJAX.pBase+file.plugin+'/'+files[_file], cb);
+						return CJAX.importFile(CJAX.pBase+file.plugin+'/'+f, callback);
 					} else {
-						return CJAX.importFile(files[_file], cb);
+						return CJAX.importFile(f, callback);
 					}
 				};
-				for(xfile in files) {
-					f = testFile(xfile);
+				for(xfile in new_files) {
+					f = testFile(new_files[xfile]);
 				}
 				if(file.callback) {
-					testFile(last_number, setTimeout(function() { file.callback(); }, time));
+					testFile({
+						file: file[last_number],
+						callback: file.callback
+					}, setTimeout(function() { file.callback(); }, time));
 				}
 				return true;
 			} else {
