@@ -333,117 +333,8 @@ class CoreEvents extends cjaxFormat {
 		return $cache;
 	}
 
-	function out()
+	static function prepareCommit()
 	{
-		if(!self::$cache && !self::$actions) {
-			return;
-		}
-		$cache = self::$cache;
-		if(!self::$cache) {
-			$cache = self::$actions;
-			if(self::$lastCache) {
-				$cache = array_merge($cache,self::$lastCache);
-			}
-		} else {
-			if(self::$actions) {
-				$cache = array_merge($cache,self::$actions);
-			}
-			if(self::$lastCache) {
-				$cache = array_merge($cache,self::$lastCache);
-			}
-		}
-
-		$cache = self::callbacks($cache);
-
-		$_preload = null;
-		foreach($cache as $k => $v) {
-			if($v['do']=='_import' || $v['do']=='_imports' || isset($v['is_plugin'])) {
-				$_preload[$k] = $v;
-				if(!isset($v['is_plugin'])) {
-					unset($cache[$k]);
-				}
-			}
-		}
-		if($_preload) {
-			$_preload = self::processScache($_preload);
-			$_preload = self::mkArray($_preload);
-		}
-
-		$_cache = self::processScache($cache);
-		$_cache = self::mkArray($_cache);
-
-
-		$out  = "<xml class='cjax'>".$_cache."</xml><xml class='cjax'><preload>$_preload</preload></xml>";
-		if(self::$wrapper) {
-			$out = str_replace('(!xml!)', $out, self::$wrapper);
-		}
-		return $out;
-	}
-
-	static function commit()
-	{
-		if(!self::$cache && !self::$actions) {
-			return;
-		}
-		if(!self::$cache) {
-			self::$cache = self::$actions;
-			if(self::$lastCache) {
-				self::$cache = array_merge(self::$cache,self::$lastCache);
-			}
-		} else {
-			if(self::$actions) {
-				self::$cache = array_merge(self::$cache,self::$actions);
-			}
-			if(self::$lastCache) {
-				self::$cache = array_merge(self::$lastCache, self::$cache);
-			}
-		}
-		$ajax = ajax();
-
-		self::$cache = self::callbacks(self::$cache);
-
-		//if(self::$simpleCommit==self::$cache && !$ajax->config->caching && !$ajax->config->fallback) {
-		//	return true;
-		//}
-
-
-
-		$_preload = array();
-		foreach(self::$cache as $k => $v) {
-			if($v['do']=='_import' || $v['do']=='_imports' || isset($v['is_plugin'])) {
-				$_preload[$k] = $v;
-				if(!isset($v['is_plugin'])) {
-					unset(self::$cache[$k]);
-				}
-			}
-		}
-		if($_preload) {
-			$_preload = self::processScache($_preload);
-			$_preload = self::mkArray($_preload);
-		} else {
-			$_preload = null;
-		}
-
-		$_cache = self::processScache(self::$cache);
-
-		$_cache = self::mkArray($_cache);
-
-		if($ajax->config->debug) {
-			$ajax->debug = true;
-		}
-		$debug =  ($ajax->debug? 1 : 0);
-
-		$out = 'CJAX.process_all("'.$_cache.'","'.$_preload.'", '.$debug.', true);';
-
-		return $out;
-	}
-
-	function simpleCommit($return = false)
-	{
-		$ajax = ajax();
-		if($ajax->fallback || $ajax->config->fallback || $ajax->caching) {
-			return true;
-		}
 		$cache = self::$cache;
 		if(!$cache) {
 			$cache = self::$actions;
@@ -469,6 +360,15 @@ class CoreEvents extends cjaxFormat {
 					unset($cache[$k]);
 				}
 			}
+			if($v['do'] == 'AddEventTo') {
+				$events = $v['events'];
+				foreach($events as $k2 => $v2) {
+					if(isset($v2['is_plugin'])) {
+						$_preload[$k2] = $v2;
+						//unset($cache[$k]);
+					}
+				}
+			}
 		}
 		if($_preload) {
 			$_preload = self::processScache($_preload);
@@ -479,20 +379,44 @@ class CoreEvents extends cjaxFormat {
 
 		$_cache = self::mkArray($_cache);
 
+
+		return array($_cache,$_preload);
+	}
+
+	function out()
+	{
+		$data = self::prepareCommit();
+
+
+		$out  = "<xml class='cjax'>".$data[0]."</xml><xml class='cjax'><preload>{$data[1]}</preload></xml>";
+		if(self::$wrapper) {
+			$out = str_replace('(!xml!)', $out, self::$wrapper);
+		}
+		return $out;
+	}
+
+	function simpleCommit($return = false)
+	{
+		$ajax = ajax();
+		if($ajax->fallback || $ajax->config->fallback || $ajax->caching) {
+			return true;
+		}
+		$data = self::prepareCommit();
+
 		if($ajax->config->debug) {
 			$ajax->debug = true;
 		}
 		$debug =  ($ajax->debug? 1 : 0);
 
-		if($_preload) {
-			self::save('cjax_preload', $_preload);
+		if($data[1]) {
+			self::save('cjax_preload', $data[1]);
 		}
-		self::save('cjax_x_cache', $_cache);
+		self::save('cjax_x_cache', $data[0]);
 		if($debug) {
 			self::save('cjax_debug', $debug);
 		}
-		self::$simpleCommit = $cache;
-		return $_cache;
+		self::$simpleCommit = $data[0];
+		return $data[0];
 	}
 
 
@@ -518,7 +442,7 @@ class CoreEvents extends cjaxFormat {
 		}  else {
 
 
-			$out = self::commit();
+			$out = self::simpleCommit();
 
 			if($ajax->config->caching) {
 				if(is_array($ajax->caching) && crc32('caching=1;'.$out)!= key($ajax->caching)) {
@@ -539,16 +463,8 @@ class CoreEvents extends cjaxFormat {
 
 	function _processScachePlugin($v,$caller = null)
 	{
-		if($v['data'] && is_array($v['data'])) {
-			/*foreach($v['data'] as $k2 => $v2) {
-				if(is_array($v2)) {
-					$v['data'][$k2] = "<$k2>".self::mkArray($v['data'][$k2])."</$k2>";
-				} else {
-					$v['data'][$k2] = "<$k2>$v2</$k2>";
-				}
-			}
-			$v['data'] =  implode($v['data']);*/
-			$v['data'] =  self::mkArray($v['data']);
+		if($v['options'] && is_array($v['options'])) {
+			$v['options'] =  self::mkArray($v['options']);
 		}
 		if(isset($v['extra'])) {
 			$v['extra'] =  self::mkArray($v['extra']);

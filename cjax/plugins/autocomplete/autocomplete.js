@@ -1,5 +1,5 @@
 /**
- * autocomplete 1.1
+ * autocomplete 1.0
  *
  * Auto Complete Plugin for Cjax
  */
@@ -10,53 +10,61 @@
 CJAX.importFile({
 	files: 'helper.js,css/style.css',
 	plugin:'autocomplete',
-	callback: function() {
-		var element = CJAX.xml('element_id',CJAX._plugins['autocomplete']);
-		setTimeout(function() {
+	callbacks: {
+		0: function() {
+			var element = CJAX._plugins['autocomplete'].element_id;
+
 			AC.init(element);
-		}, 200);
+		}
 	}
 });
 
-function autocomplete(url , fulll_load)
-{
+function autocomplete(url , fulll_load) {
+	version = CJAX.version.replace(/[^0-9\.].*/, '');
+
 	CJAX.ajaxSettings.cache = true;
 
-	var element = CJAX.$(CJAX.xml('element_id',CJAX._plugins['autocomplete']));
+	var element = CJAX.$(CJAX._plugins['autocomplete'].element_id);
 	var str = element.value;
-	if(str == '') {
-		//nothing typed in
-		return true;
-	}
 
-	url = url.replace(/\/+$/,"");//remove any slashes at the end
+	url = autocomplete.url = url.replace(/\/+$/, "");//remove any slashes at the end
 
-	if(fulll_load) {
+	if (str) {
 
-		var limit = 10;
+		if (fulll_load) {
 
-		element.setAttribute('disabled','disabled');
-		autocomplete.get(url, function(data) {
-			element.removeAttribute('disabled');
+			var limit = 10;
 
-			//convert json into js array
-			new_data = Object.keys(data).map(function (key) {return data[key]})
-			//search string
-			new_data  = new_data.filter(/./.test.bind(new RegExp(str,'i')));
+			//element.setAttribute('disabled','disabled');
+			CJAX.info('Loading Image List..', 30)
+			autocomplete.get(url, function (data) {
+				//element.removeAttribute('disabled');
+				CJAX.message();
 
-			//how many records
-			new_data = new_data.slice(0, limit)
+				//convert json into js array
+				new_data = Object.keys(data).map(function (key) {
+					return data[key]
+				})
+				//search string
+				if(str.length == 1) {
+					str = '^' + str;
+				}
+				new_data = new_data.filter(/./.test.bind(new RegExp(str, 'i')));
 
-			if(new_data) {
-				AC.refresh(new_data, element);
-			}
-		},'json');
-	} else {
+				//how many records
+				new_data = new_data.slice(0, limit)
 
-		this.get(url+='/'+str, function(data) {
-			if(data) {
-				AC.refresh(data, element);
-			}
-		},'json');
+				if (new_data) {
+					AC.refresh(new_data, element);
+				}
+			}, 'json');
+		} else {
+
+			this.get(url += '/' + str, function (data) {
+				if (data) {
+					AC.refresh(data, element);
+				}
+			}, 'json');
+		}
 	}
 }

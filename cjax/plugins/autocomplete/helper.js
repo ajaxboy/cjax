@@ -21,6 +21,7 @@ autoCompleteHelper.prototype = {
 	refresh: function(data, element) {
 		var list = new String('');
 
+
 		if(element.value.length >= this.minChars) {
 
 			for (x in data) {
@@ -51,7 +52,7 @@ autoCompleteHelper.prototype = {
 		this.field.value = item;
 		this.hideHelper();
 
-		var params = CJAX.plugins.autocomplete.params;
+		var params = CJAX._plugins.autocomplete.options;
 		if(params.c && typeof params.c == 'string') {
 			if(params.d) {
 				switch(params.d) {

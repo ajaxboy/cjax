@@ -26,7 +26,7 @@ function CJAX_FRAMEWORK() {
 	this.version	=	'5.9';
 	this.debug = false;
 	this.DOMContentLoaded = false;
-	this.loaded = [];
+	this.loaded = {};
 	this.handlers = {
 		handlerFileupload: function(form, url, funcRequestCallback) {},
 		handlerRequestStatus: function(url, request_status) {},
@@ -55,9 +55,7 @@ function CJAX_FRAMEWORK() {
 	this.commands = {};
 	this.callback_success = {};
 	this.callback_error = null;
-	this.callback_cache = {};
 	this.processCallback = null;//execute something after process_all
-	this.deferredActions = {};
 	this.left_delimeter = "<";
 	this.right_delimeter = ">";
 	this.split_delimiter = "|";
@@ -69,7 +67,6 @@ function CJAX_FRAMEWORK() {
 	this.ie;// is IE? -_-
 	this.cache_calls = {};
 	this.calls_in_progress = {};
-	this.chache_templates = [];
 	this.dir;
 	this.files = false;
 	this.styles = [];
@@ -457,7 +454,7 @@ function CJAX_FRAMEWORK() {
 	{
 		return {
 			//turn an entire cjax xml string, into an object.
-			objectify: function(xml, parent) {
+			objectify: function(xml, parent, options) {
 
 				var data = {};
 				var items = xml.match(/<([\w]+)>(.+?)<\/\1>/gi);
@@ -469,22 +466,37 @@ function CJAX_FRAMEWORK() {
 							event = items[x].match(/<(.+)>(.+)<\/\1>/i);
 
 							if (parent) {
-								return CJAX.util.objectify(event[2]);
+								return CJAX.util.objectify(event[2], null, options);
 							} else {
 								if(event){
 									data[event[1]] = event[2];
 								}
 							}
 						}
+
+						if(options && data.options) {
+							data.options = CJAX.util.json(data.options);
+						}
+
+
 					}
 					return data;
 				}catch(e) {
 					//stupid IE???
 				}
 			},
+			cleanString: function(str) {
+				return str.toLowerCase().replace(/[^\w\s]/gi, '');
+			},
+			loaded: function(file, data) {
+				if(typeof data == 'undefined') {
+					return CJAX.loaded[CJAX.util.cleanString(file)];
+				}
+				CJAX.loaded[CJAX.util.cleanString(file)] = data;
+			},
 			cacheURL: function(cache_url, data, dataType) {
 				if(typeof cache_url != 'undefined') {
-					var lower_url = cache_url.toLowerCase().replace(/[^\w\s]/gi,'');
+					var lower_url = CJAX.util.cleanString(cache_url);
 
 					CJAX.cache_calls[lower_url] = {
 						response: data,
@@ -494,13 +506,13 @@ function CJAX_FRAMEWORK() {
 			},
 			cachedURL: function(cache_url) {
 				if(typeof cache_url != 'undefined') {
-					var lower_url = cache_url.toLowerCase().replace(/[^\w\s]/gi, '');
+					var lower_url = CJAX.util.cleanString(cache_url);
 
 					return CJAX.cache_calls[lower_url];
 				}
 			},
 			cacheState: function(cache_url, settings) {
-				var lower_url = cache_url.toLowerCase().replace(/[^\w\s]/gi, '');
+				var lower_url = CJAX.util.cleanString(cache_url);
 
 				if(CJAX.calls_in_progress[lower_url]) {
 
@@ -516,7 +528,7 @@ function CJAX_FRAMEWORK() {
 			},
 			cachedState: function(cache_url) {
 				if(typeof cache_url != 'undefined') {
-					var lower_url = cache_url.toLowerCase().replace(/[^\w\s]/gi, '');
+					var lower_url = CJAX.util.cleanString(cache_url);
 
 					return CJAX.calls_in_progress[lower_url];
 				}
@@ -784,9 +796,6 @@ function CJAX_FRAMEWORK() {
 					}
 				},
 				selfpath : function() {
-					if(CJAX.vars['selfpath']) {
-						return vars['selfpath'];
-					}
 					var script;
 					var src;
 
@@ -1306,12 +1315,12 @@ function CJAX_FRAMEWORK() {
 			},
 			loadCallback: function(element, $callback, caller) {
 				if(!element) {
-					console.log('Script was not found',  caller);
+					console.log('Script was not found', element, caller, $callback.toString());
 					return ;
 				}
 				if(element.loaded) {
 					$callback();
-					return element;
+					return false;
 				}
 
 				if($callback) {
@@ -1319,6 +1328,7 @@ function CJAX_FRAMEWORK() {
 
 						element.onreadystatechange = function () {
 							if (this.readyState == 'complete' || this.readyState == 'loaded') {
+
 								element.loaded = true;
 								return $callback();
 							}
@@ -1331,6 +1341,7 @@ function CJAX_FRAMEWORK() {
 							}, false );
 						} else {
 							element.onload = function(){
+								console.log('onload', element);
 								element.loaded = true;
 								return $callback();
 							};
@@ -1338,9 +1349,9 @@ function CJAX_FRAMEWORK() {
 							giveup = function(time) {
 								setTimeout(function() {
 									if(!element.loaded) {
-										if(CJAX.debug) {
-											console.log('Forcing loadCallback', caller,'to complete.');
-										}
+										//if(CJAX.debug) {
+										console.log('Forcing loadCallback', element,'to complete.');
+										//}
 										element.loaded = true;
 										return $callback();
 									}
@@ -1367,7 +1378,7 @@ function CJAX_FRAMEWORK() {
 					try {
 						fn = eval('('+buffer+')');
 					} catch(e) {
-						console.log('Function Error:\n',e, '\n\n', buffer);
+						console.error('Function Error:\n',e, '\n\n', buffer);
 					}
 					if(CJAX.lib.isFn(fn)) {
 						return fn;
@@ -1419,6 +1430,7 @@ function CJAX_FRAMEWORK() {
 
 	this.AddEventTo	=	function( buffer )
 	{
+
 		var temp_buffer = CJAX.decode(buffer);
 
 		uid = CJAX._uniqid(temp_buffer);
@@ -1464,22 +1476,44 @@ function CJAX_FRAMEWORK() {
 
 	this.__AddEventTo	=	function(element, buffer)
 	{
+
 		var events = CJAX.util.json(CJAX.xml('events', buffer));
 		var event = CJAX.xml('event', buffer);
+		var trigger;
+		var new_options;
 
 		for(x in events) {
 			buffer = events[x];
 			trigger = buffer.event? buffer.event: event;
-			options = CJAX.util.objectify(buffer.xml);
+			options = CJAX.util.objectify(buffer.xml, null, true);
+
+			if(typeof options !='object') {
+
+				alert('Could not objectify this request.');
+				return false;
+			}
+
 			if(!options.element_id) {
 				options.element_id = element.id;
 			}
-			if(options.options) {
-				options.options = CJAX.util.json(options.options);
-			}
 			options.cache_id = x;
 			options.xml = buffer.xml;
-			CJAX.set.event(element, trigger, options);
+
+
+			if(!CJAX.is_loading && options.is_plugin) {
+				new_options = options;
+				if(window[new_options.is_plugin]) {
+					CJAX.set.event(element, trigger, new_options);
+				} else {
+
+					CJAX.lib.loadCallback(CJAX.util.loaded(new_options.filename), function () {
+						el = CJAX.$(new_options.element_id);
+						CJAX.set.event(el, trigger, new_options);
+					});
+				}
+			} else {
+				CJAX.set.event(element, trigger, options);
+			}
 		}
 	}
 
@@ -1563,35 +1597,44 @@ function CJAX_FRAMEWORK() {
 		}
 	};
 
-	var listEvents = [];
+	var listEvents = {};
 	this._EventCache		=		function(){
 		return {
 			listEvents : listEvents,
 			add : function(node, sEventName, fHandler){
-				return listEvents.push( arguments );
+				return listEvents[CJAX.util.count(listEvents)+1] = {
+					node: node,
+					event_name: sEventName,
+					handler: fHandler
+				};
 			},
 			flushElement: function(element) {
-				for(i = listEvents.length - 1; i >= 0; i = i - 1){
+
+				var item;
+
+				for(var i in listEvents){
 					item = listEvents[i];
-					if(item[0].removeEventListener){
-						if(item[0]==element) {
-							item[0].removeEventListener(item[1], item[2], item[3]);
+
+					if(item.node==element) {
+						if (item.node.removeEventListener) {
+							item.node.removeEventListener(item.event_name, item.handler);
+						} else {
+							if (item.event_name.substring(0, 2) != "on") {
+								item.event_name = "on" + item.event_name;
+							}
+							if (item.node.detachEvent) {
+								if (item.node == element) {
+									item.node.detachEvent(item.event_name, item.handler, false);
+								}
+							}
 						}
-					};
-					if(item[1].substring(0, 2) != "on"){
-						item[1] = "on" + item[1];
-					};
-					if(item[0].detachEvent){
-						if(item[0]==element) {
-							item[0].detachEvent(item[1], item[0][eventtype+item[2]]);
-						}
-					};
-					item[0][item[1]] = null;
+					}
 				};
 			},
 			flush : function( event_id ) {
 				if(typeof event_id =='undefined') var event_id;
 				var i, item;
+
 				for(i = listEvents.length - 1; i >= 0; i = i - 1){
 					item = listEvents[i];
 					if(item[0].removeEventListener){
@@ -1659,8 +1702,7 @@ function CJAX_FRAMEWORK() {
 			}
 		}
 
-
-		if(plugin_name = CJAX.xml('is_plugin', new_xml)) {
+		if(plugin_name = cache.is_plugin) {
 
 			if(init = CJAX.inits[plugin_name]) {
 				plugin_fn = CJAX.lib.pharseFunction(init);
@@ -1669,32 +1711,23 @@ function CJAX_FRAMEWORK() {
 
 			_fn = function() {
 				if(!_stop) {
-					plugin_name = CJAX.xml('is_plugin', new_xml)
+					var plugin_name = cache.is_plugin;
 
-					var plugin_fn = function(element, new_xml, _event) {
-						CJAX._extendPlugin(plugin_name, new_xml, {
+					var plugin_fn = function(element, cache, _event) {
+						CJAX._extendPlugin(plugin_name, cache, {
 							//options: cache.options,
 							element: element,
 							event: _event,
 							element_id: element.id,
 							clear: function() {
 								CJAX._EventCache.flushElement(element);
-							}
+							},
 						});
 					};
 
-					if(window[plugin_name]) {
-						plugin_fn(element, new_xml, _event);
-					} else {
-						var data = {
-							'set.event' : function() {
-								plugin_fn(element, new_xml, _event);
-							}
-						};
-						console.log(data, CJAX._pluginsData, plugin_name, new_xml, window);
-						CJAX._pluginsData[plugin_name] = data;
-					}
-
+					CJAX.lib.loadCallback(CJAX.util.loaded(cache.filename), function() {
+						plugin_fn(element, cache, _event);
+					});
 
 				} else {
 					_stop = false;
@@ -2138,17 +2171,15 @@ function CJAX_FRAMEWORK() {
 			},
 			load: function(script, $callback, waitfor) {
 				var f = script.replace(/.*\//,'');
-				CJAX.vars['loading'][script] = f;
-				if(CJAX.defined(CJAX.vars['loaded'][script])) {
+				if(CJAX.util.loaded(f)) {
 					if(CJAX.debug) {
 						console.log('Already loaded:',script );
 					}
-					s = CJAX.vars['loaded'][script];
 
 					if($callback && !waitfor) {
-						CJAX.lib.loadCallback(s , $callback,f);
+						$callback();
 					}
-					return true;
+					return false;
 				}
 
 				var head = CJAX.elem_docs( 'head' )[0];
@@ -2164,16 +2195,15 @@ function CJAX_FRAMEWORK() {
 					s.src= script;
 				}
 				head.appendChild( s );
-				CJAX.loaded[f] = s;
-				CJAX.vars['loaded'][script] = s;
+				CJAX.util.loaded(f, s);
 
 				if($callback && !waitfor) {
 					CJAX.lib.loadCallback(s , $callback,f);
 				}
 
 				if(waitfor) {
-					if(CJAX.loaded[waitfor]) {
-						CJAX.lib.loadCallback(CJAX.loaded[waitfor] , function() {
+					if(CJAX.util.loaded(waitfor)) {
+						CJAX.lib.loadCallback(CJAX.util.loaded(waitfor) , function() {
 							CJAX.lib.loadCallback(s , function() {
 								$callback();
 							},f);
@@ -2218,8 +2248,10 @@ function CJAX_FRAMEWORK() {
 	this.process_all		=		function ( actions, preload, debug, is_loading)
 	{
 		var raw_actions = actions;
+
 		actions = CJAX.util.json(actions);
 		preload = CJAX.util.json(preload);
+
 
 		var plugin_buffer;
 		var waitfor;
@@ -2228,7 +2260,9 @@ function CJAX_FRAMEWORK() {
 
 		if(!CJAX.is_loading) {
 			if(!preload) {
-				preload = CJAX.util.json(CJAX.xml('preload', raw_actions));
+				preload = CJAX.xml('preload', raw_actions);
+
+				preload = CJAX.util.json(preload);
 			}
 		}
 		if(is_loading!='skip') {
@@ -2278,13 +2312,12 @@ function CJAX_FRAMEWORK() {
 						if(CJAX.xml('is_plugin', buffer) ) {
 							plugin_buffer = buffer;
 							plugin_method = CJAX.xml('do',plugin_buffer);
+							var options = CJAX.util.objectify(plugin_buffer,'cjax', true);
+							CJAX._plugins[plugin_method] = options;
 							if(CJAX.debug) {
 								console.log('Preloading Plugin:', method);
 							}
-							file = CJAX.xml('file', buffer);
-							file = CJAX.pBase+file;
-
-							CJAX._plugins[plugin_method] = plugin_buffer;
+							var file = CJAX.pBase+options.file;
 
 							init = CJAX.xml('init', plugin_buffer);
 
@@ -2304,21 +2337,20 @@ function CJAX_FRAMEWORK() {
 								}, waitfor);
 							} else {
 
+
 								if(buff = CJAX.xml('onwait', plugin_buffer)) {
 									_import = CJAX.importPlugin(file , function() {
 										CJAX.process_all(buff);
 									});
 								} else {
-									CJAX.importPlugin(file, function() {
 
-										if(CJAX.lib.isFn(window[plugin_method])) {
-											if(CJAX._pluginsData[plugin_method]) {
-												for(x in CJAX._pluginsData[plugin_method]) {
-													CJAX._pluginsData[plugin_method][x]();
-												}
-											}
-										}
-									});
+									ximport = function(f, options) {
+										CJAX.importPlugin(f, function () {
+											CJAX._extendPlugin(options.is_plugin, options);
+										});
+									};
+
+									ximport(file, options);
 								}
 
 							}
@@ -2344,7 +2376,7 @@ function CJAX_FRAMEWORK() {
 				buffer = actions[_id];
 				method = CJAX.xml('do', buffer);
 
-				if(method=='_import' || method=='_imports') {
+				if(method=='_import' || method=='_imports' || CJAX.xml('is_plugin', buffer)) {
 					//already imported.
 					continue;
 				}
@@ -2353,58 +2385,15 @@ function CJAX_FRAMEWORK() {
 					console.log('#',_id,'process_all in loading mode','calling:',method);
 				}
 
+				if(id = CJAX.xml('waitFor', buffer)) {
 
-
-
-				if(CJAX.xml('is_plugin', buffer)) {
-					plugin_buffer = buffer;
-					plugin_method = CJAX.xml('do', plugin_buffer);
-
-					if(window[plugin_method]) {
-						console.log(plugin_method, window[plugin_method]);
-					}
-
-					if(CJAX.debug) {
-						console.info('Processing Plugin', plugin_method);
-					}
-					CJAX._extendPlugin(plugin_method, plugin_buffer);
-					continue;
-				} else {
-					if(id = CJAX.xml('waitFor', buffer)) {
-
-						if(cmd = CJAX.commands[id]) {
-							f = CJAX.xml('file',cmd).replace(/.*\//,'');
-							if(!CJAX.loaded[f]) {
-								CJAX.waitingFor[CJAX.xml('file',cmd).replace(/.*\//,'')] = function() {
-									CJAX.process(buffer,'process_all for '+method, method+' '+_id);
-								};
-								continue;
-							}
-						}
-					} else {
-						//this is a plugin that was not called on page load
-						//but rather from controller and needs to be loaded
-						if(!CJAX.is_loading) {
-							var events = CJAX.xml('events', buffer);
-							if (events) {
-								events = CJAX.util.json(buffer);
-								for (x in events) {
-									event = events[x];
-
-									if (plugin_name = CJAX.xml('is_plugin', event.xml)) {
-
-										file = CJAX.xml('file', event.xml);
-										file = CJAX.pBase+file;
-
-										CJAX._plugins[plugin_name] = event.xml;
-
-										//only load if not previously loaded
-										if(!window[plugin_name]) {
-											CJAX.importPlugin(file, function() {});
-										}
-									}
-								}
-							}
+					if(cmd = CJAX.commands[id]) {
+						f = CJAX.xml('file',cmd).replace(/.*\//,'');
+						if(!CJAX.util.loaded(f)) {
+							CJAX.waitingFor[CJAX.xml('file',cmd).replace(/.*\//,'')] = function() {
+								CJAX.process(buffer,'process_all for '+method, method+' '+_id);
+							};
+							continue;
 						}
 					}
 				}
@@ -2448,9 +2437,9 @@ function CJAX_FRAMEWORK() {
 		CJAX.timer = 0;
 	};
 
-	this._extendPlugin		=		function(plugin_name, plugin_buffer, settings)
+	this._extendPlugin		=		function(plugin_name, options, settings)
 	{
-		if(waitfor = CJAX.xml('waitfor', plugin_buffer)) {
+		if(waitfor = options.waitfor) {
 			if(CJAX.debug) {
 				console.info(plugin_name, 'waiting for', waitfor);
 			}
@@ -2460,44 +2449,26 @@ function CJAX_FRAMEWORK() {
 		if(CJAX.debug) {
 			console.log('Loading:', CJAX.xml('is_plugin', plugin_buffer));
 		}
-		file = CJAX.xml('file', plugin_buffer);
-		file = CJAX.pBase+'/'+file;
-		f = CJAX.xml('filename', plugin_buffer);
 
-		_p = window[plugin_name];
+		var _p = window[plugin_name];
+		var file = CJAX.pBase+ options.file;
 
-
-		if(!_p) {
-			console.log('Plugin Not Loaded');
-		}
-
-		callbacks = CJAX.xml('callback', plugin_buffer);
+		callbacks = options.callback;
 
 		if(CJAX.debug && callbacks) {
-			console.info('Plugin Buffer',plugin_buffer);
+			console.info('Plugin Buffer', options.xml);
 			console.info("Callbacks found for", plugin_name, callbacks);
 		}
-		if(_p) {
-			if(plugin = CJAX.plugins[plugin_name] || CJAX.lib.isFn(_p)) {
-				if(CJAX.lib.isFn(plugin)) {
-					plugin = CJAX.extend(plugin, plugin_name, plugin_buffer,callbacks, settings);
-
-				} else if(CJAX.lib.isFn(_p)) {
-					plugin = CJAX.extend(_p, plugin_name, plugin_buffer,callbacks, settings);
-
-				} else {
-					params = _p.params;
-					_p.fn.apply(this, Object.keys(params).map(function (key) {return params[key]}));
-				}
-			}
+		if(CJAX.lib.isFn(_p) || typeof _p == 'object') {
+			CJAX.extend(_p, options, callbacks, settings);
 		} else {
-			CJAX.lib.loadCallback(CJAX.loaded[f], function(){
+			CJAX.lib.loadCallback(CJAX.util.loaded(options.filename), function(){
 
 				if(CJAX.lib.isFn(window[plugin_name])) {
+					plugin = CJAX.extend(window[plugin_name], options, callbacks, settings);
 
-					plugin = CJAX.extend(window[plugin_name], plugin_name, plugin_buffer, callbacks, settings);
 				} else {
-					console.log('option ??');
+					console.log(plugin_name, 'option ??', window[plugin_name]);
 				}
 			},null, plugin_name);
 		}
@@ -2541,40 +2512,33 @@ function CJAX_FRAMEWORK() {
 		return f;
 	};
 
-	this.extend			=	function(plugin_fn, plugin_name, buffer, callbacks, settings)
+	this.extend			=	function(plugin_fn, options, callbacks, settings)
 	{
-		if(plugin = CJAX.plugins[plugin_name]) {
+		var plugin_name = options.is_plugin;
+		buffer = options.xml;
+		if(typeof plugin_fn == 'object') {
+			plugin = plugin_fn;
 			params = plugin.params;
-			plugin.fn.apply(this, Object.keys(params).map(function (key) {return params[key]}));
-			//plugin.fn(params['a'],params['b'],params['c'],params['d'],params['e'],params['f']);
+			//plugin.fn.apply(window[plugin_name], Object.keys(params).map(function (key) {return params[key]}));
+			plugin.fn(params['a'],params['b'],params['c'],params['d'],params['e'],params['f']);
 			return plugin;
 		}
 		var plugins_dir = __base__+'plugins/';
-		var path = plugins_dir+file;
+		var path = plugins_dir+options.file;
 		var extra = {};
-		var file;
+		var file = options.file;
 
 		var params = {};
-		if(buffer) {
-			file = CJAX.xml('file',buffer);
 
-			if(_extra = CJAX.xml('extra',buffer)) {
-				extra = CJAX.util.json(_extra);
-			}
-			var data = CJAX.decode(CJAX.xml('data',buffer));
-			data = CJAX.util.json(data);
 
-			for(x in data) {
-				if('object' == typeof data[x]) {
-					for(i in data[x]) {
-						data[x][i] = CJAX.lib.pharseFunction(data[x][i]);
-					}
-				} else {
-					data[x] = CJAX.lib.pharseFunction(data[x]);
-				}
-			}
-			params = data;
+		if(_extra = options.extra) {
+			extra = CJAX.util.json(_extra);
 		}
+
+		if(options.options) {
+			params = options.options;
+		}
+
 		var uniqid  = CJAX._uniqid(buffer);
 		CJAX.$plugin = uniqid;
 		if(CJAX.lib.isFn(plugin_fn)) {
@@ -2727,19 +2691,16 @@ function CJAX_FRAMEWORK() {
 		};
 
 		try {
-			CJAX.plugins[plugin_name] = window[plugin_name] = _new = new _plugin(buffer);
+			window[plugin_name] = _new = new _plugin(buffer);
 
+			//_new.fn.apply(window[plugin_name], Object.keys(params).map(function (key) {return params[key]}));
 			_new.fn(params['a'],params['b'],params['c'],params['d'],params['e'],params['f']);
 
 			if(CJAX.debug) {
-				console.log('Called plugin:', plugin_name);
+				console.info('Called plugin:', plugin_name);
 			}
 			return _new;
 		}catch(e) {
-
-			if(CJAX.debug){
-				alert("Error#1 plugin Error "+plugin_name+': '+e);
-			}
 			console.error("plugin",plugin_name ,"Generated an Error:", e.message);
 			return false;
 		}
@@ -2767,10 +2728,10 @@ function CJAX_FRAMEWORK() {
 			}
 			if(seconds){
 				return setTimeout( function() {
-					return CJAX.extend(fn, plugin, buffer, callbacks);
+					return CJAX.extend(fn, CJAX._plugins[plugin], callbacks);
 				},seconds*1000);
 			} else {
-				return CJAX.extend(fn, plugin, buffer, callbacks);
+				return CJAX.extend(fn, CJAX._plugins[plugin], callbacks);
 			}
 		} else {
 			if(CJAX.ie) {
@@ -2847,6 +2808,11 @@ function CJAX_FRAMEWORK() {
 
 	this.importPlugin		=		function(file, $callback, waitfor, plugin_name)
 	{
+		if(typeof file == 'object') {
+			var options = file;
+			file = CJAX.pBase + options.file;
+			CJAX._plugins[options.is_plugin] = options;
+		}
 		var _import = CJAX.script.load(file, $callback, waitfor);
 		if(plugin_name) {
 			console.log('plugin',plugin_name);
@@ -3958,9 +3924,16 @@ function CJAX_FRAMEWORK() {
 	this.get		=		function($url , container , callback) {
 		var options = {};
 
-		if(callback && !CJAX.lib.isFn(callback)) {
-			options.options = {};
-			options.options.dataType = callback;
+		if(callback) {
+			if(!CJAX.lib.isFn(callback)) {
+				options.options = {};
+				options.options.dataType = callback;
+			}
+		} else {
+			if(!options.options) {
+				options.options = {};
+			}
+			options.options.dataType = CJAX.ajaxSettings.dataType;
 		}
 		options.url = $url;
 		if(/^https?/.test(options.url)) {
@@ -4240,7 +4213,7 @@ function CJAX_FRAMEWORK() {
 	this.info	=	function(message, seconds)
 	{
 		if(typeof message=='undefined') {
-			var message = CJAX.defaultMessages.info;;
+			var message = CJAX.defaultMessages.info;
 		}
 		if(typeof seconds =='undefined') {
 			var seconds = CJAX.default_timeout;
@@ -4434,8 +4407,6 @@ function CJAX_FRAMEWORK() {
 
 
 	this.initiate			=			function() {
-		CJAX.vars['loaded'] = [];
-		CJAX.vars['loading'] = [];
 		__base__ = CJAX.base = CJAX.dir = CJAX.util.get.basepath()+'/';
 		__root__ = CJAX.util.get.dirname(__base__,3)+'/';
 		CJAX.f = __root__+'ajax.php';

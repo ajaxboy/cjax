@@ -24,58 +24,58 @@ require_once $core_dir.'/cjax_config.php';
 class plugin extends ext {
 
 	/**
-	 * 
+	 *
 	 * instancedd  to the plugin class
 	 * @var unknown_type
 	 */
 	private static $instance;
-	
+
 	public $xml;//xmlItem Object
-	
+
 	/**
-	*  Instances to plugins
+	 *  Instances to plugins
 	 */
 	private static $_instances = array();
 	/**
-	 * 
+	 *
 	 * entries Ids from plugns
 	 * @var unknown_type
 	 */
 	private static $_instances_ids = array();
-	
+
 	/**
-	 * 
+	 *
 	 * Plugin has a class
 	 * @var unknown_type
 	 */
 	private static $_instances_exist = array();
 	/**
-	* Plugins parameters
+	 * Plugins parameters
 	 */
 	private static $_instances_params = array();
 	/**
-	* Default controllers directory to each plugin
+	 * Default controllers directory to each plugin
 	 */
 	public $controllers_dir = 'controllers';
-	
+
 	public $controller_file = null;
-	
+
 	/**
 	 * A executable string before the plugin is ran.
 	 * @var unknown_type
 	 */
 	public $init = "function(){}";
-	
+
 	/**
-	 * 
+	 *
 	 * Plugins that are aborted
 	 * @var unknown_type
 	 */
 	private static $_aborted = array();
-	
+
 	/**
-	 * 
-	 * When needing  $loading in the contructor 
+	 *
+	 * When needing  $loading in the contructor
 	 * @var unknown_type
 	 */
 	private static $_loading_prefix = null;
@@ -83,44 +83,44 @@ class plugin extends ext {
 	public static $initiatePlugins = array();
 	public $loading;
 	/**
-	 * 
+	 *
 	 * Plugins settings
-	 * 
+	 *
 	 * @var unknown_type
 	 */
 	public $ajaxFile = false; //if true the it  will replace any string that start with ajax.php to a full url.
 
 	/**
-	 * 
+	 *
 	 * javascript file name,
 	 * by default is the plugin's name but can be different.
 	 * @var unknown_type
 	 */
 	public $file = null;
-	
+
 	/**
-	 * 
+	 *
 	 * Plugin arguments
 	 * @var unknown_type
 	 */
 	public $params;
-	
+
 	/**
-	 * 
+	 *
 	 * class pertaining to an addon
 	 * @var unknown_type
 	 */
 	public $class;
-	
+
 	/**
-	 * 
+	 *
 	 * If using Exec event, store the element_id.
 	 * @var unknown_type
 	 */
 	public $element_id;
-	
+
 	/**
-	 * 
+	 *
 	 * If a  plugin is used more than once on the page, assigns an id
 	 * in wished to do modifications in later execution
 	 * @var integer
@@ -130,18 +130,18 @@ class plugin extends ext {
 	private static $_dirs = array();
 	private static $_initiated;
 	private static $readDir = array();
-	
+
 	/**
-	 * 
+	 *
 	 * For session variables use cookie?
 	 * if false it will use sessions.
-	 * 
+	 *
 	 * @var boolean
 	 */
 	private $cookie = false;
 
 	/**
-	 * 
+	 *
 	 * Delete plugin entries
 	 */
 	function abort($plugin_name = null)
@@ -158,63 +158,63 @@ class plugin extends ext {
 			}
 		}
 		self::$_aborted[$plugin_name] = true;
- 	}
- 	
- 	/*
- 	 * can preload the plugin file if plugin is not being fired.
- 	 */
+	}
+
+	/*
+     * can preload the plugin file if plugin is not being fired.
+     */
 	function preload()
 	{
 		$file = $this->file($this->loading);
 		$file = preg_replace('/.+\/+/', '', $file);
 		$this->import($file);
 	}
-	
+
 	function xmlObject()
 	{
 		return ajax()->xmlObjects($this->_id);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * mirrors xmlItem::xml()
 	 */
 	function xml()
 	{
 		return ajax()->xmlObjects($this->_id)->xml();
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * mirrors xmlItem::rawXml()
 	 */
 	function output()
 	{
 		return ajax()->xmlObjects($this->_id)->output();
-	}	
-	
+	}
+
 	/**
-	 * 
+	 *
 	 * mirros xmlItem::delete()
 	 */
 	function delete()
 	{
 		return ajax()->xmlObjects($this->_id)->delete();
 	}
-	
+
 	function trigger($event, $params = array())
 	{
 		$ajax = ajax();
-		
+
 		if(self::$_instances_exist) {
 			foreach(self::$_instances_exist as $k => $v) {
-				
+
 				$plugin = $ajax->plugin($v);
-				
+
 				if(!$plugin || !plugin::hasClass($k))  {
 					continue;
 				}
-				
+
 				if(plugin::isAborted($k) || $plugin->exclude) {
 					continue;
 				}
@@ -228,7 +228,7 @@ class plugin extends ext {
 			}
 		}
 	}
-	
+
 	function isAborted($plugin_name = null)
 	{
 		$plugin = self::getInstance();
@@ -239,9 +239,9 @@ class plugin extends ext {
 			return  true;
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @deprecated
 	 * @param unknown_type $apiObj
 	 */
@@ -249,11 +249,11 @@ class plugin extends ext {
 	{
 		$this->xml->callback = $apiObj;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * pass apis, and they will be accesible in javascripot through this.callback;
-	 * 
+	 *
 	 * @param unknown_type $apiObj
 	 */
 	function callback($apiObj)
@@ -261,17 +261,17 @@ class plugin extends ext {
 		$this->xml->callback = $apiObj;
 		CoreEvents::$cache = CoreEvents::callbacks(CoreEvents::$cache);
 	}
-	
+
 	function imports($files = array(), &$data = array())
 	{
 		$data['plugin_dir'] = $this->loading;
 		$ajax = ajax();
-		
+
 		return $ajax->imports($files, $data);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * Impor javascript and css files
 	 * @param mixed $file
 	 * @param string $name
@@ -280,17 +280,17 @@ class plugin extends ext {
 	function import($file , $load_time = 0, $on_init = false)
 	{
 		$ajax = ajax();
-		
+
 		if(!is_array($file) && preg_match("/^https?/",$file)) {
 			$data['file'] = $file;
 		} else {
 			$data['plugin_dir'] = $this->loading;
 			$data['file'] = $file;
 		}
-		
+
 		$data['time'] = (int) $load_time;
-			
-			
+
+
 		if($on_init) {
 			$ajax->init_extra[] = $data;
 		} else {
@@ -298,14 +298,14 @@ class plugin extends ext {
 			$ajax->import($data);
 		}
 	}
-	
+
 	function waitFor($file)
 	{
 		ajax()->xmlObjects($this->_id)->waitfor = $file;
 		CoreEvents::simpleCommit();
 	}
-	
-	public static function isPlugin($plugin_name)
+
+	public function isPlugin($plugin_name)
 	{
 		$plugins = self::readDir(CJAX_HOME."/plugins/");
 		if(isset($plugins[$plugin_name])) {
@@ -328,12 +328,12 @@ class plugin extends ext {
 		}
 		self::$_initiated = true;
 	}
-	
-	
+
+
 	/**
-	 * 
+	 *
 	 * Handle right handlers chain apis
-	 * 
+	 *
 	 * @param unknown_type $api
 	 * @param unknown_type $args
 	 */
@@ -341,16 +341,16 @@ class plugin extends ext {
 	{
 		return call_user_func_array(array($this->xml,$api), $args);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * Set variables
 	 */
 	function __set($setting, $value)
 	{
 		$this->setVar($setting, $value);
 	}
-	
+
 	function setVar($setting, $value)
 	{
 		if(empty(self::$_instances_ids) || !isset(self::$_instances_ids[$this->loading])) {
@@ -358,14 +358,14 @@ class plugin extends ext {
 		} else {
 			$instances  = self::$_instances_ids[$this->loading];
 		}
-		
+
 		foreach ($instances as  $v) {
 			$this->_setVar($setting , $value, $v);
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * Set variables that can be accessed as this.var
 	 */
 	private function _setVar($setting, $value, $instance_id)
@@ -374,17 +374,17 @@ class plugin extends ext {
 			return;
 		}
 		$item = CoreEvents::$cache[$instance_id];
-		
+
 		if(is_array($value)) {
 			$value  = CoreEvents::mkArray($value);
 		}
 		$item['extra'][$setting] = $value;
-		
+
 		CoreEvents::UpdateCache($instance_id, $item);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * Updates parameters using plugin class
 	 */
 	public function set($setting, $value , $instance_id = null)
@@ -392,26 +392,26 @@ class plugin extends ext {
 		if(plugin::isAborted($this->loading)) {
 			return;
 		}
-		
+
 		$params = range('a','z');
-		
+
 		if(!in_array($setting, $params)) {
 			return $this->setVar($setting,$value);
 		}
-		
+
 		if(!is_null($instance_id)) {
 			$item = CoreEvents::$cache[$instance_id];
-			$item['data'][$setting] = $value;
-			
+			$item['options'][$setting] = $value;
+
 			CoreEvents::UpdateCache($instance_id, $item);
 		} else {
-			
+
 			if(!isset(self::$_instances_ids[$this->loading])) {
 				return;
 			}
-			
+
 			$instances  = self::$_instances_ids[$this->loading];
-		
+
 			if(!$instances) {
 				return false;
 			}
@@ -423,7 +423,7 @@ class plugin extends ext {
 			}
 		}
 	}
-	
+
 	public static function getPluginInstance($plugin = null, $params = array(), $instance_id = null, $load_controller = false)
 	{
 		if(isset(self::$_instances[$plugin]) && is_object(self::$_instances[$plugin])) {
@@ -436,7 +436,7 @@ class plugin extends ext {
 		} else {
 			$plugin_class = self::$_instances_exist[$plugin];
 		}
-		
+
 		if(!isset(self::$_instances[$plugin])  ||  !is_object(self::$_instances[$plugin])) {
 			$ajax = ajax();
 			if(!isset($params[1])) {
@@ -448,10 +448,10 @@ class plugin extends ext {
 					$_plugin->id = $instance_id;
 					self::$_instances_ids[$plugin][$instance_id] = $instance_id;
 				}
-				
+
 				$_plugin->dir = self::dir($plugin);
 				$_plugin->loading = $plugin;
-				
+
 				self::$_loading_prefix = null;
 			} else {
 				$args = array();
@@ -488,7 +488,7 @@ class plugin extends ext {
 		$_plugin->loading = $plugin;
 		return $_plugin;
 	}
-	
+
 	function instanceTriggers($_plugin , $params)
 	{
 		$ajax = ajax();
@@ -497,16 +497,16 @@ class plugin extends ext {
 				if($params) {
 					call_user_func_array(array($_plugin,'onLoad'), $params);
 				}
-			}	
+			}
 		} else {
 			if(method_exists($_plugin, 'onAjaxLoad')) {
 				if($params) {
 					call_user_func_array(array($_plugin,'onAjaxLoad'),  $params);
 				}
-			}						
+			}
 		}
 	}
-	
+
 	function DeleteEntry($entry_id)
 	{
 		if(isset(CoreEvents::$cache[$entry_id])) {
@@ -514,14 +514,14 @@ class plugin extends ext {
 		}
 		self::$_instances_ids[$this->loading] = array();
 	}
-	
+
 	public function hasClass($plugin)
 	{
 		if(isset(self::$_instances_exist[$plugin])) {
 			return true;
 		}
 	}
-	
+
 	public static function getInstance($plugin = null, $params = array() , $instance_id  = null)
 	{
 		if(is_object(self::$instance)) {
@@ -531,25 +531,26 @@ class plugin extends ext {
 			$plugin = new plugin;
 			return self::$instance = $plugin;
 		}
-		
+
 		if($plugin = self::getPluginInstance($plugin, $params, $instance_id)) {
 			return $plugin;
 		}
-		
+
 	}
-	
-	public static function initiatePlugins()
+
+	function initiatePlugins()
 	{
 		if(self::$initiatePlugins) {
 			return self::$initiatePlugins;
 		}
+		$base = CJAX_HOME;
 		$plugins = CJAX_HOME."/plugins/";
-		
+
 		self::$initiatePlugins = self::readDir($plugins);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * Saves values in a cookie or session
 	 * @param unknown_type $setting
 	 * @param unknown_type $value
@@ -566,12 +567,12 @@ class plugin extends ext {
 			$setting = $prefix.'_'.$setting;
 		}
 		$ajax = ajax();
-		
+
 		return $ajax->save($setting,$value, $this->cookie);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * get settings saved in cookies
 	 */
 	function get($setting,$prefix = null)
@@ -591,39 +592,39 @@ class plugin extends ext {
 
 	function  __get($setting)
 	{
-		return self::get($setting);		
+		return self::get($setting);
 	}
-		
+
 	/**
 	 * get the full path of a plugin
 	 */
 	function file($name)
 	{
 		$plugin_name = self::$initiatePlugins[$name]->file;
-		
+
 		return $plugin_name;
 	}
-	
+
 	function init()
 	{
 		return $this->init;
 	}
-	
+
 	function method($method)
 	{
 		return self::$initiatePlugins[$method]->method;
 	}
-	
+
 	public function dir($plug_name = null)
 	{
 		if(!$plug_name) {
 			$plug_name = $this->loading;
 		}
 		$dir = self::$_dirs[$plug_name];
-		
+
 		return $dir;
 	}
-	
+
 	public static function readDir($resource)
 	{
 		if(self::$readDir) {
@@ -631,14 +632,14 @@ class plugin extends ext {
 		}
 		$resource = str_replace("\\","/",$resource);
 		$dirs = scandir($resource);
-		unset($dirs[0],$dirs[1]);	
+		unset($dirs[0],$dirs[1]);
 		$new = array();
 
 		$ajax = ajax();
-		
+
 		foreach($dirs as $k => $v) {
 			$name = preg_replace("/\..+$/", '', $v);
-			
+
 			if(isset($new[$name])) {
 				continue;
 			}
@@ -648,7 +649,7 @@ class plugin extends ext {
 			if(is_dir($resource.$v)) {
 				self::$_dirs[$name] = $resource.$v.'/';
 				$dir = self::$_dirs[$name];
-				
+
 				if(file_exists($f = "{$dir}{$v}.php")) {
 					require_once $f;
 					$class = $v;
@@ -658,16 +659,16 @@ class plugin extends ext {
 					} else if($parent!='plugin') {
 						$class = 'plugin_'.$v;
 					}
-					
+
 					if(class_exists($class)) {
 						$vars = get_class_vars($class);
-						
+
 						if(isset($vars['file'])) {
 							$obj->file = $vars['file'];
 							$obj->method = preg_replace(array("/\..+$/","/\.js$/"), '', $obj->file);
 						}
 						self::$_instances_exist[$v] = $class;
-					
+
 						if(method_exists($class, 'autoload')) {
 							call_user_func(array($class,'autoload'));
 						}
