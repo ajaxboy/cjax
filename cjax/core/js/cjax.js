@@ -1334,24 +1334,26 @@ function CJAX_FRAMEWORK() {
 								element.loaded = true;
 								return $callback();
 							};
-						}
 
-						giveup = function(time) {
+							giveup = function(time) {
+								setTimeout(function() {
+									if(!element.loaded) {
+										if(CJAX.debug) {
+											console.log('Forcing loadCallback', caller,'to complete.');
+										}
+										element.loaded = true;
+										return $callback();
+									}
+								},time);
+							};
 							setTimeout(function() {
 								if(!element.loaded) {
-									if(CJAX.debug) {
-										console.log('Forcing loadCallback', caller,'to complete.');
-									}
-									element.loaded = true;
-									return $callback();
+									giveup(300);
 								}
-							},time);
-						};
-						setTimeout(function() {
-							if(!element.loaded) {
-								giveup(300);
-							}
-						},120);
+							},120);
+						}
+
+
 
 					}
 				}
