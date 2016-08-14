@@ -40,7 +40,7 @@ $ajax->change("dropdown1",$ajax->call("ajax.php?dropdown/propagate/|dropdown1|")
         <td id="breadcrumb">
             <a href="http://cjax.sourceforge.net/">Project Home</a> &nbsp;&#8250;&nbsp;
             <a href="./">Demos</a> &nbsp;&#8250;&nbsp;
-            Template
+            Propagate Dropdown
         </td>
         <td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="cjax.sourceforge.net/" />Search Project User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
     </tr>

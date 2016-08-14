@@ -63,7 +63,7 @@ $ajax->call("ajax.php?post/post_sample",'div_response');
 
 
 	<!-- Text -->
-	Template
+	Post variables using ajax
 
 
 	<br />
