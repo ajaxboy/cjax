@@ -63,7 +63,7 @@ $ajax->click("button1",$ajax->call("ajax.php?update/update_box"));
 
 
 	<!-- Text -->
-	Update elements with on your page wtih ajax. If you are looking for something more powerful use <a href="updateX.php">UpdateX</a>.
+	Update elements  on your page with ajax. If you are looking for something more powerful use <a href="updateX.php">UpdateX</a>.
 
 
 	<br />
