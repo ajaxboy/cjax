@@ -52,7 +52,7 @@ $ajax = ajax();
 
 
     <!-- Text -->
-    Cjax  triggers is the action you take to trigger an event. You can use these triggers to bind actions to elements.
+    Cjax  triggers is the action you take to trigger an event. You can use these triggers to <a href="bind_actions.php">bind actions</a> to <a href="bind_elements.php">elements</a>.
 
 
     <br />

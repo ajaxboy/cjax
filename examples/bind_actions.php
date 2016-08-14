@@ -72,7 +72,7 @@ $ajax->blur("link2",
 
 	Binding actions, means you can pass multiple actions all at once in a single $ajax line, when genereally it is one action
 	per line.
-	You may bind as many commands as needed inside the click(), blur(), change(), keyup(), keydown(),  function.<br />
+	You may bind as many commands as needed inside the <a href="triggers.php">triggers</a> click(), blur(), change(), keyup(), keydown(),  function.<br />
 
 	<h3>Examples</h3>
 
