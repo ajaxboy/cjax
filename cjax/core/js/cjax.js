@@ -193,7 +193,7 @@ function CJAX_FRAMEWORK() {
 		}
 		fn = _raw_fn = CJAX.xml('fn', buffer);
 		var prop;
-		data = CJAX.util.json(CJAX.decode(CJAX.xml('fn_data', buffer)));
+		data = CJAX.util.json(CJAX.decode(CJAX.xml('options', buffer)));
 
 		switch(fn) {
 			case 'document':
@@ -2928,6 +2928,12 @@ function CJAX_FRAMEWORK() {
 						}
 						xml_data = cache;
 						break;
+					case '_fn':
+
+						if(CJAX[cache.fn]) {
+							SUBFIX = cache.fn;
+						}
+						break;
 				}
 				if(CJAX.debug) {
 					console.log('Call executed.');
@@ -3261,6 +3267,31 @@ function CJAX_FRAMEWORK() {
 		} else {
 			CJAX.$(element_id).innerHTML =  '';
 		}
+	};
+
+	this.updateX		=		function(element_id, options) {
+
+		var element = CJAX.$(options.options.a);
+		var update_what = options.options.b;
+		var selector_prop = options.options.c;
+		var selector  = options.options.d;
+
+		if(element) {
+
+			if (!selector) {
+				if(selector_prop.indexOf('data-') != -1) {
+					_value = CJAX.decode(options.selector.getAttribute(selector_prop));
+				} else {
+					_value = options.selector[selector_prop];
+				}
+
+				element[update_what] = _value;
+			} else {
+				element[update_what] = CJAX.$(selector)[selector_prop];
+
+			}
+		}
+
 	};
 
 	/**
@@ -3734,6 +3765,7 @@ function CJAX_FRAMEWORK() {
 		}
 		selector = cache.selector;
 
+
 		options = {};
 		if(cache.options) {
 			options = cache.options;
@@ -3745,10 +3777,7 @@ function CJAX_FRAMEWORK() {
 		url = url.replace(/\&amp\;/gi,"&");
 
 		var _confirm = CJAX.decode(cache.confirm);
-		var stamp = cache.stamp;
 		var crossdomain = cache.crossdomain;
-		var data = cache.data;
-		var dataType = cache.options.dataType;
 
 		var is_loading  =  cache.is_loading;
 		if(!is_loading) is_loading = false;

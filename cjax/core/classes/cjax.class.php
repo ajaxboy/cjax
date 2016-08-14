@@ -135,7 +135,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 			$data = array();
 			$data['do'] = '_fn';
 			$data['fn'] = $method;
-			$data['fn_data'] = $pParams;
+			$data['options'] = $pParams;
 
 			$item = $this->xmlItem($this->xml($data),'fn');
 			$item->selector = $method;

@@ -11,7 +11,7 @@ $ajax->click("button1",$ajax->call("ajax.php?update/update_box"));
 <head>
 	<link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
 	<title>Update elements with Ajax</title>
-	<?php echo $ajax->init();?>
+	<?php echo $ajax->init(false);?>
 	<style>
 		.box {
 			position:relative;
