@@ -174,6 +174,7 @@ $ajax->click('#logo2', array(
     <?php
     echo $ajax->code("
     //updates #text's value
+    // when you click the logo with id 'logo', text1 gets update, its value, for the images src.
     \$ajax->click('#logo', \$ajax->updateX('#text1','value','src'));
 
 
@@ -208,6 +209,8 @@ $ajax->click('#logo2', array(
     <?php
     echo $ajax->code("
     //updates #overlayContent's image
+    // #some-image, is the placeholder we put in the overlay. first src - we are saying to update that property in the #some-image element.
+    // the second src, is the property we pick from the element that is clicked, which has to be an image, because we binded the click to an image.
     \$ajax->click('#logo2', array(
         \$ajax->overlayContent(\"<img id='some-image' src=''>\"),
         \$ajax->updateX('#some-image', 'src','src')
