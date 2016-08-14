@@ -2518,7 +2518,7 @@ function CJAX_FRAMEWORK() {
 		buffer = options.xml;
 		if(typeof plugin_fn == 'object') {
 			plugin = plugin_fn;
-			params = plugin.params;
+			params = options.options;
 			//plugin.fn.apply(window[plugin_name], Object.keys(params).map(function (key) {return params[key]}));
 			plugin.fn(params['a'],params['b'],params['c'],params['d'],params['e'],params['f']);
 			return plugin;
