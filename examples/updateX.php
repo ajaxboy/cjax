@@ -102,7 +102,7 @@ $ajax->click('#logo2', array(
     Within the elements attributes you sent the items already containing attributes with the information you want to be used.
     Use UpdateX, when the element is clicked on perform all the actions. You can combine this with other Cjax API's.
     <br />
-    For example, display an OverlayConent() window and update its content with UpdateX().
+    For example, display an OverlayContent() window and update its content with UpdateX().
     <br /><br />
 
     Try the examples provided below, you will get the picture.
