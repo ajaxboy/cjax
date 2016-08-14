@@ -61,7 +61,7 @@ $ajax = ajax();
 
     <u>
         <li>
-            click()
+            <a href="click.php">click()</a>
         </li>
         <li>
             change()
@@ -71,6 +71,9 @@ $ajax = ajax();
         </li>
         <li>
             keydown()
+        </li>
+        <li>
+            <a href="keypress.php">keypress()</a>
         </li>
     </u>
     <!-- Code Used -->
