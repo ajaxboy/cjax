@@ -463,7 +463,7 @@ class CoreEvents extends cjaxFormat {
 
 	function _processScachePlugin($v,$caller = null)
 	{
-		if($v['options'] && is_array($v['options'])) {
+		if(isset($v['options']) && is_array($v['options'])) {
 			$v['options'] =  self::mkArray($v['options']);
 		}
 		if(isset($v['extra'])) {
