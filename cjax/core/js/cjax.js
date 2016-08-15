@@ -3808,7 +3808,7 @@ function CJAX_FRAMEWORK() {
 					return true;
 				}
 			} else {
-				if(!window.confirm(_confirm)) {
+				if(!window.confirm(CJAX.decode(_confirm))) {
 					CJAX.$('cjax_overlay').style.display = 'none';
 					return true;
 				}
