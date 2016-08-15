@@ -1,0 +1,13 @@
+{
+	"description": "Cjax ajax framework",
+	"name": "cjax/framework",
+	"type": "project",
+	"homepage": "https://github.com/ajaxboy/cjax",
+	"license": "MIT",
+	"support": {
+		"ussues": "https://github.com/ajaxboy/cjax/issues"
+	},
+	"require": {
+		"php": ">=5.2.4"
+	}
+}
