@@ -61,13 +61,17 @@ class CJAX extends CJAX_FRAMEWORK {
 			$ajax->format = new cjaxFormat();
 			
 			$config = new ext;
-			if(file_exists($f = CJAX_HOME.'/'.'config.php')) {
+			if(file_exists($f = CJAX_HOME.'/config.php')) {
 				include($f);
 				if(isset($config)) {
 					$config = new ext($config);
 				}
 			}
 			$ajax->config = $config;
+
+			if(file_exists($f = CJAX_HOME.'/integration.php')) {
+				include($f);
+			}
 			
 			$ajax->initiate($ajax);
 			if(!$ajax->isAjaxRequest()) {

@@ -582,7 +582,7 @@ class CoreEvents extends cjaxFormat {
 		}
 	}
 
-	function initiatePlugins()
+	public static function initiatePlugins()
 	{
 		return plugin::initiatePlugins();
 	}

@@ -538,7 +538,7 @@ class plugin extends ext {
 
 	}
 
-	function initiatePlugins()
+	public static function initiatePlugins()
 	{
 		if(self::$initiatePlugins) {
 			return self::$initiatePlugins;
