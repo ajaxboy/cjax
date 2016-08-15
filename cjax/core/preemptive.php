@@ -13,6 +13,8 @@
  *   Written by: CJ Galindo
  *   Website: http://cjax.sourceforge.net                     $
  *   Email: cjxxi@msn.com
+ *   Date: 2/12/2007                           $
+ *   File Last Changed:  10/05/2013            $
  **####################################################################################################    */
 
 
@@ -80,8 +82,13 @@ if(isset($_SERVER['QUERY_STRING']) && $query = $_SERVER['QUERY_STRING']) {
 }
 
 if(!$ajax->isAjaxRequest()) {
-	if(count(array_keys(debug_backtrace(false))) == 1 && !defined('AJAX_VIEW')) {
-		exit("Security Error. You cannot access this file directly.");
+
+	if(count(array_keys(debug_backtrace(false))) == 1
+		|| preg_replace('#.*\/#','', $_SERVER['SCRIPT_NAME']) == AJAX_FILE) {
+
+		if(!defined('AJAX_VIEW')) {
+			exit("Security Error. You cannot access this file directly.");
+		}
 	}
 }
 

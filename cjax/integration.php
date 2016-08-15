@@ -34,15 +34,15 @@ if(is_file('composer.json')) {
 
 
         copy('cjax/integration/default/ajax.php','application/libraries/ajax.php');
-        rcopy('cjax/integration/codeigniter/application/','application/');
+        copy('cjax/integration/codeigniter/integration.php','ajax.php');
         rcopy('cjax/','application/libraries/cjax');
-        copy('application/libraries/cjax/integration/codeigniter/integration.php','ajax.php');
+        rcopy('cjax/integration/codeigniter/application/','application/');
 
         rrmdir('cjax/');
         unlink('application/libraries/cjax/integration.php');
 
         @unlink(__file__);
 
-        exit(header("Location: ajax.php"));
+        exit(header("Location: {$_SERVER['REQUEST_URI']}"));
     }
 }

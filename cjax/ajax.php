@@ -29,6 +29,11 @@ if(!defined('AJAX_WD')) {
 	define('AJAX_WD', dirname(__file__).'/cjax');
 }
 
+if(!defined('AJAX_FILE')) {
+	//main ajax.php file name, should you rename it, enter new name here.
+	define('AJAX_FILE', 'ajax.php');
+}
+
 /**
  * //@ajax_php;
  **/
@@ -40,7 +45,7 @@ class ajax  {
 		
 		$controller = $raw_class = preg_replace('/:.*/', '', $controller);
 		$function = (isset($_REQUEST['function'])? $_REQUEST['function']: null);
-		
+
 		if($ajax->config->camelize) {
 			$raw_class = $ajax->camelize($raw_class, $ajax->config->camelizeUcfirst);
 		}
@@ -61,13 +66,13 @@ class ajax  {
 				$ajax->includes = true;
 				include_once $f;
 			}
-		}	
+		}
 		$args = $this->_params();
 		
 		if($controller=='_crossdomain') {
 			return $this->_response(call_user_func_array(array($ajax, 'crossdomain'), $args));
 		}
-		
+
 		if($plugin = $ajax->plugin($controller, true)) {
 			if(method_exists($plugin, $function)) {
 				return $this->_response(call_user_func_array(array($plugin, $function), $args));
@@ -78,9 +83,9 @@ class ajax  {
 				}
 			}
 		}
-		
+
 		$is_file = $this->_files($controller, $alt_controller);
-		
+
 		if($is_file) {
 			$class_exists = $this->_class($controller);
 			$requestObject = $this->_controller($class_exists, $controller, $function);

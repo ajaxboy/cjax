@@ -615,7 +615,7 @@ class plugin extends ext {
 		return self::$initiatePlugins[$method]->method;
 	}
 
-	public function dir($plug_name = null)
+	public static function dir($plug_name = null)
 	{
 		if(!$plug_name) {
 			$plug_name = $this->loading;

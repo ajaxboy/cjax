@@ -183,7 +183,7 @@ class CoreEvents extends cjaxFormat {
 	 *
 	 * @var string
 	 */
-	public $version;
+	public $version = '5.9';
 
 
 	/**
@@ -395,7 +395,7 @@ class CoreEvents extends cjaxFormat {
 		return $out;
 	}
 
-	function simpleCommit($return = false)
+	static function simpleCommit($return = false)
 	{
 		$ajax = ajax();
 		if($ajax->fallback || $ajax->config->fallback || $ajax->caching) {
@@ -1172,7 +1172,7 @@ if (document.addEventListener) {
 	}
 
 
-	function save($setting, $value = null, $use_cookie = false)
+	static function save($setting, $value = null, $use_cookie = false)
 	{
 		$ajax = ajax();
 		if(!isset($_SESSION)) {

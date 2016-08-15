@@ -20,15 +20,17 @@ if( isset( $_SERVER['SCRIPT_NAME'] ) )
  *
  * @var string file name
  */
-define('AJAX_FILE', 'ajax.php');
-
+if(!define('AJAX_FILE')) {
+    define('AJAX_FILE', 'ajax.php');
+}
 /**
  * Controllers Directory.
  * Directory where ajax controllers are located.
  * @constant AJAX_CD
  */
-define('AJAX_CD', 'application/response');
-
+if(!define('AJAX_CD')) {
+    define('AJAX_CD', 'application/response');
+}
 /**
  * Security Feature.
  * Lifts the limited view of ajax response on regular browsers.
@@ -42,16 +44,9 @@ define('AJAX_CD', 'application/response');
 define('AJAX_VIEW', 1);
 
 /**
- *
- * Allows to include 'ajax.php' as well as 'ajaxfw.php' back to back compatibility.
- * @var unknown_type
+ * A request is being made
  */
-$included_files = get_included_files();
-
-if(!$included_files) {
-    $included_files = get_required_files();
-}
-if($included_files && count($included_files) > 1) {
+if(debug_backtrace(false)) {
     return require_once 'application/libraries/ajax.php';
 }
 
