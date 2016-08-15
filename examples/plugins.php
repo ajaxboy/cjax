@@ -51,20 +51,6 @@ $ajax = ajax();
 <br clear="all" />
 
 <div id="content">
-
-
-	<!-- Text -->
-	Template
-
-
-	<br />
-
-	<h3>Examples</h3>
-
-
-	<!-- Code Used -->
-
-
 	<!-- HTML -->
 	<?php
 	echo $ajax->format->_dialog("
