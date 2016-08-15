@@ -1,9 +1,14 @@
 <?php
 
-class test {
+class Test {
 	
 	function test($a = null, $b = null)
 	{
-		echo "Ajax View... $a $b";
+		$ajax = ajax();
+
+		$ajax->success("Cjax was successfully installed.", 6);
+
+
+		$ajax->response = "Version: {$ajax->version}";
 	}
 }

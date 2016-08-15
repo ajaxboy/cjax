@@ -1,16 +1,41 @@
 <?php
 
-/**
- * Header HTTP_X_REQUESTED_WITH allows to identify where the request is coming from, 
- * requests are blocked, if they come from sources that are not an HRX request, Flash request or similar type of request,
- * such as regular browser view.
- */
-#Normally you would not be able to read the response on a regular browser.
-#For security reasons, you need this to be able to bypass the security feature and see the  response on the browser.
-#in other words, without this, you can't view ajax.php on  your browser.
-define('AJAX_VIEW', true);
-
 #Controllers directory
 define('AJAX_CD','response');
 
 require 'ajax.php';
+
+if($ajax->controller && $ajax->function) {
+
+    //calling file, response/test.php:test()
+    $ajax->call(array('test', 'test'));
+}
+
+?>
+<!doctype html>
+<head>
+    <title>Test</title>
+    <?php echo $ajax->init();?>
+</head>
+<body>
+
+<?php if(!$_SERVER['QUERY_STRING']):?>
+
+    <div style='margin: 50px 0 0 200px; position: relative; width: 400px;'>
+        <div style='text-align: right; width:100%; position: relative'>
+            <img src="examples/resources/images/cool_sunglasses.jpg" />
+        </div>
+        <div>
+        <h3>Put your shades on, and get ready to run this test:</h3>
+        <a href='?test/test'>Run Test</a>
+        </div>
+    </div>
+
+<?php endif;?>
+
+
+<?php if($_SERVER['QUERY_STRING']):?>
+<div id="response"></div>
+<?php endif;?>
+</body>
+</html>

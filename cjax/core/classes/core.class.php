@@ -26,6 +26,11 @@ class CoreEvents extends cjaxFormat {
 	public $a,$b,$c,$d,$e,$f,$g,$h,$i, $j;
 
 	public $config;
+
+	public $controller;
+
+	public $function;
+
 	//acts more strict in the kind of information you provive
 	public $strict = false;
 
@@ -1283,7 +1288,7 @@ if (document.addEventListener) {
 		if(!$msg) {
 			$msg = "Success!";
 		}
-		return $ajax->message($ajax->format->message($msg,cjaxFormat::CSS_SUCCESS));
+		return $ajax->message($ajax->format->message($msg,cjaxFormat::CSS_SUCCESS), $seconds);
 	}
 
 	/*

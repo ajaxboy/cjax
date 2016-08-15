@@ -47,10 +47,11 @@ if(isset($_SERVER['QUERY_STRING']) && $query = $_SERVER['QUERY_STRING']) {
 			}
 		}
 	}
+	$controller = $function = null;
 	if($ajax->isAjaxRequest() || defined('AJAX_VIEW') ) {
 		if($packet && count(array_keys($packet)) >= 2 && $packet[0] && $packet[1]) {
-			$_REQUEST['controller'] = $packet[0];
-			$_REQUEST['function'] = $packet[1];
+			$controller = $_REQUEST['controller'] = $packet[0];
+			$function 	= $_REQUEST['function'] = $packet[1];
 			$_REQUEST['cjax'] = time();
 			if(count(array_keys($packet)) > 2) {
 				unset($packet[0]);
@@ -73,7 +74,14 @@ if(isset($_SERVER['QUERY_STRING']) && $query = $_SERVER['QUERY_STRING']) {
 				}
 			}
 		}
+	} else {
+		if($packet && count(array_keys($packet)) >= 2 && $packet[0] && $packet[1]) {
+			$controller = $packet[0];
+			$function 	= $packet[1];
+		}
 	}
+	$ajax->controller 	= 	$controller;
+	$ajax->function 	= 	$function;
 }
 
 if(!$ajax->isAjaxRequest()) {
