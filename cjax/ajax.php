@@ -211,22 +211,15 @@ class ajax  {
 		if(!$class) {
 			return false;
 		}
-		$ajax = ajax();
-		if(method_exists($class, $raw_controller)) {
-			$parent = get_parent_class($class);
+
+		if($class == $function && method_exists($class, $function)) {
+
 			//prevent constructor
 			$_class = 'empty_'.$class;
-			eval('class ' . $_class . ' extends '. $class .'{}');
-			if(!$function) {
-				if(method_exists($class, $class)) {
-					$obj = new $_class;
-					$function = $class;
-				} else {
-					return new $class;
-				}
-			} else {
-				$obj = new $_class();
-			}
+			eval('class ' . $_class . ' extends '. $class .'{ public function __construct() {} }');
+
+			$obj = new $_class();
+
 		} else {
 			$obj = new $class;
 		}
