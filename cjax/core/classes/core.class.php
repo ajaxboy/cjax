@@ -558,7 +558,7 @@ class CoreEvents extends cjaxFormat {
 	 *
 	 * @param unknown_type $plugin_name
 	 */
-	function isPlugin($plugin_name)
+	public static function isPlugin($plugin_name)
 	{
 		return plugin::isPlugin($plugin_name);
 	}
