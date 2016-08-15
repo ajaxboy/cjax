@@ -1,6 +1,6 @@
 <?php
 //core file, reference..
-require_once "../../ajax.php";
+require_once "ajax.php";
 
 $ajax = ajax();
 
@@ -8,8 +8,8 @@ $ajax = ajax();
 ?>
 <!doctype html>
 <head>
-    <link rel="stylesheet" type="text/css" href="../resources/css/user_guide.css" media="all">
-    <title>Parameters</title>
+    <link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
+    <title>Value Modifiers</title>
     <?php echo $ajax->init();?>
 </head>
 <body>
@@ -38,8 +38,8 @@ $ajax = ajax();
     <tr>
         <td id="breadcrumb">
             <a href="http://cjax.sourceforge.net/">Project Home</a> &nbsp;&#8250;&nbsp;
-            <a href="../">Demos</a> &nbsp;&#8250;&nbsp;
-            Parameters
+            <a href="./">Demos</a> &nbsp;&#8250;&nbsp;
+            Value Modifiers
         </td>
         <td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="cjax.sourceforge.net/" />Search Project User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
     </tr>
@@ -52,30 +52,32 @@ $ajax = ajax();
 
 
     <!-- Text -->
-    <h2>Access fields in parameters</h2>
 
-    To be able to access your form fields through parameters in your ajax controllers you will need to name your fields the following way:
+    <h2>Value Modifiers (Cjax 5.4+)</h2>
+    Value pharser allows you to pass values within the url, for example:
+    <br /><br />
+    ajax.php?controller/function/|some_field|
+    <br /><br />
+    That 'some_field' is looked for by id then processed and the value of that field is passed in the final url to process.
+    Now value modifiers are functions and function references that you can pass along the field id to apply functionality to that value.
     <br />
+    <h3>Apply  modifiers</h3>
+    Lets say for example that you want a value to be escaped when passed, then you could do this:
+    <br /><br />
+    ajax.php?controller/function/|some_field:escape|
+    <br /><br />
 
-
+    ajax.php?controller/function/|some_field:escape:toLowerCase|
+    <br /><br />
+    The value is passed through the function modifier. You may specify multiple JavaScript function modifiers.  You can even
+    go as far as passing a full function in there, as follows:
+    <br /><br />
+    ajax.php?controller/function/|some_field:function(value) { value = value.replace(/a/g,'');return value;}|
+    <br /><br />
+    <h3>Avoid passing ":" character</h3>
+    The only condition to the value modifiers is that you do not pass a ':', this is because this character is
+    a seperator and if you pass it, the interpreter will think you are spliting the characters there.
     <br />
-
-    <h3>Examples</h3>
-
-
-    <!-- Code Used -->
-
-    <br />
-    <?php
-
-    echo $ajax->code("
-<input type='text' id='field1'  name='a[field1]' />
-<input type='text' id='field2'  name='a[field2]' />
-<input type='text' id='some_field'  name='a[some_field]' />
-");
-    ?>
-
-    <!-- HTML -->
 
 
     <br />
@@ -98,7 +100,3 @@ $ajax = ajax();
 
 </body>
 </html>
-
-
-
-

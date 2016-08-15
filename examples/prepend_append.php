@@ -1,6 +1,6 @@
 <?php
 //core file, reference..
-require_once "../../ajax.php";
+require_once "ajax.php";
 
 $ajax = ajax();
 
@@ -8,8 +8,8 @@ $ajax = ajax();
 ?>
 <!doctype html>
 <head>
-    <link rel="stylesheet" type="text/css" href="../resources/css/user_guide.css" media="all">
-    <title>Parameters</title>
+    <link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
+    <title>Prepend, Append, Before, After</title>
     <?php echo $ajax->init();?>
 </head>
 <body>
@@ -38,8 +38,8 @@ $ajax = ajax();
     <tr>
         <td id="breadcrumb">
             <a href="http://cjax.sourceforge.net/">Project Home</a> &nbsp;&#8250;&nbsp;
-            <a href="../">Demos</a> &nbsp;&#8250;&nbsp;
-            Parameters
+            <a href="./">Demos</a> &nbsp;&#8250;&nbsp;
+            Prepend/Append
         </td>
         <td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="cjax.sourceforge.net/" />Search Project User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
     </tr>
@@ -52,10 +52,13 @@ $ajax = ajax();
 
 
     <!-- Text -->
-    <h2>Access fields in parameters</h2>
-
-    To be able to access your form fields through parameters in your ajax controllers you will need to name your fields the following way:
+    <h2>Prepend /Append /Before / After</h2>
+    (5.0-RC2+)
     <br />
+    <br />
+    You can append or prepend HTML into any div/span or other elements on the page.
+    <br />
+
 
 
     <br />
@@ -64,16 +67,40 @@ $ajax = ajax();
 
 
     <!-- Code Used -->
+    <h4>Example</h4>
+    <?php echo $ajax->code(
+        "
+\$ajax->prepend('#div1','Some HTML here');
 
-    <br />
-    <?php
+\$ajax->append('#div1','Some more HTML here');
+"
+    );?>
+    You can  also use before, and after, and it will have the same effect.
+    <h4>Example</h4>
+    <?php echo $ajax->code(
+        "
+\$ajax->before('#div1','Some HTML here');
 
-    echo $ajax->code("
-<input type='text' id='field1'  name='a[field1]' />
-<input type='text' id='field2'  name='a[field2]' />
-<input type='text' id='some_field'  name='a[some_field]' />
-");
-    ?>
+//insert html inside HTML's body before the body's content.
+\$ajax->before('body','Some HTML here');
+
+\$ajax->after('#div1','Some more HTML here');
+"
+    );?>
+
+    You may also  append/prepend other elements on the page.
+    While HTML/text appends to the inner HTML/text, appending elements
+    will append it to upper in the hierarchy or  and prepend to the lower.
+    <h4>Example</h4>
+    <?php echo $ajax->code(
+        "
+//insert div2 before div1
+\$ajax->before('#div1','#div2');
+
+//insert div2 after div1
+\$ajax->after('#div1','#div2');
+"
+    );?>
 
     <!-- HTML -->
 
@@ -98,7 +125,3 @@ $ajax = ajax();
 
 </body>
 </html>
-
-
-
-

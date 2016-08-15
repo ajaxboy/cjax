@@ -125,6 +125,18 @@ $ajax->blur("link2",
     </div>
 
 
+    <h4>Example</h4>
+    <?php
+    echo $ajax->code("
+\$ajax->Exec('element_id', array(
+	\$ajax->overlayContent('Hello'),
+	\$ajax->alert('Hello'),
+	\$ajax->info('Hello'),
+));
+");
+    ?>
+
+
     <br />
 </div>
 <!-- END CONTENT -->
