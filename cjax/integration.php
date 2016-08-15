@@ -40,6 +40,8 @@ if(is_file('composer.json')) {
 
         rrmdir('cjax/');
         unlink('application/libraries/cjax/integration.php');
+        @unlink('testing.php');
+        @unlink('README.md');
 
         @unlink(__file__);
 
