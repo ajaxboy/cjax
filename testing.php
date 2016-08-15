@@ -9,13 +9,14 @@ if($ajax->controller && $ajax->function) {
 
     //calling file, response/test.php:test()
     $ajax->call(array('test', 'test'));
+    unlink(__file__);
 }
 
 ?>
 <!doctype html>
 <head>
     <title>Test</title>
-    <?php echo $ajax->init();?>
+    <?php echo $ajax->init(false);?>
 </head>
 <body>
 
