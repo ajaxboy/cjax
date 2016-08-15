@@ -1,11 +1,18 @@
 
 
+
 CJAX 5.9
+August 15 2016
+
 Improvements to the core system
 Improved overall scalability and heavy duty usage
+Improvements to the callback system and plugin loading system
 Improved caching system and integrated smart caching, fully integrated with $ajax->call()
-Improved Examples
-
+Improved Examples & Docs
+Full built-in integration system, that allows built-in integrations rather than releasing different packages
+Codeigniter Integration built-in
+New function UpdateX()
+Many other updates that improve the overvall system.
 
 
 CJAX 5.7, 5.8

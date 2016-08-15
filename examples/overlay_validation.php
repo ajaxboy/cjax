@@ -93,12 +93,6 @@ $ajax->click('link2', $ajax->call('ajax.php?overlay_validation/overlay2'));
 	<br />
 	This sample makes use of different CJAX APIs to create a Overlay/validation functionality. The validation plugin makes use of
 	Jquery.validate plugin.
-	<br />
-	<br />
-
-	This sample can be downloaded along with 20+ demos here: <a href='http://cjax.sourceforge.net/examples/'>http://cjax.sourceforge.net/examples/</a>
-	<br /><br />
-
 
 	<br />
 
