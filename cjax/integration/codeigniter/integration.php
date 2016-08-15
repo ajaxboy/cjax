@@ -20,7 +20,7 @@ if( isset( $_SERVER['SCRIPT_NAME'] ) )
  *
  * @var string file name
  */
-if(!define('AJAX_FILE')) {
+if(!defined('AJAX_FILE')) {
     define('AJAX_FILE', 'ajax.php');
 }
 /**
@@ -28,7 +28,7 @@ if(!define('AJAX_FILE')) {
  * Directory where ajax controllers are located.
  * @constant AJAX_CD
  */
-if(!define('AJAX_CD')) {
+if(!defined('AJAX_CD')) {
     define('AJAX_CD', 'application/response');
 }
 /**
