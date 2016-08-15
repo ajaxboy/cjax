@@ -305,7 +305,7 @@ class plugin extends ext {
 		CoreEvents::simpleCommit();
 	}
 
-	public function isPlugin($plugin_name)
+	public static function isPlugin($plugin_name)
 	{
 		$plugins = self::readDir(CJAX_HOME."/plugins/");
 		if(isset($plugins[$plugin_name])) {

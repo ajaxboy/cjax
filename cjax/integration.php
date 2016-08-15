@@ -32,14 +32,17 @@ if(is_file('composer.json')) {
     $composer = json_decode(file_get_contents('composer.json'));
     if($composer->name == 'codeigniter/framework') {
 
-        rcopy('cjax/','application/libraries/cjax');
-        rcopy('cjax/integration/codeigniter/application/','application/');
 
         copy('cjax/integration/default/ajax.php','application/libraries/ajax.php');
+        rcopy('cjax/integration/codeigniter/application/','application/');
+        rcopy('cjax/','application/libraries/cjax');
         copy('application/libraries/cjax/integration/codeigniter/integration.php','ajax.php');
 
+        rrmdir('cjax/');
+        unlink('application/libraries/cjax/integration.php');
 
-        unlink(__FILE__);
+        @unlink(__file__);
+
         exit(header("Location: ajax.php"));
     }
 }
