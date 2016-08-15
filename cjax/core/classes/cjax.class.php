@@ -120,7 +120,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 				$params = func_get_args();
 				$data['do'] = plugin::method($method);
 				$data['is_plugin'] = $method;
-				$data['data'] = $pParams;
+				$data['options'] = $pParams;
 				$data['file'] = plugin::file($method);
 				$data['filename'] = preg_replace("/.*\//",'', $data['file']);
 

@@ -48,7 +48,7 @@ $ajax->click('link2', $ajax->call('ajax.php?overlay_validation/overlay2'));
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
 	<title>Ajax Overlay and Validation</title>
-	<?php echo $ajax->init();?>
+	<?php echo $ajax->init(false);?>
 </head>
 <body>
 <header>

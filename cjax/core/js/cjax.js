@@ -475,7 +475,7 @@ function CJAX_FRAMEWORK() {
 						}
 
 						if(options && data.options) {
-							data.options = CJAX.util.json(data.options);
+							data.options = CJAX.util.json(CJAX.decode(data.options));
 						}
 
 
@@ -2519,8 +2519,9 @@ function CJAX_FRAMEWORK() {
 		if(typeof plugin_fn == 'object') {
 			plugin = plugin_fn;
 			params = options.options;
+
 			//plugin.fn.apply(window[plugin_name], Object.keys(params).map(function (key) {return params[key]}));
-			plugin.fn(params['a'],params['b'],params['c'],params['d'],params['e'],params['f']);
+			plugin_fn.fn(params['a'],params['b'],params['c'],params['d'],params['e'],params['f']);
 			return plugin;
 		}
 		var plugins_dir = __base__+'plugins/';
@@ -3567,9 +3568,9 @@ function CJAX_FRAMEWORK() {
 				if(CJAX.HTTP_REQUEST_INSTANCE.readyState < 4) {
 				} else {
 					if(CJAX.handlers._handlerRequestStatus && CJAX.lib.isFn(CJAX.handlers._handlerRequestStatus)) {
-						response = CJAX.handlers._handlerRequestStatus(url, CJAX.HTTP_REQUEST_INSTANCE.status);
+						response = CJAX.handlers._handlerRequestStatus(url, CJAX.HTTP_REQUEST_INSTANCE.status, {});
 					} else{
-						response = CJAX._handlerRequestStatus(url, CJAX.HTTP_REQUEST_INSTANCE.status);
+						response = CJAX._handlerRequestStatus(url, CJAX.HTTP_REQUEST_INSTANCE.status,{});
 					}
 					if(CJAX._text) {
 						CJAX.loading();

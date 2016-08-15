@@ -13,8 +13,6 @@
  *   Written by: CJ Galindo
  *   Website: http://cjax.sourceforge.net                     $
  *   Email: cjxxi@msn.com
- *   Date: 2/12/2007                           $
- *   File Last Changed:  10/05/2013            $
  **####################################################################################################    */
 
 

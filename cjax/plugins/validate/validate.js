@@ -24,7 +24,8 @@ function validate(btn_id, url, fields)
 		return;
 	}
 	if(!btn_id) {
-		return console.error('Validate: Empty Submit Button');
+		console.error('Validate: Empty Submit Button');
+		return;
 	}
 	if(typeof $.validator =='undefined') {
 		/**

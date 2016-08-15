@@ -63,7 +63,7 @@ $ajax->click('#link_confirm', $ajax->call(array('call','confirm'), null,'Are you
 
 <div id="content">
 
-    The call() <span class="keyword">method</span> allows you to make ajax requests to ajax controllers.
+    The call() <span class="keyword">method</span> allows you to make ajax requests to <a href="controllers.php">ajax controllers</a>.
     You can pass multiple parameters to this method.
 
     <br />
