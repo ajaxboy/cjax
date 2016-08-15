@@ -5,7 +5,7 @@ header("Cache-Control: no-cache");
 header("Pragma: no-cache");
 
 define('AJAX_VIEW', true);
-require '../../cjax.php';
+require '../preemptive.php';
 
 $ajax = ajax();
 
