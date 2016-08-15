@@ -153,8 +153,8 @@ class ajax  {
 		
 		$files[] = "{$ajax_cd}/{$controller}.php";
 		$files[] = "{$ajax->controller_dir}/{$ajax_cd}/{$controller}.php";
-		$files[] = dirname(__file__)."/{$ajax_cd}/{$controller}.php";
-		
+		$files[] = dirname(dirname(__file__))."/{$ajax_cd}/{$controller}.php";
+
 		do {
 			if(file_exists($f = $files[key($files)])) {
 				require_once $f;
@@ -215,11 +215,16 @@ class ajax  {
 		if($class == $function && method_exists($class, $function)) {
 
 			//prevent constructor
+			$parent = get_parent_class($class);
 			$_class = 'empty_'.$class;
-			eval('class ' . $_class . ' extends '. $class .'{ public function __construct() {} }');
+			if($parent) {
+				eval('class ' . $_class . ' extends ' . $class . '{ public function __construct() { parent::__construct(); } }');
+			} else {
+				eval('class ' . $_class . ' extends ' . $class . '{ public function __construct() {} }');
+			}
+
 
 			$obj = new $_class();
-
 		} else {
 			$obj = new $class;
 		}
@@ -251,7 +256,6 @@ class ajax  {
 		return $c;
 	}
 }
-define('AJAX_CONTROLLER',1);
 require_once (rtrim(AJAX_WD, '/') . '/core/preemptive.php');
 $ajax = ajax();
 $controller = $ajax->input('controller');
