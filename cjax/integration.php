@@ -34,7 +34,7 @@ if(is_file('composer.json')) {
 
 
         copy('cjax/integration/default/ajax.php','application/libraries/ajax.php');
-        copy('cjax/integration/codeigniter/integration.php','ajax.php');
+        copy('cjax/integration/codeigniter/ajax.php','ajax.php');
         rcopy('cjax/','application/libraries/cjax');
         rcopy('cjax/integration/codeigniter/application/','application/');
 
