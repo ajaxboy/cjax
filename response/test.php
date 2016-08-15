@@ -6,8 +6,7 @@ class Test {
 	{
 		$ajax = ajax();
 
-		$ajax->success("Cjax was successfully installed.", 20);
-
+		$ajax->success("Cjax was installed successfully.", 13);
 
 		$ajax->response = "Version: {$ajax->version}";
 
