@@ -22,6 +22,7 @@
 include_once 'cjax_config.php';
 $ajax = ajax();
 
+
 /**
  * Handle mod_rewrite redirects
  */
@@ -31,18 +32,12 @@ if(isset($_SERVER['REDIRECT_QUERY_STRING']) && $_SERVER['REDIRECT_QUERY_STRING']
 	$_SERVER['QUERY_STRING'] = ltrim($_SERVER['PATH_INFO'],'/');
 }
 
-$file = 'ajax.php';
-if(isset($_SERVER['SCRIPT_NAME'])) {
-	$file = preg_replace("/.+\//",'', ltrim($_SERVER['SCRIPT_NAME'],'/'));
-}
-if(defined('AJAX_FILE') && AJAX_FILE !=$file) {
-	return true;
-}
 
 /**
  * Handle friendly URLS
  */
 if(isset($_SERVER['QUERY_STRING']) && $query = $_SERVER['QUERY_STRING']) {
+
 	$packet = explode('/' ,rtrim($query,'/'));
 	if(count($packet) == 1) {
 		$is_plugin = $packet[0];
@@ -84,7 +79,7 @@ if(isset($_SERVER['QUERY_STRING']) && $query = $_SERVER['QUERY_STRING']) {
 if(!$ajax->isAjaxRequest()) {
 
 	if(count(array_keys(debug_backtrace(false))) == 1
-		|| preg_replace('#.*\/#','', $_SERVER['SCRIPT_NAME']) == AJAX_FILE) {
+		|| (defined('AJAX_FILE') && preg_replace('#.*\/#','', $_SERVER['SCRIPT_NAME']) == AJAX_FILE)) {
 
 		if(!defined('AJAX_VIEW')) {
 			exit("Security Error. You cannot access this file directly.");
