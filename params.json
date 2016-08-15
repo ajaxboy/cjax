@@ -1,0 +1,6 @@
+{
+  "name": "Cjax",
+  "tagline": " Ajax Development Framework built in PHP and JavaScript",
+  "body": "### Welcome to GitHub Pages.\r\nCjax is an MVC (Model-View-Controller) oriented, lightweight (>100kb) ajax framework aimed at PHP applications and websites.\r\n\t\t\r\nCjax is architectured in a  self explanatory way, just by looking at the syntax you can tell right away what  is it doing, and what's best about it is that's all there is to it; there is no Javascript to produce or inline codes in your html, just plain and simple PHP.\r\n\t\t\r\nCjax Lives in harmony  with other frameworks and it complements PHP Frameworks such as Cakephp, CodeIgniter, Zend, and can be installed on any website or application in tops 5 minutes.\r\nIt is compatible with most of all modern web browsers, and it requires zero configuration. Forget Inline Javascript, forget snipets, forget buch of JavaScript. Cjax processes your page in Event Listeners, and it is fully compatible with jQuery and with PHPFrameworks such as CodeIgniter.\r\n\r\n\r\n### Support or Contact\r\nHaving trouble with Pages? Check out our [documentation](https://help.github.com/pages) or [contact support](https://github.com/contact) and we’ll help you sort it out.\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
