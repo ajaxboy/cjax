@@ -2462,12 +2462,12 @@ function CJAX_FRAMEWORK() {
 		if(CJAX.lib.isFn(_p) || typeof _p == 'object') {
 			CJAX.extend(_p, options, callbacks, settings);
 		} else {
-			console.log('pre options ??', _p);
 			CJAX.lib.loadCallback(CJAX.util.loaded(options.filename), function(){
 
-				if(CJAX.lib.isFn(window[plugin_name])) {
+				if(CJAX.lib.isFn(window[plugin_name]) || typeof window[plugin_name] == 'object') {
 					plugin = CJAX.extend(window[plugin_name], options, callbacks, settings);
 
+					console.log(plugin_name, 'option ?? - extended', window[plugin_name], typeof window[plugin_name]);
 				} else {
 					console.log(plugin_name, 'option ??', window[plugin_name], _p);
 				}
