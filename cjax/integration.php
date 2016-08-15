@@ -38,6 +38,8 @@ if(is_file('composer.json')) {
         copy('cjax/integration/default/ajax.php','application/libraries/ajax.php');
         copy('application/libraries/cjax/integration/codeigniter/integration.php','ajax.php');
 
+
+        unlink(__FILE__);
         exit(header("Location: ajax.php"));
     }
 }
