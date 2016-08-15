@@ -293,7 +293,7 @@ class CoreEvents extends cjaxFormat {
 	}
 
 
-	function flushCache($all = false)
+	public function flushCache($all = false)
 	{
 		if(!isset($_SESSION)) {
 			@session_start();
@@ -388,12 +388,16 @@ class CoreEvents extends cjaxFormat {
 		return array($_cache,$_preload);
 	}
 
-	function out()
+	static function out()
 	{
 		$data = self::prepareCommit();
+		$preload = null;
 
+		if($data[1]) {
+			$preload = $preload;
+		}
 
-		$out  = "<xml class='cjax'>".$data[0]."</xml><xml class='cjax'><preload>{$data[1]}</preload></xml>";
+		$out  = "<xml class='cjax'>".$data[0]."</xml><xml class='cjax'><preload>{$preload}</preload></xml>";
 		if(self::$wrapper) {
 			$out = str_replace('(!xml!)', $out, self::$wrapper);
 		}
@@ -466,7 +470,7 @@ class CoreEvents extends cjaxFormat {
 		}
 	}
 
-	function _processScachePlugin($v,$caller = null)
+	static function _processScachePlugin($v,$caller = null)
 	{
 		if(isset($v['options']) && is_array($v['options'])) {
 			$v['options'] =  self::mkArray($v['options']);

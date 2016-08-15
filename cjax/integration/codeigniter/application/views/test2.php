@@ -1,12 +1,20 @@
-<html>
+<?php
+
+$ajax = ajax();
+
+if($ajax->controller && $ajax->function) {
+
+    //calling file, response/test.php:test()
+    $ajax->call(array('test', 'test2handler'));
+}
+
+?>
+<!doctype html>
 <head>
-<?php echo ajax()->init();?>
+    <title>Test</title>
+    <?php echo $ajax->init();?>
 </head>
 <body>
-<div id='response'></div>
-
-<br style="margin: 100px;" />
-
-Continue to view: <a href="examples/">Examples</a>
+<div id="response"></div>
 </body>
 </html>

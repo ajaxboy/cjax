@@ -12,6 +12,7 @@ class Test {
 
 		$ajax->wait(3);
 
+		//center text some what
 		$ajax->response = array(
 			'style' => array(
 				'position' => 'relative',
@@ -27,6 +28,7 @@ class Test {
 
 		$ajax->wait(5);
 
+		//rumble screws with the position of the text, so lets re-center it
 		$ajax->response = array(
 			'style' => array(
 				'position' => 'relative',

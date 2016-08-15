@@ -489,7 +489,7 @@ class plugin extends ext {
 		return $_plugin;
 	}
 
-	function instanceTriggers($_plugin , $params)
+	static function instanceTriggers($_plugin , $params)
 	{
 		$ajax = ajax();
 		if(!$ajax->isAjaxRequest()) {
@@ -598,7 +598,7 @@ class plugin extends ext {
 	/**
 	 * get the full path of a plugin
 	 */
-	function file($name)
+	static function file($name)
 	{
 		$plugin_name = self::$initiatePlugins[$name]->file;
 
@@ -610,7 +610,7 @@ class plugin extends ext {
 		return $this->init;
 	}
 
-	function method($method)
+	static function method($method)
 	{
 		return self::$initiatePlugins[$method]->method;
 	}
