@@ -21,18 +21,34 @@ function rcopy($src, $dst, $rm = false) {
     if (file_exists ( $dst ))
         !$rm ||  rrmdir ( $dst );
 
-    //echo "Copying $src - $dst <br />";
+
     if (is_dir ( $src )) {
         is_dir($dst) || mkdir ( $dst );
+        echo "Copying Directory: $src - $dst <br />";
         $files = scandir ( $src );
         foreach ( $files as $file )
             if ($file != "." && $file != "..")
                 rcopy ( "$src/$file", "$dst/$file" );
-    } else if (file_exists ( $src ))
-        copy ( $src, $dst );
+    } else if (file_exists ( $src )) {
+        echo "Copying File: $src - $dst <br />";
+        if(!@copy ( $src, $dst )) {
+            echo "Could not copy file." . "<pre>".print_r(error_get_last(),1) . "</pre>";
+        }
+    }
+
+    function moveSelf()
+    {
+        $cwd = dirname(__FILE__);
+        $dir = dirname($cwd);
+        rcopy(sprintf('%s/cjax/integration/codeigniter/ajax.php', $dir), sprintf('%s/ajax.php', $dir));
+        @unlink(__file__);
+    }
 }
 
 if(is_file('composer.json')) {
+
+    $sanity_check = error_get_last();
+
     $composer = json_decode(file_get_contents('composer.json'));
 
     if($composer->name == 'codeigniter/framework') {
@@ -42,7 +58,6 @@ if(is_file('composer.json')) {
 
         $files = array(
             '%s/cjax/integration/default/ajax.php' => '%s/application/libraries/ajax.php',
-            '%s/cjax/integration/codeigniter/ajax.php' => '%s/ajax.php',
             '%s/cjax/integration/codeigniter/application/' => '%s/application/',
             '%s/cjax/' => '%s/application/libraries/cjax'
         );
@@ -56,7 +71,11 @@ if(is_file('composer.json')) {
         @unlink('README.md');
         rrmdir(sprintf('%s/cjax',$dir));
 
-        @unlink(__file__);
+        if(error_get_last() != $sanity_check) {
+            die(sprintf("The following error occured: <pre>%s</pre>", print_r(error_get_last(),1)));
+        }
+
+        register_shutdown_function('moveSelf');
 
         $url = $_SERVER['REQUEST_URI'];
         if(!$_SERVER['QUERY_STRING']) {
