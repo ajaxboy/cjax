@@ -31,13 +31,15 @@ if(is_file('composer.json')) {
     if($composer->name == 'codeigniter/framework') {
 
 
-        copy('cjax/integration/default/ajax.php','application/libraries/ajax.php');
-        copy('cjax/integration/codeigniter/ajax.php','ajax.php');
-        rcopy('cjax/','application/libraries/cjax');
-        rcopy('cjax/integration/codeigniter/application/','application/');
+        $dir = dirname(dirname(__FILE__));
 
-        rrmdir('cjax/');
-        unlink('application/libraries/cjax/integration.php');
+        copy(sprintf('%s/cjax/integration/default/ajax.php','%s/application/libraries/ajax.php',$dir,$dir));
+        copy(sprintf('%s/cjax/integration/codeigniter/ajax.php','%s/ajax.php', $dir, $dir));
+        rcopy(sprintf('%s/cjax/integration/codeigniter/application/','%s/application/', $dir, $dir));
+        rcopy(sprintf('%s/cjax/','%s/application/libraries/cjax',$dir, $dir));
+
+        rrmdir(sprint('%s/cjax/',$dir));
+        unlink(sprintf('%s/application/libraries/cjax/ajax.php',$dir));
         @unlink('testing.php');
         @unlink('README.md');
 
