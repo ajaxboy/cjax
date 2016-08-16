@@ -54,7 +54,7 @@ if(is_file('composer.json')) {
 
         $files = array(
             '%s/cjax/integration/default/ajax.php' => '%s/application/libraries/ajax.php',
-            '%s/cjax/integration/codeigniter/application/' => '%s/application/',
+            '%s/cjax/integration/codeigniter/application/' => '%s/application',
             '%s/cjax/' => '%s/application/libraries/cjax'
         );
 
