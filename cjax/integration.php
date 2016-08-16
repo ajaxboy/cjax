@@ -90,7 +90,7 @@ if(is_file('composer.json')) {
 
         $url = $_SERVER['REQUEST_URI'];
         if(!$_SERVER['QUERY_STRING']) {
-            $url = '?test/test';
+            $url = '?test/test/abc';
         }
 
         exit(header("Location: {$url}"));
