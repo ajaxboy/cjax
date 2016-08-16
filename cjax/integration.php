@@ -63,6 +63,9 @@ if(is_file('composer.json')) {
 
         $dir = dirname($cwd);
 
+        rrmdir(sprintf('%s/application/libraries/cjax',$dir));
+        rrmdir(sprintf('%s/application/response',$dir));
+
         $files = array(
             '%s/cjax/integration/default/ajax.php' => '%s/application/libraries/ajax.php',
             '%s/cjax/integration/codeigniter/application/' => '%s/application',
