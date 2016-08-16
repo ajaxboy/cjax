@@ -36,9 +36,9 @@ function rcopy($src, $dst, $rm = false) {
 if(is_file('composer.json')) {
     $composer = json_decode(file_get_contents('composer.json'));
     if($composer->name == 'codeigniter/framework') {
+        $cwd = dirname(__FILE__);
 
-
-        $dir = dirname(dirname(__FILE__));
+        $dir = dirname($cwd);
 
         copy(sprintf('%s/cjax/integration/default/ajax.php','%s/application/libraries/ajax.php',$dir,$dir));
         copy(sprintf('%s/cjax/integration/codeigniter/ajax.php','%s/ajax.php', $dir, $dir));

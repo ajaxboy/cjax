@@ -73,6 +73,8 @@ class CoreEvents extends cjaxFormat {
 	 */
 	public $fallback = false;
 
+	protected static $error_log;
+
 	private static $_loading;
 
 	public $post = array();
@@ -1618,6 +1620,8 @@ if (document.addEventListener) {
 				$level = $_level;
 			}
 		}
+		self::$error_log = init_get('error_log');
+		init_set('error_log', dirname(dirname(__FILE__)) .'/error.log');
 		return $level;
 	}
 }

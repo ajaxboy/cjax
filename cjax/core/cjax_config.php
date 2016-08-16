@@ -126,8 +126,6 @@ class CJAX extends CJAX_FRAMEWORK {
 			$core_dir = str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname(__FILE__));
 			$core_dir = ltrim($core_dir,'/');
 
-
-
 			if(is_dir($core_dir)) {
 				//cjax is located in a not so, usual place...
 				$script = str_replace($_SERVER['DOCUMENT_ROOT'], '', $_SERVER['SCRIPT_FILENAME']);
