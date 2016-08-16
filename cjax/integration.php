@@ -29,7 +29,7 @@ function rcopy($src, $dst, $rm = false) {
         $files = scandir ( $src );
         foreach ( $files as $file )
             if ($file != "." && $file != "..")
-                rcopy ( rtrim($src,'/') . '/' . $file, "$dst/$file" );
+                rcopy ( rtrim($src,'/') . '/' . $file, rtrim($dst,'/'). '/' . $file);
     } else if (file_exists ( $src )) {
         //echo "Copying File: $src - $dst <br />";
         if(is_file($dst)) {
@@ -65,7 +65,7 @@ if(is_file('composer.json')) {
         $files = array(
             '%s/cjax/integration/default/ajax.php' => '%s/application/libraries/ajax.php',
             '%s/cjax/integration/codeigniter/application/' => '%s/application',
-            '%s/cjax/' => '%s/application/libraries/cjax'
+            '%s/cjax/' => '%s/application/libraries/cjax/'
         );
 
         foreach( $files as $src => $dist) {
