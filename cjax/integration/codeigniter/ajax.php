@@ -43,10 +43,16 @@ if(!defined('AJAX_CD')) {
  */
 define('AJAX_VIEW', 1);
 
+
 /**
  * A request is being made
  */
 if(debug_backtrace(false)) {
+
+    /**
+     * Make this directory the main working directory.
+     */
+    chdir(dirname(__FILE__));
     return require_once 'application/libraries/ajax.php';
 }
 
