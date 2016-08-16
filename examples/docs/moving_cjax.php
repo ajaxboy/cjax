@@ -56,7 +56,7 @@ $ajax = ajax();
     If you want to move cjax directory from the root of your site. As of Cjax 5.9 that is possible.
     <br />
     You need to do two things.  Move the cjax directory to the location where you wish it to be moved and
-    update file ajax.php with the location of the new path.
+    update file ajax.php with the location of the new path. Keep in mind, that cjax needs to remain accessible through the URL.
     <br />
     Add this line on the top of file ajax.php:
 
