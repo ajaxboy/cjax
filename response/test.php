@@ -1,9 +1,18 @@
 <?php
 
 class Test {
-	
+
+	public function __construct() {}
+
 	function test($a = null, $b = null)
 	{
+		$step1 = true;
+		include 'cjax/integration/default/testing.php';
+	}
+
+	public function test2()
+	{
+
 		$ajax = ajax();
 
 		$ajax->success("Cjax was installed successfully.", 13);
@@ -38,6 +47,7 @@ class Test {
 
 		$ajax->response = "Go ahead, lets <a href='examples/'>Continue</a>";
 
-
+		$step2 = true;
+		include 'cjax/integration/default/testing.php';
 	}
 }
