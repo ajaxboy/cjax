@@ -44,7 +44,6 @@ function moveSelf()
 {
     $cwd = dirname(__FILE__);
     $dir = dirname($cwd);
-    rename(sprintf('%s/cjax/integration/codeigniter/ajax.php', $dir), sprintf('%s/ajax.php', $dir));
     rename(sprintf('%s/cjax/',$dir));
 }
 if(is_file('composer.json')) {
@@ -63,7 +62,8 @@ if(is_file('composer.json')) {
 
         $files = array(
             '%s/cjax/integration/default/ajax.php' => '%s/application/libraries/ajax.php',
-            '%s/cjax/integration/codeigniter/application/' => '%s/application',
+            '%s/cjax/integration/codeigniter/application/' => '%s/ajax.php',
+            '%s/cjax/integration/codeigniter/ajax.php' => '',
             '%s/cjax/' => '%s/application/libraries/cjax/'
         );
 
