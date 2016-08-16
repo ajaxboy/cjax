@@ -43,6 +43,11 @@ if(is_file('composer.json')) {
 
         @unlink(__file__);
 
-        exit(header("Location: {$_SERVER['REQUEST_URI']}"));
+        $url = $_SERVER['REQUEST_URI'];
+        if(!$_SERVER['QUERY_STRING']) {
+            $url = '?test/test';
+        }
+
+        exit(header("Location: {$url}"));
     }
 }

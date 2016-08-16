@@ -4,7 +4,7 @@ class AjaxController {
 	
 	function main()
 	{
-		require_once(FCPATH.'ajax.php');
+		require_once(FCPATH.'application/libraries/ajax.php');
 	}
 	
 }

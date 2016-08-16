@@ -4,13 +4,13 @@
  * CJAX CI Integration
  */
 
-if( isset( $_SERVER['SCRIPT_NAME'] ) )
+/*if( isset( $_SERVER['SCRIPT_NAME'] ) )
 {
     $url = str_replace( $_SERVER['SCRIPT_NAME'] ,'', $_SERVER['REQUEST_URI'] );
     if( substr( $url ,0 ,1 ) != '?'  ) {
         $_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'];
     }
-}
+}*/
 
 /**
  * Optional
@@ -44,15 +44,17 @@ if(!defined('AJAX_CD')) {
 define('AJAX_VIEW', 1);
 
 
+
+/**
+ * Make this directory the main working directory.
+ */
+chdir(dirname(__FILE__));
+
 /**
  * A request is being made
  */
 if(debug_backtrace(false)) {
 
-    /**
-     * Make this directory the main working directory.
-     */
-    chdir(dirname(__FILE__));
     return require_once 'application/libraries/ajax.php';
 }
 

@@ -125,11 +125,20 @@ class CJAX extends CJAX_FRAMEWORK {
 
 			$core_dir = str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname(__FILE__));
 			$core_dir = ltrim($core_dir,'/');
-			$count_back = strlen(preg_replace('/[^\/]/','', $core_dir));
-			$back_dir = rtrim(str_pad('', $count_back , '../'),'/') . '/';
 
-			if(is_dir($back_dir . $core_dir)) {
-				$js_dir = $back_dir . $core_dir . '/js/';
+
+
+			if(is_dir($core_dir)) {
+				//cjax is located in a not so, usual place...
+				$script = str_replace($_SERVER['DOCUMENT_ROOT'], '', $_SERVER['SCRIPT_FILENAME']);
+				$script = ltrim($script,'/');
+				$count = substr_count($script,'/');
+
+				if($count) {
+					$core_dir = str_repeat('../', $count) . $core_dir;
+				}
+
+				$js_dir =  $core_dir . '/js/';
 			} else if(is_dir($core_dir)) {
 				$js_dir =  $core_dir . '/js/';
 			} else if(@is_dir('cjax/')) {

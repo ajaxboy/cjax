@@ -36,7 +36,7 @@ if(isset($_SERVER['REDIRECT_QUERY_STRING']) && $_SERVER['REDIRECT_QUERY_STRING']
 /**
  * Handle friendly URLS
  */
-if(isset($_SERVER['QUERY_STRING']) && $query = $_SERVER['QUERY_STRING']) {
+if((isset($_SERVER['QUERY_STRING']) && $query = $_SERVER['QUERY_STRING']) || defined('AJAX_CONTROLLER')) {
 
 	$packet = explode('/' ,rtrim($query,'/'));
 	if(count($packet) == 1) {
