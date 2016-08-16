@@ -41,7 +41,7 @@ if(!defined('AJAX_CD')) {
  *
  * @constant AJAX_VIEW
  */
-//define('AJAX_VIEW', 1);
+define('AJAX_VIEW', 1);
 
 
 
