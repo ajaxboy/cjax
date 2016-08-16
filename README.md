@@ -40,14 +40,27 @@ wget -N https://github.com/ajaxboy/cjax/archive/master.zip ; unzip 'master.zip' 
 
 Any of these ways work, the bottom line is to get the files on the root (public directory) of your website.
 
-
-Note:  Cjax 5.9 has integration support for CodeIgniter built-in. There are other integrations being worked on, such as for Laravel.
-If you download this package and figure out how to integrate it anywhere else, contact me @ajaxboy  and we can work together to incorporate that.
+````
+                         INTEGRATION
+Note:  Cjax 5.9 has integration support for CodeIgniter built-in.
+For further CodeIgniter Cjax Docs visit CI's wiki: https://github.com/bcit-ci/CodeIgniter/wiki/Ajax-Framework-For-CodeIgniter
+There are other integrations being worked on, such as for Laravel.
+If you download this package and figure out how to integrate it anywhere else, contact me @ajaxboy
+and we can work together to incorporate that.
+````
 
 
 boom! you are set.
 
-Now, go to your website's url, and type in ajax.php?test/test in access file included in the Cjax package.
+
+Just go to:
+
+(replace http://yoursite.com with the base directory where your site resides)
+
+To this point you are done, successfully installing and using Cjax,  the screen should give further instructions.
+
+
+Now, go to your website's url,  http://yoursite.com/ajax.php?test/test
 
 You will see a test to prove that Cjax is working on your site, if you see a success message, then that means Cjax is fully
 operational on your website.
