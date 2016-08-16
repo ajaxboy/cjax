@@ -1620,7 +1620,7 @@ if (document.addEventListener) {
 				$level = $_level;
 			}
 		}
-		self::$error_log = init_get('error_log');
+		self::$error_log = ini_get('error_log');
 		init_set('error_log', dirname(dirname(__FILE__)) .'/error.log');
 		return $level;
 	}
