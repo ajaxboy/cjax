@@ -35,6 +35,9 @@ function rcopy($src, $dst, $rm = false) {
         if(is_file($dst)) {
             unlink($dst);
         }
+        if($src == __FILE__) {
+            return true;
+        }
         if(!copy ( $src, $dst )) {
            // echo "Could not copy file." . "<pre>" . print_r(error_get_last(), 1) . "</pre>";
         }
