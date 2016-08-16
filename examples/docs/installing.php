@@ -9,7 +9,7 @@ $ajax = ajax();
 <!doctype html>
 <head>
 	<link rel="stylesheet" type="text/css" href="../resources/css/user_guide.css" media="all">
-	<title>Template</title>
+		<title>Installing Cjax Framework</title>
 	<?php echo $ajax->init();?>
 </head>
 <body>
@@ -39,7 +39,7 @@ $ajax = ajax();
 		<td id="breadcrumb">
 			<a href="http://cjax.sourceforge.net/">Project Home</a> &nbsp;&#8250;&nbsp;
 			<a href="../">Demos</a> &nbsp;&#8250;&nbsp;
-			Template
+			Installing
 		</td>
 		<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="cjax.sourceforge.net/" />Search Project User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
 	</tr>
@@ -57,8 +57,8 @@ $ajax = ajax();
 	Here are the steps to get the framework installed on your site, or test installation:<br>
 
 	<br />
-	<p>
-	<b>Important Note:</p> Previously there were more than one package being distributed, the mains Cjax
+	<b>
+	<b>Important Note:</b> Previously there were more than one package being distributed, the mains Cjax
 		release and the CodeIgniter release. Starting from Cjax v 5.9, there will be only one single distribution
 		package. This new distribution package has built-in support for CodeIgniter, rather that a separate package.
 	</p>
