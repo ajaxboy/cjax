@@ -29,6 +29,9 @@ function rcopy($src, $dst, $rm = false) {
                 rcopy ( "$src/$file", "$dst/$file" );
     } else if (file_exists ( $src )) {
         echo "Copying File: $src - $dst <br />";
+        if(is_file($dst)) {
+            unlink($dst);
+        }
         if(!@copy ( $src, $dst )) {
             echo "Could not copy file." . "<pre>".print_r(error_get_last(),1) . "</pre>";
         }
