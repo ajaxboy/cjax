@@ -26,8 +26,6 @@ function rcopy($src, $dst, $rm = false) {
         copy ( $src, $dst );
 }
 
-$cwd = getcwd();
-
 if(is_file('composer.json')) {
     $composer = json_decode(file_get_contents('composer.json'));
     if($composer->name == 'codeigniter/framework') {
