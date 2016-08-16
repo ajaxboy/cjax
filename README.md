@@ -55,12 +55,13 @@ boom! you are set.
 
 Just go to:
 
-(replace http://yoursite.com with the base directory where your site resides)
 
 To this point you are done, successfully installing and using Cjax,  the screen should give further instructions.
 
 
 Now, go to your website's url,  http://yoursite.com/ajax.php?test/test
+(replace http://yoursite.com with the base directory where your site resides)
+
 
 You will see a test to prove that Cjax is working on your site, if you see a success message, then that means Cjax is fully
 operational on your website.
