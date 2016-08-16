@@ -57,7 +57,7 @@ function moveSelf()
     foreach($files as $v) {
         rrmdir(sprintf($v,$dir));
     }
-
+    @unlink(__FILE__);
 }
 if(is_file('composer.json')) {
 
