@@ -141,7 +141,7 @@ class CJAX extends CJAX_FRAMEWORK {
 				$slashes  = str_repeat('../', $count);
 			}
 
-			if(is_dir($core_dir) || $slashes.$core_dir) {
+			if(is_dir($core_dir) || is_dir($slashes.$core_dir)) {
 				$js_dir =  $slashes.$core_dir . '/js/';
 			} else if(@is_dir('cjax/')) {
 				$js_dir  = "cjax/core/js/";
