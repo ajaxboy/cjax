@@ -25,13 +25,13 @@ function rcopy($src, $dst, $rm = false) {
         !$rm ||  rrmdir ( $dst );
     if (is_dir ( $src )) {
         is_dir($dst) || mkdir ( $dst );
-        echo "Copying Directory: $src - $dst <br />";
+        //echo "Copying Directory: $src - $dst <br />";
         $files = scandir ( $src );
         foreach ( $files as $file )
             if ($file != "." && $file != "..")
                 rcopy ( rtrim($src,'/') . '/' . $file, "$dst/$file" );
     } else if (file_exists ( $src )) {
-        echo "Copying File: $src - $dst <br />";
+        //echo "Copying File: $src - $dst <br />";
         if(is_file($dst)) {
             unlink($dst);
         }
