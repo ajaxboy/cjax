@@ -17,9 +17,9 @@ Note: SourceForge is not longer the official download location.
 
 ## Instructions / Download 
 
-*NEW Instructions*
+**NEW Instructions**
 
-There are multipel ways you can install Cjax, here are several ways:
+There are multiple ways you can install Cjax, here are several ways:
 
 
 The old fasion way:
