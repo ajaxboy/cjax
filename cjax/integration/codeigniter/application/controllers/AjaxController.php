@@ -1,6 +1,6 @@
 <?php
 
-class AjaxController {
+class AjaxController extends  CI_Controller {
 	
 	function main()
 	{
