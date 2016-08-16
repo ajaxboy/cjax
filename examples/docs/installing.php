@@ -58,9 +58,9 @@ $ajax = ajax();
 
 	<br />
 	<p>
-	<b>Important Note:</p> Previously there were more than one different packages being distributed, the mains Cjax
-		release and the CodeIgniter release. Starting from Cjax 5.9, there will be only one single distribution
-		package. This new distribution package has built-in support for CodeIgniter.
+	<b>Important Note:</p> Previously there were more than one package being distributed, the mains Cjax
+		release and the CodeIgniter release. Starting from Cjax v 5.9, there will be only one single distribution
+		package. This new distribution package has built-in support for CodeIgniter, rather that a separate package.
 	</p>
 	<ul>
 		<li>
@@ -123,9 +123,3 @@ $ajax = ajax();
 
 </body>
 </html>
-
-<?php
-
-require_once 'ajax.php';
-?>
-
