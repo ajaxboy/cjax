@@ -52,7 +52,6 @@ if((isset($_SERVER['QUERY_STRING']) && $query = $_SERVER['QUERY_STRING'])) {
 	if($packet && count(array_keys($packet)) >= 2 && $packet[0] && $packet[1]) {
 		$controller  = $packet[0];
 		$function 	 = $packet[1];
-		$_REQUEST['cjax'] = time();
 		if(count(array_keys($packet)) > 2) {
 			unset($packet[0]);
 			unset($packet[1]);
@@ -75,7 +74,7 @@ if((isset($_SERVER['QUERY_STRING']) && $query = $_SERVER['QUERY_STRING'])) {
 		}
 	}
 
-	if($ajax->isAjaxRequest() || (defined('AJAX_VIEW') && in_array($controller, $allowed))) {
+	if($ajax->isAjaxRequest() || defined('AJAX_VIEW') ) {
 		$_REQUEST['controller'] = $controller;
 		$_REQUEST['function'] = $function;
 	}
