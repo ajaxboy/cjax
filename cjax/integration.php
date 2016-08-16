@@ -34,21 +34,27 @@ function rcopy($src, $dst, $rm = false) {
 
 if(is_file('composer.json')) {
     $composer = json_decode(file_get_contents('composer.json'));
+
     if($composer->name == 'codeigniter/framework') {
         $cwd = dirname(__FILE__);
 
         $dir = dirname($cwd);
 
-        rcopy(sprintf('%s/cjax/integration/default/ajax.php','%s/application/libraries/ajax.php',$dir,$dir));
-        rcopy(sprintf('%s/cjax/integration/codeigniter/ajax.php','%s/ajax.php', $dir, $dir));
-        rcopy(sprintf('%s/cjax/integration/codeigniter/application/','%s/application/', $dir, $dir));
-        rcopy(sprintf('%s/cjax/','%s/application/libraries/cjax',$dir, $dir));
+        $files = array(
+            '%s/cjax/integration/default/ajax.php' => '%s/application/libraries/ajax.php',
+            '%s/cjax/integration/codeigniter/ajax.php' => '%s/ajax.php',
+            '%s/cjax/integration/codeigniter/application/' => '%s/application/',
+            '%s/cjax/' => '%s/application/libraries/cjax'
+        );
 
+        foreach( $files $ $src => $dist) {
+            rcopy(sprintf($src, $dir), sprtinf($dist,$dir));
+        }
 
         unlink(sprintf('%s/application/libraries/cjax/ajax.php',$dir));
         @unlink('testing.php');
         @unlink('README.md');
-       rrmdir(sprintf('%s/cjax',$dir));
+        rrmdir(sprintf('%s/cjax',$dir));
 
         @unlink(__file__);
 
