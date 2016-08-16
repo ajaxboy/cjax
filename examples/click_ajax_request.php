@@ -56,10 +56,15 @@ $ajax->click("button1",$ajax->call("ajax.php?click_ajax_request/click_button/Hel
 
     <h3>Examples</h3>
 
+    <p>
     In this example there is a button you click on, and it <a href="triggers.php">triggers</a> an ajax request.
-    The request is routed to an <a href="controllers.php">ajax controller</a>
+    The request is routed to an <a href="docs/controllers.php">ajax controller</a>.
 
-    <br /><br />
+    The ajax controller goes a step further
+    and triggers a <a href="display_messages.php">success message</a>, right from the back-end, and that is see what you after you click the button.
+    </p>
+
+    <br />
     Code Used:
     <?php
     echo $ajax->code("

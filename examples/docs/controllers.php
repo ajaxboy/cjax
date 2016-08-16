@@ -54,7 +54,7 @@ $ajax = ajax();
     <!-- Text -->
 
     <h3>Ajax Controllers</h3>
-
+<p>
     An ajax controller is a php file with a class that handles ajax requests. The ajax controller allows you to consolidate
     all your ajax requests to a single place of origin. An ajax controller has also Cjax pre-loaded. You can easily start
     creating more functionality right from your ajax controller. All Cjax functions will work on an ajax controller as they work
@@ -62,8 +62,7 @@ $ajax = ajax();
     Ajax controllers not only let you serve ajax requests, but it also can generate further actions, right from the back-end. For example,
     from an ajax controller you can create ajax requests, update elements on the page, issue <a href="triggers.php">triggers</a>. Anything else
     you can do on the page load, you can also do in an ajax controller, you can even use Cjax plugins from an ajax controller. Imagine having this power, on every ajax call you make!.
-
-    <br />
+</p>
     <br />
     An ajax controller is automatically called when you route your ajax requests through file  ajax.php.
     <br />

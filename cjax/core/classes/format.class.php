@@ -88,7 +88,7 @@ class cjaxFormat {
 		} else if($type==self::CSS_LOADING) {
 			$css  = " cjax_process cjax_loading_f";
 		}
-		$data ="<div class='cjax_message cjax_message_type$css'>$text</div>\n";
+		$data ="<div class='cjax_message cjax_message_type$css'>$text</div>";
 		
 		return $data;
 	}
