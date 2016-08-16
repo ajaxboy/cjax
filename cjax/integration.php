@@ -21,7 +21,7 @@ function rcopy($src, $dst, $rm = false) {
     if (file_exists ( $dst ))
         !$rm ||  rrmdir ( $dst );
 
-    echo "Copying $src - $dst <br />";
+    //echo "Copying $src - $dst <br />";
     if (is_dir ( $src )) {
         is_dir($dst) || mkdir ( $dst );
         $files = scandir ( $src );
