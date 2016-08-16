@@ -61,9 +61,17 @@ $ajax = ajax();
     to create custom validation and routes. For changes to take effect you must rename file auth.default.php to auth.php.
     <br />
     <h3>Auth and Routing</h3>
-    file auth.php has a class with name "AjaxAuth", in this class there are two functions, one of them is "validation" - triggers at validation besore the
-    ajax request is finished and allows you to write your own custom validation code. The other function is "intercept" - provides you with a section
+    <p>
+    File auth.php has a class name "AjaxAuth", in this class there are two <span class="keyword">methods</span>,
+    one of them is "validation" - triggers at validation before the
+    ajax request is finished and allows you to write your own custom validation code.
+    The other function is "intercept" - provides you with a section
     where you can create your custom code to route ajax requests to other parts of your application.
+
+    <br /><br />
+    <b>Note:</b>  If a controller name is the same name as a Cjax plugin, the request will be routed to that controller plugin's directory.
+    </p>
+
     <h3>Auth</h3>
     Returning true indicates that the session is valid. If your return false the request will not proceed and will present an error.
     <?php
