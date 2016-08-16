@@ -50,7 +50,9 @@ function moveSelf()
     $dir = dirname($cwd);
 
     $files = array(
-        '%s/cjax'
+        '%s/cjax',
+        '%s/testing.php',
+        '%s/README.md'
     );
     foreach($files as $v) {
         rrmdir(sprintf($v,$dir));
@@ -78,9 +80,6 @@ if(is_file('composer.json')) {
         foreach( $files as $src => $dist) {
             rcopy(sprintf($src, $dir), sprintf($dist,$dir));
         }
-
-        @unlink('testing.php');
-        @unlink('README.md');
 
 
         if(error_get_last() != $sanity_check) {
