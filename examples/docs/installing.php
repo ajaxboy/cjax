@@ -75,9 +75,8 @@ $ajax = ajax();
 				<div style="margin-left: 15px;">
 		<pre>		 /
 		 cjax/
-		 controllers/
+		 response/
 		 ajax.php
-		 testing.php
 		</pre>
 				</div>
 			</ol>
@@ -87,12 +86,12 @@ $ajax = ajax();
 		</li>
 	</ul>
 	<h4>Testing your Cjax Installation</h4>
-	For security reasons you cannot access ajax.php directly on your browser, so we'll use testing.php to use. <br>
+	For security reasons you cannot access ajax.php directly on your browser, however there is a special case allowed for this test. <br>
 	Go onto your browser and type in the url for your site, plus testing.php?test/test, eg:  http://yoursite.com/ajax.php?test/test
 	<br>
-	If you see the text "Ajax View..." on your browser, that means you have successfully installed and tested the ajax framework.
+	You will see further confirmation on that page, and instructions.
 	<br>
-	You may find the text in file controllers/test.php in function test(). If your installation was successful you may delete file testing.php.
+	You may find the text in file response/test.php in function test(). If your installation was successful you may delete file test.php.
 
 
 
