@@ -11,7 +11,10 @@ function rrmdir($dir) {
             }
         }
         if(!@rmdir($dir)) {
-            echo "Could not remove directory $dir <br />";
+            chmod($dir,777);
+            if(!@rmdir($dir)) {
+                echo "Could not remove directory $dir <br />";
+            }
         }
     } else if (file_exists($dir)) {
         unlink($dir);
@@ -35,7 +38,10 @@ function rcopy($src, $dst, $rm = false) {
             unlink($dst);
         }
         if(!@copy ( $src, $dst )) {
-            echo "Could not copy file." . "<pre>".print_r(error_get_last(),1) . "</pre>";
+            chmod($dst,777);
+            if(!@copy ( $src, $dst )) {
+                echo "Could not copy file." . "<pre>" . print_r(error_get_last(), 1) . "</pre>";
+            }
         }
     }
 }
