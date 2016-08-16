@@ -56,12 +56,13 @@ $ajax = ajax();
     <h2>Troubleshooting</h2>
 
     <h3>Strict Standard</h3>
-    Strict Stadards turned on is one of the most common casuses for Cjax not working after the release of PHP 5.4.
+    Strict Stadards turned on is one of the most common causes for Cjax not working after the release of PHP 5.4.
     for Cjax version < 5.8 (5.7 and before), this of course broke many sites.
     <br />
-    Cjax 5.8 added support to rid of this issue by changing this setting on the fly, it seems that this fixed the issue for everyone.
-    As this has rarely been reported anyone.
-    Cjax 5.9+ is strict standards complian.
+    Cjax 5.8 added support to rid of this issue by changing this setting on the fly. It seems that this fixed the issue for everyone.
+    As this has rarely been reported anymore.
+    Cjax 5.9+ is strict standards compliant, and shouldn't need the on-the-fly setting change anymore, though the fix will remain until
+    we are sure.
     <br />
     <h3>Fallback</h3>
     There is an options that allows you to switch how the data is tranfered across over to JavaScript. If you are  experiencing
