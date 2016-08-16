@@ -14,15 +14,14 @@ function rrmdir($dir) {
     } else if (file_exists($dir)) {
         unlink($dir);
     }
-    if (is_dir($dir)) {
-        rmdir($dir);
-    }
 }
 
 // Function to Copy folders and files
 function rcopy($src, $dst, $rm = false) {
     if (file_exists ( $dst ))
         !$rm ||  rrmdir ( $dst );
+
+    echo "Copying $src - $dst <br />";
     if (is_dir ( $src )) {
         is_dir($dst) || mkdir ( $dst );
         $files = scandir ( $src );
@@ -40,8 +39,8 @@ if(is_file('composer.json')) {
 
         $dir = dirname($cwd);
 
-        copy(sprintf('%s/cjax/integration/default/ajax.php','%s/application/libraries/ajax.php',$dir,$dir));
-        copy(sprintf('%s/cjax/integration/codeigniter/ajax.php','%s/ajax.php', $dir, $dir));
+        rcopy(sprintf('%s/cjax/integration/default/ajax.php','%s/application/libraries/ajax.php',$dir,$dir));
+        rcopy(sprintf('%s/cjax/integration/codeigniter/ajax.php','%s/ajax.php', $dir, $dir));
         rcopy(sprintf('%s/cjax/integration/codeigniter/application/','%s/application/', $dir, $dir));
         rcopy(sprintf('%s/cjax/','%s/application/libraries/cjax',$dir, $dir));
 
