@@ -48,7 +48,7 @@ if(is_file('composer.json')) {
         );
 
         foreach( $files as $src => $dist) {
-            rcopy(sprintf($src, $dir), sprtinf($dist,$dir));
+            rcopy(sprintf($src, $dir), sprintf($dist,$dir));
         }
 
         unlink(sprintf('%s/application/libraries/cjax/ajax.php',$dir));
