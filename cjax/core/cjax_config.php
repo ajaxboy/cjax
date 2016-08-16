@@ -123,22 +123,26 @@ class CJAX extends CJAX_FRAMEWORK {
 		
 		if(!$js_dir = $ajax->config->js_path) {
 
-			$core_dir = str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname(__FILE__));
-			$core_dir = ltrim($core_dir,'/');
+			$script_name = explode('/', dirname($_SERVER['SCRIPT_FILENAME']));
 
-			if(is_dir($core_dir)) {
-				//cjax is located in a not so, usual place...
-				$script = str_replace($_SERVER['DOCUMENT_ROOT'], '', $_SERVER['SCRIPT_FILENAME']);
-				$script = ltrim($script,'/');
-				$count = substr_count($script,'/');
+			$count = 0;
+			$slashes  = null;
+			do  {
+				$new = implode('/', $script_name);
 
-				if($count) {
-					$core_dir = str_repeat('../', $count) . $core_dir;
+				if(strpos(dirname(__FILE__), $new) !== false) {
+					$core_dir = ltrim(str_replace($new, '', dirname(__FILE__)),'/');
+					break;
 				}
+				$count ++;
+			} while(array_pop($script_name));
 
-				$js_dir =  $core_dir . '/js/';
-			} else if(is_dir($core_dir)) {
-				$js_dir =  $core_dir . '/js/';
+			if($count) {
+				$slashes  = str_repeat('../', $count);
+			}
+
+			if(is_dir($core_dir) || $slashes.$core_dir) {
+				$js_dir =  $slashes.$core_dir . '/js/';
 			} else if(@is_dir('cjax/')) {
 				$js_dir  = "cjax/core/js/";
 			} else if(@is_dir('core/js/')) {

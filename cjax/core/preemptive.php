@@ -36,7 +36,7 @@ if(isset($_SERVER['REDIRECT_QUERY_STRING']) && $_SERVER['REDIRECT_QUERY_STRING']
 /**
  * Handle friendly URLS
  */
-if((isset($_SERVER['QUERY_STRING']) && $query = $_SERVER['QUERY_STRING']) || defined('AJAX_CONTROLLER')) {
+if((isset($_SERVER['QUERY_STRING']) && $query = $_SERVER['QUERY_STRING'])) {
 
 	$packet = explode('/' ,rtrim($query,'/'));
 	if(count($packet) == 1) {
@@ -89,9 +89,8 @@ if(!$ajax->isAjaxRequest()) {
 	if(count(array_keys(debug_backtrace(false))) == 1
 		|| (defined('AJAX_FILE') && preg_replace('#.*\/#','', $_SERVER['SCRIPT_NAME']) == AJAX_FILE)) {
 
-		if(!defined('AJAX_VIEW')) {
+		if(!defined('AJAX_VIEW') && $ajax->controller !='integration') {
 			exit("Security Error. You cannot access this file directly.");
 		}
 	}
 }
-
