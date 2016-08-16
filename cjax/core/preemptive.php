@@ -75,7 +75,7 @@ if((isset($_SERVER['QUERY_STRING']) && $query = $_SERVER['QUERY_STRING'])) {
 		}
 	}
 
-	if($ajax->isAjaxRequest() || defined('AJAX_VIEW') || in_array($controller, $allowed)) {
+	if($ajax->isAjaxRequest() || (defined('AJAX_VIEW') && in_array($controller, $allowed))) {
 		$_REQUEST['controller'] = $controller;
 		$_REQUEST['function'] = $function;
 	}
