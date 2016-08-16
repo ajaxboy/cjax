@@ -23,8 +23,9 @@ There are multiple ways you can install Cjax, here are several ways:
 
 
 The old fasion way:
+```
 Download zip from git 
-
+```
 
 git clone:
 ```
