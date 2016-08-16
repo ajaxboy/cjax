@@ -7,7 +7,7 @@ function rrmdir($dir) {
         $files = scandir($dir);
         foreach ($files as $file) {
             if ($file != "." && $file != "..") {
-                rrmdir("$dir/$file");
+                rrmdir(rtrim($dir,'/') . '/' . $file);
             }
         }
         if(!@rmdir($dir)) {
@@ -31,7 +31,7 @@ function rcopy($src, $dst, $rm = false) {
         $files = scandir ( $src );
         foreach ( $files as $file )
             if ($file != "." && $file != "..")
-                rcopy ( "$src/$file", "$dst/$file" );
+                rcopy ( rtrim($src,'/') . '/' . $file, "$dst/$file" );
     } else if (file_exists ( $src )) {
         echo "Copying File: $src - $dst <br />";
         if(is_file($dst)) {
