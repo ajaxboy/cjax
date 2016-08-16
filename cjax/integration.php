@@ -11,7 +11,7 @@ function rrmdir($dir) {
             }
         }
         if(!@rmdir($dir)) {
-            echo "Could not remove directory $dir <br />";
+           // echo "Could not remove directory $dir <br />";
 
         }
     } else if (file_exists($dir)) {
@@ -36,7 +36,7 @@ function rcopy($src, $dst, $rm = false) {
             unlink($dst);
         }
         if(!@copy ( $src, $dst )) {
-            echo "Could not copy file." . "<pre>" . print_r(error_get_last(), 1) . "</pre>";
+           // echo "Could not copy file." . "<pre>" . print_r(error_get_last(), 1) . "</pre>";
         }
     }
 }
@@ -74,11 +74,11 @@ if(is_file('composer.json')) {
 
         unlink(sprintf('%s/application/libraries/cjax/ajax.php',$dir));
         @unlink('testing.php');
-        //@unlink('README.md');
+        @unlink('README.md');
 
 
         if(error_get_last() != $sanity_check) {
-            die(sprintf("The following error occured: <pre>%s</pre>", print_r(error_get_last(),1)));
+           // die(sprintf("The following error occured: <pre>%s</pre>", print_r(error_get_last(),1)));
         }
 
         register_shutdown_function('moveSelf');
