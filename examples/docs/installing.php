@@ -57,7 +57,7 @@ $ajax = ajax();
 	Here are the steps to get the framework installed on your site, or test installation:<br>
 
 	<br />
-	<b>
+	<p>
 	<b>Important Note:</b> Previously there were more than one package being distributed, the mains Cjax
 		release and the CodeIgniter release. Starting from Cjax v 5.9, there will be only one single distribution
 		package. This new distribution package has built-in support for CodeIgniter, rather that a separate package.
