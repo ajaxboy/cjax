@@ -38,7 +38,7 @@ if(is_file('composer.json')) {
         rcopy(sprintf('%s/cjax/integration/codeigniter/application/','%s/application/', $dir, $dir));
         rcopy(sprintf('%s/cjax/','%s/application/libraries/cjax',$dir, $dir));
 
-        rrmdir(sprint('%s/cjax/',$dir));
+        rrmdir(sprintf('%s/cjax/',$dir));
         unlink(sprintf('%s/application/libraries/cjax/ajax.php',$dir));
         @unlink('testing.php');
         @unlink('README.md');
