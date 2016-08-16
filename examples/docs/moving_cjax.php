@@ -9,7 +9,7 @@ $ajax = ajax();
 <!doctype html>
 <head>
     <link rel="stylesheet" type="text/css" href="../resources/css/user_guide.css" media="all">
-    <title>Cjax Setup</title>
+    <title>Moving Cjax directory</title>
     <?php echo $ajax->init();?>
 </head>
 <body>
@@ -39,7 +39,7 @@ $ajax = ajax();
         <td id="breadcrumb">
             <a href="http://cjax.sourceforge.net/">Project Home</a> &nbsp;&#8250;&nbsp;
             <a href="../">Demos</a> &nbsp;&#8250;&nbsp;
-            Cjax Setup
+            Moving Cjax directory
         </td>
         <td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="cjax.sourceforge.net/" />Search Project User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
     </tr>
@@ -52,51 +52,33 @@ $ajax = ajax();
 
 
     <!-- Text -->
-
-    <h2>Iniciating the JavaScript Engine</h2>
+    <h3>Moving Cjax directory</h3>
+    If you want to move cjax directory from the root of your site. As of Cjax 5.9 that is possible.
     <br />
-    To initialize the JavaScript library included with Cjax,  have the $ajax Object do it for you, <br />
+    You need to do two things.  Move the cjax directory to the location where you wish it to be moved and
+    update file ajax.php with the location of the new path.
     <br />
+    Add this line on the top of file ajax.php:
 
+    <?php
+       echo $ajax->code("
 
-    <br />
+        define('AJAX_WD', '/new/location/where/cjax/is');
 
-    <h3>Examples</h3>
+        ", 'HTML');
+    ?>
 
+    That should be all you need.
 
-    simply in the HEAD of the HTML page do:
-    <?php echo $ajax->code("
-<head>
-<?php echo \$ajax->init(); ?>
-</head>
-", false);?>
-    <br />
-    $ajax->init() will print the script tag of cjax.js.
-    <br /><br />
-    As of version 5.0-beta, By default the minified version of cjax.js is invoked, but you can change that by passing false in the init function, eg:  $ajax->init(false), then the full version would be used.
-    <br /><br />
-    - OR -
-    <br /><br />
-    As of 5.0-RC2 you can also do this:
-    <br /><br />
-    <?php echo $ajax->code("
-<head>
-<?php echo \$ajax->init('http://yoursite/url/here/'); ?>
-</head>
-", false);?>
-    Where it says "http://yoursite/url/here/" Enter the path where ajax.php is, but withouth the "ajax.php".
-    <br /><br />
-    - OR - a work around for using init() function -
-    <br /><br />
-    Simply include file in the head of your HTML document:
-    <?php echo $ajax->code("
-<script id='cjax_lib' type='text/javascript' src='cjax/core/js/cjax.min.js'></script>
-", false);?>
+    <p>
+        <b>Note:</b>  This could helpful with the creation of new integrations with other products/projects or frameworks.
+        <br />
+        Simply move the directory where otherwise the other product/project  requires it.  Also ajax.php is
+        can be moved.
+        <br />
+        If you are interested in seeing how integrations work, look inside cjax/integration.php
 
-    Make sure that the path is correct. You may want to try to visit it on the browser and that it is actually loading something.
-    If it isn't the the issue is that something on your server is blocking the URL, mod-rewrite.
-
-
+    </p>
 
     <!-- Code Used -->
 
