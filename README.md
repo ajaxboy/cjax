@@ -5,22 +5,48 @@
 +    PHP 5.2+
 
 
-## 5.9
+
+## Cjax 5.9
 
 Version 5.9  brings scalabity improvements and processing power to work on heave duty ajax. It improves upon caching and processing core functionality, plugin processing, speed. So you definitely want this version (currently on the master branch)
+
+
+
+Note: SourceForge is not longer the official download location.
 
 
 ## Instructions / Download 
 
 *NEW Instructions*
 
+There are multipel ways you can install Cjax, here are several ways:
+
+
+The old fasion way:
 Download zip from git 
 
-or 
 
+git clone:
+```
 git clone https://github.com/ajaxboy/cjax.git
+```
 
-boom! you are set. First thing you want to do is go to the examples directory on your install. Review the examples, and the code samples, and start using, as simple as that. Have any question? Open an issue here on the issues tab. 
+
+Use wget in terminal:
+```
+wget -N https://github.com/ajaxboy/cjax/archive/master.zip ; unzip 'master.zip' ;  cp -rf cjax-master/* . ; rm -fr cjax-master ;  rm master.zip
+```
+
+Any of these ways work, the bottom line is to get the files on the root (public directory) of your website.
+
+
+Note:  Cjax 5.9 has integration support for CodeIgniter built-in. There are other integrations being worked on, such as for Laravel.
+If you download this package and figure out how to integrate it anywhere else, contact me @ajaxboy  and we can work together to incorporate that.
+
+
+boom! you are set. First thing you want to do is go to the examples directory on your install.
+
+Review the examples, and the code samples, and start using, as simple as that. Have any question? Open an issue here on the issues tab.
 
 Review the examples below on this readme. If you can understand these examples from the get-go, you're absoletely going to love Cjax because there isn't much more needed to be done, except adding a ajax controller.
 
@@ -39,6 +65,9 @@ it is the most seemless integration of PHP and JavaScript that you can find.
 
 Unlike others libraries that try to mimic Cjax, for cjax there is no 'client' side involved, there is no inlines codes, there is no process request, all you need is your php code and that's it.
  
+
+##
+
 
 
 
