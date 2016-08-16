@@ -10,7 +10,9 @@ function rrmdir($dir) {
                 rrmdir("$dir/$file");
             }
         }
-        rmdir($dir);
+        if(!@rmdir($dir)) {
+            echo "Could not remove directory $dir <br />";
+        }
     } else if (file_exists($dir)) {
         unlink($dir);
     }
@@ -68,7 +70,7 @@ if(is_file('composer.json')) {
         unlink(sprintf('%s/application/libraries/cjax/ajax.php',$dir));
         @unlink('testing.php');
         @unlink('README.md');
-        rrmdir(sprintf('%s/cjax',$dir));
+        //rrmdir(sprintf('%s/cjax',$dir));
 
         if(error_get_last() != $sanity_check) {
             die(sprintf("The following error occured: <pre>%s</pre>", print_r(error_get_last(),1)));
