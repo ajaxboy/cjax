@@ -45,11 +45,20 @@ Note:  Cjax 5.9 has integration support for CodeIgniter built-in. There are othe
 If you download this package and figure out how to integrate it anywhere else, contact me @ajaxboy  and we can work together to incorporate that.
 
 
-boom! you are set. First thing you want to do is go to the examples directory on your install.
+boom! you are set.
 
-Review the examples, and the code samples, and start using, as simple as that. Have any question? Open an issue here on the issues tab.
+Now, go to your website's url, and type in ajax.php?test/test in access file included in the Cjax package.
 
-Review the examples below on this readme. If you can understand these examples from the get-go, you're absoletely going to love Cjax because there isn't much more needed to be done, except adding a ajax controller.
+You will see a test to prove that Cjax is working on your site, if you see a success message, then that means Cjax is fully
+operational on your website.
+
+
+Review the examples, and the code samples, and start using, as simple as that.
+
+Have any question? Open an issue here on the issues tab or contact me @ajaxboy, I will be happy to assit.
+
+Please do note that I do offer profesional installation, should you need that service.
+
 
 
 ## Introduction
@@ -67,8 +76,19 @@ it is the most seemless integration of PHP and JavaScript that you can find.
 Unlike others libraries that try to mimic Cjax, for cjax there is no 'client' side involved, there is no inlines codes, there is no process request, all you need is your php code and that's it.
  
 
-##
+##Background##
 
+Cjax allows you to write ajax in the PHP side, it gives you many tools that you can use to make your deveploment experience a smooth ride. It also saves you tons of time from re-inventing the wheel, - you see, I spent years perfecting this tool, now you can just come and use and not spend all that time - and money! - not to mention the research, gone overboard.
+
+Cjax comes with over 70 examples/samples/docs and APIs that can let you do amazing things with a single line of code, that otherwise would take you hours or days, or even weeks!. You know, the usual success message, to lightbox, submitting forms with ajax, and uploading files with ajax, you know - the usual stuff that you would use in your application or website, each one of these things I just mentioned took me days and weeks to code, and overtime they have improved, Cjax has become an e-cosystem of ajax functions.
+
+Cjax consolidates all your ajax code in a single place. Making your code more secure. Cjax also has only one point of access. Making your application or website very secure. Cjax lets you use classes and routes your ajax calls through a dispatcher to reach your ajax controller. Includes a callback system, that lets you do ajax requests when the page loads, but also, when you trigger your ajax request once on the server, it lets you run more ajax code, and interact with your application or website right from the back-end, right from your controller. This gives you the freedom to go back and forth, from one ajax method to the other, working in harmony. Also includes a way that you can maninupate all the elements on the page, right from the back-end, all done within one ajax call.
+
+Cjax is a piece of machinery to build ajax features . Uses unconventional methods to push the bounderies in allowing you to just write very few short lines of code .
+
+Cjax has the power to allow you to to call and use your existing JavaScript, without making changes to it. It really lets express yourself in the way that you want to express. You have old, or new custom JavaScript, execute it with Cjax - you can pass data to your existing functions, instanciate them, right from the back-end. You use other 3rd party libraries or code - no problem. Cjax lets you execute it, and pass data to it, right from the back-end, you can call them as many times as you want, no limit, only the sky. You can pass from simple strings, or integers, to entire arrays or objects. Guess what, As a matter of fact, that is what Cjax's plugins are, 'plugins' is just a formality, but what they really are - custom code ran with Cjax. If you run your custom code, you already built a Cjax plugin!
+
+Cjax code is simple easy to understand, and uses convention over configuration approach to do the most, with less.
 
 
 
