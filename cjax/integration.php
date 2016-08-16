@@ -43,20 +43,19 @@ function rcopy($src, $dst, $rm = false) {
         }
     }
 }
+
 function moveSelf()
 {
     $cwd = dirname(__FILE__);
     $dir = dirname($cwd);
 
     $files = array(
-
+        '%s/cjax'
     );
-
-    if($files) {
-        foreach ($files as $src => $dist) {
-            rcopy(sprintf($src, $dir), sprintf($dist, $dir));
-        }
+    foreach($files as $v) {
+        rrmdir(sprintf($v,$dir));
     }
+
 }
 if(is_file('composer.json')) {
 
