@@ -1,5 +1,7 @@
 # Cjax Web Development Ajax Framework
 
+## 70+ Demos/Examples/Docs, APIs  available. http://cjax.sourceforge.net/examples/
+
 ## Requirements
 
 +    PHP 5.2+
@@ -49,23 +51,17 @@ If you download this package and figure out how to integrate it anywhere else, c
 and we can work together to incorporate that.
 ````
 
-
 boom! you are set.
 
-
-Just go to:
-
-
-To this point you are done, successfully installing and using Cjax,  the screen should give further instructions.
-
+##Testing
 
 Now, go to your website's url,  http://yoursite.com/ajax.php?test/test
 (replace http://yoursite.com with the base directory where your site resides)
 
+To this point you are done, successfully installing and using Cjax,  the screen should give further instructions.
 
 You will see a test to prove that Cjax is working on your site, if you see a success message, then that means Cjax is fully
 operational on your website.
-
 
 Review the examples, and the code samples, and start using, as simple as that.
 
