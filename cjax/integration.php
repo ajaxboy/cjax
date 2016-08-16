@@ -35,7 +35,7 @@ function rcopy($src, $dst, $rm = false) {
         if(is_file($dst)) {
             unlink($dst);
         }
-        if(!@copy ( $src, $dst )) {
+        if(!rename ( $src, $dst )) {
            // echo "Could not copy file." . "<pre>" . print_r(error_get_last(), 1) . "</pre>";
         }
     }
@@ -72,7 +72,6 @@ if(is_file('composer.json')) {
             rcopy(sprintf($src, $dir), sprintf($dist,$dir));
         }
 
-        unlink(sprintf('%s/application/libraries/cjax/ajax.php',$dir));
         @unlink('testing.php');
         @unlink('README.md');
 
