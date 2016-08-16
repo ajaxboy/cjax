@@ -20,8 +20,6 @@ function rrmdir($dir) {
 function rcopy($src, $dst, $rm = false) {
     if (file_exists ( $dst ))
         !$rm ||  rrmdir ( $dst );
-
-
     if (is_dir ( $src )) {
         is_dir($dst) || mkdir ( $dst );
         echo "Copying Directory: $src - $dst <br />";
@@ -35,16 +33,14 @@ function rcopy($src, $dst, $rm = false) {
             echo "Could not copy file." . "<pre>".print_r(error_get_last(),1) . "</pre>";
         }
     }
-
-    function moveSelf()
-    {
-        $cwd = dirname(__FILE__);
-        $dir = dirname($cwd);
-        rcopy(sprintf('%s/cjax/integration/codeigniter/ajax.php', $dir), sprintf('%s/ajax.php', $dir));
-        @unlink(__file__);
-    }
 }
-
+function moveSelf()
+{
+    $cwd = dirname(__FILE__);
+    $dir = dirname($cwd);
+    rcopy(sprintf('%s/cjax/integration/codeigniter/ajax.php', $dir), sprintf('%s/ajax.php', $dir));
+    @unlink(__file__);
+}
 if(is_file('composer.json')) {
 
     $sanity_check = error_get_last();
