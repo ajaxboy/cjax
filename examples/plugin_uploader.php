@@ -316,20 +316,8 @@ add the tag as shown above.
 </tbody>
 </table>
 
-<h2>Distribution</h2>
-
-<p>As you already know, this is a <a href="http://cjax.sourceforge.net/">Cjax</a> plugin, and requires Cjax installed on your site for it to work. </p>
-
-
-<h2>Download</h2>
-
-<ul>
-	<a target="_blank" href="http://sourceforge.net/projects/cjax/files/Plugins/">http://sourceforge.net/projects/cjax/files/Plugins/</a>
-</ul>
-
 <h2>Professional Installation</h2>
-If you don't feel like doing it yourself,  there is a professional installation service available. If you would like me to personally get it working and implemented on your website or application, I could do that for a fee of $199 USD.
-This does not include any custom styling or  database inserts, that would be extra. <a href='mailto:&#099;&#106;&#120;&#120;&#105;&#050;&#049;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;'>Contact me</a> if you are interested.
+Professional installation service available. <a href='mailto:&#099;&#106;&#120;&#120;&#105;&#050;&#049;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;'>Contact me</a> if you are interested.
 
 <!-- END CONTENT -->
 

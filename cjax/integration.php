@@ -93,6 +93,6 @@ if(is_file('composer.json')) {
             $url = '?test/test/abc';
         }
 
-        exit(header("Location: {$url}"));
+        //exit(header("Location: {$url}"));
     }
 }
