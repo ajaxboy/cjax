@@ -65,13 +65,13 @@ $ajax = ajax();
     we are sure.
     <br />
     <h3>Fallback</h3>
-    There is an options that allows you to switch how the data is tranfered across over to JavaScript. If you are  experiencing
+    There is an option that allows you to switch how the data is tranfered across over to JavaScript. If you are  experiencing
     issues with commands not taking effect (while on page load) or with PHP SESSIONS, then you might want to use this :
 
     <?php echo $ajax->code("\$ajax->fallback = true;");?>
     This will print a script tag on the page instead of using  PHP SESSIONS to pass data.
     <br /><br />
-    This is only available as of 5.0 RC2+. You may also find file cjax/config.default.php, rename this file to config.php.
+    You may also find file cjax/config.default.php, rename this file to config.php.
     <br /> then find the option $config->fallback, and change it to true, this will apply the change globally.
 
 
@@ -88,6 +88,11 @@ $ajax = ajax();
     Follow the steps on <a href="Iniciating_the_JavaScript_Engine.php">Initiating the Js engine</a>.
 
 
+    <h2>Found a new problem?</h2>
+
+    Although Cjax works out of the box in 99% of the hosts where you use it, it is still posible something odd  might happen.
+    <br/>
+    You think you found a problem that prevents you from using Cjax? Let us know.
     <!-- Code Used -->
 
 
