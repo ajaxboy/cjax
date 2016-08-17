@@ -86,10 +86,9 @@ if((isset($_SERVER['QUERY_STRING']) && $query = $_SERVER['QUERY_STRING'])) {
 
 if(!$ajax->isAjaxRequest()) {
 
-	if(count(array_keys(debug_backtrace(false))) == 1
-		|| (defined('AJAX_FILE') && preg_replace('#.*\/#','', $_SERVER['SCRIPT_NAME']) == AJAX_FILE)) {
+	if(count(array_keys(debug_backtrace(false))) == 1) {
 
-		if(!defined('AJAX_VIEW') && $ajax->controller !='integration') {
+		if(!defined('AJAX_VIEW') && $ajax->controller !='test') {
 			exit("Security Error. You cannot access this file directly.");
 		}
 	}

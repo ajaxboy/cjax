@@ -13,7 +13,7 @@ $ajax->click("button1",$ajax->call("ajax.php?click_ajax_request/click_button/Hel
 <head>
     <link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
     <title>Simple ajax request binded to a button</title>
-    <?php echo $ajax->init();?>
+    <?php echo $ajax->init(false);?>
 </head>
 <body>
 <header>

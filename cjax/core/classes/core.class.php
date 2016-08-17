@@ -1621,7 +1621,7 @@ if (document.addEventListener) {
 			}
 		}
 		self::$error_log = ini_get('error_log');
-		ini_set('error_log', dirname(dirname(__FILE__)) .'/error.log');
+		ini_set('error_log', dirname(dirname(dirname(__FILE__))) .'/error.log');
 		return $level;
 	}
 }
