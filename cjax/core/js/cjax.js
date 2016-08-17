@@ -1325,6 +1325,10 @@ function CJAX_FRAMEWORK() {
 					console.log('Script was not found', element, caller, $callback.toString());
 					return ;
 				}
+				if(element.loaded) {
+					$callback();
+					return false;
+				}
 				if(typeof element == 'string') {
 					var raw_string = element;
 					element = CJAX.util.loaded(element);
@@ -1344,12 +1348,10 @@ function CJAX_FRAMEWORK() {
 							}, 500);
 						}
 					}
+					element.loaded = true;
 					return $callback();
 				}
-				if(element.loaded) {
-					$callback();
-					return false;
-				}
+
 
 				if($callback) {
 					if(CJAX.lib.isFn($callback)) {
