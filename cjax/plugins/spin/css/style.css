@@ -1,0 +1,90 @@
+/* Custom Stylesheet */
+body, html {
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+      background: #f4eedf;
+      text-align: center;
+      height: 100%;
+}
+
+body .header{
+  color: #fff;
+}
+
+.container {
+  float: left;
+  width: 100%;
+  height: 100%;
+}
+
+/* ALL DEMO */
+.main h1 {
+  color: #000;
+}
+
+
+/* DEMO 1 */
+.demo1 {
+  background: #1ABC9C; 
+}
+
+.demo1 h1 {
+  color: #fff;
+}
+
+.demo1 .main h1 {
+  font-size: 50px;
+}
+
+
+/* DEMO 2*/
+.demo2 {
+  background: #2ecc71; 
+}
+
+.demo2 h1 {
+  color: #fff;
+}
+
+.demo2 .main h1 {
+  font-size: 50px;
+}
+
+/* DEMO 3 */
+.demo3 {
+  background: #e74c3c; 
+}
+
+.demo3 h1 {
+  color: #fff;
+}
+
+.demo3 .main h1 {
+  font-size: 50px;
+}
+
+/* DEMO 4 */
+.demo4 {
+  background: #e67e22; 
+}
+
+.demo4 h1 {
+  color: #fff;
+}
+
+.demo4 .main h1 {
+  font-size: 50px;
+}
+
+/* DEMO 5 */
+.demo5 {
+  background: #2c85dd; 
+}
+
+.demo5 h1 {
+  color: #fff;
+}
+
+.demo5 .main h1 {
+  font-size: 50px;
+}

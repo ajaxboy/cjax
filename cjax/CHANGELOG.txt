@@ -2,7 +2,7 @@
 
 
 CJAX 5.9
-August 15 2016
+August 17 2016
 
 Improvements to the core system
 Improved overall scalability and heavy duty usage
@@ -12,7 +12,11 @@ Improved Examples & Docs
 Full built-in integration system, that allows built-in integrations rather than releasing different packages
 Codeigniter Integration built-in
 New function UpdateX()
-Many other updates that improve to the overvall system.
+Implemented payload system
+Improved JS plugin system tools
+Many other updates that improvements to the overvall system.
+
+
 
 
 CJAX 5.7, 5.8

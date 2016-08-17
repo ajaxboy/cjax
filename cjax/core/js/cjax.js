@@ -27,6 +27,7 @@ function CJAX_FRAMEWORK() {
 	this.debug = false;
 	this.DOMContentLoaded = false;
 	this.loaded = {};
+	this.payload = {};
 	this.handlers = {
 		handlerFileupload: function(form, url, funcRequestCallback) {},
 		handlerRequestStatus: function(url, request_status) {},
@@ -487,6 +488,12 @@ function CJAX_FRAMEWORK() {
 			},
 			cleanString: function(str) {
 				return str.toLowerCase().replace(/[^\w\s]/gi, '');
+			},
+			payload: function(file, data) {
+				if(typeof data == 'undefined') {
+					return CJAX.payload[CJAX.util.cleanString(file)];
+				}
+				CJAX.payload[CJAX.util.cleanString(file)] = data;
 			},
 			loaded: function(file, data) {
 				if(typeof data == 'undefined') {
@@ -1318,6 +1325,27 @@ function CJAX_FRAMEWORK() {
 					console.log('Script was not found', element, caller, $callback.toString());
 					return ;
 				}
+				if(typeof element == 'string') {
+					var raw_string = element;
+					element = CJAX.util.loaded(element);
+
+					if(!element) {
+						if(!CJAX.util.payload(raw_string)) {
+							//object hasnt beed added to payload
+							console.warn('Script was not found:', raw_string, CJAX.loaded);
+							return false;
+						} else {
+							if(CJAX.debug) {
+								console.info('Payload Found:', raw_string, CJAX.loaded);
+							}
+							//object is already registered that is going to load, it is a matter of time.
+							return setTimeout( function() {
+								CJAX.lib.loadCallback(raw_string, $callback, caller);
+							}, 500);
+						}
+					}
+					return $callback();
+				}
 				if(element.loaded) {
 					$callback();
 					return false;
@@ -1348,7 +1376,7 @@ function CJAX_FRAMEWORK() {
 
 							giveup = function(time) {
 								setTimeout(function() {
-									if(!element.loaded) {
+									if(typeof element == 'object' && !element.loaded) {
 										//if(CJAX.debug) {
 										console.log('Forcing loadCallback', element,'to complete.');
 										//}
@@ -2181,7 +2209,7 @@ function CJAX_FRAMEWORK() {
 					}
 					return false;
 				}
-
+				CJAX.util.payload(f, true);
 				var head = CJAX.elem_docs( 'head' )[0];
 				var file_ext = CJAX.util.get.extension(script);
 				if(file_ext=='.css') {
@@ -2466,8 +2494,6 @@ function CJAX_FRAMEWORK() {
 
 				if(CJAX.lib.isFn(window[plugin_name]) || typeof window[plugin_name] == 'object') {
 					plugin = CJAX.extend(window[plugin_name], options, callbacks, settings);
-
-					console.log(plugin_name, 'option ?? - extended', window[plugin_name], typeof window[plugin_name]);
 				} else {
 					console.log(plugin_name, 'option ??', window[plugin_name], _p);
 				}
@@ -2753,36 +2779,98 @@ function CJAX_FRAMEWORK() {
 				}
 				var files = file.files.split(',');
 				var new_files = {};
+				var payload = file.payload;
+				var check = file.check;
+				var last_number = CJAX.util.count(files) -1;
 
-				for(x in files) {
+				for(var x in files) {
 					new_files[x] = {};
 					new_files[x].file = files[x];
 				}
 
-				var last_number = CJAX.util.count(files) -1;
+				if(check) {
+					if(typeof check != 'object') {
+						check = {0 : check};
+					}
+					for(var x in check) {
+						if(new_files[x]) {
+							if(window[check[x]]) {
+								new_files[x].cancel = check[x];
+							}
+						}
+					}
+				}
 
 				if(!file.callbacks) {
 					if(file.callback) {
 						new_files[last_number].callback = file.callback;
 					}
 				} else {
-
 					for(x in file.callbacks) {
 						new_files[x].callback = file.callbacks[x];
 					}
+				}
+
+				if(payload) {
+
+					var payloadHandler = function(pfile, cb) {
+						var cbs = function () {
+							load = {
+								files: pfile,
+								plugin: file.plugin
+							};
+							CJAX.script.load(CJAX.pBase+file.plugin+'/'+pfile, cb);
+						};
+
+						return cbs;
+					};
+
+					if(typeof payload != 'object') {
+						payload = payload.split(',');
+					}
+					var new_callback = {};
+					var pl = {};
+					for (var x in payload) {
+						if(typeof payload[x] != 'object') {
+							pl = {
+								file: payload[x],
+								callback: null
+							};
+						} else {
+							pl = payload[x];
+						}
+						new_file = pl.file.replace(/.*\//, '');
+						CJAX.util.payload(new_file, true);
+						new_callback[x] = payloadHandler(pl.file, pl.callback)
+					}
+					var old_cb = new_files[0].callback;
+					new_files[0].callback = function () {
+						for (x in new_callback) {
+							new_callback[x]();
+						}
+						if (old_cb) {
+							old_cb();
+						}
+					};
 				}
 
 				testFile = function(fileData) {
 					var f =  fileData.file;
 					var callback = fileData.callback;
 
-
-					if(/^https?/.test(f)) {
-						return CJAX.importFile(f, callback);
-					} else if(file.plugin) {
-						return CJAX.importFile(CJAX.pBase+file.plugin+'/'+f, callback);
+					//is already loaded
+					if(fileData.cancel) {
+						if(callback) {
+							callback();
+						}
 					} else {
-						return CJAX.importFile(f, callback);
+						if (/^https?/.test(f)) {
+							return CJAX.importFile(f, callback);
+						} else if (file.plugin) {
+							return CJAX.importFile(CJAX.pBase + file.plugin + '/' + f, callback);
+						} else {
+							return CJAX.importFile(f, callback);
+						}
 					}
 				};
 				for(xfile in new_files) {

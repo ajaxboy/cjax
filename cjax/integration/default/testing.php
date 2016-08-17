@@ -6,7 +6,7 @@ $ajax = ajax();
 <!doctype html>
 <head>
     <title>Test</title>
-    <?php echo $ajax->init();?>
+    <?php echo $ajax->init(false);?>
 </head>
 <body>
 
@@ -27,6 +27,7 @@ $ajax = ajax();
 
 <?php if(isset($step2)):?>
 <div id="response"></div>
+<div id="response2"></div>
 <?php endif;?>
 </body>
 </html>
