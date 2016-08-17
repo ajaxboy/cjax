@@ -16,5 +16,6 @@ if($ajax->controller && $ajax->function) {
 </head>
 <body>
 <div id="response"></div>
+<div id="response2"></div>
 </body>
 </html>
