@@ -18,6 +18,7 @@
  **####################################################################################################    */
 
 
+
 include_once 'cjax_config.php';
 $ajax = ajax();
 
@@ -46,37 +47,38 @@ if((isset($_SERVER['QUERY_STRING']) && $query = $_SERVER['QUERY_STRING'])) {
 			}
 		}
 	}
-	$allowed = array ('test');
 	$controller = $function = null;
-
-	if($packet && count(array_keys($packet)) >= 2 && $packet[0] && $packet[1]) {
-		$controller  = $packet[0];
-		$function 	 = $packet[1];
-		if(count(array_keys($packet)) > 2) {
-			unset($packet[0]);
-			unset($packet[1]);
-			if($packet){
-				$params = range('a','z');
-				foreach($packet as $k  => $v) {
-					$_REQUEST[current($params)] = $v;
-					next($params);
-				}
-			}
-		}
-	} else  {
-		if(!$ajax->input('controller')) {
-			if(count($packet)==1) {
-				$url = explode('&',$_SERVER['QUERY_STRING']);
-				if(count($url) ==1){
-					$controller = $packet[0];
-				}
-			}
-		}
-	}
-
 	if($ajax->isAjaxRequest() || defined('AJAX_VIEW') ) {
-		$_REQUEST['controller'] = $controller;
-		$_REQUEST['function'] = $function;
+		if($packet && count(array_keys($packet)) >= 2 && $packet[0] && $packet[1]) {
+			$controller = $_REQUEST['controller'] = $packet[0];
+			$function 	= $_REQUEST['function'] = $packet[1];
+			$_REQUEST['cjax'] = time();
+			if(count(array_keys($packet)) > 2) {
+				unset($packet[0]);
+				unset($packet[1]);
+				if($packet){
+					$params = range('a','z');
+					foreach($packet as $k  => $v) {
+						$_REQUEST[current($params)] = $v;
+						next($params);
+					}
+				}
+			}
+		} else  {
+			if(!$ajax->input('controller')) {
+				if(count($packet)==1) {
+					$url = explode('&',$_SERVER['QUERY_STRING']);
+					if(count($url) ==1){
+						$_REQUEST['controller'] = $packet[0];
+					}
+				}
+			}
+		}
+	} else {
+		if($packet && count(array_keys($packet)) >= 2 && $packet[0] && $packet[1]) {
+			$controller = $packet[0];
+			$function 	= $packet[1];
+		}
 	}
 	$ajax->controller 	= 	$controller;
 	$ajax->function 	= 	$function;
@@ -87,7 +89,7 @@ if(!$ajax->isAjaxRequest()) {
 	if(count(array_keys(debug_backtrace(false))) == 1
 		|| (defined('AJAX_FILE') && preg_replace('#.*\/#','', $_SERVER['SCRIPT_NAME']) == AJAX_FILE)) {
 
-		if(!defined('AJAX_VIEW') || $ajax->controller !='test') {
+		if(!defined('AJAX_VIEW') && $ajax->controller !='integration') {
 			exit("Security Error. You cannot access this file directly.");
 		}
 	}
