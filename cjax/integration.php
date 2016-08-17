@@ -93,6 +93,7 @@ if(is_file('composer.json')) {
             $url = '?test/test/abc';
         }
 
+        header("Cache-Control: no-cache, must-revalidate");
         exit(header("Location: {$url}"));
     }
 }
