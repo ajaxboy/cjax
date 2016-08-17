@@ -1,5 +1,5 @@
 /**
- * autocomplete 1.0
+ * autocomplete 1.2
  *
  * Auto Complete Plugin for Cjax
  */
@@ -31,40 +31,44 @@ function autocomplete(url , fulll_load) {
 
 	if (str) {
 
-		if (fulll_load) {
+		//executes until helper.js if fully loaded.
+		this.load('helper.js', function() {
 
-			var limit = 10;
+			if (fulll_load) {
 
-			//element.setAttribute('disabled','disabled');
-			CJAX.info('Loading Image List..', 30)
-			autocomplete.get(url, function (data) {
-				//element.removeAttribute('disabled');
-				CJAX.message();
+				var limit = 10;
 
-				//convert json into js array
-				new_data = Object.keys(data).map(function (key) {
-					return data[key]
-				})
-				//search string
-				if(str.length == 1) {
-					str = '^' + str;
-				}
-				new_data = new_data.filter(/./.test.bind(new RegExp(str, 'i')));
+				//element.setAttribute('disabled','disabled');
+				CJAX.info('Loading Image List..', 30)
+				autocomplete.get(url, function (data) {
+					//element.removeAttribute('disabled');
+					CJAX.message();
 
-				//how many records
-				new_data = new_data.slice(0, limit)
+					//convert json into js array
+					new_data = Object.keys(data).map(function (key) {
+						return data[key]
+					})
+					//search string
+					if (str.length == 1) {
+						str = '^' + str;
+					}
+					new_data = new_data.filter(/./.test.bind(new RegExp(str, 'i')));
 
-				if (new_data) {
-					AC.refresh(new_data, element);
-				}
-			}, 'json');
-		} else {
+					//how many records
+					new_data = new_data.slice(0, limit)
 
-			this.get(url += '/' + str, function (data) {
-				if (data) {
-					AC.refresh(data, element);
-				}
-			}, 'json');
-		}
+					if (new_data) {
+						AC.refresh(new_data, element);
+					}
+				}, 'json');
+			} else {
+
+				autocomplete.get(url += '/' + str, function (data) {
+					if (data) {
+						AC.refresh(data, element);
+					}
+				}, 'json');
+			}
+		});
 	}
 }
