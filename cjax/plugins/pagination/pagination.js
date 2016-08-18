@@ -1,6 +1,7 @@
-
-
-//CJAX.debug = true;
+/**
+ * Author:  Cj Galindo
+ * included here, the works of Eugene Simakin
+ */
 
 CJAX.importFile({
         files: 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js,pagination.css',
@@ -19,7 +20,7 @@ function pagination(element_id, options)
     var $options = {
         totalPages: 0,
         startPage: 1,
-        visiblePages: 5,
+        visiblePages: 7,
         initiateStartPageClick: false,
         href: false,
         hrefVariable: '{{number}}',
@@ -38,7 +39,7 @@ function pagination(element_id, options)
         activeClass: 'active',
         disabledClass: 'disabled',
         pageContainer: 'page',
-        cache: false
+        cache: false,
     };
 
     if(typeof this.options == 'object') {
@@ -47,53 +48,76 @@ function pagination(element_id, options)
         }
     }
 
-    $options.onPageClick = function (event, page) {
-
-        if($options.cache) {
-            CJAX.ajaxSettings.cache = true;
-        }
-
-        var url = $options.url;
-        CJAX.get(url + '/' + page, function (response) {
-
-            CJAX.update($options.pageContainer, response);
-
-        });
-    };
-
+    //at this point the file already loaded.
     this.load('jquery.twbsPagination.js', function(object) {
 
-        pagination.payload(element_id, function(ul) {
+            $(document).ready(function() {
 
-            if(typeof  display_num == 'undefined') {
-                display_num = 10;
-            }
+                var n = Math.floor((Math.random() * 100) + 1);
 
-            var tries = 0;
+                var content = 'content'+n;
+                var pagination_class = 'pagination';
 
-            var paginatin = function() {
-                try {
-                    $(ul).twbsPagination($options);
-                    return true;
-                } catch(e) {
-                    if(tries >= 15) {
-                        CJAX.warning("Could not generate pagination.");
-                        console.error("Could not generate pagination.", e);
-                        return false;
-                    }
-                    setTimeout(function() {
-                        paginatin();
-                    },100);
-                    tries++;
-                    return false;
+                page_wrapper = 'page_wrapper'
+                if($options.wrapperClass) {
+                    page_wrapper = $options.wrapperClass;
                 }
 
-            };
+                if($options.pageClass) {
+                    page_class = $options.pageClass;
+                }
+                if($options.paginationClass) {
+                    pagination_class = $options.paginationClass;
+                }
 
-            paginatin();
+                if($options.size) {
+                    pagination_class += ' pagination-sm';
+                }
 
+                $container = $("<div class='"+page_wrapper+"'><div><span class='page_content' id='"+content+"'></span></div><div><nav aria-label='"+page_class+" navigation'><ul class='"+pagination_class+"' id='pagination"+n+"'></ul> </nav></div></div>");
+
+                if(!/^#|\./i.test(element_id)) {
+                    element_id = '#' +element_id;
+                }
+
+                $(element_id).wrapInner($container.clone());
+
+
+                $options.onPageClick = function (event, page) {
+
+                    if($options.cache) {
+                        CJAX.ajaxSettings.cache = true;
+                    }
+
+                    var url = $options.url;
+                    CJAX.get(url + '/' + page, function (response) {
+
+                        CJAX.update(content, response);
+
+                    });
+                };
+
+
+                //allows to delegate the element in question, it will execute this function.
+                //even if the element doesn't exist, it adds the function to queue
+                //if the element is created some time within the next few minutes, it will execute when it finds it.
+                pagination.payload('pagination'+n, function(ul) {
+
+                    var tries = 0;
+
+                    var paginatin = function() {
+                        $(ul).twbsPagination($options);
+                    };
+
+                    //basically calls the function paginatin(), and if it fails,
+                    // (most likely because jquery hasn't processed the plugin yet, or dom not ready)
+                    //adds a few milliseconds, then tries to execute again, does this a few times, allows for failsafe.
+                    pagination.repeat(paginatin, 300);
+
+                });
 
         });
 
     });
+
 }

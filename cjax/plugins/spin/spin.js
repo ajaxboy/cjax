@@ -78,16 +78,8 @@ function spin(element_id, animation, speed)
                         });
                 }
             };
-            if(typeof $.fn.textrotator =='undefined') {
-                //it appears that even though the file has loaded,
-                //jquery still needs some time to process the plugin, so
-                //wee need a few milliseconds more..
 
-                spin.repeat(animate); // tried to recall if it fails
-            } else {
-                animate();
-            }
-
+            spin.repeat(animate); // try to recall if it fails
 
         });
 

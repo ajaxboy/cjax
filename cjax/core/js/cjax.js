@@ -2688,9 +2688,12 @@ function CJAX_FRAMEWORK() {
 					CJAX.util.payload(element, expiry);
 					CJAX.lib.loadCallback(element, fn);
 				},
-				repeat: function(fn, times, internal) {
+				repeat: function(fn, internal, times) {
 					if(typeof internal == 'undefined') {
 						var internal = 100;
+					}
+					if(typeof times == 'undefined') {
+						var times = 15;
 					}
 					var tried = 0;
 					var trying = function() {

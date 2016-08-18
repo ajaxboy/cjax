@@ -13,10 +13,47 @@ $options  = array(
 	'pageContainer' => 'page_container'
 );
 
-$ajax->pagination('pagination1', $options);
+$ajax->pagination('#pager1', $options);
 
-$ajax->spin('page','page_container');
 
+$options  = array(
+	'url' => 'ajax.php?pagination/page',
+	'totalPages' => 10,
+	'startPage' => 1,
+	'visiblePages' => 7,
+	'initiateStartPageClick' => false,
+	'href' => false,
+	'hrefVariable' => '{{number}}',
+	'first' => 'First',
+	'prev' => 'Previous',
+	'next' => 'Next',
+	'last' => 'Last',
+	'loop' => false,
+	'paginationClass' => 'pagination',
+	'nextClass' => 'next',
+	'prevClass' => 'prev',
+	'lastClass' => 'last',
+	'firstClass' => 'first',
+	'pageClass' => 'page',
+	'activeClass' => 'active',
+	'disabledClass' => 'disabled',
+	'pageContainer' => 'page',
+	'cache' => true,
+);
+
+$ajax->pagination('#pager2', $options);
+//$ajax->spin('page','page_container');
+
+
+$options  = array(
+	'url' => 'ajax.php?pagination/page',
+	'totalPages' => 10,
+	'startPage' => 1,
+	'visiblePages' => 7,
+	'size' => 'small'
+);
+
+$ajax->pagination('pager3', $options);
 
 ?>
 <!doctype html>
@@ -65,31 +102,150 @@ $ajax->spin('page','page_container');
 
 
 	<!-- Text -->
-	With the pagination functionality you can easily implement pages to your site hassle free.
+	<p>
+	Pagination functionality can easily be implement into pages, hassle free.
 	<br />
+	Requires Cjax 5.9+.
 
 	<br />
+	<b>Note:</b> This functionality has no dependencies, any dependecies are already built-in.
+	</p>
+
+	<p></p>
+	Credit for this plugin goes to Cj Galindo and, also includes the works of Eugene Simakin.
+	</p>
 
 	<h3>Examples</h3>
 
 
+	<h4>Basic Usage</h4>
+	<!-- Code Used -->
+	<p>
+		This example using the very minimum settings. If you want to customize it the way you really want it, you
+		could use some of the available options.
+	</p>
+
+	<?php
+	echo $ajax->code("
+
+	\$options  = array(
+		'url' => 'ajax.php?pagination/page',
+		'totalPages' => 15
+	);
+
+	\$ajax->pagination('pager1', \$options);
+");
+	?>
+
+
+	<?php
+	echo $ajax->code("
+
+	<div id='pager1'></div>
+
+
+
+", 'HTML', "<div class='try_it' style='margin-left: 250px;'><img src='resources/images/try_it.png' /></div>");
+	?>
+	<br />
+	<div id='pager1'>Pagination Page One</div>
+	<br />
+
+
+	<h4>Advanced Usage</h4>
 	<!-- Code Used -->
 
+	<p>
+		Here showcased all the possible options you can use.
+	</p>
+	<?php
+	echo $ajax->code("
 
-	<!-- HTML -->
-	<div style='text-align: center'>
-		<div id="page_container">
-			<span id="page">Page 1</span>
-		</div>
-	<div style='text-align: center'>
-		<nav aria-label="Page navigation">
-			<ul class="pagination" id="pagination1"></ul>
-		</nav>
-	</div>
-	</div>
+	\$options  = array(
+		'url' => 'ajax.php?pagination/page',
+		'totalPages' => 10,
+        'startPage' => 1,
+        'visiblePages' => 7,
+        'initiateStartPageClick' => false,
+        'href' => false,
+        'first' => 'First',
+        'prev' => 'Previous',
+        'next' => 'Next',
+        'last' => 'Last',
+        'loop' => false,
+        'paginationClass' => 'pagination',
+        'nextClass' => 'next',
+        'prevClass' => 'prev',
+        'lastClass' => 'last',
+        'firstClass' => 'first',
+        'pageClass' => 'page',
+        'activeClass' => 'active',
+        'disabledClass' => 'disabled',
+        'pageContainer' => 'page',
+        'cache' => true,
+        'size' => 'large'
+	);
+
+	\$ajax->pagination('pager2', \$options);
+");
+	?>
+
+	<?php
+	echo $ajax->code("
+
+	<div id='pager2'>Pagination Page One</div>
+
+
+
+", 'HTML', "<div class='try_it' style='margin-left: 250px;'><img src='resources/images/try_it.png' /></div>");
+	?>
+	<br />
+	<div id='pager2'>Pagination Page One</div>
+	<br />
 
 
 	<br />
+
+
+
+	<h4>Small Size</h4>
+
+	<p>
+	For the smaller size pagination
+	</p>
+	<!-- Code Used -->
+	<?php
+	echo $ajax->code("
+
+	\$options  = array(
+		'url' => 'ajax.php?pagination/page',
+		'totalPages' => 50,
+        'visiblePages' => 10,
+        'size' => 'small'
+	);
+
+	\$ajax->pagination('pager3', \$options);
+");
+	?>
+
+	<?php
+	echo $ajax->code("
+
+	<div id='pager3'>Pagination Page One</div>
+
+
+
+", 'HTML', "<div class='try_it' style='margin-left: 250px;'><img src='resources/images/try_it.png' /></div>");
+	?>
+
+
+	<br />
+	<div id='pager3'>Pagination Page One</div>
+	<br />
+
+
+
+
 </div>
 <!-- END CONTENT -->
 
