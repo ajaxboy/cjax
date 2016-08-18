@@ -1340,20 +1340,22 @@ function CJAX_FRAMEWORK() {
 								console.info('Payload Found:', raw_string, CJAX.loaded, payload);
 							}
 
-							new_element = CJAX.$(raw_string);
-							if(new_element) {
+							if(!/[^a-zA-Z0-9_\-]/.test(raw_string)) {
+								new_element = CJAX.$(raw_string);
+								if (new_element) {
 
-								new_element.loaded = true;
-								$callback(new_element);
-								return new_element;
+									new_element.loaded = true;
+									$callback(new_element);
+									return new_element;
+								}
+								/*if(!/[^a-zA-Z0-9_]/.test(raw_string) && window[raw_string]) {
+								 $callback(element);
+								 return window[raw_string];
+								 }*/
 							}
-							/*if(!/[^a-zA-Z0-9_]/.test(raw_string) && window[raw_string]) {
-							 $callback(element);
-							 return window[raw_string];
-							 }*/
 							//object is already registered that is going to load, it is a matter of time.
 							if(typeof payload != 'boolean') {
-								payload = payload - 1000;
+								payload = payload - 100;
 								if(payload <= 0) {
 									console.warn('Payload for', raw_string, 'has expired.');
 									return false;
@@ -1362,7 +1364,7 @@ function CJAX_FRAMEWORK() {
 							return setTimeout( function() {
 								CJAX.util.payload(raw_string, payload);
 								CJAX.lib.loadCallback(raw_string, $callback, caller);
-							}, 1000);
+							}, 100);
 						}
 					}
 					element.loaded = true;
@@ -1433,6 +1435,9 @@ function CJAX_FRAMEWORK() {
 					if(CJAX.lib.isFn(fn)) {
 						return fn;
 					}
+				}
+				if(CJAX.xml('json',buffer)) {
+					return CJAX.util.json(buffer);
 				}
 				return buffer;
 			},
@@ -2683,6 +2688,26 @@ function CJAX_FRAMEWORK() {
 					CJAX.util.payload(element, expiry);
 					CJAX.lib.loadCallback(element, fn);
 				},
+				repeat: function(fn, times, internal) {
+					if(typeof internal == 'undefined') {
+						var internal = 100;
+					}
+					var tried = 0;
+					var trying = function() {
+						setTimeout(function() {
+							fn();
+						}, internal)
+					};
+					try {
+						trying();
+					} catch(e) {
+						if(tried >= times) {
+							console.warn('Gave up on', fn, fn.toSource());
+							return false;
+						}
+						trying();
+					}
+				},
 				callback: function(event_trigger) {
 					if(event_trigger==null) {
 						var event_trigger = true;
@@ -2815,6 +2840,7 @@ function CJAX_FRAMEWORK() {
 				for(var x in files) {
 					new_files[x] = {};
 					new_files[x].file = files[x];
+					new_files[x].filename = files[x].replace(/.*\//, '');
 				}
 
 				if(check) {
@@ -2887,6 +2913,32 @@ function CJAX_FRAMEWORK() {
 					var f =  fileData.file;
 					var callback = fileData.callback;
 
+					if(CJAX.util.payload(fileData.filename)) {
+
+						if(callback) {
+							CJAX.lib.loadCallback(fileData.filename, function(obj) {
+								var call_number = 0;
+								var calling = function () {
+									setTimeout(function() {
+										callback();
+									},250);
+								}
+								try {
+									calling();
+								}catch(e) {
+									if(call_number >= 10) {
+										console.log('Giving up trying to load callback for', fileData.filename);
+										return false;
+									}
+									console.log(call_number);
+									call_number++;
+									calling();
+								}
+							});
+						}
+
+						return false;
+					}
 					//is already loaded
 					if(fileData.cancel) {
 						if(callback) {

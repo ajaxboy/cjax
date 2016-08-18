@@ -78,8 +78,10 @@ class ajax  {
 				return $this->_response(call_user_func_array(array($plugin, $function), $args));
 			} else {
 				$alt_controller = $plugin->controller_file;
-				if(!file_exists($alt_controller)) {
-					$this->abort("{$controller} Plugin: Controller File Not Found.");
+				if(is_dir($plugin->controllers_dir)) {
+					if (!file_exists($alt_controller)) {
+						$this->abort("{$controller} Plugin: Controller File Not Found.");
+					}
 				}
 			}
 		}
