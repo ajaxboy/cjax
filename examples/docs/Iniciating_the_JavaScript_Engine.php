@@ -75,8 +75,7 @@ $ajax = ajax();
     <br /><br />
     As of version 5.0-beta, By default the minified version of cjax.js is invoked, but you can change that by passing false in the init function, eg:  $ajax->init(false), then the full version would be used.
     <br /><br />
-    <h5>- OR -</h5>
-    <br /><br />
+    <h4>- OR -</h4>
     <h5>As of 5.0-RC2 you can also do this</h5>
     <br /><br />
     <?php echo $ajax->code("
@@ -86,8 +85,7 @@ $ajax = ajax();
 ", false);?>
     Where it says "http://yoursite/url/here/" Enter the path where ajax.php is, but withouth the "ajax.php".
     <br /><br />
-    <h5>- OR - a work around for using init() function -</h5>
-    <br /><br />
+    <h4>- OR - a work around for using init() function -</h4>
     Simply include file in the head of your HTML document:
     <?php echo $ajax->code("
 <script id='cjax_lib' type='text/javascript' src='cjax/core/js/cjax.min.js'></script>
@@ -96,7 +94,7 @@ $ajax = ajax();
     Make sure that the path is correct. You may want to try to visit it on the browser and that it is actually loading something.
     If it isn't the the issue is that something on your server is blocking the URL, mod-rewrite.
 
-    <h5>OR</h5>
+    <h4- OR - </h4>
 
     You can edit your Cjax's cofig file and add the path there. <br />
     Open file cjax/config.default.php and rename it to  config.php.
