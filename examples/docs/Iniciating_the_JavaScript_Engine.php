@@ -102,7 +102,7 @@ $ajax = ajax();
     <br />
     <?php echo $ajax->code("
     \$config->js_path = 'http://yoursite.com/cjax/core/js/';
-", false);?>
+");?>
     use the actual url to the js directory. eg  http://yoursite.com/cjax/core/js/  or  http://yoursite.com/application/library/cjax/core/js/
 
     <!-- Code Used -->
