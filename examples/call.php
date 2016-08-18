@@ -139,7 +139,7 @@ $ajax->click('#link_confirm', $ajax->call(array('call','confirm'), null,'Are you
     ?>
     <h5>More Usages</h5>
 
-    You can use the call() <span class="keyword">method</span> with any of the Cjax <a href="triggers.php">trigger events</a>.
+    You can use the call() <span class="keyword">method</span> with any of the Cjax <a href="docs/triggers.php">trigger events</a>.
     <?php
     echo $ajax->code("
 
