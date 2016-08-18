@@ -6,6 +6,12 @@
 
 
 /**
+ * Setting to where the js directory is within cjax, for example
+ * http://yoursite.com/cjax/core/js/
+ */
+$config->js_path = '';
+
+/**
  * Enable advanced selectors (all jquery selectors will work), 
  */
 $config->sizzle = false;

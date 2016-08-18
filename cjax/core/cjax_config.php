@@ -143,7 +143,7 @@ class CJAX extends CJAX_FRAMEWORK {
 
 			if(is_dir($core_dir) || is_dir($slashes.$core_dir)) {
 				$js_dir =  $slashes.$core_dir . '/js/';
-			} else if(@is_dir('cjax/')) {
+			} else if(@is_dir('cjax/core')) {
 				$js_dir  = "cjax/core/js/";
 			} else if(@is_dir('core/js/')) {
 				$js_dir  = "core/js/";
@@ -154,7 +154,8 @@ class CJAX extends CJAX_FRAMEWORK {
 			} else if(@is_dir('../../../cjax')) {
 				$js_dir  = "../../../cjax/core/js/";
 			} else {
-				die("Cannot find the correct path to Js directory.");
+				$help = "http://cjax.sourceforge.net/examples/docs/Iniciating_the_JavaScript_Engine.php";
+				die(sprintf("Cannot find the correct path to Js directory(tried: $core_dir).<br /> You may find useful information <a href=\"%s\">here</a>.", $help));
 			}
 			
 			$error = error_get_last();

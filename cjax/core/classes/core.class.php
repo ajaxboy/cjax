@@ -582,10 +582,12 @@ class CoreEvents extends cjaxFormat {
 		return plugin::isPlugin($plugin_name);
 	}
 
-	function UpdateCache($instance_id, $data)
+	static function UpdateCache($instance_id, $data)
 	{
 		self::$cache[$instance_id] = $data;
-		CoreEvents::simpleCommit();
+		if(!ajax()->isAjaxRequest()) {
+			CoreEvents::simpleCommit();
+		}
 	}
 
 	/**
