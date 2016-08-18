@@ -1325,45 +1325,53 @@ function CJAX_FRAMEWORK() {
 					console.log('Script was not found', element, caller, $callback.toString());
 					return ;
 				}
-				if(element.loaded) {
-					$callback();
-					return false;
-				}
 				if(typeof element == 'string') {
 					var raw_string = element;
 					element = CJAX.util.loaded(element);
 
 					if(!element) {
-						if(!CJAX.util.payload(raw_string)) {
+						var payload = CJAX.util.payload(raw_string);
+						if(!payload) {
 							//object hasnt beed added to payload
-							console.warn('Script was not found:', raw_string, CJAX.loaded);
+							console.warn('Script/Element was not found:', raw_string, CJAX.loaded);
 							return false;
 						} else {
 							if(CJAX.debug) {
-								console.info('Payload Found:', raw_string, CJAX.loaded);
+								console.info('Payload Found:', raw_string, CJAX.loaded, payload);
 							}
 
-							element = CJAX.$(raw_string);
-							if(element) {
+							new_element = CJAX.$(raw_string);
+							if(new_element) {
 
-								element.loaded = true;
-								$callback(element);
-								return element;
+								new_element.loaded = true;
+								$callback(new_element);
+								return new_element;
 							}
 							/*if(!/[^a-zA-Z0-9_]/.test(raw_string) && window[raw_string]) {
-								$callback(element);
-								return window[raw_string];
-							}*/
+							 $callback(element);
+							 return window[raw_string];
+							 }*/
 							//object is already registered that is going to load, it is a matter of time.
+							if(typeof payload != 'boolean') {
+								payload = payload - 1000;
+								if(payload <= 0) {
+									console.warn('Payload for', raw_string, 'has expired.');
+									return false;
+								}
+							}
 							return setTimeout( function() {
+								CJAX.util.payload(raw_string, payload);
 								CJAX.lib.loadCallback(raw_string, $callback, caller);
-							}, 1500);
+							}, 1000);
 						}
 					}
 					element.loaded = true;
-					return $callback();
+					return $callback(element);
 				}
-
+				if(element.loaded) {
+					$callback();
+					return false;
+				}
 
 				if($callback) {
 					if(CJAX.lib.isFn($callback)) {
@@ -2668,8 +2676,11 @@ function CJAX_FRAMEWORK() {
 				},
 				isFn: CJAX.lib.isFn,
 				load: CJAX.lib.loadCallback,
-				payload: function(element, fn) {
-					CJAX.util.payload(element,true);
+				payload: function(element, fn, expiry) {
+					if(typeof  expiry == 'undefined') {
+						var expiry = true;
+					}
+					CJAX.util.payload(element, expiry);
 					CJAX.lib.loadCallback(element, fn);
 				},
 				callback: function(event_trigger) {
