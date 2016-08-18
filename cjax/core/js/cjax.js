@@ -1357,7 +1357,7 @@ function CJAX_FRAMEWORK() {
 							//object is already registered that is going to load, it is a matter of time.
 							return setTimeout( function() {
 								CJAX.lib.loadCallback(raw_string, $callback, caller);
-							}, 800);
+							}, 1500);
 						}
 					}
 					element.loaded = true;
