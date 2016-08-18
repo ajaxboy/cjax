@@ -93,7 +93,7 @@ $ajax = ajax();
     Make sure that the path is correct. You may want to try to visit it on the browser and that it is actually loading something.
     If it isn't the the issue is that something on your server is blocking the URL, mod-rewrite.
 
-    <h4- OR - </h4>
+    <h4> OR - </h4>
 
     You can edit your Cjax's cofig file and add the path there. <br />
     Open file cjax/config.default.php and rename it to  config.php.
