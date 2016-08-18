@@ -1350,10 +1350,10 @@ function CJAX_FRAMEWORK() {
 								$callback(element);
 								return element;
 							}
-							if(!/[^a-zA-Z0-9_]/.test(raw_string) && window[raw_string]) {
+							/*if(!/[^a-zA-Z0-9_]/.test(raw_string) && window[raw_string]) {
 								$callback(element);
 								return window[raw_string];
-							}
+							}*/
 							//object is already registered that is going to load, it is a matter of time.
 							return setTimeout( function() {
 								CJAX.lib.loadCallback(raw_string, $callback, caller);
