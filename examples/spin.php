@@ -4,8 +4,11 @@ require_once "ajax.php";
 
 $ajax = ajax();
 
-$ajax->spin('.spinning_text', 'spin', 200);
-$ajax->spin('.flipping_text', 'flip', 200);
+$ajax->spin('.spinning_text', 'spin');
+$ajax->spin('.flipping_text', 'flip');
+$ajax->spin('.flip_cube', 'flipCube');
+$ajax->spin('.flip_up_cube', 'flipCubeUp');
+
 
 ?>
 <!doctype html>
@@ -56,15 +59,33 @@ $ajax->spin('.flipping_text', 'flip', 200);
     <!-- Text -->
     <h2>Spin Effect (Cjax 5.9+)</h2>
 
-    This effects applies spining, and rotating effects to text elements.
+    These text effects to spin, rotate, and apply other effects to text elements.
 
-    <br />
-    <h5>How does it work?</h5>
-    This effect uses a Cjax plugin, and 3rd party code contained within the plugin.
-    <h3>Examples</h3>
 
+    <h4>Examples</h4>
+
+    <p>
+    Please note, these examples are based of a 3rd party component, Cjax only integrates these effects into a Cjax plugin for you to use.
+    </p>
+
+
+    Here are all the examples put together:
+    <?php
+    echo $ajax->code("
+	\$ajax->spin('.spinning_text', 'spin');
+    \$ajax->spin('.flipping_text', 'flip');
+    \$ajax->spin('.flip_cube', 'flipCube');
+    \$ajax->spin('.flip_up_cube', 'flipCubeUp');
+");
+    ?>
+
+
+");
+    ?>
 
     <!-- Code Used -->
+    <h3>Spin</h3>
+
     Code Used:
     <?php
     echo $ajax->code("
@@ -94,11 +115,14 @@ $ajax->spin('.flipping_text', 'flip', 200);
 
 
 
+    <!-- Start new item-->
+
+    <h3>FlipText</h3>
 
     <?php
     echo $ajax->code("
 
-	\$ajax->spin('.spinning_text', 'flip', 200);
+	\$ajax->spin('.flipping_text', 'flip');
 
 
     ");
@@ -120,46 +144,107 @@ echo $ajax->code("
 
 
 
+
+    <!-- Start new item-->
+
+    <h3>FlipCube</h3>
+
+    <?php
+    echo $ajax->code("
+
+	\$ajax->spin('.flip_cube', 'flipCube');
+
+
+    ");
+    ?>
+
+    Code Used:
+    <?php
+    echo $ajax->code("
+
+	    <span class=\"flip_cube\">FlipCube Text</span>
+
+
+", 'HTML', true);
+    ?>
+    <span class="flip_cube">FlipCube Text</span>
+    <span>FlipCube Text</span>
+    <span class="flip_cube">FlipCube Text</span>
+    <span>FlipCube Text</span>
+
+
+
+    <!-- Start new item-->
+
+    <h3>flipCubeUp</h3>
+
+    <?php
+    echo $ajax->code("
+
+	\$ajax->spin('.flip_up_cube', 'flipCubeUp');
+
+
+    ");
+    ?>
+
+    Code Used:
+    <?php
+    echo $ajax->code("
+
+	    <span class=\"flip_up_cube\">flipCubeUp Text</span>
+
+
+", 'HTML', true);
+    ?>
+    <span class="flip_up_cube">flipCubeUp Text</span>
+    <span>flipCubeUp Text</span>
+    <span class="flip_up_cube">flipCubeUp Text</span>
+    <span>flipCubeUp Text</span>
+
+
+
     <br />
     <h3>Available Effects</h3>
 
     <table cellspacing="1" cellpadding="0" border="0" class="tableborder" style="width:100%">
         <tbody><tr>
             <th>Effect</th>
-            <th>Required</th>
-            <th>Type</th>
-            <th>Options</th>
-            <th>Description</th>
+            <th>Options/Description</th>
         </tr>
         <tr>
             <td class="td"><strong>dissolve</strong></td>
-            <td class="td">No</td>
-            <td class="td">String</td>
-            <td class="td">string $message</td>
-            <td class="td">Need to ask "Are you sure?" Before triggering the call() ?</td>
+            <td class="td">default effect</td>
         </tr>
-        <tr>
             <td class="td"><strong>flip</strong></td>
-            <td class="td">Yes</td>
-            <td class="td">Mixed</td>
             <td class="td">
-                string <span class="param">$url</span>
-                <br />
-                <kbd>array 5.9+</kbd>
+                add a 3rd parameter to control the speed eg. 1000.
+
             </td>
-            <td class="td">This url is fetched with ajax</td>
         </tr>
         <tr>
             <td class="td"><strong>spin</strong></td>
-            <td class="td">No</td>
-            <td class="td">String</td>
-            <td class="td">div, span, p, td, etc
-                <br />
-                You must echo your desire content from the controller/method.
-            </td>
             <td class="td">
-                Update a specific container with this pararement, any text the ajax call comes back with in the response
-                will be automatically propagated to this container.
+            </td>
+        </tr>
+        <tr>
+            <td class="td"><strong>flipUp</strong></td>
+            <td class="td">
+                add a 3rd parameter to control the speed eg. 2000.
+            </td>
+        </tr>
+        <tr>
+            <td class="td"><strong>flipCube</strong></td>
+            <td class="td">
+            </td>
+        </tr>
+        <tr>
+            <td class="td"><strong>flipCubeUp</strong></td>
+            <td class="td">
+            </td>
+        </tr>
+        <tr>
+            <td class="td"><strong>fade</strong></td>
+            <td class="td">
             </td>
         </tr>
 
