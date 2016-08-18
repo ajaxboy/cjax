@@ -77,7 +77,6 @@ $ajax = ajax();
     <br /><br />
     <h4>- OR -</h4>
     <h5>As of 5.0-RC2 you can also do this</h5>
-    <br /><br />
     <?php echo $ajax->code("
 <head>
 <?php echo \$ajax->init('http://yoursite/url/here/'); ?>
@@ -99,8 +98,12 @@ $ajax = ajax();
     You can edit your Cjax's cofig file and add the path there. <br />
     Open file cjax/config.default.php and rename it to  config.php.
     <br/>
-    You will notice that this file already has the setting there in place, you change it and add your site's
-    url to the js directory. eg  http://yoursite.com/cjax/core/js/  or  http://yoursite.com/application/library/cjax/core/js/
+    Add this setting to your config file:
+    <br />
+    <?php echo $ajax->code("
+    \$config->js_path = 'http://yoursite.com/cjax/core/js/';
+", false);?>
+    use the actual url to the js directory. eg  http://yoursite.com/cjax/core/js/  or  http://yoursite.com/application/library/cjax/core/js/
 
     <!-- Code Used -->
 
