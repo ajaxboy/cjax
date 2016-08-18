@@ -2711,6 +2711,7 @@ function CJAX_FRAMEWORK() {
 						trying();
 					}
 				},
+				ready: CJAX.ready,
 				callback: function(event_trigger) {
 					if(event_trigger==null) {
 						var event_trigger = true;
@@ -4675,7 +4676,7 @@ function CJAX_FRAMEWORK() {
 			}
 			return;
 		}
-		CJAX.set.event(window,'load', fn);
+		CJAX.set.event(document,'load', fn);
 	};
 
 	this.onStartEvents		=		function() {

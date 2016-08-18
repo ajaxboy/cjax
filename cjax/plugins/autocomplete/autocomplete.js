@@ -33,44 +33,46 @@ function autocomplete(url , fulll_load) {
 
 	if (str) {
 
-		//executes until helper.js if fully loaded.
-		this.load('helper.js', function() {
+		this.ready(function() {
+			//executes until helper.js if fully loaded.
+			autocomplete.load('helper.js', function() {
 
-			if (fulll_load) {
+				if (fulll_load) {
 
-				var limit = 10;
+					var limit = 10;
 
-				//element.setAttribute('disabled','disabled');
-				CJAX.info('Loading Image List..', 30)
-				autocomplete.get(url, function (data) {
-					//element.removeAttribute('disabled');
-					CJAX.message();
+					//element.setAttribute('disabled','disabled');
+					CJAX.info('Loading Image List..', 30)
+					autocomplete.get(url, function (data) {
+						//element.removeAttribute('disabled');
+						CJAX.message();
 
-					//convert json into js array
-					new_data = Object.keys(data).map(function (key) {
-						return data[key]
-					})
-					//search string
-					if (str.length == 1) {
-						str = '^' + str;
-					}
-					new_data = new_data.filter(/./.test.bind(new RegExp(str, 'i')));
+						//convert json into js array
+						new_data = Object.keys(data).map(function (key) {
+							return data[key]
+						})
+						//search string
+						if (str.length == 1) {
+							str = '^' + str;
+						}
+						new_data = new_data.filter(/./.test.bind(new RegExp(str, 'i')));
 
-					//how many records
-					new_data = new_data.slice(0, limit)
+						//how many records
+						new_data = new_data.slice(0, limit)
 
-					if (new_data) {
-						AC.refresh(new_data, element);
-					}
-				}, 'json');
-			} else {
+						if (new_data) {
+							AC.refresh(new_data, element);
+						}
+					}, 'json');
+				} else {
 
-				autocomplete.get(url += '/' + str, function (data) {
-					if (data) {
-						AC.refresh(data, element);
-					}
-				}, 'json');
-			}
+					autocomplete.get(url += '/' + str, function (data) {
+						if (data) {
+							AC.refresh(data, element);
+						}
+					}, 'json');
+				}
+			});
 		});
 	}
 }

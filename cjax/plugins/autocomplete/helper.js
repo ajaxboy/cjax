@@ -28,6 +28,7 @@ autoCompleteHelper.prototype = {
 				list += '<a class=\'ACOption\' href="javascript:AC.select(\'' + data[x] + '\',\'' + x + '\');">' + data[x] + '</a>';
 			}
 		}
+		this.helper || this.createHelper(element);
 
 		this.helper.innerHTML = list;
 		this.showHelper();
@@ -66,7 +67,10 @@ autoCompleteHelper.prototype = {
 		}
 	},
 	// helper
-	createHelper:function() {
+	createHelper:function(element) {
+		if(!this.field) {
+			this.field = element;
+		}
 		this.helper = document.createElement("div");
 		this.helper.style.width = (this.field.offsetWidth - 22) + "px";
 		this.helper.setAttribute("id", "helper");
