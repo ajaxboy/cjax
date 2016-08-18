@@ -1343,11 +1343,16 @@ function CJAX_FRAMEWORK() {
 								console.info('Payload Found:', raw_string, CJAX.loaded);
 							}
 
-							if(element = CJAX.$(raw_string)) {
+							element = CJAX.$(raw_string);
+							if(element) {
 
 								element.loaded = true;
 								$callback(element);
 								return element;
+							}
+							if(window[raw_string]) {
+								$callback(element);
+								return window[raw_string];
 							}
 							//object is already registered that is going to load, it is a matter of time.
 							return setTimeout( function() {
