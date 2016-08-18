@@ -1350,7 +1350,7 @@ function CJAX_FRAMEWORK() {
 								$callback(element);
 								return element;
 							}
-							if(window[raw_string]) {
+							if(!/[^a-zA-Z0-9_]/.test(raw_string) && window[raw_string]) {
 								$callback(element);
 								return window[raw_string];
 							}
