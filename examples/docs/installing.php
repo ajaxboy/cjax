@@ -87,7 +87,7 @@ $ajax = ajax();
 	</ul>
 	<h4>Testing your Cjax Installation</h4>
 	For security reasons you cannot access ajax.php directly on your browser, however there is a special case allowed for this test. <br>
-	Go onto your browser and type in the url for your site, plus testing.php?test/test, eg:  http://yoursite.com/ajax.php?test/test
+	Go onto your browser and type in the url for your site, ajax.php?test/test, eg:  http://yoursite.com/ajax.php?test/test
 	<br>
 	You will see further confirmation on that page, and instructions.
 	<br>

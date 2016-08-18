@@ -10,7 +10,7 @@
 
 ## Cjax 5.9
 
-Version 5.9  brings scalabity improvements and processing power to work on heave duty ajax. It improves upon caching and processing core functionality, plugin processing, speed. So you definitely want this version (currently on the master branch)
+Version 5.9  brings scalabity improvements and processing power to work on heavy duty ajax. It improves upon caching and processing core functionality, plugin processing, speed. So you definitely want this version (currently on the master branch)
 
 
 

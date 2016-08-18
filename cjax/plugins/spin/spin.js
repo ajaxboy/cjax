@@ -21,7 +21,8 @@ function spin(element_id, animation, speed)
         var speed = 200;
     }
 
-    console.log('trying to load');
+    console.log(arguments);
+
     //makes sure that the file is loaded. Or waits until it loads.
     this.load('jquery.simple-text-rotator.js', function() {
 
@@ -31,11 +32,47 @@ function spin(element_id, animation, speed)
         }
 
 
-            $(element_id).textrotator({
-                animation: animation,
-                separator: ", "
-            });
+        switch(animation) {
+            case 'flip':
+                if(!speed) {
+                    var speed = 1000;
+                }
+                $(element_id).textrotator({
+                    animation: "flip",
+                    speed: speed
+                });
+            break;
+            case 'spin':
 
+                $(element_id).textrotator({
+                    animation: "spin",
+                    separator: ","
+                });
+                break;
+            case 'flipUp':
+                if(!speed) {
+                    var speed = 2000;
+                }
+                $(element_id).textrotator({
+                    animation: "flipUp",
+                    speed: speed
+                });
+
+                break;
+            case 'flipCube':
+                $(element_id).textrotator({
+                    animation: "flipCube",
+                    separator: "|"
+                });
+                break;
+            case 'fade':
+                $(element_id).textrotator({
+                    animation: "fade",
+                    separator: "|"
+                });
+            default:
+
+        }
 
     });
 

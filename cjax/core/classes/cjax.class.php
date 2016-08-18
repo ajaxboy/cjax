@@ -303,7 +303,13 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 			$options = array_merge($options, $_options);
 		}
 
+		$cwd = getcwd();
+
+		chdir(dirname(dirname(__FILE__)));
+
 		is_file($f = './ajax.php') || is_file($f = '../ajax.php') || is_file($f = '../../ajax.php');
+
+		chdir($cwd);
 
 		$url = sprintf('%s?%s/%s%s', $f, $controller, $method, $_params);
 
@@ -380,7 +386,9 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 			return self::simpleCommit();
 		} else {
 			$xml =  $this->property($setting,$value);
-			self::simpleCommit();
+			if(!ajax()->isAjaxRequest()) {
+				self::simpleCommit();
+			}
 			return $xml;
 		}
 	}

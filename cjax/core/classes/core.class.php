@@ -358,7 +358,17 @@ class CoreEvents extends cjaxFormat {
 		}
 
 		$cache = self::callbacks($cache);
+		$_preload = self::_preload($cache);
 
+		$_cache = self::processScache($cache);
+		$_cache = self::mkArray($_cache);
+
+
+		return array($_cache, $_preload);
+	}
+
+	static function _preload(&$cache)
+	{
 		$_preload = array();
 		foreach($cache as $k => $v) {
 			if($v['do']=='_import' || $v['do']=='_imports' || isset($v['is_plugin'])) {
@@ -377,17 +387,8 @@ class CoreEvents extends cjaxFormat {
 				}
 			}
 		}
-		if($_preload) {
-			$_preload = self::processScache($_preload);
-			$_preload = self::mkArray($_preload);
-		}
 
-		$_cache = self::processScache($cache);
-
-		$_cache = self::mkArray($_cache);
-
-
-		return array($_cache,$_preload);
+		return $_preload;
 	}
 
 	static function out()
@@ -396,7 +397,8 @@ class CoreEvents extends cjaxFormat {
 		$preload = null;
 
 		if($data[1]) {
-			$preload = $preload;
+			$preload = self::processScache($data[1]);
+			$preload = self::mkArray($preload);
 		}
 
 		$out  = "<xml class='cjax'>".$data[0]."</xml><xml class='cjax'><preload>{$preload}</preload></xml>";
@@ -412,7 +414,13 @@ class CoreEvents extends cjaxFormat {
 		if($ajax->fallback || $ajax->config->fallback || $ajax->caching) {
 			return true;
 		}
+
 		$data = self::prepareCommit();
+
+		if($data[1]) {
+			$data[1] = self::processScache($data[1]);
+			$data[1] = self::mkArray($data[1]);
+		}
 
 		if($ajax->config->debug) {
 			$ajax->debug = true;
@@ -798,7 +806,6 @@ if (document.addEventListener) {
 
 		if($ajax->init_extra) {
 			$plugin_path = str_replace('/core/js','/plugins',$js_path);
-			//die($plugin_path);
 			foreach($ajax->init_extra as $k => $v) {
 				if(isset($v['plugin_dir'])) {
 					$script[] = "\t<script type='text/javascript' src='".$plugin_path.$v['plugin_dir'].'/'.$v['file']."'></script>\n";
@@ -1251,7 +1258,9 @@ if (document.addEventListener) {
 		} else if(isset(self::$cache[$cache_id])) {
 			unset(self::$cache[$cache_id]);
 		}
-		self::simpleCommit();
+		if(!ajax()->isAjaxRequest()) {
+			self::simpleCommit();
+		}
 	}
 
 	/**
@@ -1542,7 +1551,7 @@ if (document.addEventListener) {
 		$c_comment = "#FF8000";
 		$c_keyword = "#007700";
 		$c_default = "#0000BB";
-		$c_html = "#0000BB";
+		$c_html = "blue";
 
 		@ini_set('highlight.string', $c_string); // Set each colour for each part of the syntax
 		@ini_set('highlight.comment', $c_comment); // Suppression has to happen as some hosts deny access to ini_set and there is no way of detecting this
@@ -1565,7 +1574,7 @@ if (document.addEventListener) {
 				$data = highlight_string("<?php \n" . $data . "\n?>", true);
 			}
 		} else {
-			$data = highlight_string($data, true);; // Add nice and friendly <script> tags around highlighted text
+			$data = highlight_string($data, true) . "<br /><br />"; // Add nice and friendly <script> tags around highlighted text
 		}
 
 		if (is_bool($extra) && $extra) {

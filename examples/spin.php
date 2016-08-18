@@ -4,7 +4,9 @@ require_once "ajax.php";
 
 $ajax = ajax();
 
-$ajax->spin('#spinning_text', 'spin', 200);
+$ajax->spin('.spinning_text', 'spin', 200);
+$ajax->spin('.flipping_text', 'flip', 200);
+
 ?>
 <!doctype html>
 <head>
@@ -52,7 +54,7 @@ $ajax->spin('#spinning_text', 'spin', 200);
 
 
     <!-- Text -->
-    <h2>Spin Effect</h2>
+    <h2>Spin Effect (Cjax 5.9+)</h2>
 
     This effects applies spining, and rotating effects to text elements.
 
@@ -67,7 +69,7 @@ $ajax->spin('#spinning_text', 'spin', 200);
     <?php
     echo $ajax->code("
 	//
-	\$ajax->spin('#spinning_text', 'spin', 200);
+	\$ajax->spin('.spinning_text', 'spin', 200);
 
 
 ");
@@ -77,10 +79,7 @@ $ajax->spin('#spinning_text', 'spin', 200);
     <?php
     echo $ajax->code("
 
-	    <span id=\"spinning_text\">Spinning Text</span>
-
-
-
+	    <span class=\"spinning_text\">Spinning Text</span>
 
 
 ", 'HTML', true);
@@ -88,10 +87,83 @@ $ajax->spin('#spinning_text', 'spin', 200);
 
     <!-- HTML -->
 
-    <span id="spinning_text">Spinning Text</span>
+    <span class="spinning_text">Spinning Text</span>
+    <span>Spinning Text</span>
+    <span class="spinning_text">Spinning Text</span>
+    <span>Spinning Text</span>
+
+
+
+
+    <?php
+    echo $ajax->code("
+
+	\$ajax->spin('.spinning_text', 'flip', 200);
+
+
+    ");
+    ?>
+
+    Code Used:
+<?php
+echo $ajax->code("
+
+	    <span class=\"flipping_text\">Flipping Text</span>
+
+
+", 'HTML', true);
+?>
+    <span class="flipping_text">Flipping Text</span>
+    <span>Flipping Text</span>
+    <span class="flipping_text">Flipping Text</span>
+    <span>Flipping Text</span>
+
 
 
     <br />
+    <h3>Available Effects</h3>
+
+    <table cellspacing="1" cellpadding="0" border="0" class="tableborder" style="width:100%">
+        <tbody><tr>
+            <th>Effect</th>
+            <th>Required</th>
+            <th>Type</th>
+            <th>Options</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td class="td"><strong>dissolve</strong></td>
+            <td class="td">No</td>
+            <td class="td">String</td>
+            <td class="td">string $message</td>
+            <td class="td">Need to ask "Are you sure?" Before triggering the call() ?</td>
+        </tr>
+        <tr>
+            <td class="td"><strong>flip</strong></td>
+            <td class="td">Yes</td>
+            <td class="td">Mixed</td>
+            <td class="td">
+                string <span class="param">$url</span>
+                <br />
+                <kbd>array 5.9+</kbd>
+            </td>
+            <td class="td">This url is fetched with ajax</td>
+        </tr>
+        <tr>
+            <td class="td"><strong>spin</strong></td>
+            <td class="td">No</td>
+            <td class="td">String</td>
+            <td class="td">div, span, p, td, etc
+                <br />
+                You must echo your desire content from the controller/method.
+            </td>
+            <td class="td">
+                Update a specific container with this pararement, any text the ajax call comes back with in the response
+                will be automatically propagated to this container.
+            </td>
+        </tr>
+
+        </tbody></table>
 </div>
 <!-- END CONTENT -->
 

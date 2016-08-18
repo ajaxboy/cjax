@@ -1342,10 +1342,17 @@ function CJAX_FRAMEWORK() {
 							if(CJAX.debug) {
 								console.info('Payload Found:', raw_string, CJAX.loaded);
 							}
+
+							if(element = CJAX.$(raw_string)) {
+
+								element.loaded = true;
+								$callback(element);
+								return element;
+							}
 							//object is already registered that is going to load, it is a matter of time.
 							return setTimeout( function() {
 								CJAX.lib.loadCallback(raw_string, $callback, caller);
-							}, 500);
+							}, 800);
 						}
 					}
 					element.loaded = true;
@@ -2656,6 +2663,10 @@ function CJAX_FRAMEWORK() {
 				},
 				isFn: CJAX.lib.isFn,
 				load: CJAX.lib.loadCallback,
+				payload: function(element, fn) {
+					CJAX.util.payload(element,true);
+					CJAX.lib.loadCallback(element, fn);
+				},
 				callback: function(event_trigger) {
 					if(event_trigger==null) {
 						var event_trigger = true;
