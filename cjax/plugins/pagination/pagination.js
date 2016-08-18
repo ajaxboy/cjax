@@ -70,7 +70,7 @@ function pagination(element_id, options)
                     pagination_class = $options.paginationClass;
                 }
 
-                if($options.size) {
+                if($options.size && $options.size == 'small') {
                     pagination_class += ' pagination-sm';
                 }
 
