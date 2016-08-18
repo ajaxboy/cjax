@@ -100,10 +100,12 @@ $ajax = ajax();
     <br/>
     Add this setting to your config file:
     <br />
+    Note: You js_path may vary, depending on where cjax is located within your site.
     <?php echo $ajax->code("
     \$config->js_path = 'http://yoursite.com/cjax/core/js/';
 ");?>
-    use the actual url to the js directory. eg  http://yoursite.com/cjax/core/js/  or  http://yoursite.com/application/library/cjax/core/js/
+    <br />
+    If you use CodeIgniter, cjax will be located in the application/library/cjax directory.
 
     <!-- Code Used -->
 
