@@ -31,17 +31,6 @@ if(!defined('AJAX_FILE')) {
 if(!defined('AJAX_CD')) {
     define('AJAX_CD', 'application/response');
 }
-/**
- * Security Feature.
- * Lifts the limited view of ajax response on regular browsers.
- * If you remove this no one will be able to see responses unless from an XHR request, Flash Request, etc.
- *
- * If you are not interested in viewing the response on the browser or you unexpectly see the response,
- * you may remove this setting by removing the line below.
- *
- * @constant AJAX_VIEW
- */
-define('AJAX_VIEW', 1);
 
 
 
