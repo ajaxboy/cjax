@@ -26,7 +26,7 @@ if(!defined('AJAX_WD')) {
 	//directory where cjax directory is located
 	//this allows you to move the cjax/ directory else where.
 	//keep in mind that it need to remain accessibly through the url.
-	define('AJAX_WD', dirname(__file__).'/cjax');
+	define('AJAX_WD', dirname(__file__));
 }
 
 if(!defined('AJAX_FILE')) {
