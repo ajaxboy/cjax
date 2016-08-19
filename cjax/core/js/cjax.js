@@ -570,9 +570,6 @@ function CJAX_FRAMEWORK() {
 							json =  eval("("+buff+")");
 						}
 					} catch(e) {
-						if(CJAX.ie) {
-							alert(e.message);
-						}
 						console.log('Json Parser Error:',e);
 					}
 
@@ -2920,6 +2917,9 @@ function CJAX_FRAMEWORK() {
 					}
 					//is already loaded
 					if(fileData.cancel) {
+						if(file.debug) {
+							console.info('Element importing was cancelled because it matches',fileDta.cancel,fileData);
+						}
 						if(callback) {
 							callback();
 						}
@@ -4623,7 +4623,6 @@ function CJAX_FRAMEWORK() {
 		div.className = 'cjax_overlay';
 		div.onclick = CJAX._removeOverLay;
 
-
 		/**
 		 * Deal with Firebug not being present
 		 */
@@ -4643,16 +4642,15 @@ function CJAX_FRAMEWORK() {
 		}
 		CJAX.ready(CJAX.onStartEvents);
 
-		var domstart = function(e) {
+		r = function(f){/in/.test(document.readyState)?setTimeout('r('+f+')',9):f()}
+		r(function(){
+			CJAX.DOMContentLoaded = true;
 			var data;
 			for(var x in CJAX._Ready) {
 				data = CJAX._Ready[x];
-				data.fn(e, data.elment);
+				data.fn();
 			}
-			CJAX.DOMContentLoaded = true;
-		};
-		document.removeEventListener('DOMContentLoaded', domstart, false);
-		document.addEventListener('DOMContentLoaded', domstart);
+		});
 	};
 
 	this.ready		=		function(fn, obj) {
@@ -4663,6 +4661,7 @@ function CJAX_FRAMEWORK() {
 			return;
 		}
 		if(CJAX.DOMContentLoaded) {
+			console.log('Why is CJAX.DOMContentLoaded', CJAX.DOMContentLoaded);
 			fn();
 		} else {
 			CJAX._Ready[CJAX.util.count(CJAX._Ready) + 1] = {
