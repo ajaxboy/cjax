@@ -4642,15 +4642,17 @@ function CJAX_FRAMEWORK() {
 		}
 		CJAX.ready(CJAX.onStartEvents);
 
-		r = function(f){/in/.test(document.readyState)?setTimeout('r('+f+')',9):f()}
-		r(function(){
+		var completed = function() {
 			CJAX.DOMContentLoaded = true;
 			var data;
 			for(var x in CJAX._Ready) {
 				data = CJAX._Ready[x];
 				data.fn();
 			}
-		});
+		};
+
+		r = function(f){/in/.test(document.readyState)?setTimeout('r('+f+')',9):f()}
+		r(completed);
 	};
 
 	this.ready		=		function(fn, obj) {
@@ -4661,7 +4663,6 @@ function CJAX_FRAMEWORK() {
 			return;
 		}
 		if(CJAX.DOMContentLoaded) {
-			console.log('Why is CJAX.DOMContentLoaded', CJAX.DOMContentLoaded);
 			fn();
 		} else {
 			CJAX._Ready[CJAX.util.count(CJAX._Ready) + 1] = {
