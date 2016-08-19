@@ -4,25 +4,6 @@
  * CJAX CI Integration
  */
 
-/*if( isset( $_SERVER['SCRIPT_NAME'] ) )
-{
-    $url = str_replace( $_SERVER['SCRIPT_NAME'] ,'', $_SERVER['REQUEST_URI'] );
-    if( substr( $url ,0 ,1 ) != '?'  ) {
-        $_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'];
-    }
-}*/
-
-/**
- * Optional
- * Force ajax controler to only be served if requested from this file.
- * This is only needed when calling controllers from files other than 'ajax.php';
- * in case of conflict with other controllers.
- *
- * @var string file name
- */
-if(!defined('AJAX_FILE')) {
-    define('AJAX_FILE', 'ajax.php');
-}
 /**
  * Controllers Directory.
  * Directory where ajax controllers are located.
@@ -32,6 +13,17 @@ if(!defined('AJAX_CD')) {
     define('AJAX_CD', 'application/response');
 }
 
+/**
+ * Optional
+ * Force ajax controller to only be served if requested from this file.
+ * This is only needed when calling controllers from files other than 'ajax.php';
+ * in case of conflict with other controllers.
+ *
+ * @var string file name
+ */
+if(!defined('AJAX_FILE')) {
+    define('AJAX_FILE', 'ajax.php');
+}
 
 
 /**
