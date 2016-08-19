@@ -24,67 +24,69 @@ function spin(element_id, animation, speed)
     //makes sure that the file is loaded. Or waits until it loads.
     this.load('jquery.simple-text-rotator.js', function(obj) {
 
-        if(!/^#|\./i.test(element_id)) {
-            element_id = '#' +element_id;
-        }
-
-        var animate  = function() {
-            switch (animation) {
-                case 'flip':
-                    if (!speed) {
-                        var speed = 1000;
-                    }
-                    $(element_id).textrotator({
-                        animation: "flip",
-                        speed: speed
-                    });
-                    break;
-                case 'spin':
-
-                    $(element_id).textrotator({
-                        animation: "spin",
-                        separator: ","
-                    });
-
-                    break;
-                case 'flipUp':
-                    if (!speed) {
-                        var speed = 2000;
-                    }
-                    $(element_id).textrotator({
-                        animation: "flipUp",
-                        speed: speed
-                    });
-
-                    break;
-                case 'flipCubeUp':
-                    $(element_id).textrotator({
-                        animation: "flipCubeUp"
-                    });
-
-                    break;
-                case 'flipCube':
-                    $(element_id).textrotator({
-                        animation: "flipCube",
-                        separator: "|"
-                    });
-                    break;
-                case 'fade':
-                    $(element_id).textrotator({
-                        animation: "fade",
-                        separator: "|"
-                    });
-                default:
-                    $(element_id).textrotator({
-                        animation: "flipCube",
-                        separator: "|"
-                    });
+        spin.payload(element_id, function() {
+            if (!/^#|\./i.test(element_id)) {
+                element_id = '#' + element_id;
             }
-        };
 
-        spin.ready(function() {
-            spin.repeat(animate); // try to recall if it fails
-        })
+            var animate = function () {
+                switch (animation) {
+                    case 'flip':
+                        if (!speed) {
+                            var speed = 1000;
+                        }
+                        $(element_id).textrotator({
+                            animation: "flip",
+                            speed: speed
+                        });
+                        break;
+                    case 'spin':
+
+                        $(element_id).textrotator({
+                            animation: "spin",
+                            separator: ","
+                        });
+
+                        break;
+                    case 'flipUp':
+                        if (!speed) {
+                            var speed = 2000;
+                        }
+                        $(element_id).textrotator({
+                            animation: "flipUp",
+                            speed: speed
+                        });
+
+                        break;
+                    case 'flipCubeUp':
+                        $(element_id).textrotator({
+                            animation: "flipCubeUp"
+                        });
+
+                        break;
+                    case 'flipCube':
+                        $(element_id).textrotator({
+                            animation: "flipCube",
+                            separator: "|"
+                        });
+                        break;
+                    case 'fade':
+                        $(element_id).textrotator({
+                            animation: "fade",
+                            separator: "|"
+                        });
+                    default:
+                        $(element_id).textrotator({
+                            animation: "flipCube",
+                            separator: "|"
+                        });
+                }
+            };
+
+            spin.ready(function () {
+                spin.repeat(animate); // try to recall if it fails
+            })
+        });
 
 
     });
