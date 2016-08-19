@@ -14,9 +14,12 @@ CJAX.importFile({
 		0: function() {
 			var element = CJAX._plugins['autocomplete'].element_id;
 
-			autocomplete.payload(element, function(element) {
-				AC.init(element);
+			autocomplete.ready(function() {
+				autocomplete.payload(element, function(element) {
+					AC.init(element);
+				});
 			});
+
 		}
 	}
 });
