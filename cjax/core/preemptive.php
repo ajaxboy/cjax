@@ -86,8 +86,9 @@ if((isset($_SERVER['QUERY_STRING']) && $query = $_SERVER['QUERY_STRING'])) {
 
 if(!$ajax->isAjaxRequest()) {
 
-	if(count(array_keys(debug_backtrace(false))) == 1) {
-		if(!defined('AJAX_VIEW')) {
+	if(count(array_keys(debug_backtrace(false))) == 2) {
+
+		if(!defined('AJAX_VIEW') && !in_array($controller, $allowed)) {
 			exit("Security Error. You cannot access this file directly.");
 		}
 	}
