@@ -55,7 +55,7 @@ chdir(dirname(__FILE__));
  */
 if(debug_backtrace(false)) {
 
-    return require_once 'application/libraries/ajax.php';
+    return require_once 'cjax/ajax.php';
 }
 
 
