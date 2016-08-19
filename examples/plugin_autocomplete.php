@@ -55,9 +55,9 @@ $ajax->keyup('#text1', $ajax->autocomplete('ajax.php?autocomplete/update'));
 	<!-- Text -->
 	Slick, simple and usable autocomplete. This plugin ready to use when you download Cjax, as it already comes included.
 	<br />
-	From your <a href="controllers.php">Ajax controller</a> return an array. That array, is then converted into autocomplete options.
+	From your <a href="docs/controllers.php">Ajax controller</a> return an array. That array, is then converted into autocomplete options.
 	<br />
-	Caching is enabled. If you have already typed a word and undo then retype it won't make more ajax calls, it will attain previous data.
+	Caching is enabled. If you have already typed a word and undo then retype, it won't make more ajax calls. It will attain previous data.
 	<br />
 
 	<h3>Examples</h3>
@@ -79,23 +79,29 @@ $ajax->keyup('#text1', $ajax->autocomplete('ajax.php?autocomplete/update'));
 	<br /><br />
 
 	<h2>Cjax 5.9+</h2>
-	Cjax 5.9 adds alot of power to autocomplete. More stability, more caching and overall more complete and more features.
+	<p>
+
+
+	Cjax 5.9 adds alot of power to autocomplete. More stability, more scalability, more caching and overall more complete and more features.
+	</p>
 	<kbd>Note: These new features should be considered beta, which means, they could change in the future.</kbd>
 	<br />
 
 	Two more optional parameters. boolean <span class="param">$full_load</span> and  string <span class="param">$url2</span>
 
 	<h5>$full_load</h5>
-
+	<p>
 	Realizing that every time you type a key, triggers an ajax call to the server, you may want to instead load all data at
 	once, and not request the server as much.
 	True / False, this options lets you load all the data at once. Intead of making an ajax request for each letter you
 	type, you can dump a full array  of data once, this data is then cached.  When used this way, only one ajax call to the server is made.
 	When you type more, the data obtained is filtered to serve the other keys you type.
-	<br /><br />
+	</p>
+	<p>
 	Additionally, you can -
+	</p>
 	<br />
-	<br />
+	<p>
 	<b>Preload</b>: Need to load large amount of data? No problem. You can preload it. This can ensure that the
 	autocomplete acts really fast even with very large amounts of data.
 	<br />
@@ -104,7 +110,7 @@ $ajax->keyup('#text1', $ajax->autocomplete('ajax.php?autocomplete/update'));
 	You can take advanage of this by  <a href="call.php">making an ajax request</a> to the same url you are using for the
 	autocomplete, and using the cache flag in the call() <span class="keyword">method</span>.
 	This wil cache data, when the autocomplete triggers the request, it will be served from cache, without making any other ajax request.
-
+	</p>
 	<h6>Preload Example</h6>
 	<?php
 	echo $ajax->code("
