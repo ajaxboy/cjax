@@ -102,8 +102,6 @@ function pagination(element_id, options)
             //if the element is created some time within the next few minutes, it will execute when it finds it.
             pagination.payload('pagination'+n, function(ul) {
 
-                var tries = 0;
-
                 var paginatin = function() {
                     $(ul).twbsPagination($options);
                 };

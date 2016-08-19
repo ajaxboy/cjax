@@ -15,9 +15,7 @@ CJAX.importFile({
 			var element = CJAX._plugins['autocomplete'].element_id;
 
 			autocomplete.ready(function() {
-				autocomplete.payload(element, function(element) {
-					AC.init(element);
-				});
+				AC.init(element);
 			});
 
 		}

@@ -1,7 +1,6 @@
 <?php
 header('Content-type: application/x-javascript');
 header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
-header("Cache-Control: no-cache");
 header("Pragma: no-cache");
 
 define('AJAX_VIEW', true);
