@@ -82,13 +82,9 @@ function spin(element_id, animation, speed)
             }
         };
 
-        //it appears that even though the file has loaded,
-        //jquery still needs some time to process the plugin, so
-        //wee need a few milliseconds more..
-
-
-        spin.repeat(animate); // try to recall if it fails
-
+        spin.ready(function() {
+            spin.repeat(animate); // try to recall if it fails
+        })
 
 
     });
