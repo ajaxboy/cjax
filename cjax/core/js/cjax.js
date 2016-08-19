@@ -26,6 +26,7 @@ function CJAX_FRAMEWORK() {
 	this.version	=	'5.9';
 	this.debug = false;
 	this.DOMContentLoaded = false;
+	this._Ready = {};
 	this.loaded = {};
 	this.payload = {};
 	this.handlers = {
@@ -42,7 +43,6 @@ function CJAX_FRAMEWORK() {
 	this.$plugin; // plugin being loaded
 	this.plugins = {};//plugins instances
 	this._plugins = {};//access plugins xml settings
-	this._pluginsData = {};//access plugins xml settings
 	this.pBase; //plugins  base
 	this.inits = [];//plugins init code
 	this.vars = [];
@@ -1609,32 +1609,7 @@ function CJAX_FRAMEWORK() {
 		}
 		if (obj.addEventListener) {
 			if(type=='load'){
-				if(CJAX.DOMContentLoaded || typeof window['DOMContentLoaded'] !='undefined') {
-					if(CJAX.debug) {
-						console.info('DOMContentLoaded is loaded');
-					}
-					fn();
-					return  CJAX._EventCache.add(obj, type, fn);
-				} else {
-					var listener = function(e)
-					{
-						document.removeEventListener("DOMContentLoaded", listener, false);
-						if(CJAX.debug) {
-							console.info('DOMContentLoaded is loaded');
-						}
-						fn();
-
-						CJAX.DOMContentLoaded = true;
-					};
-					document.addEventListener("DOMContentLoaded", listener, false);
-					if(!CJAX.DOMContentLoaded && typeof window['DOMContentLoaded']=='undefined') {
-						try {
-							obj.addEventListener( 'load', fn, false );
-						} catch(e) {
-							alert("CJAX: Error - addEvent "+e );
-						}
-					}
-				}
+				CJAX.ready(fn,obj);
 				return  CJAX._EventCache.add(obj, type, fn);
 			}
 			try {
@@ -4635,13 +4610,13 @@ function CJAX_FRAMEWORK() {
 		}
 
 		function myClickListener(e) {
-			var eventIsFiredFromElement;
+			var el;
 			if(e==null) {
-				eventIsFiredFromElement = event.srcElement;
+				el = event.srcElement;
 			} else {
-				eventIsFiredFromElement = e.target;
+				el = e.target;
 			}
-			CJAX.clicked =eventIsFiredFromElement;
+			CJAX.clicked = el;
 		}
 		document.onclick = myClickListener;
 		var div = CJAX.create.div('cjax_overlay');
@@ -4667,16 +4642,34 @@ function CJAX_FRAMEWORK() {
 			cjax_css.style.display = 'none';
 		}
 		CJAX.ready(CJAX.onStartEvents);
+
+		var domstart = function(e) {
+			var data;
+			for(var x in CJAX._Ready) {
+				data = CJAX._Ready[x];
+				data.fn(e, data.elment);
+			}
+			CJAX.DOMContentLoaded = true;
+		};
+		document.removeEventListener('DOMContentLoaded', domstart, false);
+		document.addEventListener('DOMContentLoaded', domstart);
 	};
 
-	this.ready		=		function(fn) {
+	this.ready		=		function(fn, obj) {
 		if(!CJAX.lib.isFn(fn)) {
 			if(CJAX.debug) {
 				console.log(fn, 'is not a function');
 			}
 			return;
 		}
-		CJAX.set.event(document,'load', fn);
+		if(CJAX.DOMContentLoaded) {
+			fn();
+		} else {
+			CJAX._Ready[CJAX.util.count(CJAX._Ready) + 1] = {
+				fn: fn,
+				element: obj
+			};
+		}
 	};
 
 	this.onStartEvents		=		function() {

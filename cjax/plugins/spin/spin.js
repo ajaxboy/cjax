@@ -13,7 +13,7 @@ function spin(element_id, animation, speed)
 {
     if(!element_id) {
 
-        console.warn('No Element ID', this.name);
+        console.warn('No Element ID', 'spin plugin');
 
         return false;
     }

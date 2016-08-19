@@ -99,16 +99,17 @@ function pagination(element_id, options)
 
             //allows to delegate the element in question, it will execute this function.
             //even if the element doesn't exist, it adds the function to queue
-            //if the element is created some time within the next few minutes, it will execute when it finds it.
             pagination.payload('pagination'+n, function(ul) {
 
                 var paginatin = function() {
                     $(ul).twbsPagination($options);
                 };
 
+
                 //basically calls the function paginatin(), and if it fails,
                 // (most likely because jquery hasn't processed the plugin yet, or dom not ready)
                 //adds a few milliseconds, then tries to execute again, does this a few times, allows for failsafe.
+
                 pagination.ready(function() {
                     pagination.repeat(paginatin, 300);
                 })
