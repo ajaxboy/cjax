@@ -303,13 +303,13 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 			$options = array_merge($options, $_options);
 		}
 
-		$cwd = getcwd();
+		//$cwd = getcwd();
 
-		chdir(dirname(dirname(__FILE__)));
+		//chdir(dirname(dirname(__FILE__)));
 
 		is_file($f = './ajax.php') || is_file($f = '../ajax.php') || is_file($f = '../../ajax.php');
 
-		chdir($cwd);
+		//chdir($cwd);
 
 		$url = sprintf('%s?%s/%s%s', $f, $controller, $method, $_params);
 
