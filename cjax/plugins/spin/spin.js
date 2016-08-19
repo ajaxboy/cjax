@@ -22,13 +22,14 @@ function spin(element_id, animation, speed)
     }
 
     //makes sure that the file is loaded. Or waits until it loads.
-    //this.load('jquery.simple-text-rotator.js', function(obj) {
+    //particularly needed when calling during ajax call, and none of the files are loaded.
+    this.load('jquery.simple-text-rotator.js', function(obj) {
 
-        if(!/^#|\./i.test(element_id)) {
-            element_id = '#' +element_id;
+        if (!/^#|\./i.test(element_id)) {
+            element_id = '#' + element_id;
         }
 
-        var animate  = function() {
+        var animate = function () {
             switch (animation) {
                 case 'flip':
                     if (!speed) {
@@ -85,5 +86,7 @@ function spin(element_id, animation, speed)
         spin.ready(function () {
             spin.repeat(animate);
         });
+
+    });
 
 }
