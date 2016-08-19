@@ -1,16 +1,7 @@
-<?php
-//core file, reference..
-require_once "ajax.php";
-
-$ajax = ajax();
-
-
-?>
 <!doctype html>
 <head>
     <link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
-    <title>Template</title>
-    <?php echo $ajax->init();?>
+    <title>An Error Ocurred</title>
 </head>
 <body>
 <header>
@@ -39,7 +30,7 @@ $ajax = ajax();
         <td id="breadcrumb">
             <a href="http://cjax.sourceforge.net/">Project Home</a> &nbsp;&#8250;&nbsp;
             <a href="./">Demos</a> &nbsp;&#8250;&nbsp;
-            Template
+            Error
         </td>
         <td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="cjax.sourceforge.net/" />Search Project User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
     </tr>
@@ -50,14 +41,20 @@ $ajax = ajax();
 
 <div id="content">
 
-    <p>
-    <!-- Text -->
-    Template
 
+    <!-- Text -->
+    <p>
+    Cjax was not detected in the parent directory. Make sure the framework is placed in the upper directory.
+    <br />
+    You may download Cjax from its website:
 
     </p>
 
-    <h3>Examples</h3>
+    <p>
+    <b>Download</b>
+    <a href='https://cjax.sourceforge.net/'>https://cjax.sourceforge.net/</a>
+    </p>
+
 
 
     <!-- Code Used -->
