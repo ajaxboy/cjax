@@ -382,7 +382,6 @@ class CoreEvents extends cjaxFormat {
 				foreach($events as $k2 => $v2) {
 					if(isset($v2['is_plugin'])) {
 						$_preload[$k2] = $v2;
-						//unset($cache[$k]);
 					}
 				}
 			}
@@ -726,6 +725,10 @@ if (document.addEventListener) {
 		} else {
 			self::$cache[] = $add;
 		}
+
+		$entr_id = self::lastEntryId();
+
+		self::$cache[$entr_id]['entry_id'] = $entr_id;
 
 		if($add==null){
 			return self::$cache;

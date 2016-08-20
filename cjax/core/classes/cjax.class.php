@@ -227,6 +227,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 			if(is_a($actions,'plugin')) {
 				$actions->element_id = $selector;
 				$actions->xml->element_id = $selector;
+				$actions->xml->event_element_id = $selector;
 				if(method_exists($actions, 'onEvent')) {
 					call_user_method('onEvent', $actions, $selector);
 				}

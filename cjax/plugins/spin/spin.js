@@ -75,12 +75,18 @@ function spin(element_id, animation, speed)
                         animation: "fade",
                         separator: "|"
                     });
+                    break;
+                case 'stop':
+                    console.log('trygin to stop');
+                    $(element_id).stop();
+                    break;
                 default:
                     $(element_id).textrotator({
                         animation: "flipCube",
                         separator: "|"
                     });
             }
+            $(element_id).data('default', $(element_id).text())
         };
 
         spin.ready(function () {

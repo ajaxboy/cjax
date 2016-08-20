@@ -424,13 +424,13 @@ class plugin extends ext {
 		}
 	}
 
-	public static function getPluginInstance($plugin = null, $params = array(), $instance_id = null, $load_controller = false)
+	public static function getPluginInstance($plugin = null, $params = array(), $instance_id = null)
 	{
 		if(isset(self::$_instances[$plugin]) && is_object(self::$_instances[$plugin])) {
 			return self::$_instances[$plugin];
 		}
 		if(!isset(self::$_instances_exist[$plugin])) {
-			$plugin_class = 'plugin_'.$plugin;
+			$plugin_class = 'plugin_'.$plugin . $instance_id;
 			eval('class ' . $plugin_class . ' extends plugin {}');
 			self::$_instances_exist[$plugin] = $plugin_class;
 		} else {
@@ -467,7 +467,7 @@ class plugin extends ext {
 				}
 				extract($args);
 				self::$_loading_prefix = $plugin;
-				$_plugin = self::$_instances[$plugin]  = new $plugin_class($a,$b,$c,$d,$e,$f);
+				$_plugin = self::$_instances[$plugin][$instance_id]  = new $plugin_class($a,$b,$c,$d,$e,$f);
 				$_plugin->params  = $params;
 				if(!is_null($instance_id)) {
 					$_plugin->_id = $instance_id;
