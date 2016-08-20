@@ -366,10 +366,13 @@ function CJAX_FRAMEWORK() {
 		}
 	};
 
-	this.property  	=		function (buffer)
+	this.property  	=		function (buffer, options)
 	{
-		var element = CJAX.$(CJAX.xml('element_id',buffer));
-
+		if(options) {
+			var element = options.selector;
+		} else {
+			var element = CJAX.$(CJAX.xml('element_id', buffer));
+		}
 		if(!element) {
 			if(CJAX.debug) {
 
@@ -377,11 +380,15 @@ function CJAX_FRAMEWORK() {
 			}
 			return;
 		}
-		var value = CJAX.decode(CJAX.xml('value',buffer));
-		if(CJAX.util.json(value)) {
-			value = CJAX.util.json(value);
-		}
 
+		if(options.options) {
+			var value = options.options.a;
+		} else {
+			var value = CJAX.decode(CJAX.xml('value',buffer));
+			if(CJAX.util.json(value)) {
+				value = CJAX.util.json(value);
+			}
+		}
 		if(typeof value =='object') {
 			for(x in value) {
 				if(typeof value[x] == 'object') {
@@ -454,6 +461,19 @@ function CJAX_FRAMEWORK() {
 	this.util		=		function()
 	{
 		return {
+			applySelector: function(element,callback) {
+
+				if(typeof element == 'object') {
+					return callback({0 : element});
+				}
+				CJAX.lib.loadCallback('sizzle.js', function (obj) {
+
+					CJAX.set.event(obj,'ready', function() {
+
+						return callback(Sizzle(element));
+					});
+				});
+			},
 			//turn an entire cjax xml string, into an object.
 			objectify: function(xml, parent, options) {
 
@@ -570,7 +590,7 @@ function CJAX_FRAMEWORK() {
 							json =  eval("("+buff+")");
 						}
 					} catch(e) {
-						console.log('Json Parser Error:',e);
+						console.error('Parser Error looking for:',tag,e, buffer, arguments.callee);
 					}
 
 					if(typeof json=='undefined' || !json) {
@@ -810,22 +830,9 @@ function CJAX_FRAMEWORK() {
 						var f = src.replace(/cjax-.+$/,'');
 
 						CJAX.uri = script.src;
-					} else {
-						var scripts = document.getElementsByTagName('script');
-						for( var i = 0; i < scripts.length; i++ ){
-							script = scripts[i];
-							src = script.src;
-							if(CJAX.util.get.basename(src).indexOf('cjax-')!=-1) {
-								var f = src.replace(/cjax-.+$/,'');
-								CJAX.uri = src;
-								return f;
-							}
-						}
-					}
-					if(f) {
-						return  f;
-					}
 
+						return f;
+					}
 				},
 				value : function(elem,verbose) {
 					var type = (typeof elem);
@@ -1488,11 +1495,11 @@ function CJAX_FRAMEWORK() {
 		uid = CJAX._uniqid(temp_buffer);
 
 
-		var element = CJAX.xml('element_id',temp_buffer);
+		var element_id = CJAX.xml('element_id',temp_buffer);
 
 		//binding elements
-		if(element.indexOf(CJAX.split_delimiter)!=-1) {
-			var bind = element.split(CJAX.split_delimiter);
+		if(element_id.indexOf(CJAX.split_delimiter)!=-1) {
+			var bind = element_id.split(CJAX.split_delimiter);
 			var elem,rel,xml;
 			var new_buffer;
 			var len =CJAX.util.count(bind);
@@ -1500,35 +1507,37 @@ function CJAX_FRAMEWORK() {
 			for(x in bind) {
 				if(i>= len)break;
 				i++;
-				new_buffer = buffer.replace(element, bind[x]);
+				new_buffer = buffer.replace(element_id, bind[x]);
 				elem = CJAX.is_element(bind[x],false);
 				CJAX.AddEventTo(new_buffer,false);
 			}
 			return;
 		}
-		if(typeof Sizzle !='undefined' || typeof jQuery !='undefined') {
-			if(!/[^a-zA-Z0-9_\-]/.test(element) && element.indexOf('#')==-1) {
-				element = '#'+element;
-			}
+		if(/[^a-zA-Z0-9_\-]/.test(element_id)) {
 			if(typeof jQuery !='undefined') {
-				elements = jQuery(element);
+				elements = jQuery(element_id);
 				elements.each(function(index, element) {
 					CJAX.__AddEventTo(element, buffer);
 				});
 			} else {
-				elements = Sizzle(element);
-				for(x in elements) {
-					CJAX.__AddEventTo(elements[x], buffer);
-				}
+				CJAX.lib.loadCallback('sizzle.js', function (file) {
+
+					CJAX.set.event(file,'load', function() {
+						elements = Sizzle(element_id);
+						for (x in elements) {
+							CJAX.__AddEventTo(elements[x], buffer);
+						}
+					});
+
+				});
 			}
 		} else {
-			CJAX.__AddEventTo(element, buffer);
+			CJAX.__AddEventTo(element_id, buffer);
 		}
 	};
 
 	this.__AddEventTo	=	function(element, buffer)
 	{
-
 		var events = CJAX.util.json(CJAX.xml('events', buffer));
 		var event = CJAX.xml('event', buffer);
 		var trigger;
@@ -1537,6 +1546,7 @@ function CJAX_FRAMEWORK() {
 		for(x in events) {
 			buffer = events[x];
 			trigger = buffer.event? buffer.event: event;
+
 			options = CJAX.util.objectify(buffer.xml, null, true);
 
 			if(typeof options !='object') {
@@ -1551,14 +1561,13 @@ function CJAX_FRAMEWORK() {
 			options.cache_id = x;
 			options.xml = buffer.xml;
 
-
 			if(!CJAX.is_loading && options.is_plugin) {
 				new_options = options;
 				if(window[new_options.is_plugin]) {
 					CJAX.set.event(element, trigger, new_options);
 				} else {
 
-					CJAX.lib.loadCallback(CJAX.util.loaded(new_options.filename), function () {
+					CJAX.lib.loadCallback(new_options.filename, function () {
 						el = CJAX.$(new_options.element_id);
 						CJAX.set.event(el, trigger, new_options);
 					});
@@ -1605,7 +1614,7 @@ function CJAX_FRAMEWORK() {
 			type = type.substring(2);
 		}
 		if (obj.addEventListener) {
-			if(type=='load'){
+			if(type=='ready'){
 				CJAX.ready(fn,obj);
 				return  CJAX._EventCache.add(obj, type, fn);
 			}
@@ -1845,6 +1854,7 @@ function CJAX_FRAMEWORK() {
 					}
 				}
 
+
 				if(CJAX.debug) {
 					console.log("set.even  for -..:",element);
 				}
@@ -1873,8 +1883,10 @@ function CJAX_FRAMEWORK() {
 						element.href= 'javascript:void(0)';
 					}
 				} else {
-					if(element.tagName=='IMG') {
-						element.style.cursor = 'pointer';
+					switch(element.tagName) {
+						case 'IMG':
+						case 'DIV':
+							element.style.cursor = 'pointer';
 					}
 					if(element.type && (element.type == 'checkbox' || element.type=='radio')) {
 						element.onclick = function() {return true;};
@@ -3074,6 +3086,8 @@ function CJAX_FRAMEWORK() {
 						break;
 					case '_fn':
 
+
+
 						if(CJAX[cache.fn]) {
 							SUBFIX = cache.fn;
 						}
@@ -3413,6 +3427,49 @@ function CJAX_FRAMEWORK() {
 		}
 	};
 
+
+	this.prop			=		function(element_id, options) {
+		if(options.options.b) {
+			CJAX.$(options.options.b, function(elements) {
+
+				for(var x in elements) {
+					options.selector = elements[x];
+					CJAX.property(options.xml, options);
+				}
+			});
+		} else {
+			return CJAX.property(options.xml, options);
+		}
+	};
+
+
+	this.swap			=		function(buffer, options)
+	{
+		var swap1 = options.options.a;
+		var swap2 = options.options.b;
+		var swap_type = options.options.c;
+
+		switch(swap_type) {
+			default:
+			case 'class':
+
+				CJAX.$('.'+ swap1, function(elements) {
+
+					CJAX.$('.'+ swap2, function(elements2) {
+						for(x in elements2) {
+							elements2[x].setAttribute('class', swap1);
+						}
+					});
+
+					for(x in elements) {
+						elements[x].setAttribute('class', swap2);
+					}
+				});
+
+
+		}
+	};
+
 	this.updateX		=		function(element_id, options) {
 
 		var element = CJAX.$(options.options.a);
@@ -3435,7 +3492,6 @@ function CJAX_FRAMEWORK() {
 
 			}
 		}
-
 	};
 
 	/**
@@ -3756,15 +3812,15 @@ function CJAX_FRAMEWORK() {
 		}
 	};
 
-	this.$					=		function(element_id,v) {
+	this.$					=		function(element_id, callback) {
 		if(!element_id) {
 			return;
 		}
 		if(typeof element_id =='object') {
+			if(callback) {
+				CJAX.util.applySelector(element_id,callback);
+			}
 			return element_id;
-		}
-		if(typeof v == 'undefined') {
-			var v = false;
 		}
 
 		if(element_id=='body') {
@@ -3775,29 +3831,36 @@ function CJAX_FRAMEWORK() {
 		}
 		element_id = element_id.replace(/^\#/,'');
 
+
 		if(/[^a-zA-Z0-9_\-]/.test(element_id)) {
-			//if(CJAX.debug) {
-			console.log('Invalid Element ID:', element_id);
-			//}
-			return;
+
+			if(CJAX.lib.isFn(callback)) {
+
+				CJAX.util.applySelector(element_id,callback);
+			} else {
+				console.log('Invalid Element ID:', element_id, callback);
+			}
+			return false;
 		}
-		return CJAX.is_element(element_id,v);
+		if(CJAX.lib.isFn(callback)) {
+			return callback({ 0: CJAX.is_element(element_id)})
+		}
+		return CJAX.is_element(element_id);
 	};
 
 	/**
 	 * return an element object can pass an string as id or an object
 	 **/
 	this.is_element			=			function(id_obj, verbose) {
-
-		var type = (typeof id_obj);
-		if( typeof verbose == 'undefined' && CJAX.debug) { verbose = true; }
-		if( type.indexOf( 'object' ) != -1) {
+		if(typeof id_obj == 'object') {
 			return id_obj;
-		} else {
-			var elem = document.getElementById(id_obj);
 		}
+		if(CJAX.debug) { verbose = true; }
+
+		var elem = document.getElementById(id_obj);
+
 		if(typeof id_obj == 'undefined' || id_obj===null) {
-			if( verbose ) alert('Element '+id_obj+' not found');
+			console.warning('Element '+id_obj+' not found');
 			return false;
 		}
 
@@ -4647,7 +4710,7 @@ function CJAX_FRAMEWORK() {
 			var data;
 			for(var x in CJAX._Ready) {
 				data = CJAX._Ready[x];
-				data.fn();
+				data.fn(data.element);
 			}
 		};
 
@@ -4663,7 +4726,7 @@ function CJAX_FRAMEWORK() {
 			return;
 		}
 		if(CJAX.DOMContentLoaded) {
-			fn();
+			fn(obj);
 		} else {
 			CJAX._Ready[CJAX.util.count(CJAX._Ready) + 1] = {
 				fn: fn,
@@ -4684,6 +4747,8 @@ function CJAX_FRAMEWORK() {
 					}
 				}
 			});
+		} else {
+			CJAX.importFile(__base__+'lib/sizzle.js');
 		}
 	};
 }

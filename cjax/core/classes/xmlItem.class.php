@@ -160,7 +160,7 @@ class xmlItem {
 		$data = array();
 		$data['do'] = '_fn';
 		$data['fn'] = $fn;
-		$data['fn_data'] = $pParams;
+		$data['options'] = $pParams;
 
 		$item = $ajax->xmlItem($ajax->xml($data),'xmlItem_fn');
 		return  $item;

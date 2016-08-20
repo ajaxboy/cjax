@@ -13,7 +13,7 @@ $ajax = ajax();
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
 
-<title>Location/Redirect</title>
+<title>Location/Redirect Ajax</title>
 <?php echo $ajax->init();?>
 </head>
 <body>
@@ -49,7 +49,12 @@ Location
 
 <div id="content">
 
-
+<p>
+	Ever tried to redirect a page from the server, while you are in an ajax call? well, you can't, oh wait - erase that, with Cjax yes you can.
+	<br />
+	Here is where this function is most useful. You can use it and it will redirect from the server or from
+	anywhere you call it. If you just call it without parameters, it will refresh the page you are on.
+</p>
 <br />
 You can redirect to a different url, or site, by using the location function.
 

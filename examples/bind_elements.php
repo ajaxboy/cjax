@@ -1,36 +1,95 @@
 <?php
+
 //core file, reference..
 require_once "ajax.php";
+//initiate CJAX..
 
 $ajax = ajax();
 
 
-//multiple commands can be binded..
-//defeault event is "click"
-$ajax->click("link1",
-    array(
-        $ajax->call("ajax.php?bind/link2"),
-        $ajax->alert("Hello World 1"),
-        $ajax->alert("Hello World 2"),
-    ));//default event is "click"
+/**
+ * You can pass two elements ids separate by pipe lines.
+ */
+$ajax->click("link1|link2", $ajax->call("ajax.php?bind/bind_elements") );
 
 
-//different event.. "blur"
-$ajax->blur("link2",
-    array(
-        $ajax->call("ajax.php?bind/link2"),
-        $ajax->alert("Hello World 3"),
-        $ajax->alert("Hello World 4")
-    )
-);
+/**
+ * Update Style, to green.
+ * Note: You can update any property in CSS, make sure you know their JavaScript name,
+ * as they are are not the same as they in styles sheets.
+ * See a list here: http://cjax.sourceforge.net/examples/docs/dom_style_list.php
+ */
+$style = array(
+    'style' => array(
+        'backgroundColor' => 'green'
+    ));
+
+$ajax->click('.red', $ajax->prop($style));
+
+
+/**
+ * Update Style, to yellow.
+ * Note: You can update any property in CSS, make sure you know their JavaScript name,
+ * as they are are not the same as they in styles sheets.
+ * See a list here: http://cjax.sourceforge.net/examples/docs/dom_style_list.php
+ */
+$style = array(
+    'style' => array(
+        'backgroundColor' => 'yellow'
+    ));
+
+$ajax->click('.blue', $ajax->prop($style));
+
+
+
+/**
+ * Reset style property before we can swap (in case they have changed)
+ * Swapping a class doesn't particularly overwrite the style, you would end up with the class swapped
+ * but they would look the same color provided by style.backgroundColor.
+ */
+$style = array(
+    'style' => array(
+        'backgroundColor' => ''
+    ));
+$ajax->click('.grey', $ajax->prop($style,'.blue , .red'));
+
+/**
+ * Swap class
+ */
+$ajax->click('.grey', array($ajax->swap('blue','red')));
+
+
+### look inside controllers/bind.php for response code sample.
 ?>
 <!doctype html>
 <head>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
-
     <title>Bind Elements</title>
-    <?php echo $ajax->init();?>
+    <?php echo $ajax->init(false);?>
+    <style>
+
+        .red {
+            background: red;
+        }
+
+        .blue {
+            background: blue;
+        }
+
+        .green {
+            background: green;
+        }
+
+        .grey {
+            background: grey;
+        }
+
+        .blue, .red, .green,.grey {
+            width: 100px;
+            height: 100px;
+            float: left;
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -71,70 +130,125 @@ $ajax->blur("link2",
 <div id="content">
 
 
-    You can pass multiple element ids separated by a pipe line. You can also pass an array with elements id values.
+        <!-- Text -->
+    <h2>Bind elements to commands</h2>
+    <p>
     <br />
-    If you are interested in using many elements, you are encouraged to enable sizzle in your $ajax config.
-    <a href="sizzle.php">See more info</a>.
+    Basically both anchor are hooked by the same event used
+    </p>
 
     <h3>Examples</h3>
 
 
-    <h5>Normal</h5>
-    This is an example how you genereally only pass one action to an event. See below for multiple action bind to an event.
+    <!-- Code Used -->
+
+    Code used:
+<?php
+echo $ajax->code("
+\$ajax->click(\"link1|link2\",\$ajax->call(\"ajax.php?bind/bild_elements\"));
+", true, true);?>
+
+    <br />
+    <a href='#' id='link1'>Click Me (element 1)</a>
+    <br />
+    <a href='#' id='link2'>Click Me (element 2)</a>
+
+    <h4>Using Array</h4>
+
     <?php
     echo $ajax->code("
-	//Normal, only one actions passed.
-	\$ajax->click(\"#link1\",\$ajax->call(\"ajax.php?bind/link2\"),);
-	");
-    ?>
-    <h5>Bind Multiple Actions</h5>
-    <?php
-    echo $ajax->code("
-	//default event is \"click\"
-	\$ajax->click(\"#link1\",
-	array(
-	\$ajax->call(\"ajax.php?bind/link2\"),
-	\$ajax->alert(\"Hello World 1\"),
-	\$ajax->alert(\"Hello World 2\"),
-	));
+    \$elements = array(
+        'element_id','element_id2','element_id3'
+    );
+    \$ajax->click(\$elements,\$ajax->call(\"ajax.php?bind/bild_elements\"));
+");?>
 
 
-	//different event.. \"blur\"
-	\$ajax->blur(\"#link2\",
-	array(
-	\$ajax->call(\"ajax.php?bind/link2\"),
-	\$ajax->alert(\"Hello World 3\"),
-	\$ajax->alert(\"Hello World 4\"),
-	)
-	);
-
-	", true, true);
-    ?>
-
+    <h4>Using Advanced Selector <span class="req">Cjax 5.9+</span> </h4>
     <!-- HTML -->
-    <div style="padding: 15px;">
-        <h2> "click" event..</h2>
+    <p>
+    You can use wildcard selectors, or class selectors, or any type of advanced selectors, supported by popular libraries.
+    </p>
+    <p>
+        In these examples we feature CSS/style properties, you can use any <a target="_blank" href="docs/dom_style_list.php">available property</a> in CSS.
+    </p>
+    <p class="note">
+        This does not limit the properties you may use to CSS. You may use any DOM property entirely, that the element may support.
+    </p>
 
-        <br />
-        <a href='#' id='link1'>Click Me</a>
-        <br />
-        <br />
-        <h2> "blur" event..</h2>
-        <br />
-        <a href='#' id='link2'>Click Me</a>
-    </div>
+    <p>If you know CSS, you already know how to use this whole system, without much of a learning curve. If you know even a little
+    about the properties in JavaScript, this is a walk in the park. Otherwise you can just review the <a target="_blank" href="docs/dom_style_list.php">docs</a>
+    </p>
 
-
-    <h4>Example</h4>
+    <p class="note">
+        Although advanced selectors are available since Cjax 5.7 (2012), the uses in these examples are new. For example: Using
+        <span clas="keyword">prop()</span> and <span clas="keyword">swap()</span> methods.
+    </p>
     <?php
     echo $ajax->code("
-\$ajax->Exec('element_id', array(
-	\$ajax->overlayContent('Hello'),
-	\$ajax->alert('Hello'),
-	\$ajax->info('Hello'),
-));
-");
-    ?>
+
+
+     //Apply CSS properties to any element you click on, containing the class '.red'. When clicked on, will change to green.
+    \$style = array(
+        'style' => array(
+            'backgroundColor' => 'green'
+        ));
+
+    \$ajax->click('.red', \$ajax->prop(\$style));
+
+
+    //Apply CSS properties to any element you click on, containing the class '.blue'. When clicked on, will change to yellow.
+    \$style = array(
+        'style' => array(
+            'backgroundColor' => 'yellow'
+        ));
+
+    \$ajax->click('.blue', \$ajax->prop(\$style));
+
+
+    //Reset the style.backgroundColor property style
+    \$style = array(
+    'style' => array(
+        'backgroundColor' => ''
+    ));
+
+    //prop() supports parameter to specify selectors to apply the properties to.
+    //If not specified - by default it would apply them to the element you click on.
+    \$ajax->click('.grey', \$ajax->prop(\$style,'.blue , .red'));
+
+
+    //When you click on any element that contains the class .grey, it will trigger a swap of class red and blue.
+    \$ajax->click('.grey', \$ajax->swap('blue','red'));
+
+    ");?>
+
+    <?php
+    echo $ajax->code('
+
+        <div class="red"></div>
+        <div class="blue"></div>
+        <div class="red"></div>
+        <div class="blue"></div>
+        <div class="red"></div>
+        <div class="grey"></div>
+
+    ',"HTML",true);?>
+
+
+
+    <p>
+    <div>
+        <div class="red"></div>
+        <div class="blue"></div>
+        <div class="red"></div>
+        <div class="blue"></div>
+        <div class="red"></div>
+        <div class="blue"></div>
+        <div class="grey"></div>
+        <div style="clear: both"></div>
+    </div>
+    </p>
+
 
 
     <br />

@@ -10,6 +10,12 @@ body {
 .try_it {
  position: relative;
 }
+
+.req {
+ font-family: "Adobe Devanagari";
+ font-size: 19px;
+ color: #0000BB;
+}
 .try_it img {
  position: absolute;
  overflow: hidden;
@@ -185,6 +191,7 @@ padding: 0 0 6px 0;
 
 #content p {
  margin: 12px 20px 12px 0;
+ max-width: 900px;
 }
 
 #content h1 {
@@ -279,12 +286,34 @@ padding: 3px 0 7px 3px;
  font-weight: bold;
  font-style: normal;
 }
-#content kbd {
+#content kbd, .note {
  font-family: Lucida Grande, Verdana, Geneva, Sans-serif;
  color: #A70000;
  font-weight: bold;
  font-style: normal;
+ background-color:#F9F9F9;
+ padding: 20px;
+ width: 50%;
+ border-style: dashed;
+ border-width: 1px;
+ border-radius: 3px;
 }
+
+.soft-note {
+ font-family: Lucida Grande, Verdana, Geneva, Sans-serif;
+ color: #A70000;
+ font-weight: lighter;
+ font-style: oblique;
+ background-color: linen;
+ font-size:  13px;
+ padding: 8px;
+ width: 94%;
+ border-style: dashed;
+ border-color: #99BC99;
+ border-width: 1px;
+ border-radius: 3px;
+}
+
 
 #content ul {
  list-style-image: url(../images/arrow.gif);

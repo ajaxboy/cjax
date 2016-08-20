@@ -505,11 +505,11 @@ class CoreEvents extends cjaxFormat {
 			$v['event_element_id'] = $event['element_id'];
 			foreach($v as $k2 => $v2) {
 				if(is_array($v2)) {
-					foreach($v2 as $k3 => $v3) {
+					/*foreach($v2 as $k3 => $v3) {
 						if(is_array($v3)) {
 							$v2[$k3] = self::mkArray($v3);
 						}
-					}
+					}*/
 					$v[$k2] = self::mkArray($v2);
 				}
 			}
@@ -1576,7 +1576,7 @@ if (document.addEventListener) {
 				$data = highlight_string("<?php \n" . $data . "\n?>", true);
 			}
 		} else {
-			$data = highlight_string($data, true) . "<br /><br />"; // Add nice and friendly <script> tags around highlighted text
+			$data = self::highlight_html($data, true) . "<br /><br />"; // Add nice and friendly <script> tags around highlighted text
 		}
 
 		if (is_bool($extra) && $extra) {
@@ -1584,6 +1584,35 @@ if (document.addEventListener) {
 		}
 
 		return sprintf('<div id="code_highlighted">%s%s</div>', $data, $extra);
+	}
+
+	static function highlight_html($string, $decode = false){
+		$tag = '#0000ff';
+		$att = '#ff0000';
+		$val = '#2c8510';
+		$com = '#34803a';
+
+		$find = array(
+			//'~(\s[a-z].*?=)~',
+			'~(\s[a-z].*?=)~',                    // Highlight the attributes
+			'~(&lt;\!--.*?--&gt;)~s',            // Hightlight comments
+			'~(&quot;[a-zA-Z0-9\/].*?&quot;)~',    // Highlight the values
+			'~(&lt;[a-z].*?&gt;)~',                // Highlight the beginning of the opening tag
+			'~(&lt;/[a-z].*?&gt;)~',            // Highlight the closing tag
+			'~(&amp;.*?;)~',                    // Stylize HTML entities
+		);
+		$replace = array(
+			//'<span style="color:'.$att.';">$1</span>',
+			'<span style="color:'.$att.';">$1</span>',
+			'<span style="color:'.$com.';">$1</span>',
+			'<span style="color:'.$val.';">$1</span>',
+			'<span style="color:'.$tag.';">$1</span>',
+			'<span style="color:'.$tag.';">$1</span>',
+			'<span style="font-style:italic;">$1</span>',
+		);
+		if($decode)
+			$string = htmlentities($string);
+		return '<pre>'.preg_replace($find, $replace, $string).'</pre>';
 	}
 
 	function jsCode($data, $tags = false)
