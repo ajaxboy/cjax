@@ -11,6 +11,21 @@ body {
  position: relative;
 }
 
+.code-used {
+ font-family: "Adobe Devanagari";
+ font-size: 19px;
+ color: #0000BB;
+ background-color: #F9F9F9;
+ position:relative;
+ top: 20px;
+ padding: 5px 40px 2px 5px;
+ border-color: #d0d0d0;
+ border-style: dashed;
+ border-radius: 4px;
+ border-width: 1px;
+ width: 200px;
+}
+
 .req {
  font-family: "Adobe Devanagari";
  font-size: 19px;

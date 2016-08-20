@@ -64,8 +64,7 @@ $ajax->click("button1",$ajax->call("ajax.php?click_ajax_request/click_button/Hel
     and triggers a <a href="display_messages.php">success message</a>, right from the back-end, and that is  what you see as end result.
     </p>
 
-    <br />
-    Code Used:
+
     <?php
     echo $ajax->code("
         \$ajax->click(\"#button1\",\$ajax->call(\"ajax.php?click_ajax_request/click_button/Hello!\"));

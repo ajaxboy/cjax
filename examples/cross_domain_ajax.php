@@ -66,7 +66,6 @@ $ajax->click('btn_request', $ajax->call($url,'div_response'));
 
 	<h3>Examples</h3>
 
-	Code Used:
 	<?php
 	echo $ajax->code("
 		\$ajax->click('btn_request', \$ajax->call('https://raw.githubusercontent.com/ajaxboy/cjax/master/CHANGELOG.txt','div_response'));

@@ -7,7 +7,7 @@ $ajax = ajax();
 $ajax->spin('.spinning_text', 'spin');
 $ajax->spin('.flipping_text', 'flip');
 $ajax->spin('.flip_cube', 'flipCube');
-$ajax->spin('.flip_up_cube', 'flipCubeUp');
+$ajax->spin('.flip_up_cube', 'flipUpCube');
 
 
 ?>
@@ -57,7 +57,7 @@ $ajax->spin('.flip_up_cube', 'flipCubeUp');
 
 
     <!-- Text -->
-    <h2>Spin Effect (Cjax 5.9+)</h2>
+    <h2>Spin Effect <span class="req">Cjax 5.9+</span></h2>
 
     These text effects to spin, rotate, and apply other effects to text elements.
 

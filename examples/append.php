@@ -64,8 +64,6 @@ $ajax->append('#response','#other_element');
 
 
     <!-- Code Used -->
-    <br />
-    Code Used:
 <?php
 echo $ajax->code("
 //Appending HTML

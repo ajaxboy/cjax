@@ -1,15 +1,21 @@
 <?php
 require 'ajax.php';
 
+
+
+
 $ajax->spin('star', 'spin');
 
+$ajax->click('demos', $ajax->spin('star','stop'));
+
+//$ajax->debug = true;
 ?>
 <!doctype html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
-<?php echo $ajax->init(); ?>
+<?php echo $ajax->init(false); ?>
 <title>Demos</title>
 <style>
 
@@ -66,13 +72,9 @@ h4 {
 
 <h4 id="demos"><a target="_blank" href="https://github.com/ajaxboy/cjax">Download</a> all 70+Demos/Samples/Docs</h4>
 <br />
-
 <div style="margin: 20px;"> <div style="font-size: 12px;padding: 5px;">Project development is new to github. Give us a <span id="star">star</span>.</div>
-	<iframe src="https://ghbtns.com/github-btn.html?user=ajaxboy&repo=cjax&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+	<iframe id='istar' src="https://ghbtns.com/github-btn.html?user=ajaxboy&repo=cjax&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
 	<iframe src="https://ghbtns.com/github-btn.html?user=ajaxboy&repo=cjax&type=watch&count=true&v=2" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
-<!--
-	<iframe src="https://ghbtns.com/github-btn.html?user=ajaxboy&type=follow&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
--->
 </div>
 <h5>Welcome to the World of Cjax</h5>
 <p>
@@ -247,7 +249,7 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 	</div>
 	
 	
-	<div style="width: 200px;float: left">
+	<div style="width: 210px;float: left">
 	<h3>Plugins</h3>
 		<ul>
 			<li>

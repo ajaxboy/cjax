@@ -10,8 +10,8 @@ $ajax = ajax();
 $ajax->click("link1",
 	array(
 		$ajax->call("ajax.php?bind/link2"),
-		$ajax->alert("Hello World 1"),
-		$ajax->alert("Hello World 2"),
+		$ajax->success("Hello World 1"),
+		$ajax->overlayContent("Hello World 2"),
 	));//default event is "click"
 
 
@@ -90,20 +90,21 @@ echo $ajax->code("
 	echo $ajax->code("
 	//default event is \"click\"
 	\$ajax->click(\"#link1\",
-	array(
-	\$ajax->call(\"ajax.php?bind/link2\"),
-	\$ajax->alert(\"Hello World 1\"),
-	\$ajax->alert(\"Hello World 2\"),
-	));
+		array(
+			\$ajax->call(\"ajax.php?bind/link2\"),
+			\$ajax->succcess(\"Hello World 1\"),
+			\$ajax->overlayCotent(\"Hello World 2\"),
+		)
+	);
 
 
 	//different event.. \"blur\"
 	\$ajax->blur(\"#link2\",
-	array(
-	\$ajax->call(\"ajax.php?bind/link2\"),
-	\$ajax->alert(\"Hello World 3\"),
-	\$ajax->alert(\"Hello World 4\"),
-	)
+		array(
+			\$ajax->call(\"ajax.php?bind/link2\"),
+			\$ajax->sucess(\"Hello World 3\"),
+			\$ajax->overlayCotent(\"Hello World 4\"),
+		)
 	);
 
 	");

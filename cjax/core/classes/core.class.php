@@ -1586,7 +1586,8 @@ if (document.addEventListener) {
 			$extra = "<div class='try_it'><img src='resources/images/try_it.png' /></div><h4>Try it</h4>";
 		}
 
-		return sprintf('<div id="code_highlighted">%s%s</div>', $data, $extra);
+		$msg = "<div class='code-used'>Code Used</div>";
+		return sprintf('<div id="code_highlighted">%s%s%s</div>',$msg, $data, $extra);
 	}
 
 	static function highlight_html($string, $decode = false){
