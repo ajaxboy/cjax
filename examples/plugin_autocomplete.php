@@ -82,7 +82,8 @@ $ajax->keyup('#text1', $ajax->autocomplete('ajax.php?autocomplete/update'));
 	<p>
 	Cjax 5.9 adds alot of power to autocomplete. More stability, more scalability, more caching and overall more complete and more features.
 	</p>
-	<kbd>Note: These new features should be considered beta, which means, they could change in the future.</kbd>
+
+	<p class="note">Note: These new features should be considered beta, which means, they could change in the future.</p>
 
 	<p>
 	Two more optional parameters. boolean <span class="param">$full_load</span> and  string <span class="param">$url2</span>
