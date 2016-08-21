@@ -50,6 +50,10 @@ $ajax = ajax();
 
 <div id="content">
 
+	<div style="margin: 20px;"> <div style="font-size: 12px;padding: 5px;">Project development is new to github. Give us a <span id="star">star</span>.</div>
+		<iframe id='istar' src="https://ghbtns.com/github-btn.html?user=ajaxboy&repo=cjax&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+		<iframe src="https://ghbtns.com/github-btn.html?user=ajaxboy&repo=cjax&type=watch&count=true&v=2" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+	</div>
 
 	<!-- Text -->
 	<h2 id="install">Install/Download</h2>
@@ -57,14 +61,13 @@ $ajax = ajax();
 	Here are the steps to get the framework installed on your site, or test installation:<br>
 
 	<br />
-	<p>
-	<b>Important Note:</b> Previously there were more than one package being distributed, the mains Cjax
-		release and the CodeIgniter release. Starting from Cjax v 5.9, there will be only one single distribution
-		package. This new distribution package has built-in support for CodeIgniter, rather that a separate package.
+	<p class="soft-note">
+		Previously there were multiple packages being distributed. Starting from <span class="req">Cjax v 5.9</span>, there will be a one single distribution
+		package. It includes CI Integration.
 	</p>
 	<ul>
 		<li>
-			1. <a target="_blank" href="https://github.com/ajaxboy/cjax">Download</a> the latest stable release
+			1. <a target="_blank" href="https://github.com/ajaxboy/cjax/releases">Download</a> the latest stable release
 			<br />
 		</li>
 		<li>
@@ -86,13 +89,20 @@ $ajax = ajax();
 		</li>
 	</ul>
 	<h4>Testing your Cjax Installation</h4>
-	For security reasons you cannot access ajax.php directly on your browser, however there is a special case allowed for this test. <br>
-	Go onto your browser and type in the url for your site, ajax.php?test/test, eg:  http://yoursite.com/ajax.php?test/test
-	<br>
+	<p>
+	For security reasons you cannot access ajax.php directly on your browser, however there is a special case allowed for this <span class="keyword">test</span> controller.
+	Go onto your browser and type in your site url + /ajax.php?test/test  eg: http://yoursite.com/ajax.php?test/test
+	<br />
 	You will see further confirmation on that page, and instructions.
 	<br>
 	You may find the text in file response/test.php in function test(). If your installation was successful you may delete file test.php.
+	</p>
 
+	<p>
+		If you run into any issues while installing, consider <a href="troubleshooting.php">Troubleshooting</a>, and <a href="debugging.php">debugging</a>.
+		<br />
+		Should you have additional questions, you can contact the <a href="">author</a>. If all else fails, professional installation is available for a feed 100% guarateed or your money back.
+	</p>
 
 
 
