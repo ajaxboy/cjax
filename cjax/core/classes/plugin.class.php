@@ -56,7 +56,7 @@ class plugin extends ext {
 	/**
 	 * Default controllers directory to each plugin
 	 */
-	public $controllers_dir = 'controllers';
+	public $controllers_dir = 'response';
 
 	public $controller_file = null;
 
@@ -484,7 +484,11 @@ class plugin extends ext {
 		$dir = plugin::dir($plugin).$_plugin->controllers_dir;
 		$_plugin->xml = $ajax->xmlObject($instance_id);
 		$_plugin->controllers_dir = $dir;
-		$_plugin->controller_file = $dir."/{$plugin}.php";
+		if(!$_plugin->controller) {
+			$_plugin->controller = $plugin;
+		} else {
+			$_plugin->controller = $_plugin->controller;
+		}
 		$_plugin->loading = $plugin;
 		return $_plugin;
 	}

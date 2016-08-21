@@ -77,9 +77,14 @@ class ajax  {
 			if(method_exists($plugin, $function)) {
 				return $this->_response(call_user_func_array(array($plugin, $function), $args));
 			} else {
-				$alt_controller = $plugin->controller_file;
 				if(is_dir($plugin->controllers_dir)) {
-					if (!file_exists($alt_controller)) {
+
+					$alt_controller = array(
+						'class' => $plugin->controller,
+						'dir' => $plugin->controllers_dir,
+						'file' => $plugin->controllers_dir . '/' . $plugin->controller . '.php'
+					);
+					if (!file_exists($alt_controller['file'])) {
 						$this->abort("{$controller} Plugin: Controller File Not Found.");
 					}
 				}
@@ -121,6 +126,7 @@ class ajax  {
 		if(!$function) {
 			$function = $raw_class;
 		}
+
 		if(!method_exists($requestObject,$function)) {
 			$this->abort("Controller Method/Function: {$raw_class}::{$function}() was not found");
 		}
@@ -141,11 +147,12 @@ class ajax  {
 		}		
 	}
 	
-	protected function _files($controller, $alt_controller = null)
+	protected function _files(&$controller, $alt_controller = null)
 	{
 		$ajax = ajax();
-		if($alt_controller) {
-			$files[] = $alt_controller;
+		if($alt_controller && is_array($alt_controller)) {
+			$files[] = $alt_controller['file'];
+			$controller = $alt_controller['class'];
 		}
 		if(defined('AJAX_CD')) {
 			$ajax_cd = AJAX_CD;
@@ -163,6 +170,31 @@ class ajax  {
 				return $f;
 			}
 		} while( next($files) );
+	}
+
+	protected function _class($controller)
+	{
+		$raw_controller = $controller;
+		$ajax = ajax();
+
+		$controller = $ajax->camelize($controller, $ajax->config->camelizeUcfirst);
+
+		$_classes = array();
+		$_classes[] = 'controller_'.$controller;
+		$_classes[] = '_'.$controller;
+		$_classes[] = $controller;
+		$_classes[] = $raw_controller;
+
+		do {
+			$c = $_classes[key($_classes)];
+
+			if(class_exists($c, false)) {
+				return $c;
+			}
+		} while(next($_classes));
+
+
+		return $c;
 	}
 	
 	protected function _params()
@@ -231,31 +263,6 @@ class ajax  {
 			$obj = new $class;
 		}
 		return $obj;
-	}
-
-	protected function _class($controller)
-	{
-		$raw_controller = $controller;
-		$ajax = ajax();
-
-		$controller = $ajax->camelize($controller, $ajax->config->camelizeUcfirst);
-
-		$_classes = array();
-		$_classes[] = 'controller_'.$controller;
-		$_classes[] = '_'.$controller;
-		$_classes[] = $controller;
-		$_classes[] = $raw_controller;
-		
-		do {
-			$c = $_classes[key($_classes)];
-			
-			if(class_exists($c, false)) {
-				return $c;
-			}
-		} while(next($_classes));
-		
-		
-		return $c;
 	}
 }
 require_once (rtrim(AJAX_WD, '/') . '/core/preemptive.php');

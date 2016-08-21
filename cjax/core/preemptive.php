@@ -52,7 +52,7 @@ if((isset($_SERVER['QUERY_STRING']) && $query = $_SERVER['QUERY_STRING'])) {
 	if($packet && count(array_keys($packet)) >= 2 && $packet[0] && $packet[1]) {
 		$controller  = $packet[0];
 		$function 	 = $packet[1];
-		
+
 		if(count(array_keys($packet)) > 2) {
 			unset($packet[0]);
 			unset($packet[1]);
@@ -72,6 +72,9 @@ if((isset($_SERVER['QUERY_STRING']) && $query = $_SERVER['QUERY_STRING'])) {
 					$controller = $packet[0];
 				}
 			}
+		} else {
+			$controller = $_REQUEST['controller'];
+			$function = isset($_REQUEST['function'])? $_REQUEST['function'] : null;
 		}
 	}
 

@@ -6,11 +6,11 @@
 function uploader(a,b,c)
 {
 	this.callback(false);
-	
+
 	var handler,version;
 	//backward compatibility with pre-5.3
 	version = CJAX.version.replace(/[^0-9\.].*/,'');
-	
+
 	if(parseFloat(version) < 5.3) {
 		handler = 'handlerFileupload';
 	} else {

@@ -9,6 +9,8 @@
 class uploader extends plugin {
 	
 	private $options = array();
+
+	public $controller = 'uploading';
 	
 	private $callback_id;
 	
