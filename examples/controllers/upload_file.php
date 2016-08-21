@@ -74,7 +74,7 @@ class upload_file {
 	
 	function error()
 	{
-		
+		$ajax = ajax();
 		$upload_max = $ajax->toMB(ini_get('upload_max_filesize'));
 		$post_max = $ajax->toMB($pmax = ini_get('post_max_size'));// / 2;
 		$max_size = ($upload_max < $post_max) ? $upload_max : $post_max;

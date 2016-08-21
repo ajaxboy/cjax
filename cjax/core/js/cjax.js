@@ -1460,7 +1460,7 @@ function CJAX_FRAMEWORK() {
 					if(overlay_class) {
 						with (overlay_class.style) {
 							display = 'block';
-							position = 'absolute';
+							position = 'fixed';
 							top = 0;
 							left= 0;
 							width= '100%';
@@ -1472,9 +1472,10 @@ function CJAX_FRAMEWORK() {
 								filter = _alpha;
 							}
 							if(_color) {
-								backgroundColor =_color;
+								backgroundColor = _color;
 							}
 						}
+
 						CJAX.$('cjax_overlay').className = 'overlay_class';
 					}
 				}

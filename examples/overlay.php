@@ -38,7 +38,7 @@ $ajax->click("#overlay_dialog", $ajax->dialog('Hello World','Dialog#1'));
 <head>
     <link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
     <title>Ajax Overlays in PHP</title>
-    <?php echo $ajax->init();?>
+    <?php echo $ajax->init(false);?>
 </head>
 <body>
 <header>
