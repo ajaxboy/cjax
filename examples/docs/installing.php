@@ -63,7 +63,7 @@ $ajax = ajax();
 	<br />
 	<p class="soft-note">
 		Previously there were multiple packages being distributed. Starting from <span class="req">Cjax v 5.9</span>, there will be a one single distribution
-		package. It includes CI Integration. Cjax is a general purpose ajax framework, it is not exclusive to CodeIgniter.
+		package. It includes CI Integration. Cjax is a general purpose ajax framework, it is not exclusive to CodeIgniter (many people seem to think it is).
 	</p>
 	<ul>
 		<li>
