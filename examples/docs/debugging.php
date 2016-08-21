@@ -87,7 +87,7 @@ $ajax = ajax();
             Request status response
             <ol>
                <li>
-                   This is a number the server responds with depending on how the request went. 404, indicating that the controller file was not found.
+                   This is a number status the server responds with depending on how the request went. 404, indicating that the controller file was not found.
                     500 indicating a server error, and there are other types of responses you may see.
                     If there is a php error, the console always will give you the error message, unless you have error messaging completly turned off in your server settings.
                    If you can't find the error on the console, the next place to look is your apache log files.
