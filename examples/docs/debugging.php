@@ -107,6 +107,7 @@ $ajax = ajax();
         </ul>
     </p>
     <br />
+    <p>
     <ul>
     <li>
         Request status response
@@ -151,7 +152,7 @@ $ajax = ajax();
            </ol>
        </li>
     </ul>
-
+    </p>
 
    <p>
        These methods described above, should be able to catch 99% of any issue you may experience. If you experience something different, be sure to create
