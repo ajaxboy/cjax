@@ -121,7 +121,7 @@ class uploader extends plugin {
 		if(!$btn_id || is_array($btn_id)) {
 			$xml = $ajax->form($options['url'], $options['form_id']);
 		} else {
-			$xml = $ajax->Exec($btn_id, $ajax->form($options['url'], $options['form_id']));
+			$xml = $ajax->click($btn_id, $ajax->form($options['url'], $options['form_id']));
 		}
 		$this->options = $options;
 		$this->callback($xml);

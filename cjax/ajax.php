@@ -129,7 +129,7 @@ class ajax  {
 	
 	function abort($err)
 	{
-		ajax()->error($err);
+		ajax()->error($err, 10);
 		exit(0);
 	}
 
