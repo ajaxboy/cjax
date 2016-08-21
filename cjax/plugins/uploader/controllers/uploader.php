@@ -6,7 +6,7 @@
  * @author cj
  *
  */
-class Uploader
+class _Uploader
 {
 	private $error;
 	private $post;
