@@ -125,7 +125,8 @@ $ajax = ajax();
         <ol>
             <li>
                 If there is an error, for instance produced some where in the Cjax JS library, or in a plugin, the error will show up in the
-                console. This error can give you explicit information of why something didn't work.
+                console. This error can give you explicit information of why something didn't work. Many times it will give the specific line number
+                where the error occured, and you can click it and it will take you to the file in question.
             </li>
             <li>
                 A plugin's dependencies could trigger one of the console errors. Dependencies are encapsulated within a plugin, they are loaded
@@ -139,7 +140,8 @@ $ajax = ajax();
             <li>
                 If you are looking at the console, you click on the URL, and view the response, and you do not see an error
                 (and the response status is 200)  - this could be something
-                within the scope of your ajax controller.  Try an exit test  -  eg:  exit("It's getting here"); , then go to back to the console and
+                within the scope of your ajax controller.
+                Try an exit test  -  eg:  exit("It's getting here"); , then go to back to the console and
                 if you see this message it's telling you that there is no problem, and the response you expect, is not a Cjax error, rather
                 a product of your code or lack of.
             </li>

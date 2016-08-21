@@ -100,16 +100,23 @@ $ajax->pagination('pager3', $options);
 
 <div id="content">
 
+	<div style="margin: 20px;"> <div style="font-size: 12px;padding: 5px;">Project development is new to github. Give us a <span id="star">star</span>.</div>
+		<iframe id='istar' src="https://ghbtns.com/github-btn.html?user=ajaxboy&repo=cjax&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+		<iframe src="https://ghbtns.com/github-btn.html?user=ajaxboy&repo=cjax&type=watch&count=true&v=2" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+	</div>
+
+	<h2>Pagination</h2>
 
 	<!-- Text -->
 	<p>
-	Pagination functionality can easily be implement into pages, hassle free.
+	Pagination plugin can easily be implement into pages, hassle free.
 	<br />
-	Requires Cjax 5.9+.
-
-	<br />
-	<b>Note:</b> This functionality has no dependencies, any dependecies are already built-in.
+	Requires <span class="req">Cjax 5.9+</span>.
 	</p>
+	<p class="note">
+		This functionality has no dependencies, any dependencies are already built-in.
+	</p>
+
 
 	<p></p>
 	Credit for this plugin goes to Cj Galindo and, also includes the works of Eugene Simakin.

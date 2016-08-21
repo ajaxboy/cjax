@@ -66,30 +66,6 @@ $ajax->click('.grey', array($ajax->swap('blue','red')));
     <link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
     <title>Bind Elements</title>
     <?php echo $ajax->init(false);?>
-    <style>
-
-        .red {
-            background: red;
-        }
-
-        .blue {
-            background: blue;
-        }
-
-        .green {
-            background: green;
-        }
-
-        .grey {
-            background: grey;
-        }
-
-        .blue, .red, .green,.grey {
-            width: 100px;
-            height: 100px;
-            float: left;
-        }
-    </style>
 </head>
 <body>
 <header>

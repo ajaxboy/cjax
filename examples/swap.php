@@ -1,15 +1,17 @@
 <?php
 //core file, reference..
-require_once "../../ajax.php";
+require_once "ajax.php";
 
 $ajax = ajax();
 
-
+$ajax->click('#link', $ajax->swap('red', 'blue'));
+$ajax->click('.grey', $ajax->swap('green', 'red'));
+$ajax->click('.blue, .red', $ajax->swap('code-used', 'code-used2'));
 ?>
 <!doctype html>
 <head>
-    <link rel="stylesheet" type="text/css" href="../resources/css/user_guide.css" media="all">
-    <title>Triggers</title>
+    <link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
+    <title>Swap</title>
     <?php echo $ajax->init();?>
 </head>
 <body>
@@ -38,8 +40,8 @@ $ajax = ajax();
     <tr>
         <td id="breadcrumb">
             <a href="http://cjax.sourceforge.net/">Project Home</a> &nbsp;&#8250;&nbsp;
-            <a href="../">Demos</a> &nbsp;&#8250;&nbsp;
-            Triggers
+            <a href="./">Demos</a> &nbsp;&#8250;&nbsp;
+            Swap
         </td>
         <td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="cjax.sourceforge.net/" />Search Project User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
     </tr>
@@ -50,34 +52,52 @@ $ajax = ajax();
 
 <div id="content">
 
+    <div style="margin: 20px;"> <div style="font-size: 12px;padding: 5px;">Project development is new to github. Give us a <span id="star">star</span>.</div>
+        <iframe id='istar' src="https://ghbtns.com/github-btn.html?user=ajaxboy&repo=cjax&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+        <iframe src="https://ghbtns.com/github-btn.html?user=ajaxboy&repo=cjax&type=watch&count=true&v=2" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+    </div>
 
+    <p>
     <!-- Text -->
-    Cjax  triggers is the action you take to trigger an event. You can use these triggers to <a href="../bind_actions.php">bind actions</a> to <a href="../bind_elements.php">elements</a>.
+    Swap function <span class="req">Cjax 5.9+</span> allows you to swap CSS classes.
 
 
-    <br />
+    </p>
 
     <h3>Examples</h3>
 
-    <u>
-        <li>
-            <a href="../click.php">click()</a>
-        </li>
-        <li>
-            change()
-        </li>
-        <li>
-            keyup()
-        </li>
-        <li>
-            keydown()
-        </li>
-        <li>
-            <a href="../keypress.php">keypress()</a>
-        </li>
-    </u>
-    <!-- Code Used -->
+    <?php echo $ajax->code(
+      "
+      //Click on text link and swap red and blue
+      \$ajax->click('#link', \$ajax->swap('red', 'blue'));
 
+       //Click the grey block and swaps the green and red
+      \$ajax->click('.grey', \$ajax->swap('green', 'red'));
+
+      //Click on any red or blue, and swaps the header of code
+      \$ajax->click('.blue, .red', \$ajax->swap('code-used', 'code-used2'));
+      "
+    , true, true);?>
+
+
+    <p>
+    <a id="link" href="#">Swap Class</a>
+    </p>
+
+    <p>
+
+    <div>
+        <div class="red"></div>
+        <div class="blue"></div>
+        <div class="red"></div>
+        <div class="blue"></div>
+        <div class="red"></div>
+        <div class="blue"></div>
+        <div class="grey"></div>
+    </div>
+
+    <div style="clear:both"></div>
+    </p>
 
     <!-- HTML -->
 
@@ -102,4 +122,3 @@ $ajax = ajax();
 
 </body>
 </html>
-

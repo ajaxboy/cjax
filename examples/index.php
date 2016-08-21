@@ -2,11 +2,8 @@
 require 'ajax.php';
 
 
-
-
 $ajax->spin('star', 'spin');
 
-$ajax->click('demos', $ajax->spin('star','stop'));
 
 ?>
 <!doctype html>
@@ -241,6 +238,9 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 			</li>
 			<li>
 				<a href="location.php">Location()</a>
+			</li>
+			<li>
+				<a href="swap.php">Swap</a>
 			</li>
 		</ul>
 		

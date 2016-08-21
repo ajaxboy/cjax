@@ -1571,14 +1571,16 @@ if (document.addEventListener) {
 
 		//$data = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $data); // Regex identifies all extra empty lines produced by the str_replace above. It is quicker to do it like this than deal with a more complicated regular expression above.
 
-
+		$code_used = 'Code Used';
 		if (is_bool($tags)) {
+			$code_used = 'PHP';
 			if (!$tags) {
 				$data = highlight_string($data, true);; // Add nice and friendly <script> tags around highlighted text
 			} else {
 				$data = highlight_string("<?php \n" . $data . "\n?>", true);
 			}
 		} else {
+			$code_used = $tags;
 			$data = self::highlight_html($data, true) . "<br /><br />"; // Add nice and friendly <script> tags around highlighted text
 		}
 
@@ -1586,7 +1588,7 @@ if (document.addEventListener) {
 			$extra = "<div class='try_it'><img src='resources/images/try_it.png' /></div><h4>Try it</h4>";
 		}
 
-		$msg = "<div class='code-used'>Code Used</div>";
+		$msg = "<div class='code-used'>$code_used</div>";
 		return sprintf('<div id="code_highlighted">%s%s%s</div>',$msg, $data, $extra);
 	}
 
