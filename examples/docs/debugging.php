@@ -63,7 +63,7 @@ $ajax = ajax();
 
     </p>
     <p>
-        To debug Cjax, you are required to use a browser console. Most browsers will already have a console or 'web inspector' bult-in.
+        To debug Cjax, you are required to use a browser console. Most modern browsers will already have a console or 'web inspector' bult-in.
         <a target="_blank" href="http://getfirebug.com/">Firefox</a>,  Chrome, <a target="_blank" href="https://developer.apple.com/library/iad/documentation/AppleApplications/Conceptual/Safari_Developer_Guide/GettingStarted/GettingStarted.html">Safari</a>, IE, MS Edge, come included with one. Any of them will do nicely.
         Firefox's plugin <a target="_blank" href="http://getfirebug.com/">firebug</a> is highly recommend to debug Cjax, as it includes many useful tools and is second to none compared to the others.
         <br />

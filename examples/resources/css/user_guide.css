@@ -321,6 +321,20 @@ padding: 3px 0 7px 3px;
  border-radius: 3px;
 }
 
+.info {
+ font-family: Lucida Grande, Verdana, Geneva, Sans-serif;
+ color: #333333;
+ font-weight: bold;
+ font-style: normal;
+ background-color:#F9F9F9;
+ padding: 20px;
+ width: 50%;
+ border-color: #2c85dd;
+ border-style: dashed;
+ border-width: 1px;
+ border-radius: 3px;
+}
+
 .soft-note {
  font-family: Lucida Grande, Verdana, Geneva, Sans-serif;
  color: #A70000;

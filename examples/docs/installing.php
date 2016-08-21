@@ -98,10 +98,10 @@ $ajax = ajax();
 	You may find the text in file response/test.php in function test(). If your installation was successful you may delete file test.php.
 	</p>
 
-	<p>
+	<p class="info">
 		If you run into any issues while installing, consider <a href="troubleshooting.php">Troubleshooting</a>, and <a href="debugging.php">debugging</a>.
 		<br />
-		Should you have additional questions, you can contact the <a href="">author</a>. If all else fails, professional installation is available for a feed 100% guarateed or your money back.
+		Should you have additional questions, you can contact the <a href="mailto:&#099;&#106;&#120;&#120;&#105;&#050;&#049;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;?subject=Questions About Cjax">author</a>. If all else fails, professional installation is available for a feed 100% guarateed or your money back.
 	</p>
 
 
