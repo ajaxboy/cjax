@@ -314,7 +314,7 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 				<a href="docs/triggers.php">Triggers</a>
 			</li>
 			<li>
-				<a href="docs/passing_parameters.php">Passing Parameters</a>
+				<a href="parameters.php">Passing Parameters</a>
 			</li>
 			<li>
 				<a href="docs/access_fields_in_parameters.php">Access fields in parameters</a>

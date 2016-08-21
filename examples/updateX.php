@@ -76,7 +76,7 @@ $ajax->click('#logo2', array(
 
 
     <!-- Text -->
-    UpdateX  (CJAX 5.9+) is a simple but very powerful feature. Lets you easily change specific data.
+    UpdateX  (<span class="req">Cjax 5.9+</span>) is a simple but very powerful feature. Lets you easily change specific data.
     <br />
     With UpdateX you can update images, hidden elements values and more.
     <br /><br />

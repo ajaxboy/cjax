@@ -1,16 +1,16 @@
 <?php
 //core file, reference..
-require_once "../../ajax.php";
+require_once "ajax.php";
 
 $ajax = ajax();
 
-$ajax->click('#button1', $ajax->call('ajax.php?params/data/|data.test| - |data.my_name_id| - |data.cj|'));
+$ajax->click('#button1', $ajax->call('ajax.php?params/data/|data.my_name_is| - |data.cj|'));
 
 $ajax->click('#button2', $ajax->call('ajax.php?params/data/|data.yes|/|data.id|'));
 ?>
 <!doctype html>
 <head>
-    <link rel="stylesheet" type="text/css" href="../resources/css/user_guide.css" media="all">
+    <link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
     <title>Parameters</title>
     <?php echo $ajax->init();?>
 </head>
@@ -72,14 +72,21 @@ ajax.php?test/test/123/someID
 
     <br />
 
-    <h3>Examples</h3>
+    <h5>Parameters in your <a href="docs/controllers.php">Ajax Controller</a></h5>
 
 
     <!-- Code Used -->
-
+    <p>
+        Here how your ajax controller receives parameters.
+        All parameters you send to the <a href="docs/controllers.php">ajax controller</a> are automatically mapped to be
+        ajax controller parameters.
+    </p>
+    <p>
             The above URL passes two parameters 123 and someID, test/test indicates the controller and the method.
-            Anything after the method will translate into paratemeters. You may pass up to 26 parameteres respectively symbolizing the English Alphabeth.
-            <?php echo $ajax->code("
+            Anything after the method will translate into paratemeters.
+        You may pass up to 26 parameters.
+    </p>
+        <?php echo $ajax->code("
 class test  {
 
     function test(\$arg1, \$arg2)
@@ -124,7 +131,8 @@ class test  {
     </ul>
     <h4>Passing Element Values in the URL</h4>
     <p>
-    Sometimes you might need to pass element values such as these of inputs. To accomplish this, in the url pass the element_id
+    Sometimes you might need to pass element values such as these of a text field or checkbox or a hidden field.
+    You can easily pass fields values without submitting a form. To accomplish this, in the url pass the element_id
     wrapped with vertical bars.
     </p>
 
@@ -134,33 +142,33 @@ ajax.php?controller/function/arg1/arg2/|text1|/|checkbox1|
     The above URL will automatically seek for these elements on the HTML document and pass their value in the URL.
 
 
-    <h3 id="data">Using Data Attribute</h3>
+    <h4>Using Data Attribute</h4>
     <p>
     You can also pass parameters within the data-x attribute.
         <br />
     Just add any data-x item in the element target. When clicked, it passes that value in the parameter in the URL.
-    This works in a similar way you pass field values,  intead of adding the |field_name|, you add |data.name|.
+    This works in a similar way you pass field values,  instead of adding the |field_name|, you add |data.name|.
     </p>
 
 
     <?php
     echo $ajax->code("
 
-    \$ajax->click('#button1', \$ajax->call('ajax.php?params/data/|data.test| - |data.my_name_id| - |data.cj|'));
+    \$ajax->click('#button1', \$ajax->call('ajax.php?params/data/|data.my_name_is| - |data.cj|'));
 
     \$ajax->click('#button2', $ajax->call('ajax.php?params/data/|data.yes|/|data.id|'));
 
     ");?>
     <?php
-    echo $ajax->code("
+    echo $ajax->code('
 
-    <input type='button' id='button1' data-test=\"Hello!\"  data-my_name_id=\"My Name is\" data-cj=\"Cj!\" value='Click this button to make an ajax request #1'>
+    <input type="button" id="button1"  data-my_name_is="My Name" data-cj="is Cj!" value="Click this button to make an ajax request #1">
 
-    <input type='button' id='button2' data-yes=\"Yes,\" data-id=\"This is an ID!\" value='Click this button to make an ajax request #3'>
+    <input type="button" id="button2" data-yes="Yes," data-id="This is an ID!" value="Click this button to make an ajax request #3">
 
-    ",'HTML', true);?>
+    ','HTML', true);?>
 
-    <input type='button' id='button1' data-test="Hello!"  data-my_name_id="My Name is" data-cj="Cj!" value='Click this button to make an ajax request #1'>
+    <input type='button' id='button1' data-my_name_is="My Name is" data-cj="Cj!" value='Click this button to make an ajax request #1'>
     <br />
     <input type='button' id='button2' data-yes="Yes," data-id="This is an ID!" value='Click this button to make an ajax request #3'>
 

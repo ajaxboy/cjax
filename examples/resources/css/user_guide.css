@@ -247,6 +247,13 @@ padding: 3px 0 7px 3px;
  padding: 0 0 0 0;
 }
 
+#content h4 {
+  width: 100%;
+ border: 1px dashed #99BC99;
+ border-width: 0 0 1px 0;
+ font-family: Tahoma;
+ font-size: 120% !important;
+}
 #content img {
  margin: auto;
  padding: 0;

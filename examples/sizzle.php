@@ -64,7 +64,7 @@ Selectors
 </p>
 
 <h3>Examples</h3>
-<h2>Multiple Selections</h2>
+<h2 id="data">Multiple Selections</h2>
 You can add multiple buttons or elements in your HTML page, and add the same class ".bt", or any class you specify, and cjax will use these selectors to 
 bind your elements with the assigned actions.
 <br />
