@@ -78,7 +78,7 @@ ajax.php?test/test/123/someID
     <!-- Code Used -->
     <p>
         Here how your ajax controller receives parameters.
-        All parameters you send to the <a href="docs/controllers.php">ajax controller</a> are automatically mapped to be
+        All parameters you send in the url to the <a href="docs/controllers.php">ajax controller</a> are automatically mapped to be
         ajax controller parameters.
     </p>
     <p>
@@ -156,7 +156,7 @@ ajax.php?controller/function/arg1/arg2/|text1|/|checkbox1|
 
     \$ajax->click('#button1', \$ajax->call('ajax.php?params/data/|data.my_name_is| - |data.cj|'));
 
-    \$ajax->click('#button2', $ajax->call('ajax.php?params/data/|data.yes|/|data.id|'));
+    \$ajax->click('#button2', \$ajax->call('ajax.php?params/data/|data.yes|/|data.id|'));
 
     ");?>
     <?php

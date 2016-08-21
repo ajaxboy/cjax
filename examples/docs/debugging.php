@@ -81,7 +81,7 @@ $ajax = ajax();
 
     <p class="note">
         Keep in mind that web-inspector include many tabs. Cjax information can be found in the response tab, 95% of the time.
-        The network tab, some times is useful as well to get information about whether a file has been loaded, or if a file is has been hard-cached.
+        The network tab, some times is useful as well to get information about whether a file has been loaded, or if a file has been hard-cached.
     </p>
     <br />
     <P>

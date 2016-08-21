@@ -6,7 +6,7 @@
  * @author cj
  *
  */
-class _uploader
+class Uploader
 {
 	private $error;
 	private $post;
@@ -162,9 +162,9 @@ class _uploader
 	{
 		$ajax = ajax();
 		
-		$ajax->error($error, 8);
+		$ajax->error($error, 20);
 		
-		exit();
+		exit(0);
 	}
 
 	function debug($options)
