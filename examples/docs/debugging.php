@@ -1,6 +1,6 @@
 <?php
 //core file, reference..
-require_once "ajax.php";
+require_once "../ajax.php";
 
 $ajax = ajax();
 
