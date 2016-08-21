@@ -103,7 +103,7 @@ $ajax = ajax();
                 </li>
                 <li>
                     A plugin's dependencies could trigger one of the console errors. Dependencies are encapsulated within a plugin, they are loaded
-                    dinamically from the plugin directory by the plugin js file in cjax/plugins/[plugin-name], dependecies be found within the same directory.
+                    dynamically from the plugin directory by the plugin js file in cjax/plugins/[plugin-name], dependecies be found within the same directory.
                 </li>
             </ol>
         </li>
@@ -111,7 +111,8 @@ $ajax = ajax();
             No Error
             <ol>
                 <li>
-                    If you are looking at the console, you click on the URL, and view the response, and you do not see an error - this could be something
+                    If you are looking at the console, you click on the URL, and view the response, and you do not see an error
+                    (and the response status is 200)  - this could be something
                     within the scope of your ajax controller.  Try an exit test  -  eg:  exit("It's getting here"); , then go to back to the console and
                     if you see this message it's telling you that there is no problem, and the response you expect, is not a Cjax error, rather
                     a product of your code or lack of.
