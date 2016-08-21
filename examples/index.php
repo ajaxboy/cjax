@@ -252,9 +252,6 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 	<h3>Plugins</h3>
 		<ul>
 			<li>
-				<a href="plugin_uploader.php">Ajax Uploader</a>
-			</li>
-			<li>
 				<a href="plugin_autocomplete.php">Autocomplete</a>
 			</li>
 			<li>
@@ -282,6 +279,10 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 		<h3>Tools</h3>
 
 		<ul>
+
+			<li>
+				<a href="plugin_uploader.php">Ajax Uploader</a>
+			</li>
 			<li>
 				<a href="pagination.php">Pagination</a>
 			</li>

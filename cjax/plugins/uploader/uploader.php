@@ -85,8 +85,8 @@ class uploader extends plugin {
 			$this->set('a', $options);
 		}
 		
-		if($ajax->config->uploader_dir) {
-			$target_directory = $ajax->config->uploader_dir;
+		if($ajax->config->upload_dir) {
+			$target_directory = $ajax->config->upload_dir;
 		}
 		if(!$target_directory) {
 			$target_directory = './';
