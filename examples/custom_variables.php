@@ -1,0 +1,119 @@
+<?php
+//core file, reference..
+require_once "ajax.php";
+
+$ajax = ajax();
+
+
+?>
+    <!doctype html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
+        <title>Template</title>
+        <?php echo $ajax->init();?>
+    </head>
+    <body>
+    <header>
+        <div style='padding: 15px;'>
+            <a href='http://cjax.sourceforge.net'><img src='http://cjax.sourceforge.net/media/logo.png' border=0/></a>
+        </div>
+    </header>
+    <!-- START NAVIGATION -->
+    <div id="nav"><div id="nav_inner"></div></div>
+    <div id="nav2"><a name="top">&nbsp;</a></div>
+    <div id="masthead">
+        <table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+            <tr>
+                <td><h1>Cjax Framework</h1></td>
+                <td id="breadcrumb_right"><a href="#">Demos</a></td>
+            </tr>
+        </table>
+    </div>
+    <!-- END NAVIGATION -->
+
+
+
+    <!-- START BREADCRUMB -->
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+        <tr>
+            <td id="breadcrumb">
+                <a href="http://cjax.sourceforge.net/">Project Home</a> &nbsp;&#8250;&nbsp;
+                <a href="./">Demos</a> &nbsp;&#8250;&nbsp;
+                Template
+            </td>
+            <td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="cjax.sourceforge.net/" />Search Project User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+        </tr>
+    </table>
+    <!-- END BREADCRUMB -->
+
+    <br clear="all" />
+
+    <div id="content">
+
+        <div style="margin: 20px;"> <div style="font-size: 12px;padding: 5px;">Project development is new to github. Give us a <span id="star">star</span>.</div>
+            <iframe id='istar' src="https://ghbtns.com/github-btn.html?user=ajaxboy&repo=cjax&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+            <iframe src="https://ghbtns.com/github-btn.html?user=ajaxboy&repo=cjax&type=watch&count=true&v=2" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+        </div>
+
+        <p>
+            <!-- Text -->
+
+
+        <h2>Pass values in URL</h2>
+
+        You can pass data through the url by using the data keyword. In your HTML element you add an attribute item prefixed by "data-", the word following the data-
+        prefix will be the keyword you need to pass in the url by passing data.[Keyword Here] sorounded by pipe bars.
+        <br />
+        <br />
+
+
+
+        </p>
+
+        <h3>Examples</h3>
+
+
+        <!-- Code Used -->
+
+       <?php
+        echo $ajax->code("
+<?php
+
+\$ajax->click(\".buttons\",\$ajax->call(\"ajax.php?click_ajax_request/click_button/|data.button_number|\"));
+
+?>
+
+<!-- HTML -->
+<input type='button' class='buttons' data-button_number='This is button #1' value='Click this button to make an ajax request'>
+<input type='button' class='buttons' data-button_number='This is button #2' value='Click this button to make an ajax request'>
+<input type='button' class='buttons' data-button_number='This is button #3' value='Click this button to make an ajax request'>
+", false);
+        ?>
+
+        <!-- HTML -->
+
+        <input type='button' class='buttons' data-button_number='This is button 1' value='Click this button to make an ajax request'>
+        <input type='button' class='buttons' data-button_number='This is button 2' value='Click this button to make an ajax request'>
+        <input type='button' class='buttons' data-button_number='This is button 3' value='Click this button to make an ajax request'>
+
+
+        <br />
+    </div>
+    <!-- END CONTENT -->
+
+    <div id="myfooter">
+        <p>
+            Previous Topic:&nbsp;&nbsp;<a href="#">Previous Class</a>
+            &nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+            <a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+            <a href="http://cjax.sourceforge.net/examples">Demos Home</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+            <!-- Next Topic:&nbsp;&nbsp;<a href="#">Next Class</a> -->
+        </p>
+        <p>
+            <a href="http://codeigniter.com">CodeIgniter</a> &nbsp;&middot;&nbsp; Copyright &#169; 2006 - 2012 &nbsp;&middot;&nbsp;
+            <a href="http://cjax.sourceforge.net/">Cjax</a>
+        </p>
+    </div>
+
+    </body>
+    </html>

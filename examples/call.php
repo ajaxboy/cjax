@@ -87,7 +87,8 @@ $ajax->click('#link_confirm', $ajax->call(array('call','confirm'), null,'Are you
             <td class="td">
                 string <span class="param">$url</span>
                 <br />
-                <kbd>array 5.9+</kbd>
+                <p>
+                array <span class="req">Cjax 5.9+</span>
                 <br />
                 as an array the options are as follow:
                 <br />
@@ -96,6 +97,7 @@ $ajax->click('#link_confirm', $ajax->call(array('call','confirm'), null,'Are you
                 parameters - can pass a string with one or an array with more element ids, for its value.
                 <br />
                 options - cache =  true/false
+                </p>
             </td>
             <td class="td">This url is fetched with ajax</td>
         </tr>

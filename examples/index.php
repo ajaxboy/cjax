@@ -8,7 +8,6 @@ $ajax->spin('star', 'spin');
 
 $ajax->click('demos', $ajax->spin('star','stop'));
 
-//$ajax->debug = true;
 ?>
 <!doctype html>
 <html>
@@ -245,7 +244,7 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 			</li>
 		</ul>
 		
-		
+
 	</div>
 	
 	
@@ -272,8 +271,6 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 			</li>
 		</ul>
 
-
-
 		<h3>Effects</h3>
 
 		<ul>
@@ -281,8 +278,6 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 				<a href="spin.php">Spin Text</a>
 			</li>
 		</ul>
-
-
 
 		<h3>Tools</h3>
 
@@ -313,17 +308,16 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 				<a href="docs/controllers.php">Creating Controllers</a>
 			</li>
 			<li>
-				<a href="docs/passing_parameters.php">Passing Parameters</a>
-			</li>
-
-			<li>
 				<a href="docs/url_styles.php">URL Styles</a>
 			</li>
 			<li>
-				<a href="docs/access_fields_in_parameters.php">Access fields in parameters</a>
+				<a href="docs/triggers.php">Triggers</a>
 			</li>
 			<li>
-				<a href="docs/configuation.php">Configuration</a>
+				<a href="docs/passing_parameters.php">Passing Parameters</a>
+			</li>
+			<li>
+				<a href="docs/access_fields_in_parameters.php">Access fields in parameters</a>
 			</li>
 			<li>
 				<a href="docs/includes.php">Includes</a>
@@ -332,10 +326,13 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 				<a href="docs/auth_and_routing.php">Custom Auth and Routes</a>
 			</li>
 			<li>
-				<a href="docs/triggers.php">Triggers</a>
+				<a href="docs/debugging.php">Debugging</a>
 			</li>
 			<li>
 				<a href="docs/moving_cjax.php">Movin Cjax Dir</a>
+			</li>
+			<li>
+				<a href="docs/configuation.php">Configuration</a>
 			</li>
 			<li>
 				<a href="docs/api_table.php">API Table</a>
@@ -344,8 +341,6 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 				<a href="docs/troubleshooting.php">Troubleshooting</a>
 			</li>
 		</ul>
-
-
 
 	</div>
 	

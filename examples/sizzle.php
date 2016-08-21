@@ -53,21 +53,15 @@ Selectors
 
 <div id="content">
 
-
-<br />
-Cjax 5.7+ lets you use well known libraries such as sizzle or Jquery to use their selector engine. Meaning that you can use wild card css selectors or
-class selectors to bind elements with cjax.
-<br /><br />
-To enable selectors in your cjax installation - you must first enable sizzle. Go to your cjax config file and enable sizzle by setting the sizzle setting = true. If you are using Jquery,
-you do not need to do this step, since Jquery already includes sizzle. All you have to do is include Jquery.
-<br /><br />
-You may also enable sizzle for a single page, by just doing this:
-<?php
-echo $ajax->code("
-\$ajax->config->sizzle = true;
-");
-?>
-
+<h3>Elements Queries, Selector</w></h3>
+<p class="note">
+	As of <span class="req">Cjax 5.9+</span> the advanced selector engine is enabled by default.
+	You don't longer need to enable this setting, as it already enabled.
+</p>
+<p>
+	<span class="req">Cjax 5.7+</span> includes a selector engine that can select complex queries, as these of known libraries.
+	You can use wildcard selections specifying a class name or more complex selections.
+</p>
 
 <h3>Examples</h3>
 <h2>Multiple Selections</h2>
@@ -97,30 +91,6 @@ echo $ajax->code("
 ?>
 
 <br />
-<h2>Pass values in URL</h2>
-
-You can pass data through the url by using the data keyword. In your HTML element you add an attribute item prefixed by "data-", the word following the data-
-prefix will be the keyword you need to pass in the url by passing data.[Keyword Here] sorounded by pipe bars.
-<br />
-<br />
-
-<input type='button' class='buttons' data-button_number='This is button 1' value='Click this button to make an ajax request'>
-<input type='button' class='buttons' data-button_number='This is button 2' value='Click this button to make an ajax request'>
-<input type='button' class='buttons' data-button_number='This is button 3' value='Click this button to make an ajax request'>
-<?php
-echo $ajax->code("
-<?php
-
-\$ajax->click(\".buttons\",\$ajax->call(\"ajax.php?click_ajax_request/click_button/|data.button_number|\"));
-
-?>
-
-<!-- HTML -->
-<input type='button' class='buttons' data-button_number='This is button #1' value='Click this button to make an ajax request'>
-<input type='button' class='buttons' data-button_number='This is button #2' value='Click this button to make an ajax request'>
-<input type='button' class='buttons' data-button_number='This is button #3' value='Click this button to make an ajax request'>
-", false);
-?>
 
 <br />
 </div>

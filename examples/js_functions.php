@@ -49,49 +49,74 @@ Js Functions
 
 <div id="content">
 
+	<div style="margin: 20px;"> <div style="font-size: 12px;padding: 5px;">Project development is new to github. Give us a <span id="star">star</span>.</div>
+		<iframe id='istar' src="https://ghbtns.com/github-btn.html?user=ajaxboy&repo=cjax&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+		<iframe src="https://ghbtns.com/github-btn.html?user=ajaxboy&repo=cjax&type=watch&count=true&v=2" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+	</div>
 
-<br />
+<h3>Access Your JS Functions</h3>
+
+<p>
 In Cjax, you can control most HTML objects/elements with the $ajax object. You can also control JavaScript Objects and functions of other scrips.
-Cjax allows to access your existing scripts, and existing JavasScript.
-<br /><br />
+Cjax allows to access your existing JavasScript very easily and elegantly.
+</p>
 
-If you have written some custom JavaScript functions or you are using a third party script, that you must run or interact with, 
-Cjax makes this easy by giving you control and access over them in PHP.
-<br /><br />
-
-Cjax will allow you to execute unlimited JavaScript functions. You can reach all functions you need, you have a full bridge between PHP and JavaScript.
+<p>
+If you have written some custom JavaScript functions or you are using a third party script, that you need to run or interact with,
+Cjax lets you access them right from the backend.
+</p>
 
 <h3>Examples</h3>
 
-Lets say you have a custom Js Function/or any function, and you would like to execute it. Cjax will allow you to execute it, even pass paramenters into your function.
+<p>
+You have a custom JavaScript function, and you would like to execute it. Here is how.
+</p>
+
+<p>
+Here is how you access your function. Cjax makes it seemsless.
+</p>
+<?php echo $ajax->code("
+
+\$ajax->myCustomFunction();
+");?>
+
 <?php echo $ajax->code("
 //your custom function
 <script>
-	
-	function  my_function(param1, param2) 
+
+	function myCustomFunction()
 	{
-		
-		//your custom code
-		alert(param1+ ' ' +param2);
-		
+		//your javascript code..
 	}
 
 </script>
-");?>
+",'JavaScript');?>
 
-Here is how you access your function. Cjax makes it seemsless, as if you were executing a PHP function, but it reaches all the way to your JS function.
+<p>
+	You can also pass parameters to your functions if you need to. Cjax will allow you to pass arrays, and strings.
+	You will receive them in your JavaScript as a Json object or a string.
+</p>
+
 <?php echo $ajax->code("
-\$param1 = \"Hello\";
-\$param2 = \"World\";
 
-\$ajax->my_function(\$param1, \$param2);
+\$ajax->myCustomFunction(array('test','test','test'), 'test');
 ");?>
 
-<br /><br />
+<?php echo $ajax->code("
+//your custom function
+<script>
 
+	function myCustomFunction(data, data2)
+	{
+		console.log(data, data2);
 
+		//the parameters that you passed in php, have become available in your JavaScript function.
+	}
 
-<br />
+</script>
+",'JavaScript');?>
+
+	<br />
 </div>
 <!-- END CONTENT -->
 

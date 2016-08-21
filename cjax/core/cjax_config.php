@@ -162,6 +162,7 @@ class CJAX extends CJAX_FRAMEWORK {
 			if($error &&  preg_match('%.*(open_basedir).*File\(([^\)]+)%', $error['message'], $match)) {
 				die( sprintf('Restriction <b>open_basedir</b> is turned on. File or directory %s will not be accessible while this setting is on due to security directory range.', $match[2]) );
 			}
+			$ajax->config->js_path = $js_dir;
 		}
 		$ajax->js($js_dir);
 		

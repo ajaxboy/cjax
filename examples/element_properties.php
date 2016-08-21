@@ -55,9 +55,11 @@ $ajax = ajax();
 		<iframe src="https://ghbtns.com/github-btn.html?user=ajaxboy&repo=cjax&type=watch&count=true&v=2" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
 	</div>
 
+	<h2>Element Properties</h2>
+
 	<p>
 		<!-- Text -->
-	<h2>Element Properties</h2>
+
 	Changin/Setting element properties with the $ajax object follows the same logic as changing them in JavaScript.
 	All you need is the ID of the element to be able to change/set its properties. This applies to all elements:
 	divs,spans,images , text, buttons, inputs, and other elements. You may change ANY property that is available in JavaScript for that element.

@@ -306,11 +306,25 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 
 		//$cwd = getcwd();
 
-		//chdir(dirname(dirname(__FILE__)));
+		$f =  'ajax.php';
 
-		is_file($f = './ajax.php') || is_file($f = '../ajax.php') || is_file($f = '../../ajax.php');
+		$path = str_replace($_SERVER['SCRIPT_NAME'],'', $_SERVER['SCRIPT_FILENAME']);
+		$file_path = dirname($_SERVER['SCRIPT_NAME']) . '/';
 
-		//chdir($cwd);
+
+		if(is_file($path . $file_path . AJAX_FILE)) {
+			//ajax.php is found inside the directory in the script that called it, so you call it relative.
+			$f = AJAX_FILE;
+		} else if (dirname($path . $file_path) . AJAX_FILE) {
+			$f = '../' . AJAX_FILE;
+		} else {
+			$path = dirname(dirname(dirname(ajax()->config->js_path)));
+			if($path) {
+				$f = $path . '/' . AJAX_FILE;
+			}
+		}
+
+		//is_file($f = 'ajax.php') || is_file($f = '../ajax.php') || is_file($f = '../../ajax.php');
 
 		$url = sprintf('%s?%s/%s%s', $f, $controller, $method, $_params);
 
@@ -334,7 +348,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 			$out['options'] = array();
 			$url = $this->urlAccess($url, $out['options']);
 		}
-		$ajax = CJAX::getInstance();
+		$ajax = ajax();
 
 		if(preg_match('/^https?/', $url)) {
 			$out['crossdomain'] = true;
