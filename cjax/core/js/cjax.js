@@ -2251,9 +2251,11 @@ function CJAX_FRAMEWORK() {
 					s.setAttribute("rel", "stylesheet");
 					s.setAttribute("type", "text/css");
 					s.setAttribute("href", script);
+					head.appendChild( s );
 				} else {
 					var s = document.createElement( 'script' );
 					s.type = 'text/javascript';
+					head.appendChild( s );
 					s.onload = function() {
 						var queue = CJAX.util.queue(f);
 						if(queue) {
@@ -2265,7 +2267,7 @@ function CJAX_FRAMEWORK() {
 					}
 					s.src= script;
 				}
-				head.appendChild( s );
+
 				CJAX.util.loaded(f, s);
 
 				if($callback && !waitfor) {
