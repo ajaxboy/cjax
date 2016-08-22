@@ -29,6 +29,8 @@ function CJAX_FRAMEWORK() {
 	this._Ready = {};
 	this.loaded = {};
 	this.payload = {};
+	this.queue = {};
+	this.queueCompleted = {};
 	this.handlers = {
 		handlerFileupload: function(form, url, funcRequestCallback) {},
 		handlerRequestStatus: function(url, request_status) {},
@@ -490,10 +492,8 @@ function CJAX_FRAMEWORK() {
 				if(typeof selector == 'object') {
 					return callback({0 : selector});
 				}
-				CJAX.lib.loadCallback('sizzle.js', function (obj) {
-					CJAX.ready(function() {
-						return callback(Sizzle(selector));
-					},200);
+				CJAX.util.queue('sizzle.js', function () {
+					return callback(Sizzle(selector));
 				});
 			},
 			//turn an entire cjax xml string, into an object.
@@ -542,6 +542,23 @@ function CJAX_FRAMEWORK() {
 					return CJAX.loaded[CJAX.util.cleanString(file)];
 				}
 				CJAX.loaded[CJAX.util.cleanString(file)] = data;
+			},
+			queueCompleted: function(file) {
+				CJAX.queueCompleted[CJAX.util.cleanString(file)] = true;
+			},
+			queue: function(file, fn) {
+				if(!fn) {
+					return CJAX.queue[CJAX.util.cleanString(file)];
+				}
+				if(CJAX.queueCompleted[CJAX.util.cleanString(file)]) {
+					fn.call();
+				} else {
+					var count = CJAX.util.count(CJAX.queue[CJAX.util.cleanString(file)]);
+					if (!CJAX.queue[CJAX.util.cleanString(file)]) {
+						CJAX.queue[CJAX.util.cleanString(file)] = {};
+					}
+					CJAX.queue[CJAX.util.cleanString(file)][count] = fn;
+				}
 			},
 			cacheURL: function(cache_url, data, dataType) {
 				if(typeof cache_url != 'undefined') {
@@ -711,7 +728,7 @@ function CJAX_FRAMEWORK() {
 			},
 			count: function(mixed_var,mode){
 				var key, cnt = 0;
-				if (mixed_var === null){
+				if (!mixed_var){
 					return 0;
 				} else if (mixed_var.constructor !== Array && mixed_var.constructor !== Object){
 					return 1;	}
@@ -2237,6 +2254,15 @@ function CJAX_FRAMEWORK() {
 				} else {
 					var s = document.createElement( 'script' );
 					s.type = 'text/javascript';
+					s.onload = function() {
+						var queue = CJAX.util.queue(f);
+						if(queue) {
+							for (var x in queue) {
+								queue[x].call(this);
+							}
+						}
+						CJAX.util.queueCompleted(f);
+					}
 					s.src= script;
 				}
 				head.appendChild( s );
