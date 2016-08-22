@@ -19,9 +19,8 @@ class upload_file {
 	
 		//files listed under 'files' array are files that were successfully uploaded
 		if($files) {
-			$ajax->wait(2, false);
 			
-			$ajax->alert("Controller Response:".print_r($files,1));
+			//	$ajax->alert("Controller Response:".print_r($files,1));
 		}
 		//uncoment to see the response on the screen
 		//$ajax->overlayContent($ajax->dialog("<pre>".print_r($_REQUEST,1)."</pre>","Controller Response: upload_file/post "));

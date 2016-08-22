@@ -56,6 +56,7 @@ body{ /*height:100%*/ }
 	background-color: #616161;
 	-moz-border-radius: 12px;
 	width: 100%;
+	border-radius: 12px;
 }
 
 
@@ -102,10 +103,10 @@ body{ /*height:100%*/ }
 			background-color: #fff;
 			z-index: 5000;
 			padding: 5px 5px 4px 5px;
-			text-align: left;
 			border-radius: 0px 0px 15px 15px;
 			-moz-border-radius: 0px 0px 15px 15px;
 			-webkit-border-radius: 0px 0px 15px 15px;
+			text-align: left;
 		}
 
 

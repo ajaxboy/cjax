@@ -105,7 +105,7 @@ function CJAX_FRAMEWORK() {
 
 	this.Execfn		=		function(fn,element,data)
 	{
-		_raw_fn = fn;
+		xraw_fn = fn;
 
 		switch(fn) {
 			case 'replace':
@@ -159,7 +159,11 @@ function CJAX_FRAMEWORK() {
 						element.insertBefore(child,element.firstChild);
 					}
 				} else {
-					CJAX.lib.fnCall(element,{insert: data.b},data);
+					if(data.c){
+						element['innerHTML'] = element['innerHTML']+data.b;
+					} else {
+						element['innerHTML'] = data.b+element['innerHTML'];
+					}
 				}
 				break;
 			case 'append':
@@ -183,18 +187,21 @@ function CJAX_FRAMEWORK() {
 				element.style.display = 'block';
 				break;
 			default:
-				CJAX.lib.fnCall(element,{_raw_fn: data.b});
+				CJAX.lib.fnCall(element,{xraw_fn: data.b});
 		}
 	};
 
-	this._fn		=		function(buffer)
+	this._fn		=		function(options)
 	{
-		if(typeof buffer =='object') {
-			buffer = buffer.buffer;
-		}
-		fn = _raw_fn = CJAX.xml('fn', buffer);
+		var fn = raw_fn = options.fn;
 		var prop;
-		data = CJAX.util.json(CJAX.decode(CJAX.xml('options', buffer)));
+
+		data = options.options;
+
+		if(!data) {
+			console.warn('_fn no data');
+			return false;
+		}
 
 		switch(fn) {
 			case 'document':
@@ -207,27 +214,15 @@ function CJAX_FRAMEWORK() {
 
 		function _processFn(my_fn, type)
 		{
-			if(type=='custom') {
-				data.a = data.a.replace(/^\#/,'');
-				element = CJAX.$(data.a);
-				if(!element) {
-					console.log('Element',data.a, 'cold not be found in the document.');
-					return;
-				}
-				try {
-					return CJAX.Execfn(_raw_fn,element,data);
-				}catch (e) {
-					alert("Function "+_raw_fn+ " generated an error: "+e);
-					return;
-				}
-			} else if(type=='direct') {
-				str = _raw_fn.toLowerCase().replace(/\b([a-z])/gi,function(c){return c.toUpperCase();});
+			if(type=='direct') {
+
+				str = raw_fn.toLowerCase().replace(/\b([a-z])/gi,function(c){return c.toUpperCase();});
 				if(CJAX.handlers['_handler'+str] && CJAX.lib.isFn(CJAX.handlers['_handler'+str])) {
-					if(CJAX.handlers['_handler'+str](data.a,data.b,data,buffer)) {
+					if(CJAX.handlers['_handler'+str](data.a,data.b,data,options)) {
 						return true;
 					}
 				}
-				switch(_raw_fn) {
+				switch(raw_fn) {
 					case 'confirm':
 						if(my_fn(data.a)) {
 
@@ -242,8 +237,24 @@ function CJAX_FRAMEWORK() {
 						element.submit();
 						break;
 					case 'click':
-						element = CJAX.$(data.a);
-						element.click();
+						var element = CJAX.$(data.a);
+
+						var event = new MouseEvent('click', {
+							'view': window,
+							'bubbles': true,
+							'cancelable': true
+						});
+						var cb = element;
+						var canceled = !cb.dispatchEvent(event);
+						if (canceled) {
+							// A handler called preventDefault.
+						} else {
+							// None of the handlers called preventDefault.
+						}
+
+						console.log(event, element);
+
+						//element.click();
 						break;
 						break;
 					case 'focus':
@@ -272,7 +283,24 @@ function CJAX_FRAMEWORK() {
 						my_fn.apply(this, arr_data);
 				}
 				return;
+			} else if(type=='custom') {
+				data.a = data.a.replace(/^\#/,'');
+				data.b = CJAX.decode(data.b);
+				element = CJAX.$(data.a);
+				if(!element) {
+					console.log('Element',data.a, 'cold not be found in the document.');
+					return;
+				}
+				try {
+					return CJAX.Execfn(raw_fn,element,data);
+				}catch (e) {
+					alert("Function "+raw_fn+ " generated an error: "+e);
+					return;
+				}
 			}
+
+
+
 			if(typeof my_fn =='object') {
 				if(prop) {
 					data.a = prop;
@@ -283,7 +311,7 @@ function CJAX_FRAMEWORK() {
 					if(data.b){
 						if(CJAX.lib.isFN(my_fn)) {
 							if(type=='window') {
-								window[_raw_fn][data.a](data.b);
+								window[raw_fn][data.a](data.b);
 							}
 						}
 					}
@@ -297,94 +325,90 @@ function CJAX_FRAMEWORK() {
 			}
 		}
 
-		if(data) {
-			try {
-				for(x in data) {
-					data[x] = CJAX.lib.pharseFunction(data[x]);
-				}
-			} catch(e) {
-				console.log("Function Error:",e.message,"in your dynamic $ajax->"+_raw_fn+" function.", "\n\n\n", data[x]);
-				alert("Function Error:"+e.message+", in your dynamic $ajax->"+_raw_fn+" function.");
-				return;
+
+		try {
+			for(x in data) {
+				data[x] = CJAX.lib.pharseFunction(data[x]);
 			}
+		} catch(e) {
+			console.log("Function Error:",e.message,"in your dynamic $ajax->"+raw_fn+" function.", "\n\n\n", data[x]);
+			alert("Function Error:"+e.message+", in your dynamic $ajax->"+raw_fn+" function.");
+			return;
+		}
 
-			if(typeof data.a == 'string') {
-				parts = data.a.split('.');
-				if(CJAX.util.count(parts) > 1) {
-					if(window[fn]) {
-						fn = window[fn];
-						if(fn[parts[0]]) {
-							fn = fn[parts[0]];
-							if(typeof fn[parts[1]]=='object') {
-								fn = fn[parts[1]];
-							} else {
-								prop = parts[1];
-							}
-						}
-					}
-				}
-			}
-
-			if(CJAX.ie) {
-				if(CJAX.ie[_raw_fn]) {
-
-					if(!fn || typeof fn=='string') {
-						fn = window[fn];
-					}
-					return _processFn(fn,'direct');
-				}
-			}
-
-			if(CJAX.lib.isFn(fn)) {
-				_processFn(fn,'direct');
-			} else if(window[fn]) {
-				fn = window[fn];
-				if(CJAX.lib.isFn(fn)) {
-					return _processFn(fn, 'direct');
-				} else {
-					return _processFn(fn, 'window');
-				}
-			} else {
-				if(typeof fn=='object') {
-					_processFn(fn);
-				} else  {
-
-					element = CJAX.$(data.a);
-
-					if(element) {
-						fn = element[fn];
-						if(fn) {
-							_processFn(fn);
+		if(typeof data.a == 'string') {
+			parts = data.a.split('.');
+			if(CJAX.util.count(parts) > 1) {
+				if(window[fn]) {
+					fn = window[fn];
+					if(fn[parts[0]]) {
+						fn = fn[parts[0]];
+						if(typeof fn[parts[1]]=='object') {
+							fn = fn[parts[1]];
 						} else {
-							_processFn(fn,'custom');
+							prop = parts[1];
 						}
-					} else {
-						console.log("Element", data.a, "could not be found.");
 					}
+				}
+			}
+		}
+
+		if(CJAX.ie) {
+			if(CJAX.ie[raw_fn]) {
+
+				if(!fn || typeof fn=='string') {
+					fn = window[fn];
+				}
+				return _processFn(fn,'direct');
+			}
+		}
+
+		if(CJAX.lib.isFn(fn)) {
+			_processFn(fn,'direct');
+		} else if(window[fn]) {
+			fn = window[fn];
+			if(CJAX.lib.isFn(fn)) {
+				return _processFn(fn, 'direct');
+			} else {
+				return _processFn(fn, 'window');
+			}
+		} else {
+			if(typeof fn=='object') {
+				_processFn(fn);
+			} else  {
+				element = CJAX.$(data.a);
+
+				if(element) {
+					xfn = element[fn];
+					if(xfn) {
+						_processFn(v);
+					} else {
+						_processFn(fn,'custom');
+					}
+				} else {
+					console.log("Element", data.a, "could not be found.");
 				}
 			}
 		}
 	};
 
-	this.property  	=		function (buffer, options)
+	this.property  	=		function (options)
 	{
-		if(options) {
-			var element = options.selector;
-		} else {
-			var element = CJAX.$(CJAX.xml('element_id', buffer));
-		}
-		if(!element) {
-			if(CJAX.debug) {
+		var element = options.selector;
 
-				console.log('Element:', CJAX.xml('element_id',buffer),'was not found');
-			}
+		if(!element) {
+			element = CJAX.$(options.element_id);
+		}
+
+		if(!element) {
+				console.log('Element:', options.element_id, 'was not found');
+
 			return;
 		}
-
 		if(options.options) {
 			var value = options.options.a;
 		} else {
-			var value = CJAX.decode(CJAX.xml('value',buffer));
+			var value = options.value;
 			if(CJAX.util.json(value)) {
 				value = CJAX.util.json(value);
 			}
@@ -403,7 +427,7 @@ function CJAX_FRAMEWORK() {
 			switch ( element.nodeName ) {
 				default:
 
-					console.log(element);
+					console.info('Property: default Assignment to',element, ' value.');
 					element.value = value;
 					break;
 				case 'IMG':
@@ -461,17 +485,15 @@ function CJAX_FRAMEWORK() {
 	this.util		=		function()
 	{
 		return {
-			applySelector: function(element,callback) {
+			applySelector: function(selector,callback) {
 
-				if(typeof element == 'object') {
-					return callback({0 : element});
+				if(typeof selector == 'object') {
+					return callback({0 : selector});
 				}
 				CJAX.lib.loadCallback('sizzle.js', function (obj) {
-
-					CJAX.set.event(obj,'ready', function() {
-
-						return callback(Sizzle(element));
-					});
+					CJAX.ready(function() {
+						return callback(Sizzle(selector));
+					},200);
 				});
 			},
 			//turn an entire cjax xml string, into an object.
@@ -1284,6 +1306,7 @@ function CJAX_FRAMEWORK() {
 				}
 			},
 			fnCall: function(element, setting) {
+
 				if(CJAX.lib.isFn(element[setting])) {
 					element[setting](data.b);
 				} else {
@@ -1307,13 +1330,6 @@ function CJAX_FRAMEWORK() {
 							element['outerHTML'] = value;
 						} else {
 							element['outerHTML'] = element['outerHTML']+value;
-						}
-						break;
-					case 'insert':
-						if(data.c){
-							element['innerHTML'] = element['innerHTML']+value;
-						} else {
-							element['innerHTML'] = value+element['innerHTML'];
 						}
 						break;
 				}
@@ -1427,9 +1443,10 @@ function CJAX_FRAMEWORK() {
 				return element;
 			},
 			pharseFunction: function(buffer) {
-				if(typeof buffer == 'object') {
+				if(typeof buffer != 'string') {
 					return buffer;
 				}
+
 				if(typeof buffer=='string' && buffer.substr(0,'function('.length)=='function(') {
 					try {
 						fn = eval('('+buffer+')');
@@ -1514,24 +1531,18 @@ function CJAX_FRAMEWORK() {
 			}
 			return;
 		}
+
+
+
+
+
 		if(/[^a-zA-Z0-9_\-]/.test(element_id)) {
-			if(typeof jQuery !='undefined') {
-				elements = jQuery(element_id);
-				elements.each(function(index, element) {
-					CJAX.__AddEventTo(element, buffer);
-				});
-			} else {
-				CJAX.lib.loadCallback('sizzle.js', function (file) {
 
-					CJAX.set.event(file,'load', function() {
-						elements = Sizzle(element_id);
-						for (x in elements) {
-							CJAX.__AddEventTo(elements[x], buffer);
-						}
-					});
-
-				});
-			}
+			CJAX.$(element_id, function(elements) {
+				for (x in elements) {
+					CJAX.__AddEventTo(elements[x], buffer);
+				}
+			});
 		} else {
 			CJAX.__AddEventTo(element_id, buffer);
 		}
@@ -1747,42 +1758,33 @@ function CJAX_FRAMEWORK() {
 			}
 
 			_fn = function() {
-				if(!_stop) {
-					var plugin_name = cache.is_plugin;
+				var plugin_name = cache.is_plugin;
 
-					var plugin_fn = function(element, cache, _event) {
-						CJAX._extendPlugin(plugin_name, cache, {
-							//options: cache.options,
-							element: element,
-							event: _event,
-							element_id: element.id,
-							clear: function() {
-								CJAX._EventCache.flushElement(element);
-							},
-						});
-					};
-
-					CJAX.lib.loadCallback(CJAX.util.loaded(cache.filename), function() {
-						plugin_fn(element, cache, _event);
+				var plugin_fn = function(element, cache, _event) {
+					CJAX._extendPlugin(plugin_name, cache, {
+						//options: cache.options,
+						element: element,
+						event: _event,
+						element_id: element.id,
+						clear: function() {
+							CJAX._EventCache.flushElement(element);
+						},
 					});
+				};
 
-				} else {
-					_stop = false;
-				}
+				CJAX.lib.loadCallback(CJAX.util.loaded(cache.filename), function() {
+					plugin_fn(element, cache, _event);
+				});
 			};
 		} else {
 
 			_fn = function(data, selector) {
-				if(!_stop) {
 					if(CJAX.util.isXML(data.xml) ) {
 						CJAX._process(cache,'set.event',element);
 					} else {
-
 						eval(_method);
 					}
-				} else {
-					_stop = false;
-				}
+
 			};
 		}
 
@@ -2091,7 +2093,7 @@ function CJAX_FRAMEWORK() {
 				if(!id) {
 					var id = 'cjax_iframe';
 				}
-				var f = CJAX.$(id,false);
+				var f = CJAX.$(id);
 				if(!f) {
 					if(CJAX.ie) {
 						f = document.createElement('<iframe name="'+id+'"/>');
@@ -2100,6 +2102,9 @@ function CJAX_FRAMEWORK() {
 					}
 					f.setAttribute("id",id);
 					f.setAttribute("name",id);
+					f.setAttribute("width",600);
+					f.setAttribute("height",300);
+
 					if(typeof src !='undefined' && src) {
 						f.setAttribute("src",src);
 					}
@@ -2642,7 +2647,7 @@ function CJAX_FRAMEWORK() {
 				get:CJAX.get,
 				overLayContent: CJAX.overLayContent,
 				base : base,
-				$: CJAX.is_element,
+				$: CJAX.$,
 				handler: function(handler, callback) {
 					if(CJAX.debug) {
 						console.log('Setting Handler..',handler);
@@ -2659,29 +2664,7 @@ function CJAX_FRAMEWORK() {
 					CJAX.util.payload(element, expiry);
 					CJAX.lib.loadCallback(element, fn);
 				},
-				repeat: function(fn, internal, times) {
-					if(typeof internal == 'undefined') {
-						var internal = 100;
-					}
-					if(typeof times == 'undefined') {
-						var times = 15;
-					}
-					var tried = 0;
-					var trying = function() {
-						setTimeout(function() {
-							fn();
-						}, internal)
-					};
-					try {
-						trying();
-					} catch(e) {
-						if(tried >= times) {
-							console.warn('Gave up on', fn, fn.toSource());
-							return false;
-						}
-						trying();
-					}
-				},
+				repeat: CJAX.repeat,
 				ready: CJAX.ready,
 				callback: function(event_trigger) {
 					if(event_trigger==null) {
@@ -3073,11 +3056,23 @@ function CJAX_FRAMEWORK() {
 						xml_data = cache;
 						break;
 					case '_fn':
-
-
-
 						if(CJAX[cache.fn]) {
+							if(typeof  cache != 'object') {
+								cache = CJAX.util.objectify(cache, 'cjax');
+								if(cache && cache.options) {
+									cache.options = CJAX.util.json(cache.options);
+								}
+							}
 							SUBFIX = cache.fn;
+						}
+					case 'property':
+
+						if(typeof  cache != 'object') {
+							cache = CJAX.util.objectify(cache, 'cjax');
+							if(cache && cache.options) {
+								cache.options = CJAX.util.json(cache.options);
+							}
+							xml_data = cache;
 						}
 						break;
 				}
@@ -3100,7 +3095,8 @@ function CJAX_FRAMEWORK() {
 					}
 				}
 			} catch( _e ) {
-				alert('#process unabled to load function#1: '+ CJAX.method+'();  '+_e.message);
+				console.error('#process unabled to load function#1: '+ CJAX.method+'();  '+_e.message, "\n", arguments.callee.caller.toString());
+				alert('An error prevented last action. See console for details.');
 			}
 			return;
 		} else {
@@ -3121,10 +3117,7 @@ function CJAX_FRAMEWORK() {
 			var loc_start = buffer.indexOf( start );
 		} catch(e) {
 
-			console.log("CJAX: XML-tag"+start+" - '",buffer,"' is not valid xml source.");
-			if(CJAX.debug) {
-				alert("CJAX: XML-tag"+start+" - '"+buffer+"' is not valid xml source.");
-			}
+			console.warn("CJAX: XML-tag"+start+" - '",buffer,"' is not valid xml source.\n", arguments.callee.caller.toString());
 			return;
 		}
 		var start_len = start.length;
@@ -3459,26 +3452,30 @@ function CJAX_FRAMEWORK() {
 	};
 
 	this.updateX		=		function(element_id, options) {
-		var element = CJAX.$(options.options.a);
-		var update_what = options.options.b;
-		var selector_prop = options.options.c;
-		var selector  = options.options.d;
 
-		if(element) {
+		var src_prop = options.options.b;
+		var dest_prop = options.options.c;
+		var selector  = options.selector;
 
-			if (!selector) {
-				if(selector_prop.indexOf('data-') != -1) {
-					_value = CJAX.decode(options.selector.getAttribute(selector_prop));
+		if(!dest_prop) {
+			dest_prop = src_prop;
+		}
+
+		CJAX.$(options.options.a, function(elements) {
+
+			for(var x in elements) {
+				//if (!selector) {
+				//CJAX.property(elements[x])
+				if (selector.getAttribute(src_prop)) {
+					_value = selector.getAttribute(src_prop);
 				} else {
-					_value = options.selector[selector_prop];
+					_value = selector[src_prop];
 				}
 
-				element[update_what] = _value;
-			} else {
-				element[update_what] = CJAX.$(selector)[selector_prop];
+				elements[x][dest_prop] = _value;
 
 			}
-		}
+		});
 	};
 
 	/**
@@ -3819,7 +3816,7 @@ function CJAX_FRAMEWORK() {
 		element_id = element_id.replace(/^\#/,'');
 
 
-		if(/[^a-zA-Z0-9_\-]/.test(element_id)) {
+		if(/[^a-zA-Z0-9_\-]/i.test(element_id)) {
 
 			if(CJAX.lib.isFn(callback)) {
 
@@ -4516,6 +4513,9 @@ function CJAX_FRAMEWORK() {
 	 */
 	this._pharseValues		=	function(url, selector)
 	{
+		if(undefined == url) {
+			return '';
+		}
 		var v = url.match(/\|[^\|\|]*\|/g);
 
 		try {
@@ -4636,6 +4636,9 @@ function CJAX_FRAMEWORK() {
 
 		CJAX.setHandler('handlerRequestStatus', CJAX._handlerRequestStatus);
 
+
+		CJAX.util.payload('sizzle.js', 10000);
+
 		CJAX.pBase = CJAX.base+'plugins/';
 		if(typeof _CJAX_PROCESS !='undefined') {
 			_CJAX_PROCESS();
@@ -4690,6 +4693,7 @@ function CJAX_FRAMEWORK() {
 			cjax_css.style.visibility = 'hidden';
 			cjax_css.style.display = 'none';
 		}
+
 		CJAX.ready(CJAX.onStartEvents);
 
 		var completed = function() {
@@ -4697,12 +4701,40 @@ function CJAX_FRAMEWORK() {
 			var data;
 			for(var x in CJAX._Ready) {
 				data = CJAX._Ready[x];
-				data.fn(data.element);
+				if(data.element === true) {
+					CJAX.repeat(data.fn(data.element),400,20);
+				} else {
+					data.fn(data.element);
+				}
 			}
 		};
 
 		r = function(f){/in/.test(document.readyState)?setTimeout('r('+f+')',9):f()}
 		r(completed);
+	};
+
+	this.repeat		=		function(fn, internal, times) {
+		if(typeof internal == 'undefined') {
+			var internal = 100;
+		}
+		if(typeof times == 'undefined') {
+			var times = 15;
+		}
+		var tried = 0;
+		var trying = function() {
+			setTimeout(function() {
+				fn();
+			}, internal)
+		};
+		try {
+			trying();
+		} catch(e) {
+			if(tried >= times) {
+				console.warn('Gave up on', fn, fn.toSource());
+				return false;
+			}
+			trying();
+		}
 	};
 
 	this.ready		=		function(fn, obj) {
@@ -4713,7 +4745,16 @@ function CJAX_FRAMEWORK() {
 			return;
 		}
 		if(CJAX.DOMContentLoaded) {
-			fn(obj);
+			switch(typeof obj) {
+				case 'number':
+					CJAX.repeat(fn, obj, 20);
+					break;
+				case 'boolean':
+					CJAX.repeat(fn, 400, 20);
+					break;
+				default:
+					fn.call(this,obj);
+			}
 		} else {
 			CJAX._Ready[CJAX.util.count(CJAX._Ready) + 1] = {
 				fn: fn,

@@ -6,7 +6,7 @@
  * @author cj
  *
  */
-class Uploading
+class Uploading extends  uploader
 {
 	private $error;
 	private $post;
@@ -25,17 +25,18 @@ class Uploading
 		$error = false;
 		$files_fount = false;
 		$files = array();
-		
+		$instance_id =  isset($_REQUEST['instance_id'])? $_REQUEST['instance_id']: 0;
+		$use_debug = isset($_REQUEST['use_debug'])  && $_REQUEST['use_debug']? 1 : 0;
 		$ajax->cacheWrapper(array("<html><body>","</body></html>"));
-		$options = $ajax->get('upload_options', true);
-		$this->options = $options;
-		
-		if(!$this->options->target) {
+		$options = (object) $this->options = $ajax->get('Uploader_upload_options' . $instance_id, true);
+		$options->use_debug = $use_debug;
+
+		if(!$options->target) {
 			$this->abort("No target directory.");
 		}
 		
 		if(!is_writable($options->target )) {
-			return $this->abort("Directory is not writable.");
+			return $this->abort(sprintf("Directory %s is not writable.", $options->target));
 		}
 		
 		$this->chkLength();
@@ -97,10 +98,10 @@ class Uploading
 		}
 		
 		
-		$this->debug($this->options);
+		$this->debug($options);
 		
 		if(!$files_fount) {
-			if(!$this->options->files_require && !$this->upload_count)  {
+			if(!$options->files_require && !$this->upload_count)  {
 				$this->flush();
 				$ajax->message();
 				return true;
@@ -109,42 +110,61 @@ class Uploading
 				$this->error = "No Files Were selected";
 			}
 		}
+
+
 		
 		if(!$this->error) {
 			if($this->post) {
 				$ajax->ajaxVars($this->post);
 			}
-			if($this->options->preview) {
-				$preview = $this->options->preview;
-				$preview_url = $this->options->preview_url;
+
+			if($options->preview_container) {
+				$preview_container = $options->preview_container;
+				$preview_url = $options->preview_dir;
+				if($ajax->config->preview_url) {
+					$preview_url = $ajax->config->preview_url;
+				}
 				if($preview_url) {
 					$preview_url = rtrim($preview_url,'/').'/';
 				}
-				$range = range(1,  count($this->files));
-				array_walk($range, function(&$v) {
-					$v =  "#image{$v}#";
-					
-				});
-				foreach($this->files as $k => $v) {
-					$this->files[$k] = $preview_url.$v;
+
+				$img_class = 'img';
+				if($options->img_class) {
+					$img_class = $options->img_class;
 				}
-				foreach($preview as $k => $v) {
-					$image = str_replace($range, $this->files, $v);
-					$ajax->update($k, $image);
+
+				foreach($files as $k => $v) {
+					$img = sprintf("<img class='%s' src='%s' />", $img_class, $preview_url . $v);
+					if ($options->preview_type == 'single') {
+						$ajax->update($preview_container, $img);
+					} else {
+						$ajax->insert($preview_container, $img);
+					}
 				}
+				if($options->overlay) {
+					$overlay_img_class = 'img_overlay';
+					if($options->overlay_img_class) {
+						$overlay_img_class = $options->overlay_img_class;
+					}
+					$ajax->click('.' . $img_class,
+						array(
+							$ajax->overlayContent(sprintf("<img class='%s' src='#' />", $overlay_img_class)),
+							$ajax->updateX('.' . $overlay_img_class, 'src')
+						)
+					);
+				}
+
 			}
 			
 			$_files = implode(', ',$files);
-			$message = $this->options->success_message;
-			if(!$message) {
-				$message = "File(s) $_files successfully uploaded.";
-			} else {
+			$message = $options->success_message;
+			if($message) {
 				$message = str_replace("@files", $_files, $message);
+				$ajax->success($message);
 			}
-			$ajax->success($message, 5);
 		} else {
 			
-			$ajax->warning($this->error, 5);
+			$ajax->warning($this->error, 10);
 		}
 		
 	}
@@ -169,7 +189,7 @@ class Uploading
 
 	function debug($options)
 	{
-		if($options && $options->debug) {
+		if($options && $options->use_debug) {
 			$ajax = ajax();
 			
 			$options->{"List Of Files Uploaded"} = $this->post;
@@ -178,13 +198,9 @@ class Uploading
 			$settings['php.ini upload_max_filesize'] = ini_get('upload_max_filesize');
 			$settings['php.ini max_execution_time'] = ini_get('max_execution_time');
 			$settings['CONTENT_LENGTH'] = @$_SERVER['CONTENT_LENGTH'].' bytes';
-			
-			$debug_message = null;
-			if(is_string($options->debug)) {
-				$debug_message = $options->debug."<br /><br />";
-			}
+
 			$ajax->dialog("
-				$debug_message
+
 				To be able to upload files, the server has to be able to handle them. 
 				These are settings you can control in php.ini file. Any file(s) that exceeds these limitations
 				will not be uploaded.
@@ -196,7 +212,7 @@ class Uploading
 				<pre>".print_r($options,1)."</pre>"
 				."Files:".
 				"<pre>".print_r($_FILES,1)."</pre>"
-			,"Debug Information");
+			,"Debug Option is turned on this Demo");
 		}
 	}
 	

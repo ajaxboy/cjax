@@ -6,8 +6,8 @@
 
 
 /**
- * Setting to where the js directory is
- * http://yoursite.com/cjax/
+ * Setting to where the js directory is.
+ * Eg: http://yoursite.com/cjax/
  */
 $config->js_path = '';
 

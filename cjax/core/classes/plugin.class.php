@@ -140,6 +140,11 @@ class plugin extends ext {
 	 */
 	private $cookie = false;
 
+	public function __construct()
+	{
+		$this->loading = get_class($this);
+	}
+
 	/**
 	 *
 	 * Delete plugin entries
@@ -553,6 +558,16 @@ class plugin extends ext {
 		self::$initiatePlugins = self::readDir($plugins);
 	}
 
+	public function merge($setting, $new_data)
+	{
+		$data = $this->get($setting);
+
+		foreach($new_data as $k => $v) {
+			$data[$k] = $v;
+		}
+		$this->save($setting, $data);
+	}
+
 	/**
 	 *
 	 * Saves values in a cookie or session
@@ -579,7 +594,7 @@ class plugin extends ext {
 	 *
 	 * get settings saved in cookies
 	 */
-	function get($setting,$prefix = null)
+	function get($setting, $prefix = null)
 	{
 		if(!$prefix) {
 			$prefix = $this->loading;
@@ -590,8 +605,12 @@ class plugin extends ext {
 		if($prefix) {
 			$setting = $prefix.'_'.$setting;
 		}
+		$setting = strtolower($setting);
 		$ajax = ajax();
-		return $ajax->getSetting($setting, $prefix);
+
+		$data = $ajax->getSetting($setting, $prefix);
+
+		return $data;
 	}
 
 	function  __get($setting)

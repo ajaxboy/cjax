@@ -13,6 +13,59 @@ class uploader extends plugin {
 	public $controller = 'uploading';
 	
 	private $callback_id;
+
+
+
+	function onLoad($options = array(), $target_directory = null)
+	{
+		if(is_array($target_directory) && !$options) {
+			$options = $target_directory;
+
+			if(isset($options['dir'])) {
+				$target_directory = $options['dir'];
+			}
+		}
+		$instance_id = $this->_id;
+		$ajax = ajax();
+
+		if($ajax->config->upload_dir) {
+			$target_directory = $ajax->config->upload_dir;
+		}
+		if(!$target_directory) {
+			$target_directory = './';
+		}
+		if(!is_writable($target_directory)) {
+			return $ajax->warning("Cjax Upload: Directory '$target_directory' is not writable, , aborting..",5);
+		}
+		if(!isset($options['text'])) {
+			$options['text'] = 'Uploading File(s)...';
+		}
+		if(!isset($options['ext'])) {
+			$options['ext'] = array('jpg','jpeg','gif','png');
+		}
+		if(!isset($options['files_require'])) {
+			$options['files_require'] = true;
+		}
+		if(!isset($options['form_id']) ) {
+			$options['form_id'] = null;
+		}
+		$ajax->text = $options['text'];
+		$target = rtrim($target_directory,'/') . '/';
+
+		if(!isset($options['before'])) {
+			$options['url'] = null;
+		}
+
+		if(!isset($options['target'])) {
+			$options['target'] = $target;
+		}
+		$options['instance_id'] = $instance_id;
+		$this->set('a', $options, $instance_id);
+		//usually we call save, but there could be more than one instance.
+		$this->save('upload_options' . $instance_id, $options);
+
+		$this->options = $options;
+	}
 	
 	/**
 	 * 
@@ -58,80 +111,9 @@ class uploader extends plugin {
 		}
 	}
 	
-	function preview($preview_url, $data = array())
+	function onAjaxLoad($options = array(), $target_directory = null)
 	{
-		$ajax = ajax();
-		if($ajax->config->preview_url) {
-			$preview_url = $ajax->config->preview_url;
-		}
-		$this->options['preview'] = $data;
-		$this->options['preview_url'] = $preview_url;
-		$ajax->save('upload_options', $this->options);
-	}
-	
-	function onLoad($btn_id =  null, $target_directory = null, $options = array())
-	{
-		if(is_array($btn_id) && !$options) {
-			$options = $btn_id;
-			$btn_id = null;
-			
-			if(isset($options['dir'])) {
-				$target_directory = $options['dir'];
-			}
-		}
-		$ajax = ajax();
-		foreach($options as $k =>$v) {
-			$this->{$k} = $v;
-		}
-		if(isset($options['before'])) {
-			$this->set('a', $options);
-		}
-		
-		if($ajax->config->upload_dir) {
-			$target_directory = $ajax->config->upload_dir;
-		}
-		if(!$target_directory) {
-			$target_directory = './';
-		}
-		if(!is_writable($target_directory)) {
-			return $ajax->warning("Cjax Upload: Directory '$target_directory' is not writable, , aborting..",5);
-		}
-		if(!isset($options['text'])) {
-			$options['text'] = 'Uploading File(s)...';
-		}
-		if(!isset($options['ext'])) {
-			$options['ext'] = array('jpg','jpeg','gif','png');
-		}
-		if(!isset($options['files_require'])) {
-			$options['files_require'] = true;
-		}
-		if(!isset($options['form_id']) ) {
-			$options['form_id'] = null;
-		}
-		$ajax->text = $options['text'];
-		$target = rtrim($target_directory,'/') . '/';
-		
-		if(!isset($options['url'])) {
-			$options['url'] = null;
-		}
-		
-		if(!isset($options['target'])) {
-			$options['target'] = $target;
-		}
-		$ajax->save('upload_options', $options);
-			
-		if(!$btn_id || is_array($btn_id)) {
-			$xml = $ajax->form($options['url'], $options['form_id']);
-		} else {
-			$xml = $ajax->click($btn_id, $ajax->form($options['url'], $options['form_id']));
-		}
-		$this->options = $options;
-		$this->callback($xml);
-	}
-	
-	function onAjaxLoad($btn_id, $target_directory, $options = array())
-	{
-		return $this->onLoad($btn_id, $target_directory, $options);
+		return $this->onLoad($options, $$target_directory);
 	}
 	
 }

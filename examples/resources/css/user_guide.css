@@ -175,6 +175,8 @@ a:hover {
  padding:0;
  margin: 0 0 10px 0;
 }
+
+
 #nav_inner ul {
  list-style-image: url(../images/arrow.gif);
  padding: 0 0 0 18px;
@@ -183,6 +185,11 @@ a:hover {
 #nav_inner li {
  padding: 0;
  margin: 0 0 4px 0;
+}
+
+.normal {
+ list-style: none !important;
+ margin: 30px !important;
 }
 
 #nav_inner a {

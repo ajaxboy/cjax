@@ -1195,12 +1195,14 @@ if (document.addEventListener) {
 	}
 
 
-	static function save($setting, $value = null, $use_cookie = false)
+
+	public function save($setting, $value = null, $use_cookie = false)
 	{
 		$ajax = ajax();
 		if(!isset($_SESSION)) {
 			@session_start();
 		}
+		$setting = strtolower($setting);
 		if($ajax->fallback || $ajax->config->fallback) {
 			if($value===null) {
 				if(isset($_SESSION[$setting])) {
@@ -1536,6 +1538,7 @@ if (document.addEventListener) {
 	function get($setting, $get_as_object = false)
 	{
 		$value = null;
+		$setting = strtolower($setting);
 		if(isset($_SESSION[$setting])) {
 			$value = $_SESSION[$setting];
 		} else if(isset($_COOKIE[$setting])) {
@@ -1546,6 +1549,7 @@ if (document.addEventListener) {
 		} else if($get_as_object) {
 			$value = new ext;
 		}
+
 		return $value;
 	}
 
