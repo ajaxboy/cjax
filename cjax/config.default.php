@@ -11,11 +11,6 @@
  */
 $config->js_path = '';
 
-/**
- * Enable advanced selectors (all jquery selectors will work), 
- */
-$config->sizzle = false;
-
 
 /**
 * Having issues on page load not loading some times?
