@@ -149,7 +149,7 @@ $uploader = $ajax->uploader(
 	</p>
 
 	<p class="info">
-		Envision this functionality (or a customized version of it) on your website or application?,  and can't do it yourself? Note a problem. <a href="custom_delopment.php">We'll do it for you</a>.
+		Envision this functionality (or a customized version of it) on your website or application?,  and can't do it yourself? Not a problem. <a href="custom_delopment.php">We'll do it for you</a>.
 	</p>
 	<h3>Example</h3>
 
