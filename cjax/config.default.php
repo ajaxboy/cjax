@@ -6,8 +6,8 @@
 
 
 /**
- * Setting to where the js directory is within cjax, for example
- * http://yoursite.com/cjax/core/js/
+ * Setting to where the js directory is
+ * http://yoursite.com/cjax/
  */
 $config->js_path = '';
 
@@ -82,6 +82,14 @@ $config->camelizeUcfirst = false;
  */
 $config->upload_dir = '';
 
+
+/**
+ * URL of directory where images are uploaded.
+ * Eg: http://yoursite.com/uploads/
+ * This setting is used by any feature that would display images
+ * including the ajax uploader plugin.
+ */
+$config->preview_url = '';
 
 
 
