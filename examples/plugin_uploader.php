@@ -61,7 +61,7 @@ $uploader = $ajax->uploader(
 <!doctype html>
 <head>
 	<link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
-	<title>Template</title>
+	<title>Ajax File Uploader</title>
 	<?php echo $ajax->init(false);?>
 	<style>
 		.img {
@@ -110,7 +110,7 @@ $uploader = $ajax->uploader(
 		<td id="breadcrumb">
 			<a href="http://cjax.sourceforge.net/">Project Home</a> &nbsp;&#8250;&nbsp;
 			<a href="./">Demos</a> &nbsp;&#8250;&nbsp;
-			Template
+			Ajax File Uploader
 		</td>
 		<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="cjax.sourceforge.net/" />Search Project User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
 	</tr>
