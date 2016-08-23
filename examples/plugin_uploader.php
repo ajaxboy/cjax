@@ -417,7 +417,7 @@ $uploader = $ajax->uploader(
 	);
 
 //button id, upload directory
-\$ajax->uploader('btn_saveForm', 'your/upload/directory', \$options);
+\$ajax->uploader(\$options,'your/upload/directory');
 
 
 ");
