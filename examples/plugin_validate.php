@@ -12,61 +12,49 @@ $ajax = ajax();
 ### button_id, $validate - rules, messages, handlers, errorElement, see jquery.validation to see available options.
 
 //$ajax->log = 1;
-if($ajax->isPlugin('validate')) {
-		
-	$rules = array(
-		'rules' => array(
-			'a[name]' => array(
-				'required' => true,
-				'minlength'  => 5,
-			),
-			'a[last_name]' => array(
-				'required' => true,
-				'minlength'  => 5,
-			),
-			'a[email]' => array(
-				'required' => false,
-				'email' => false
-			)
+
+$rules = array(
+	'rules' => array(
+		'a[name]' => array(
+			'required' => true,
+			'minlength'  => 5,
 		),
-		'messages' => array(
-			'a[name]' => array(
-				'required' => 'Please enter your name',
-			),
-			'a[last_name]' => array(
-				'required' => 'Enter your last name',
-			),
-			'a[email]' => array(
-				'required' => 'Email is required',
-			)
-			
+		'a[last_name]' => array(
+			'required' => true,
+			'minlength'  => 5,
+		),
+		'a[email]' => array(
+			'required' => false,
+			'email' => false
 		)
-	);
-	
-	$validate = $ajax->validate('btn_saveForm', 'ajax.php?send_form/validate', $rules);
-	
-	$rule  = array(
-		'required' => array( true , 'This field is required!'),
-		'minlength'=> array( 2 ,'Minimum length is 2!')
-	);
-	
-	$validate->rule('a[state]',$rule);
+	),
+	'messages' => array(
+		'a[name]' => array(
+			'required' => 'Please enter your name',
+		),
+		'a[last_name]' => array(
+			'required' => 'Enter your last name',
+		),
+		'a[email]' => array(
+			'required' => 'Email is required',
+		)
+
+	)
+);
+
+$validate = $ajax->validate('btn_saveForm', 'ajax.php?send_form/validate', $rules);
+
+$rule  = array(
+	'required' => array( true , 'This field is required!'),
+	'minlength'=> array( 2 ,'Minimum length is 2!')
+);
+
+$validate->rule('a[state]',$rule);
 	
 	
 	//$validate->imports(array('jquery-1.7.2.min.js','jquery.validate.min.js'));
 	
-	
-} else {
-	$data = "
-	<h2 style='color:red;'>Cjax validate plugin was not found. Install it, then refresh this page.</h2>
-	<br />
-	This plugin is by default not included in this package. You must  download the zip and place its content in cjax/plugins directory.
-	<h4>Download This plugin</h4>
-	<a target='_blank' href='https://sourceforge.net/projects/cjax/files/Plugins/'>https://sourceforge.net/projects/cjax/files/Plugins/</a>
-	
-	";
-	$ajax->update("not_found",$data);
-}
+
 
 $rules = $ajax->code("
 \$rules = array(
@@ -126,12 +114,11 @@ $more_code = $ajax->code("
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<?php echo $ajax->init();?>
+	<?php echo $ajax->init(false);?>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Validate Form...</title>
 	<link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
 	<link rel="stylesheet" type="text/css" href="resources/send_form/view.css" media="all">
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	<script type="text/javascript" src="resources/send_form/view.js"></script>
 </head>
 <body>
