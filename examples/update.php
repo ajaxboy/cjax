@@ -73,7 +73,6 @@ $ajax->click("button1",$ajax->call("ajax.php?update/update_box"));
 
 	<!-- Code Used -->
 	<br />
-	Code used:
 	<?php
 	echo $ajax->code("
 \$ajax->update('content1',\$text);

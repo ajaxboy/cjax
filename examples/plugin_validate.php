@@ -104,7 +104,7 @@ $code = $ajax->code("
 \$validate = \$ajax->validate('btn_saveForm', 'ajax.php?send_form/validate', \$rules);
 ");
 
-$ajax->Exec('code', $ajax->overlayContent($code, array('width'=> '800px','top'=>30)));
+$ajax->click('code', $ajax->overlayContent($code, array('width'=> '800px','top'=>30)));
 
 
 $more_code = $ajax->code("

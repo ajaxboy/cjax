@@ -19,7 +19,6 @@ $ajax->keypress('url', $ajax->call("ajax.php?test/remote/|url:encodeURIComponent
 Support for keypress event (Cjax 5.4)
 <br />
 </p>
-Code Used:
 <?php 
 echo $ajax->code("
 	//Press enter, a, b or c, and the ajax request will go throgh.  

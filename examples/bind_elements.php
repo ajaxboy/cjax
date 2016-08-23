@@ -123,7 +123,6 @@ $ajax->click('.grey', array($ajax->swap('blue','red')));
 
     <!-- Code Used -->
 
-    Code used:
 <?php
 echo $ajax->code("
 \$ajax->click(\"link1|link2\",\$ajax->call(\"ajax.php?bind/bild_elements\"));

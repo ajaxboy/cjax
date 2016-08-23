@@ -64,7 +64,6 @@ $ajax->keypress('text_url', $ajax->call("ajax.php?test/remote/|url|"), array(13,
 	<!-- Code Used -->
 
 	</p>
-	Code Used:
 	<?php
 	echo $ajax->code("
 	//Press enter, a, b or c, and the ajax request will go throgh.

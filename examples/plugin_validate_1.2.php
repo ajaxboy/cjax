@@ -61,7 +61,7 @@ if($ajax->isPlugin('validate')) {
 }
 
 
-$ajax->Exec("btn_saveForm",$ajax->form("ajax.php?send_form/validate","form1"));
+$ajax->click("btn_saveForm",$ajax->form("ajax.php?send_form/validate","form1"));
 
 ### below is an HTML form.  All you need is the id of the form, and all the code is needed is above. 
 ### look inside controllers/send_form.php for response code sample.
@@ -96,7 +96,6 @@ This Plugins uses Jquery and Jquery.validate plugin to dynamically add validatio
  <li><a target="_blank" href="http://docs.jquery.com/Plugins/Validation">http://docs.jquery.com/Plugins/Validation</a></li>
  <li><a target="_blank" href="https://sourceforge.net/projects/cjax/files/Plugins/">https://sourceforge.net/projects/cjax/files/Plugins/</a></li>
 </ul>
-Code Used:
 <?php 
 
 echo $ajax->code("

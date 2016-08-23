@@ -111,7 +111,6 @@ $ajax = ajax();
 
 	<?php ob_start();?>
 	<h2>Hello World Plugin</h2>
-	PHP Code used to call plugin:
 	<?php
 	echo $ajax->code("\$ajax->hello_world('hello', 'world!',array('test'));");
 	?>

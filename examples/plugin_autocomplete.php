@@ -64,7 +64,6 @@ $ajax->keyup('#text1', $ajax->autocomplete('ajax.php?autocomplete/update'));
 
 
 	<!-- Code Used -->
-	Code Used:
 	<?php
 
 	echo $ajax->code("

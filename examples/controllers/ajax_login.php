@@ -43,7 +43,7 @@ class ajax_login {
 		$ajax->login_div = 'Login Again..';
 		
 		$overlay = $ajax->overlay('resources/html/login.html', array('left'=> '400px'));
-		$link = $ajax->Exec('button1',$ajax->form('ajax.php?ajax_login/handler','form1'));
+		$link = $ajax->click('button1',$ajax->form('ajax.php?ajax_login/handler','form1'));
 		$overlay->callback($link);
 		$ajax->click('a_login', $overlay);
 	}

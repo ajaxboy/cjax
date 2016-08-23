@@ -60,7 +60,7 @@ $ajax->div_container = $ajax->call("resources/html/test.html");
 
 
     <!-- Code Used -->
-    Code used:
+
     <?php
     echo $ajax->code("
 \$ajax->call(\"resources/html/test.html\",\"div_container\");

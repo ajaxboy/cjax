@@ -62,7 +62,7 @@ $ajax->call("ajax.php?ajax_request/on_the_fly");
 
 
     <!-- Code Used -->
-    Code used:
+
     <?php
     echo $ajax->code("
 \$ajax->call(\"ajax.php?ajax_request/on_the_fly\");

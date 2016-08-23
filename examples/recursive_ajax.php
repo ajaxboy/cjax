@@ -67,7 +67,6 @@ $ajax->click("button1",$ajax->call("ajax.php?recursive_ajax/call/0/|count|"));
 
     <!-- Code Used -->
     <br />
-    Code used:
     <?php
     echo $ajax->code("
 <?php

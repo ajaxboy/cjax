@@ -67,7 +67,6 @@ $ajax->click("button2",$ajax->call("ajax.php?send_input/send_checkbox/|check1|")
     <!-- Code Used -->
 
     <br />
-    Code used:
     <?php
     echo $ajax->code("
 \$ajax->click(\"button1\",\$ajax->call(\"ajax.php?send_input/send_text/|text1|\"));

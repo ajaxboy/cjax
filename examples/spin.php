@@ -113,7 +113,6 @@ $ajax->spin('.flip_up_cube', 'flipCubeUp');
     ");
     ?>
 
-    Code Used:
 <?php
 echo $ajax->code("
 
@@ -142,8 +141,6 @@ echo $ajax->code("
 
     ");
     ?>
-
-    Code Used:
     <?php
     echo $ajax->code("
 
@@ -172,7 +169,6 @@ echo $ajax->code("
     ");
     ?>
 
-    Code Used:
     <?php
     echo $ajax->code("
 

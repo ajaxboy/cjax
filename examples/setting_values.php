@@ -73,7 +73,6 @@ $ajax->click("button3",$ajax->call("ajax.php?change_value/div/|rand|"));
 
 
     <!-- Code Used -->
-    Code used:
     <?php
     echo $ajax->code("
 <?php

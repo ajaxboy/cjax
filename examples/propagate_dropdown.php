@@ -10,7 +10,7 @@ $ajax->change("dropdown1",$ajax->call("ajax.php?dropdown/propagate/|dropdown1|")
 <!doctype html>
 <head>
     <link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
-    <title>Template</title>
+    <title>Ajax Dropdown</title>
     <?php echo $ajax->init();?>
 </head>
 <body>
@@ -63,7 +63,6 @@ $ajax->change("dropdown1",$ajax->call("ajax.php?dropdown/propagate/|dropdown1|")
 
     <!-- Code Used -->
     <br />
-    Code Used:
     <?php
     echo $ajax->code("
 \$ajax->change(\"dropdown1\",\$ajax->call(\"ajax.php?dropdown/propagate/|dropdown1|\"));

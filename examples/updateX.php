@@ -121,7 +121,6 @@ $ajax->click('#logo2', array(
     <br />
     <!-- Code Used -->
     <br />
-    Code used:
     <?php
     echo $ajax->code("
     //updates #content1's html with the id of the element you clicked on

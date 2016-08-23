@@ -97,7 +97,6 @@ $ajax->click('buttond', $ajax->call('ajax.php?calc/math/d/|buffer|'));
 
 	<!-- Code Used -->
 
-	<h4>Code Used</h4>
 	<?php
 
 	echo $ajax->code("

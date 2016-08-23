@@ -64,7 +64,6 @@ $ajax->change("dropdown1",$ajax->call("ajax.php?dropdown/propagate_allow_input/|
 
 	<!-- Code Used -->
 	<br />
-	Code used:
 	<?php
 	echo $ajax->code("
 \$ajax->change(\"dropdown1\",\$ajax->call(\"ajax.php?dropdown/propagate_allow_input/|dropdown1|\"),\"change\");

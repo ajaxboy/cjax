@@ -11,7 +11,7 @@ $code = $ajax->code("
 \$ajax->keyup('username', \$ajax->call('ajax.php?ajax_login/user/|username|','span_container'));
 ");
 
-$ajax->Exec('code', $ajax->overlayContent($code,array('width'=> '1000px','top'=>50)));
+$ajax->click('code', $ajax->overlayContent($code,array('width'=> '1000px','top'=>50)));
 ?>
 <html>
 <head>

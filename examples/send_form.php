@@ -24,7 +24,6 @@ Convert any HTML form over to ajax
 <br />
 <br />
 <div style="text-align: left">
-Code used:
 <?php 
 echo $ajax->code("
 //bind button to ajax-form request

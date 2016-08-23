@@ -53,9 +53,10 @@ $ajax = ajax();
 
     <!-- Text -->
     <h4>Upgrading</h4>
+    <p>
     Using an older version?. To upgrade simply download the newest version and overwrite all Cjax files,  in most cases that should be enough to upgrade to a newer version.<br />
     To be sure, see release notes or <a target='_blank' href='https://github.com/ajaxboy/cjax/blob/master/cjax/CHANGELOG.txt'>changeLog</a> to see if there are any changes that would affect a previous release.
-
+    </p>
 
 
     <br />

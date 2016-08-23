@@ -154,7 +154,7 @@ class ajax_login {
 
 		//This is exactly the example as the first line in the Initial code but with different syntax
 		\$overlay = \$ajax->overlay('resources/html/login.html');
-		\$link = \$ajax->Exec('button1',\$ajax->form('ajax.php?ajax_login/handler','form1'));
+		\$link = \$ajax->click('button1',\$ajax->form('ajax.php?ajax_login/handler','form1'));
 		\$overlay->callback(\$link);
 		\$ajax->click('a_login', \$overlay);
 	}

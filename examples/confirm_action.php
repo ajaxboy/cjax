@@ -60,7 +60,6 @@ $ajax->click("button1",$ajax->call("ajax.php?confirm/confirm_action",null,"Are y
 
     <!-- Code Used -->
 
-    Code Used:
     <?php
     echo $ajax->code("
     \$ajax->click(\"button1\",\$ajax->call(\"ajax.php?confirm/confirm_action\",null,\"Are you sure?\"));

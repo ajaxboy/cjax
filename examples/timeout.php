@@ -89,7 +89,6 @@ $ajax->process("This message is last... but it has no waiting time..");
 
     <!-- Code Used -->
     <br />
-    Code used:
     <?php
     echo $ajax->code("
 \$ajax->wait(5);

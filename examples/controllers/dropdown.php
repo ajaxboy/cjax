@@ -26,10 +26,8 @@ class dropdown {
 				$data[] = "Maine";
 			break;
 		}
-		
-		//setcookie('data','testesttest',time()+1000*10);
+
 		$ajax->select('dropdown2',$data);
-		
 	}
 	
 	/**

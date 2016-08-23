@@ -66,7 +66,6 @@ $ajax->keyup('search',$ajax->call('ajax.php?search/string/|search|','search_resu
 
     <!-- Code Used -->
     <br />
-    Code Used:
     <?php
     echo $ajax->code("
 //first bild text element search to the ajax request

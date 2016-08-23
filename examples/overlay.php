@@ -92,7 +92,6 @@ $ajax->click("#overlay_dialog", $ajax->dialog('Hello World','Dialog#1'));
 
     <!-- Code Used -->
     <br />
-    Code used:
     <?php
     echo $ajax->code("
 //Overlay #1

@@ -73,7 +73,6 @@ $ajax->call("ajax.php?post/post_sample",'div_response');
 
 	<!-- Code Used -->
 	<br />
-	code used:
 	<?php
 	echo $ajax->code("
 \$vars = array(

@@ -64,7 +64,6 @@ $ajax->keyup("text1", $ajax->call("ajax.php?keyup_update/update/|text1|"));
 
     <!-- Code Used -->
 
-    Code Used:
     <?php
     echo $ajax->code("
     \$ajax->keyup(\"text1\", \$ajax->call(\"ajax.php?keyup_update/update/|text1|\"));"

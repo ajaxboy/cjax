@@ -63,7 +63,6 @@ $ajax->prepend('#response','This <span style=\'color:red\'>HTML</span> was prepe
 
 	<!-- Code Used -->
 	<br />
-	Code Used:
 	<?php
 	echo $ajax->code("
 	//Appending HTML
