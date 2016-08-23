@@ -32,6 +32,22 @@ body {
  float: left;
 }
 
+.form {
+ position: relative;
+ width: 600px;
+}
+.form > div div:first-child::before {
+ content: "\00a0";
+}
+.form > div div:first-child {
+ width: 150px;
+ text-align: right;
+ float: left;
+}
+.form > div div {
+ width: 250px;
+ float: left;
+}
 
 .code-used {
  font-family: "Adobe Devanagari";
