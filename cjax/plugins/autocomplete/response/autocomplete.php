@@ -1,6 +1,6 @@
 <?php
 
-class _autocomplete {
+class autocomplete {
 
 
 	public function update($string)

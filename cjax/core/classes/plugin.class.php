@@ -58,6 +58,8 @@ class plugin extends ext {
 	 */
 	public $controllers_dir = 'response';
 
+	public $controller;
+
 	public $controller_file = null;
 
 	/**
