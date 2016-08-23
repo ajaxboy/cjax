@@ -46,8 +46,7 @@ $uploadify = $ajax->uploadify('.upload', array(
 <head>
 	<link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
 	<title>Uploadify in PHP</title>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<?php  echo $ajax->init();?>
+	<?php  echo $ajax->init(false);?>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<script type="text/javascript" src="resources/send_form/view.js"></script>
 	<link rel="stylesheet" type="text/css" href="resources/send_form/view.css" media="all">

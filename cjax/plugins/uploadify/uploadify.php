@@ -28,18 +28,6 @@ class uploadify extends plugin {
 		
 		//Remove these if already on your page, or load manually
 		//preload dependecies, import multiple files
-
-		
-		//$this->waitFor('jquery.uploadify-3.1.js');
-		
-		$this->import('uploadify-3.2/jquery.uploadify.js',0,true);
-		
-		
-		
-		//import single file (this file is relative to the plugin)
-		$this->import('uploadify-3.2/uploadify.css');
-		//uploadify-v3.1/jquery.uploadify-3.1.min.js
-		
 		
 		//updates 3rd paramaters in the plugin
 		$this->set('c',  session_id());

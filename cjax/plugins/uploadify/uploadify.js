@@ -13,13 +13,18 @@
  * 
  */
 
+CJAX.importFile({
+	files: 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js,uploadify-3.2/uploadify.css',
+	plugin:'uploadify',
+	check: 'jQuery',
+	payload: 'uploadify-3.2/jquery.uploadify.js'
+});
+
 function uploadify(upload_id, options, session_id) 
 {
-	if(typeof jQuery  =='undefined') {
-		alert('CJAX: Uploadify Plugin requires Jquery library.');
-		return;
-	}
 	var base = this.base;
+
+	console.log(options);
 
 	options.formData   = {'session_id' : session_id};// need this to communicate with the flash uploader
 	
@@ -40,8 +45,8 @@ function uploadify(upload_id, options, session_id)
 		upload_id = '#'+upload_id;
 	}
 	
-	$(function() {
-	    $(upload_id).uploadify(options);
+	this.queue('jquery.uploadify.js', function() {
+		$(upload_id).uploadify(options);
+
 	});
-	
 }

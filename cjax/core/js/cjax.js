@@ -2692,6 +2692,7 @@ function CJAX_FRAMEWORK() {
 					CJAX.util.payload(element, expiry);
 					CJAX.lib.loadCallback(element, fn);
 				},
+				queue: CJAX.util.queue,
 				repeat: CJAX.repeat,
 				ready: CJAX.ready,
 				callback: function(event_trigger) {
