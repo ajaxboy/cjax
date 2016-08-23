@@ -340,6 +340,22 @@ class CoreEvents extends cjaxFormat {
 		return $cache;
 	}
 
+	public static function delegateActions($actions)
+	{
+		$new_actions = array();
+		if(!is_array($actions)) {
+			$actions = array($actions);
+		}
+		if($actions) {
+			foreach ($actions as $v) {
+				$action = self::$cache[$v];
+				$new_actions[$v] = $action;
+				unset(self::$cache[$v]);
+			}
+		}
+		return $new_actions;
+	}
+
 	static function prepareCommit()
 	{
 		$cache = self::$cache;
@@ -1196,7 +1212,7 @@ if (document.addEventListener) {
 
 
 
-	public function save($setting, $value = null, $use_cookie = false)
+	public static function save($setting, $value = null, $use_cookie = false)
 	{
 		$ajax = ajax();
 		if(!isset($_SESSION)) {
