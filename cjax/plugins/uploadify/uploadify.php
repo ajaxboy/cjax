@@ -43,8 +43,8 @@ class uploadify extends plugin {
 	{
 		//upload directory
 		if($setting=='target') {
-			if($dir = ajax()->config->uploadify_dir) {
-				$value = $dir;
+			if($dir = ajax()->config->upload_dir) {
+				$value = rtrim($dir,'/') . 'uploadify/';
 			}
 			if(!$value) {
 				$value = './';
