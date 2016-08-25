@@ -10,10 +10,9 @@ $ajax->click(".buttons", $ajax->call("ajax.php?click_ajax_request/click_button/|
 ?>
 <!doctype html>
 <head>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
 <title>Selectors</title>
-<?php echo $ajax->init();?>
+<?php echo $ajax->init(false);?>
 </head>
 <body>
 <header>

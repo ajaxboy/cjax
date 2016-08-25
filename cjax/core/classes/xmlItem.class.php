@@ -73,20 +73,7 @@ class xmlItem {
 					break;
 				case 'callback':
 
-					if(isset(CoreEvents::$callbacks[$value->id])) {
-
-						$cb = CoreEvents::$callbacks[$value->id];
-						$cb = CoreEvents::processScache($cb);
-
-						//die("s<Pre>".print_r($cb,1));
-						CoreEvents::$cache[$value->id]['callback'] = CoreEvents::mkArray($cb,'json', true);
-
-						CoreEvents::$callbacks[$this->id][$value->id] = CoreEvents::$cache[$value->id];
-						$value->delete();
-					} else {
-						CoreEvents::$callbacks[$this->id][$value->id] = CoreEvents::$cache[$value->id];
-						$value->delete();
-					}
+					CoreEvents::$callbacks[$this->id][$value->id] = CoreEvents::delegateActions($value->id);
 
 					return;
 					break;

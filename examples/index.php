@@ -136,7 +136,7 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 			<a href="send_input.php">Send inputs</a>
 		</li>
 		<li>
-			<a href="passing_parameters.php">Passing Parameters</a>
+			<a href="parameters.php">Passing Parameters</a>
 		</li>
 		<li>
 			<a href="setting_values.php">Setting Values</a>
@@ -169,6 +169,9 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 		<h3>Other</h3>
 
 		<ul>
+			<li>
+				<a href="callbacks.php">Ajax Callbacks</a>
+			</li>
 			<li>
 				<a href="sizzle.php">Advanced Selectors</a>
 			</li>

@@ -54,10 +54,13 @@ class ajax  {
 		$alt_controller = null;
 
 		if(preg_match("/[^a-zA-Z0-9_]/", $controller)) {
+			header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found', true, 404);
 			$this->abort("Invalid Controller: $controller");
 		}
 		if($function && preg_match("/[^a-zA-Z0-9_]/", $function)) {
 			//if function is empty, it still passes.
+			header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found', true, 404);
+			//header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
 			$this->abort("Invalid Function: $function");
 		}
 
@@ -85,7 +88,6 @@ class ajax  {
 						'dir' => $plugin->controllers_dir,
 						'file' => $plugin->controllers_dir . '/' . $plugin->controller . '.php'
 					);
-					//die(print_r($alt_controller,1));
 					if (!file_exists($alt_controller['file'])) {
 						$this->abort("{$controller} Plugin: Controller File Not Found.");
 					}
@@ -118,7 +120,7 @@ class ajax  {
 		}
 		if(!$is_file) {
 			header("Content-disposition:inline; filename='{$controller}.php'");
-			header("HTTP/1.0 404 Not Found");
+			header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found', true, 404);
 			header("Status: 404 Not Found");
 			$this->abort("Controller File: $controller.php not found");
 		}
@@ -130,6 +132,9 @@ class ajax  {
 		}
 
 		if(!method_exists($requestObject,$function)) {
+			header("Content-disposition:inline; filename='{$controller}.php'");
+			header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found', true, 404);
+			header("Status: 404 Not Found");
 			$this->abort("Controller Method/Function: {$raw_class}::{$function}() was not found");
 		}
 		return $this->_response( call_user_func_array(array($requestObject, $function), $args) );

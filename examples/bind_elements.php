@@ -10,7 +10,7 @@ $ajax = ajax();
 /**
  * You can pass two elements ids separate by pipe lines.
  */
-$ajax->click("link1|link2", $ajax->call("ajax.php?bind/bind_elements") );
+$ajax->click('#link1, #link2', $ajax->call("ajax.php?bind/bind_elements") );
 
 
 /**
@@ -125,9 +125,14 @@ $ajax->click('.grey', array($ajax->swap('blue','red')));
 
 <?php
 echo $ajax->code("
-\$ajax->click(\"link1|link2\",\$ajax->call(\"ajax.php?bind/bild_elements\"));
-", true, true);?>
+\$ajax->click(\"#link1,#link2\",\$ajax->call(\"ajax.php?bind/bild_elements\"));
+");?>
 
+<?php
+echo $ajax->code("
+    <a href='#' id='link1'>Click Me (element 1)</a>
+    <a href='#' id='link2'>Click Me (element 2)</a>
+",'HTML', true); ?>
     <br />
     <a href='#' id='link1'>Click Me (element 1)</a>
     <br />

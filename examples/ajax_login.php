@@ -7,13 +7,12 @@ $ajax = ajax();
 
 //forces $ajax->form() to fire AFTER the overlay has fully loaded and shown
 //Makes sure that $ajax->Exec/$ajax->form() is triggerd after the overlay is created by being attached to the actual overlay
-$overlay = $ajax->overlay('resources/html/login.html');
 
 
-$overlay->click('button1', $ajax->form('ajax.php?ajax_login/handler'));
+$ajax->on('overlayPop', $ajax->click('button1', $ajax->form('ajax.php?ajax_login/handler')));
 
 
-$ajax->click('a_login', $overlay);
+$ajax->click('a_login', $ajax->overlay('resources/html/login.html'));
 
 
 ?>
@@ -21,7 +20,7 @@ $ajax->click('a_login', $overlay);
 <head>
 	<link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
 	<title>Ajax Login | Ajax Framework</title>
-	<?php echo $ajax->init();?>
+	<?php echo $ajax->init(false);?>
 
 	<style>
 		#login_bar {
@@ -165,10 +164,15 @@ class ajax_login {
 
 	<!-- HTML -->
 	<br />
+	<p>
 	<div id='login_now_area'>
 		<a id='a_login' href='#'>Login</a>
 	</div>
+	</p>
 	<br />
+	<p>
+		<div id="login_div"></div>
+	</p>
 	<a id='code' href="#">View Code Used</a>
 	<br />
 

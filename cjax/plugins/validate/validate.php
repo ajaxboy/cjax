@@ -34,14 +34,14 @@ class Validate extends plugin {
 			default:
 				$xmlObj->callback = $this;
 		}
-		
+
 	}
 	
 	function onLoad($button_id, $post_url, $rules = array(), $import_js = false)
 	{
 		$ajax = ajax();
 		
-		$this->callback($ajax->click($button_id,$ajax->form($post_url)));
+		$this->callback($ajax->form($post_url));
 
 		$this->rules = $rules;
 	}

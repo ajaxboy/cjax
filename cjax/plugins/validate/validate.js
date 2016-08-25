@@ -24,17 +24,11 @@ CJAX.importFile({
 
 function validate(btn_id, url, fields)
 {
-	/*if(typeof jQuery  =='undefined') {
-		CJAX.error('Validate Plugin requires Jquery library.');
-		//jquery was not found
-		return;
-	}*/
 	if(!btn_id) {
 		console.error('Validate: Empty Submit Button');
 		return;
 	}
 
-	console.log(this);
 	/**
 	 * uploadify jquery plugin was not detected, so we will try to load it automatically
 	 */
@@ -42,8 +36,9 @@ function validate(btn_id, url, fields)
 
 		if(!fields) {
 			//an array was not passed.
-			var fields = {};
+			var fields = validate.params.c;
 		}
+
 		//get form
 		var form = $('#'+btn_id).closest('form');
 
@@ -71,17 +66,13 @@ function validate(btn_id, url, fields)
 						postCallback(validate.buffer);
 						CJAX.ajaxSettings.success = null;
 					};
-			//		callback();
+					window['validate'].callback.call();
 				} else {
-					setTimeout(function() {
-						callback();
-					}, 300);
+					window['validate'].callback.call();
 					postCallback(validate.buffer);
 				}
 			};
 		}
-
-		fields = validate.params.c;
 
 
 		var val = form.validate({
@@ -92,7 +83,4 @@ function validate(btn_id, url, fields)
 			messages: fields.messages
 		});
 	});
-
-
-	
 }

@@ -26,27 +26,25 @@ $rules = array(
 	)
 );
 
-$overlay = $ajax->overLay('resources/html/test_form.html');
+
 //surging from $overlay ensures that it is ran after the html has been generated.
-$overlay->validate('button1','ajax.php?overlay_validation/form', $rules);
+//$overlay->validate('button1','ajax.php?overlay_validation/form', $rules);
 
 //die("cache<pre>".print_r(CoreEvents::$cache,1). "cbs<pre>".print_r(CoreEvents::$callbacks,1));
 
 //ensure that it validation is ran after the html form is generated.
 //$overlay->callback = $ajax->validate('button1','ajax.php?overlay_validation/form', $rules);
 
-$ajax->click('link', $overlay);
+$ajax->click('link',  $ajax->overLay('resources/html/test_form.html'));
 
+$ajax->on('overlayPop', $ajax->validate('button1','ajax.php?overlay_validation/form', $rules));
 
-
-$ajax->click('link2', $ajax->call('ajax.php?overlay_validation/overlay2'));
+//$ajax->click('link2', $ajax->call('ajax.php?overlay_validation/overlay2'));
 
 ?>
 <!doctype html>
 <head>
 	<link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
 	<title>Ajax Overlay and Validation</title>
 	<?php echo $ajax->init(false);?>
 </head>

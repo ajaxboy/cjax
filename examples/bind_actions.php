@@ -15,14 +15,6 @@ $ajax->click("link1",
 	));//default event is "click"
 
 
-//different event.. "blur"
-$ajax->blur("link2",
-	array(
-		$ajax->call("ajax.php?bind/link2"),
-		$ajax->alert("Hello World 3"),
-		$ajax->alert("Hello World 4")
-	)
-);
 ?>
 <!doctype html>
 <head>
@@ -98,33 +90,17 @@ echo $ajax->code("
 	);
 
 
-	//different event.. \"blur\"
-	\$ajax->blur(\"#link2\",
-		array(
-			\$ajax->call(\"ajax.php?bind/link2\"),
-			\$ajax->sucess(\"Hello World 3\"),
-			\$ajax->overlayCotent(\"Hello World 4\"),
-		)
-	);
+	//change color of the link, when it loses color
+	\$ajax->blur(\"#link2\", \$ajax->prop(array('color' => 'red')));
+
+
+
+	//ajax request when text in a text field changes
+	\$ajax->change(\"#textfield\",\$ajax->call(\"ajax.php?bind/link2/|textfield|\"));
 
 	");
 	?>
 
-<!-- HTML -->
-	<div style="padding: 15px;">
-		<h2> "click" event..</h2>
-
-		<br />
-		<a href='#' id='link1'>Click Me</a>
-		<br />
-		<br />
-		<h2> "blur" event..</h2>
-		<br />
-		<a href='#' id='link2'>Click Me</a>
-	</div>
-
-
-	<br />
 </div>
 <!-- END CONTENT -->
 

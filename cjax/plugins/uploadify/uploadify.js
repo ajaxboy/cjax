@@ -24,8 +24,6 @@ function uploadify(upload_id, options, session_id)
 {
 	var base = this.base;
 
-	console.log(options);
-
 	options.formData   = {'session_id' : session_id};// need this to communicate with the flash uploader
 	
 	if(options.checkExisting) {

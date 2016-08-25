@@ -38,7 +38,7 @@ $ajax->process("This message is last... but it has no waiting time..");
 <head>
     <link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
     <title>Ajax Timeouts</title>
-    <?php echo $ajax->init();?>
+    <?php echo $ajax->init(false);?>
 </head>
 <body>
 <header>

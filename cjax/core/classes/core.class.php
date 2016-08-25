@@ -43,8 +43,6 @@ class CoreEvents extends cjaxFormat {
 	//helper to cache callbacks
 	public static $callbacks = array();
 
-	private static $simpleCommit;
-
 	private static $wrapper;
 
 	public $lastCmd;
@@ -280,9 +278,7 @@ class CoreEvents extends cjaxFormat {
 	public function xmlObject($id = null)
 	{
 		if(!is_null($id)) {
-			//if(isset($this->xmlObjects->$id)) {
 			return $this->xmlObjects->$id;
-			//}
 		}
 	}
 
@@ -321,19 +317,8 @@ class CoreEvents extends cjaxFormat {
 	{
 		if(CoreEvents::$callbacks) {
 			foreach(CoreEvents::$callbacks as $k => $v) {
-				if(!$test) {
-					$cb = CoreEvents::processScache($v);
-				} else {
-					$cb = CoreEvents::processScache($v);
-				}
-				if(!isset($cache[$k])) {
-					$v[$k]['callback'] = CoreEvents::mkArray($cb,'json', true);
-				} else {
-					if(!$test) {
-						$cache[$k]['callback'] = CoreEvents::mkArray($cb,'json', true);
-					} else {
-						$cache[$k]['callback'] = $cb;
-					}
+				if(isset($cache[$k])) {
+					$cache[$k]['callback'] = $v;//CoreEvents::mkArray($cb,'json', true);
 				}
 			}
 		}
@@ -348,9 +333,30 @@ class CoreEvents extends cjaxFormat {
 		}
 		if($actions) {
 			foreach ($actions as $v) {
-				$action = self::$cache[$v];
-				$new_actions[$v] = $action;
-				unset(self::$cache[$v]);
+				$id = $v;
+				if(is_object($v) && (is_a($v,'xmlItem')  || is_a($v, 'plugin'))) {
+					$id = $v->id;
+					$action = $v->xml();
+					$v->delete();
+				} else {
+					$action = self::$cache[$id];
+					unset(self::$cache[$v]);
+				}
+
+				if(isset($action['do']) && $action['do']=='AddEventTo') {
+					$action = self::_AddEventTo($action);
+				}
+				$action['on'] = true;
+				$action['xml'] = self::xmlIt($action);
+				$new_actions[$id] = $action;
+			}
+			$preload = self::_preload($new_actions);
+			if($preload) {
+				$previous = self::get('cjax_preload');
+				if($previous) {
+					$preload = array_merge($preload);
+				}
+				self::save('cjax_preload', $preload);
 			}
 		}
 		return $new_actions;
@@ -376,11 +382,7 @@ class CoreEvents extends cjaxFormat {
 		$cache = self::callbacks($cache);
 		$_preload = self::_preload($cache);
 
-		$_cache = self::processScache($cache);
-		$_cache = self::mkArray($_cache);
-
-
-		return array($_cache, $_preload);
+		return array($cache, $_preload);
 	}
 
 	static function _preload(&$cache)
@@ -394,7 +396,7 @@ class CoreEvents extends cjaxFormat {
 				}
 			}
 			if($v['do'] == 'AddEventTo') {
-				$events = $v['events'];
+				$events = $v['options'];
 				foreach($events as $k2 => $v2) {
 					if(isset($v2['is_plugin'])) {
 						$_preload[$k2] = $v2;
@@ -415,15 +417,17 @@ class CoreEvents extends cjaxFormat {
 			$preload = self::processScache($data[1]);
 			$preload = self::mkArray($preload);
 		}
+		$cache = self::processScache($data[0]);
+		$cache = self::mkArray($cache);
 
-		$out  = "<xml class='cjax'>".$data[0]."</xml><xml class='cjax'><preload>{$preload}</preload></xml>";
+		$out  = "<xml class='cjax'>".$cache."</xml><xml class='cjax'><preload>{$preload}</preload></xml>";
 		if(self::$wrapper) {
 			$out = str_replace('(!xml!)', $out, self::$wrapper);
 		}
 		return $out;
 	}
 
-	static function simpleCommit($return = false)
+	static function simpleCommit()
 	{
 		$ajax = ajax();
 		if($ajax->fallback || $ajax->config->fallback || $ajax->caching) {
@@ -431,11 +435,6 @@ class CoreEvents extends cjaxFormat {
 		}
 
 		$data = self::prepareCommit();
-
-		if($data[1]) {
-			$data[1] = self::processScache($data[1]);
-			$data[1] = self::mkArray($data[1]);
-		}
 
 		if($ajax->config->debug) {
 			$ajax->debug = true;
@@ -449,8 +448,6 @@ class CoreEvents extends cjaxFormat {
 		if($debug) {
 			self::save('cjax_debug', $debug);
 		}
-		self::$simpleCommit = $data[0];
-		return $data[0];
 	}
 
 
@@ -462,7 +459,6 @@ class CoreEvents extends cjaxFormat {
 	public static function saveSCache()
 	{
 		$ajax = ajax();
-
 		if($ajax->log) {
 			if(self::$cache){
 				die("Debug Info:<pre>".print_r(self::$cache,1)."</pre>");
@@ -472,9 +468,7 @@ class CoreEvents extends cjaxFormat {
 		if($ajax->isAjaxRequest()) {
 
 			print self::out();
-			return;
 		}  else {
-
 
 			$out = self::simpleCommit();
 
@@ -495,16 +489,13 @@ class CoreEvents extends cjaxFormat {
 		}
 	}
 
-	static function _processScachePlugin($v,$caller = null)
+	static function _processScachePlugin($v)
 	{
 		if(isset($v['options']) && is_array($v['options'])) {
 			$v['options'] =  self::mkArray($v['options']);
 		}
 		if(isset($v['extra'])) {
 			$v['extra'] =  self::mkArray($v['extra']);
-		}
-		if(isset($v['onwait'])) {
-			$v['onwait'] = self::processScache($v['onwait']);
 		}
 		if(isset($v['callback'])) {
 			$v['callback'] = self::mkArray($v['callback']);
@@ -513,43 +504,23 @@ class CoreEvents extends cjaxFormat {
 		return $v;
 	}
 
-	function _processScacheAddEventTo($event)
+	static function _AddEventTo($event)
 	{
-		$keep = array('event_element_id','xml','do','event','waitFor','uniqid');
-		foreach($event['events'] as $k => $v) {
+		foreach($event['options'] as $k => $v) {
 			$v['event_element_id'] = $event['element_id'];
-			foreach($v as $k2 => $v2) {
-				if(is_array($v2)) {
-					/*foreach($v2 as $k3 => $v3) {
-						if(is_array($v3)) {
-							$v2[$k3] = self::mkArray($v3);
-						}
-					}*/
-					$v[$k2] = self::mkArray($v2);
-				}
-			}
 			$v['xml'] = self::xmlIt($v);
-			foreach($v as $_k => $_v) {
-				if(in_array($_k , $keep)) {
-					continue;
-				}
-				unset($v[$_k]);
-			}
-			$event['events'][$k] = $v;
+			$event['options'][$k] = $v;
 		}
-
-		$event['events'] = self::mkArray($event['events']);
 		return $event;
 	}
 
-	static function processScache($_cache)
+	public static function processScache($_cache)
 	{
 		foreach($_cache as $k => $v) {
 			$v['uniqid'] = $k;
-			if(isset($v['do']) && $v['do']=='AddEventTo') {
-				$v = self::_processScacheAddEventTo($v);
+			if(isset($v['do']) && $v['do'] == 'AddEventTo') {
+				$v = self::_AddEventTo($v);
 			}
-
 			if(isset($v['is_plugin'])) {
 				$v = self::_processScachePlugin($v);
 			}
@@ -647,7 +618,8 @@ class CoreEvents extends cjaxFormat {
 		if($ajax->_flag) {
 
 			if(is_array($ajax->_flag)) {
-				$xml['flag'] = self::xmlIt($ajax->_flag);
+				$xml['flag'] = $ajax->_flag;
+				$xml = array_merge($xml, $ajax->_flag);
 				$ajax->_flag = null;
 			} else {
 				if($ajax->_flag=='first') {
@@ -1604,8 +1576,12 @@ if (document.addEventListener) {
 			$data = self::highlight_html($data, true) . "<br /><br />"; // Add nice and friendly <script> tags around highlighted text
 		}
 
-		if (is_bool($extra) && $extra) {
-			$extra = "<div class='try_it'><img src='resources/images/try_it.png' /></div><h4>Try it</h4>";
+		if ($extra) {
+			$class = '';
+			if(is_string($extra)) {
+				$class =  " class='$extra'";
+			}
+			$extra = "<div class='try_it'><img $class src='resources/images/try_it.png' /></div><h4>Try it</h4>";
 		}
 
 		$msg = "<div class='code-used'>$code_used</div>";

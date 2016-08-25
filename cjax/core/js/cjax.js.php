@@ -14,6 +14,9 @@ function tryAgain()
 	$ajax = ajax();
 	$_cache = $ajax->get('cjax_x_cache');
 	echo "//trying\n";
+	if(!$_cache) {
+		return;
+	}
 	return $_cache;
 }
 if(isset($_REQUEST['json'])) {
@@ -24,22 +27,32 @@ if(isset($_REQUEST['json'])) {
 	} else {
 		$debug = $ajax->get('cjax_debug')? 1:0;
 		$preload = $ajax->get('cjax_preload');
-		$_cache = $ajax->get('cjax_x_cache');
-		
-		if(!$_cache) {
-			$_cache = tryAgain();
-			if(!$_cache) {
-				$_cache = tryAgain();
-				if(!$_cache) {
-					$_cache = tryAgain();
-					if(!$_cache) {
+		$cache = $ajax->get('cjax_x_cache');
+
+		if(!$cache) {
+			$cache = tryAgain();
+			if(!$cache) {
+				$cache = tryAgain();
+				if(!$cache) {
+					$cache = tryAgain();
+					if(!$cache) {
 						exit();
 					}
 				}
 			}
 		}
+
+		if($preload) {
+			$preload = CoreEvents::processScache($preload);
+			$preload = CoreEvents::mkArray($preload);
+		}
+
+		if($cache) {
+			$cache = CoreEvents::processScache($cache);
+			$cache = CoreEvents::mkArray($cache);
+		}
 			
-		$source = 'CJAX.process_all("'.$_cache.'","'.$preload.'", '.$debug.', true);';
+		$source = 'CJAX.process_all("'.$cache.'","'.$preload.'", '.$debug.', true);';
 	}
 	
 	

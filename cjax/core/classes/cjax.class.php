@@ -100,7 +100,6 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 
 	public function __call($method, $args)
 	{
-		$list = array();
 		$params = range('a','z');
 
 		$pParams = array();
@@ -135,19 +134,13 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 			$data = array();
 			$data['do'] = '_fn';
 			$data['fn'] = $method;
+
 			$data['options'] = $pParams;
 
 			$item = $this->xmlItem($this->xml($data),'fn');
 			$item->selector = $method;
 			return  $item;
 		}
-	}
-
-	function waitFor($file, $wait_for_file)
-	{
-		$xml = $this->import($file);
-
-		$xml->waitfor = $wait_for_file;
 	}
 
 	/**
@@ -178,7 +171,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 			return false;
 		}
 		if(is_array($selector)) {
-			$selector = implode('|', $selector);
+			$selector = implode(',', $selector);
 		}
 		if($event) {
 			if(substr($event, 0,2)  != "on" && $event!='click') {
@@ -311,7 +304,6 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		$path = str_replace($_SERVER['SCRIPT_NAME'],'', $_SERVER['SCRIPT_FILENAME']);
 		$file_path = dirname($_SERVER['SCRIPT_NAME']) . '/';
 
-
 		if(is_file($path . $file_path . AJAX_FILE)) {
 			//ajax.php is found inside the directory in the script that called it, so you call it relative.
 			$f = AJAX_FILE;
@@ -323,8 +315,6 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 				$f = $path . '/' . AJAX_FILE;
 			}
 		}
-
-		//is_file($f = 'ajax.php') || is_file($f = '../ajax.php') || is_file($f = '../../ajax.php');
 
 		$url = sprintf('%s?%s/%s%s', $f, $controller, $method, $_params);
 
@@ -474,6 +464,20 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		return $this->xml($select);
 	}
 
+	public function on($response_type, $actions)
+	{
+		$actions = CoreEvents::delegateActions($actions);
+		$out = array(
+			'do' => 'on',
+			'type' => $response_type,
+			'options' => $actions
+		);
+
+		$this->xmlItem($this->xml($out),'on','api');
+
+		return $this;
+	}
+
 	/**
 	 * Submit a form
 	 *
@@ -485,11 +489,16 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	 */
 	public function form($url, $form_id = null,$container_id = null,$confirm=null)
 	{
-		$ajax = CJAX::getInstance();
+		$ajax = ajax();
 
 		$out = array();
 
 		$out['do'] = '_form';
+
+		if(is_array($url)) {
+			$out['options'] = array();
+			$url = $this->urlAccess($url, $out['options']);
+		}
 		$out['url'] = $url;
 		if($form_id) $out['form_id'] = $form_id;
 		if(!is_null($container_id)) {
@@ -551,7 +560,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		if(is_array($url)) {
 			$url = $this->urlAccess($url);
 		}
-		$data['do'] = '_overLay';
+		$data['do'] = 'overLay';
 		if(!isset($options['click_close'])) {
 			$options['click_close'] = true;
 		}
@@ -571,7 +580,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		$data['url'] = $url;
 		$data['cache'] = $use_cahe;
 		if($url) {
-			$data['template'] = $this->template('overlay.html');
+			$data['message'] = str_replace(array("\n","\r","\t"),"",$this->template('overlay.html'));
 		}
 
 		return $this->xmlItem($this->xml($data),'overlay','api');
@@ -606,7 +615,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 			}
 			$data['options'] = $this->mkArray($options);
 		}
-		$data['template'] = $this->encode($this->template('overlay.html'));
+		$data['message'] = str_replace(array("\n","\r","\t"),"",$this->template('overlay.html'));
 
 		return $this->xmlItem($this->xml($data),'overlayContent','api');
 	}
@@ -689,7 +698,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		$data['do'] = 'AddEventTo';
 		$data['element_id'] = $element;
 		$data['event'] = $event;
-		$data['events'] = $actions;
+		$data['options'] = $actions;
 
 		return $this->xmlItem($this->xml($data),'AddEventTo','api');
 	}
