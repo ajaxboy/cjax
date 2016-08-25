@@ -354,7 +354,7 @@ class CoreEvents extends cjaxFormat {
 			if($preload) {
 				$previous = self::get('cjax_preload');
 				if($previous) {
-					$preload = array_merge($preload);
+					$preload = array_merge($preload, $previous);
 				}
 				self::save('cjax_preload', $preload);
 			}
