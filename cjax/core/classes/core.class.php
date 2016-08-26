@@ -1639,7 +1639,7 @@ if (document.addEventListener) {
 		//$data = explode("\n", str_replace(array("<br />"), array("\n"),$data));
 
 		if($tags) {
-			$data = str_replace(array('?php', '?&gt;'), array('script type="text/javascript">', '&lt;/script&gt;'), $output); // Add nice and friendly <script> tags around highlighted text
+			$data = str_replace(array('?php', '?&gt;'), array('script type="text/javascript">', '&lt;/script&gt;'), $data); // Add nice and friendly <script> tags around highlighted text
 		} else {
 			$data = str_replace(array('&lt;?php', '?&gt;'), array('', ''), $data); // Add nice and friendly <script> tags around highlighted text
 
