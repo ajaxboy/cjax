@@ -204,6 +204,16 @@ $ajax->on('overlayPop', $ajax->success('overlayPop callback here!'));
     </p>
     <!-- HTML -->
 
+    <h5>Callbacks you can use</h5>
+    <?php
+    echo $ajax->code("
+        \$ajax->on('success', \$ajax->[function]);
+        \$ajax->on('error', \$ajax->[function]);  //along with all the error statuses
+        \$ajax->on('complete', \$ajax->[function]);
+        \$ajax->on('overlayPop', \$ajax->[function]);
+        ");
+    ?>
+    </p>
 
     <br />
 </div>
