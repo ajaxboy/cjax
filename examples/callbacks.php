@@ -29,6 +29,11 @@ $ajax->click('button2', $ajax->call(array('controller','error')));
 
 $ajax->on('error', $ajax->error('oh No! an error ocurred'));
 
+
+$ajax->click('button4', $ajax->overlayContent("Testing on-overlayPop!"));
+
+$ajax->on('overlayPop', $ajax->success('overlayPop callback here!'));
+
 ?>
 <!doctype html>
 <head>
@@ -136,6 +141,19 @@ $ajax->on('error', $ajax->error('oh No! an error ocurred'));
         )
     );
 
+
+
+    //Add error callback to #button2
+    \$ajax->click('button2', \$ajax->call(array('controller','error')));
+
+    \$ajax->on('error', \$ajax->error('oh No! an error ocurred'));
+
+
+     //add overlayPop callback to #button4
+    \$ajax->click('button4', \$ajax->overlayContent('Testing on-overlayPop!'));
+
+    \$ajax->on('overlayPop', \$ajax->success('overlayPop callback here!'));
+
     ",true, 'flip');
     ?>
 
@@ -155,7 +173,7 @@ $ajax->on('error', $ajax->error('oh No! an error ocurred'));
                     <input type="button" id="button3" value="Do Nothing" />
                 </div>
                 <div>
-
+                    <input type="button" id="button4" value="OverlayPop" />
                 </div>
             </div>
         </div>

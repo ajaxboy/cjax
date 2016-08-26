@@ -601,9 +601,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	 */
 	function overlayContent($content = null,$options = null)
 	{
-		$_options = array();
-
-		$data['do'] = '_overLayContent';
+		$data['do'] = 'overLayContent';
 		$data['content'] = $content;
 		if(!isset($options['click_close'])) {
 			$options['click_close'] = true;
@@ -613,7 +611,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 			foreach($options as $k => $v ) {
 				$data[$k] = $v;
 			}
-			$data['options'] = $this->mkArray($options);
+			$data['options'] = $options;
 		}
 		$data['message'] = str_replace(array("\n","\r","\t"),"",$this->template('overlay.html'));
 

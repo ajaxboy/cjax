@@ -1163,7 +1163,29 @@ function CJAX_FRAMEWORK() {
 
 	this.overLayContent		=		function(content, options)
 	{
-		return CJAX._overLayContent(options);
+		var top = (CJAX.util.get.y()+100)+'px';
+
+		if(!options.content) {
+			return CJAX._removeOverLay();
+		}
+		CJAX.lib.overlayOptions(options);
+
+		CJAX.$('cjax_overlay').style.display = 'block';
+		if(!options.top) {
+			options.top = top;
+		}
+		options.message = CJAX.decode(options.message);
+		options.message_id = 'cjax_message_overlay';
+		options.success = function() {
+			CJAX.lib.overlayCallback(CJAX.decode(options.content), options);
+			if(CJAX.ajaxSettings.overlayPop && typeof CJAX.ajaxSettings.overlayPop=='function') {
+				CJAX.ajaxSettings.overlayPop(options);
+				if(options.clear) {
+					CJAX.ajaxSettings.overlayPop = function () {};
+				}
+			}
+		};
+		CJAX.message(options);
 	};
 
 	this.overLay		=		function(url, options)
@@ -1199,6 +1221,7 @@ function CJAX_FRAMEWORK() {
 				CJAX.lib.overlayCallback(response,options);
 				if(CJAX.ajaxSettings.overlayPop && typeof CJAX.ajaxSettings.overlayPop=='function') {
 					CJAX.ajaxSettings.overlayPop(options);
+					CJAX.ajaxSettings.overlayPop = function() {};
 				}
 			});
 		};
@@ -1217,27 +1240,6 @@ function CJAX_FRAMEWORK() {
 				return template;
 			}
 		});
-	};
-
-	this._overLayContent		=		function( options )
-	{
-		var top = (CJAX.util.get.y()+100)+'px';
-
-		if(!options.content) {
-			return CJAX._removeOverLay();
-		}
-		CJAX.lib.overlayOptions(options);
-
-		CJAX.$('cjax_overlay').style.display = 'block';
-		if(!options.top) {
-			options.top = top;
-		}
-		options.message = CJAX.decode(options.message);
-		options.message_id = 'cjax_message_overlay';
-		options.success = function() {
-			CJAX.lib.overlayCallback(CJAX.decode(options.content), options);
-		};
-		CJAX.message(options);
 	};
 
 	this._removeOverLay		=		function()
@@ -2267,7 +2269,6 @@ function CJAX_FRAMEWORK() {
 
 		var found = 0;
 		var default_load_timeout = 50;
-		var buff;
 
 		//preload
 		if(preload) {
