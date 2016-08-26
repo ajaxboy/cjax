@@ -7,6 +7,7 @@ $ajax = ajax();
 
 $ajax->click("button1",$ajax->call("ajax.php?click_ajax_request/click_button/Hello!"));
 
+$ajax->click("button2",$ajax->call(array('click_ajax_request','click_button','Hello!')));
 
 ?>
 <!doctype html>
@@ -68,12 +69,33 @@ $ajax->click("button1",$ajax->call("ajax.php?click_ajax_request/click_button/Hel
     <?php
     echo $ajax->code("
         \$ajax->click(\"#button1\",\$ajax->call(\"ajax.php?click_ajax_request/click_button/Hello!\"));
-        ", true, true);
+        ");
     ?>
 
-
+    <?php
+    echo $ajax->code("
+        <input type='button' id='button1' value='Click this button to make an ajax request'>
+        ", 'HTML', true);
+    ?>
     <!-- HTML -->
     <input type='button' id='button1' value='Click this button to make an ajax request'>
+    <div id='response'></div>
+
+
+   <h5>As of <span class="req">CJAX 5.9+</span></h5>
+
+    <?php
+    echo $ajax->code("
+        \$ajax->click(\"button2\",\$ajax->call(array('click_ajax_request','click_button','Hello!'));
+        ");
+    ?>
+
+    <?php
+    echo $ajax->code("
+        <input type='button' id='button2' value='Click this button to make an ajax request'>
+        ", 'HTML', true);
+    ?>
+    <input type='button' id='button2' value='Click this button to make an ajax request'>
     <div id='response'></div>
 
 
