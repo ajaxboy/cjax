@@ -137,17 +137,7 @@ echo $ajax->code("
     <a href='#' id='link1'>Click Me (element 1)</a>
     <br />
     <a href='#' id='link2'>Click Me (element 2)</a>
-
-    <h4>Using Array</h4>
-
-    <?php
-    echo $ajax->code("
-    \$elements = array(
-        'element_id','element_id2','element_id3'
-    );
-    \$ajax->click(\$elements,\$ajax->call(\"ajax.php?bind/bild_elements\"));
-");?>
-
+    
 
     <h4>Using Advanced Selector <span class="req">Cjax 5.9+</span> </h4>
     <!-- HTML -->
