@@ -555,7 +555,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	$options['transparent'] = '60%'; // from 1 transparent to 100 solid, how transparent should it be? default is 80.
 	$options['color'] = '#FF8040'
 	 */
-	function overLay($url = null, $options = array(), $use_cahe = false)
+	function overlay($url = null, $options = array(), $use_cahe = false)
 	{
 		if(is_array($url)) {
 			$url = $this->urlAccess($url);
@@ -613,7 +613,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 			}
 			$data['options'] = $options;
 		}
-		$data['message'] = str_replace(array("\n","\r","\t"),"",$this->template('overlay.html'));
+		$data['message'] = $this->encode($this->template('overlay.html'));
 
 		return $this->xmlItem($this->xml($data),'overlayContent','api');
 	}

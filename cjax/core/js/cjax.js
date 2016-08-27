@@ -55,9 +55,6 @@ function CJAX_FRAMEWORK() {
 	this.message_id = 0;
 	this.commands = {};
 	this.callback_success = {};
-	this.callback_error = null;
-	this.processCallback = null;//execute something after process_all
-	this.split_delimiter = "|";
 	this.default_timeout = 3;
 	this.messages = [];
 	this.is_loading = true;
@@ -1851,7 +1848,7 @@ function CJAX_FRAMEWORK() {
 
 	this.get_function		=		function(options) {
 		if(typeof  options == 'object') {
-			return options.do;
+			return options['do'];
 		}
 		return CJAX.xml( 'do' ,buffer);
 	};
@@ -2242,10 +2239,6 @@ function CJAX_FRAMEWORK() {
 		actions = CJAX.util.json(actions);
 		preload = CJAX.util.json(preload);
 
-
-		var plugin_buffer;
-		var waitfor;
-
 		if (!CJAX.is_cjax(actions) && typeof actions != 'object'){ return; }
 
 		if(!CJAX.is_loading) {
@@ -2267,12 +2260,8 @@ function CJAX_FRAMEWORK() {
 			console.log('initiating process_all', 'initiated by:',caller);
 		}
 
-		var found = 0;
-		var default_load_timeout = 50;
-
 		//preload
 		if(preload) {
-
 
 			var plugin_buffer;
 			for(_id in preload) {
@@ -2284,7 +2273,6 @@ function CJAX_FRAMEWORK() {
 
 				switch(method) {
 					case '_import':
-						found++;
 						if(time = CJAX.xml('time', buffer)) {
 							CJAX.found_extra_time += parseInt(time);
 						} else {
@@ -2328,24 +2316,15 @@ function CJAX_FRAMEWORK() {
 						}
 				}
 			}
-			found  = found*default_load_timeout;
-			if(found > 400) {
-				found = 400;
-			}
-
-			if(parseInt(CJAX.found_extra_time)) {
-				found += parseInt(CJAX.found_extra_time);
-			}
-			CJAX.preloadTime += found;
 		}
 
 		var method;
-		var _wait;
-		var waitFor;
-		excfun =  function() {
+		CJAX.ready(function() {
 			for(_id in actions) {
 				buffer = actions[_id];
 				method = CJAX.xml('do', buffer);
+
+				buffer = CJAX.util.objectify(CJAX.decode(buffer), 'cjax');
 
 				if(method=='_import' || method=='_imports' || CJAX.xml('is_plugin', buffer)) {
 					//already imported.
@@ -2355,55 +2334,9 @@ function CJAX_FRAMEWORK() {
 				if(CJAX.debug) {
 					console.log('#',_id,'process_all in loading mode','calling:',method);
 				}
-
-				if(id = CJAX.xml('waitFor', buffer)) {
-
-					if(cmd = CJAX.commands[id]) {
-						f = CJAX.xml('file',cmd).replace(/.*\//,'');
-						if(!CJAX.util.loaded(f)) {
-							CJAX.waitingFor[CJAX.xml('file',cmd).replace(/.*\//,'')] = function() {
-								CJAX.process(buffer,'process_all for '+method, method+' '+_id);
-							};
-							continue;
-						}
-					}
-				}
-				CJAX.process(buffer,'process_all for '+method, method+' '+_id);
+				CJAX._process(buffer,'process_all for '+method, method+' '+_id);
 			}
-		};
-
-		_processFuncs = function(){
-			if(CJAX.preloadTime) {
-				if(CJAX.debug) {
-					console.log('Loading Functions','time wait:', CJAX.preloadTime);
-				}
-
-				setTimeout('excfun()',CJAX.preloadTime);
-			} else {
-				excfun();
-			}
-			if(CJAX.processCallback) {
-				CJAX.processCallback();
-				CJAX.processCallback = null;
-			}
-		};
-
-		if(CJAX.is_loading) {
-			if(CJAX.ie) {
-				setTimeout('_processFuncs()',500);
-			} else {
-				CJAX.ready(function() { //ie doesn't like this
-
-					_processFuncs();
-				});
-			}
-		} else {
-			if(CJAX.found_extra_time) {
-				setTimeout('_processFuncs()',CJAX.found_extra_time);
-			} else {
-				_processFuncs();
-			}
-		}
+		});
 		CJAX.is_loading = false;
 		CJAX.timer = 0;
 	};
@@ -2906,7 +2839,7 @@ function CJAX_FRAMEWORK() {
 		CJAX.method = CJAX.get_function(cache);
 
 		if(!CJAX.method) {
-			console.warn('Not processed:', cache.do, cache, xml_data, '[[[',caller,']]]');
+			console.warn('Not processed:', cache, xml_data,caller);
 			return false;
 		}
 		var SUBFIX = CJAX.method;
@@ -3268,6 +3201,7 @@ function CJAX_FRAMEWORK() {
 		}
 		data = data.replace(/\+/gim," ");
 		data = data.replace(/\[plus\]/gim,"+");
+		data = data.replace(/\\/gim, '');
 
 		data = unescape(data);
 

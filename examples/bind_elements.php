@@ -137,7 +137,7 @@ echo $ajax->code("
     <a href='#' id='link1'>Click Me (element 1)</a>
     <br />
     <a href='#' id='link2'>Click Me (element 2)</a>
-    
+
 
     <h4>Using Advanced Selector <span class="req">Cjax 5.9+</span> </h4>
     <!-- HTML -->

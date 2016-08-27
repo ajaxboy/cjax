@@ -35,7 +35,7 @@ $rules = array(
 //ensure that it validation is ran after the html form is generated.
 //$overlay->callback = $ajax->validate('button1','ajax.php?overlay_validation/form', $rules);
 
-$ajax->click('link',  $ajax->overLay('resources/html/test_form.html'));
+$ajax->click('link1',  $ajax->overLay('resources/html/test_form.html'));
 
 $ajax->on('overlayPop', $ajax->validate('button1','ajax.php?overlay_validation/form', $rules));
 
@@ -151,7 +151,7 @@ $ajax->on('overlayPop', $ajax->validate('button1','ajax.php?overlay_validation/f
 
 	<br />
 
-	<a id='link' href='#'>Launch Sample #1</a>
+	<a id='link1' href='#'>Launch Sample #1</a>
 	<br />
 	<br />
 	<a id='link2' href='#'>Launch Sample #2</a>
