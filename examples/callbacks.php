@@ -304,7 +304,7 @@ $ajax->on('bubbles', $ajax->info('{response}'));
     ?>
 
     <p>
-        On this example, we're putting the JS callback directly on a button.
+       You can also put your JS directly on the element, as shown below:
     </p>
 
     <?php
