@@ -52,9 +52,14 @@ Click
 <br />
 Click function in addition to bind actions to elements, it can also be used for the simplest task, to trigger a simple click event.
 <br /><br />
+<p>
 The trigger of a click can be very useful, specially when toggling elements after an operations has been finished or 
 simply to trigger further actions that a simple trigger can save you from having to rewrite an entire different section.
+</p>
 
+<p>
+	The trigger is fire programmatically, using DOM. Not simply calling, click().
+</p>
 <h3>Examples</h3>
 
 Lets assume there is a link with the id of "link1", to trigger a click on that element is fairly simple.

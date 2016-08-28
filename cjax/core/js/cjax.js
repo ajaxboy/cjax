@@ -3974,7 +3974,7 @@ function CJAX_FRAMEWORK() {
 		return CJAX.call(options, options.success);
 	};
 
-	this.get		=		function($url , callback) {
+	this.get		=		function($url , callback, dataType) {
 		var options = {};
 
 		if(typeof $url == 'object') {
@@ -3983,6 +3983,7 @@ function CJAX_FRAMEWORK() {
 		}
 		options.callback = {};
 		options.options = {};
+		dataType = dataType? dataType : CJAX.ajaxSettings.dataType;
 
 		if(callback) {
 
@@ -3991,7 +3992,7 @@ function CJAX_FRAMEWORK() {
 			}
 			options.callback.success = callback;
 
-			options.options.dataType = CJAX.ajaxSettings.dataType;
+			options.options.dataType = dataType;
 		}
 		options.url = $url;
 		if(/^https?/.test(options.url)) {

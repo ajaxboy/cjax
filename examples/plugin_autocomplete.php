@@ -11,7 +11,7 @@ $ajax->keyup('#text1', $ajax->autocomplete('ajax.php?autocomplete/update'));
 <head>
 	<link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
 	<title>Ajax Autocomplete</title>
-	<?php echo $ajax->init();?>
+	<?php echo $ajax->init(false);?>
 </head>
 <body>
 <header>
