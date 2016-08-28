@@ -1526,6 +1526,7 @@ function CJAX_FRAMEWORK() {
 				}
 			});
 		} else {
+
 			//options.selector = CJAX.$(element_id);
 			CJAX.__AddEventTo(element_id, options);
 		}
@@ -1702,10 +1703,6 @@ function CJAX_FRAMEWORK() {
 					} else {
 						element = CJAX.$(element);
 					}
-				}
-
-				if(CJAX.debug) {
-					console.log("set.even  for -..:",element);
 				}
 
 				if( !element ) return false;
