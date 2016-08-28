@@ -1509,11 +1509,16 @@ function CJAX_FRAMEWORK() {
 	{
 		var	element_id = options.element_id;
 
+		if(CJAX.debug) {
+			console.info('AddEventTo Selector', element_id);
+		}
+
 		if(/[^a-zA-Z0-9_\-]/.test(element_id)) {
+
 			CJAX.$(element_id, function(elements) {
 
 				if(CJAX.debug) {
-					console.info('AddEventTo selector', element_id, 'elements:', elements);
+					console.info('AddEventTo Selector', element_id, 'elements:', elements);
 				}
 				for(var x in elements) {
 					options.selector = elements[x];
