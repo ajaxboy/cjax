@@ -1151,7 +1151,7 @@ if (document.addEventListener) {
 	 */
 	public function encode($data)
 	{
-		$data = str_replace('+','[plus]', $data);
+		$data = str_replace(array("+","\n"),array("[plus]","[nl]"), $data);
 		$data = urlencode($data);
 
 		return $data;

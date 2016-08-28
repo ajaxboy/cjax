@@ -39,7 +39,7 @@ $ajax->click('link1',  $ajax->overLay('resources/html/test_form.html'));
 
 $ajax->on('overlayPop', $ajax->validate('button1','ajax.php?overlay_validation/form', $rules));
 
-//$ajax->click('link2', $ajax->call('ajax.php?overlay_validation/overlay2'));
+$ajax->click('link2', $ajax->call('ajax.php?overlay_validation/overlay2'));
 
 ?>
 <!doctype html>

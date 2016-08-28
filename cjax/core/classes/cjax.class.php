@@ -580,7 +580,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		$data['url'] = $url;
 		$data['cache'] = $use_cahe;
 		if($url) {
-			$data['message'] = str_replace(array("\n","\r","\t"),"",$this->template('overlay.html'));
+			$data['message'] = $this->template('overlay.html');
 		}
 
 		return $this->xmlItem($this->xml($data),'overlay','api');
@@ -599,10 +599,9 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	 * @param $content
 	 * @param $options
 	 */
-	function overlayContent($content = null,$options = null)
+	function overlayContent($content = null,$options = array())
 	{
 		$data['do'] = 'overLayContent';
-		$data['content'] = $content;
 		if(!isset($options['click_close'])) {
 			$options['click_close'] = true;
 		}
@@ -613,7 +612,8 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 			}
 			$data['options'] = $options;
 		}
-		$data['message'] = $this->encode($this->template('overlay.html'));
+		$data['message'] =  $this->encode($this->template('overlay.html'));
+		$data['content'] = $this->encode($content);
 
 		return $this->xmlItem($this->xml($data),'overlayContent','api');
 	}

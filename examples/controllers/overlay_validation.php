@@ -34,8 +34,10 @@ class overlay_validation {
 			)
 		);
 		
-		$overlay = $ajax->overlayContent(file_get_contents('resources/html/test_form.html'));
-		$overlay->validate('button1','ajax.php?overlay_validation/form', $rules);
-		
+		$ajax->overlayContent(file_get_contents('resources/html/test_form.html'));
+
+		$ajax->on('overlayPop', $ajax->validate('button1','ajax.php?overlay_validation/form', $rules));
+
+
 	}
 }

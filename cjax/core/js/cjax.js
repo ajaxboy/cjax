@@ -523,7 +523,7 @@ function CJAX_FRAMEWORK() {
 						}
 
 						if(data && data.options) {
-							data.options = CJAX.util.json(CJAX.decode(data.options));
+							data.options = CJAX.util.jsonString(data.options);
 						}
 
 
@@ -633,6 +633,13 @@ function CJAX_FRAMEWORK() {
 				}
 				return false;
 			},
+			jsonString: function(data) {
+				var json = CJAX.util.json(data);
+				if(!json) {
+					return data;
+				}
+				return json;
+			},
 			json: function(buffer, tag)
 			{
 				if(typeof buffer=='object') {
@@ -664,14 +671,16 @@ function CJAX_FRAMEWORK() {
 					try {
 						var json = try1(buff);
 
-						if(!json) {
-							new_buff = buff.replace(/\\/gi, '');
-							json = try1(new_buff);
-						}
 						if (typeof json != 'object') {
-							buff = CJAX.decode(CJAX.decode(CJAX.xml(tag, json)));
-							json = try1(buff);
+							new_buff2 = CJAX.decode(buff);
+							json = try1(new_buff2);
+
+							if(typeof json != 'object') {
+								new_buff3 = CJAX.decode(new_buff2).replace(/\\/gi, '');
+								json = try1(new_buff3);
+							}
 						}
+
 						if (typeof json == 'undefined' || !json) {
 							return {};
 						}
@@ -1171,7 +1180,8 @@ function CJAX_FRAMEWORK() {
 		if(!options.top) {
 			options.top = top;
 		}
-		options.message = CJAX.decode(options.message);
+		options.message = CJAX.decode(CJAX.decode(options.message));
+		options.content = CJAX.decode(CJAX.decode(options.content));
 		options.message_id = 'cjax_message_overlay';
 		options.success = function() {
 			CJAX.lib.overlayCallback(CJAX.decode(options.content), options);
@@ -1850,7 +1860,7 @@ function CJAX_FRAMEWORK() {
 		if(typeof  options == 'object') {
 			return options['do'];
 		}
-		return CJAX.xml( 'do' ,buffer);
+		return CJAX.xml( 'do' , options);
 	};
 
 	this._addEvent		=		function( obj, type, fn, cache_id)
@@ -2324,16 +2334,13 @@ function CJAX_FRAMEWORK() {
 				buffer = actions[_id];
 				method = CJAX.xml('do', buffer);
 
-				buffer = CJAX.util.objectify(CJAX.decode(buffer), 'cjax');
+				buffer = CJAX.util.objectify(buffer, 'cjax');
 
 				if(method=='_import' || method=='_imports' || CJAX.xml('is_plugin', buffer)) {
 					//already imported.
 					continue;
 				}
 
-				if(CJAX.debug) {
-					console.log('#',_id,'process_all in loading mode','calling:',method);
-				}
 				CJAX._process(buffer,'process_all for '+method, method+' '+_id);
 			}
 		});
@@ -3201,7 +3208,9 @@ function CJAX_FRAMEWORK() {
 		}
 		data = data.replace(/\+/gim," ");
 		data = data.replace(/\[plus\]/gim,"+");
-		data = data.replace(/\\/gim, '');
+		data = data.replace(/<\\/gim, '<');
+		data = data.replace(/\[nl\]/gim, "\n");
+
 
 		data = unescape(data);
 
