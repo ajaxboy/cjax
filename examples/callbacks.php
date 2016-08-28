@@ -84,13 +84,17 @@ $ajax->on('overlayPop', $ajax->success('overlayPop callback here!'));
         <iframe src="https://ghbtns.com/github-btn.html?user=ajaxboy&repo=cjax&type=watch&count=true&v=2" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
     </div>
 
+    <h2>Built-in &amp; Custom Callbacks</h2>
+
     <p>
         <!-- Text -->
         When you make an ajax request, some times you want do something extra with the response of your ajax call, here is where the callback
-        system takes place.
+        system takes place. There are callbacks also available for other events. In addition, you can create custom callbacks, see some examples below.
 
 
     </p>
+
+
 
     <h3>Examples</h3>
 
@@ -109,7 +113,7 @@ $ajax->on('overlayPop', $ajax->success('overlayPop callback here!'));
     ?>
 
     <p>
-        Consider the following - an ajax form assigned to a with the id button1.
+        Consider the following - an ajax form assigned to a button, that has the id 'button1'.
         <br />
         You can wrap triggers inside the on()  method, you can also assign further actions.
         <br />
@@ -180,7 +184,7 @@ $ajax->on('overlayPop', $ajax->success('overlayPop callback here!'));
     </form>
     <!-- Code Used -->
 
-    <h3>On Error</h3>
+    <h4>On Error</h4>
 
     <p>
     You can catch all, error() responses through the error() callback. You can also catch individual errors responses
@@ -204,7 +208,7 @@ $ajax->on('overlayPop', $ajax->success('overlayPop callback here!'));
     </p>
     <!-- HTML -->
 
-    <h5>Callbacks you can use</h5>
+    <h4>Built-in callbacks you can use</h4>
     <?php
     echo $ajax->code("
         \$ajax->on('success', \$ajax->[function]);
@@ -214,6 +218,59 @@ $ajax->on('overlayPop', $ajax->success('overlayPop callback here!'));
         ");
     ?>
     </p>
+    <br />
+
+    <h4>Custom Callbacks</h4>
+    <p class="info">
+        <span class="req">Important</span>
+        <br />In addition to the provided callbacks indentified on this page, you can also create custom callbacks.
+        Which can be accessible through any plugin or through simply JavaScript everywhere on your site.
+        You may name your custom callback, anything you like.
+        <br />
+        <br />
+        You may access this callback through a plugin or simply thorugh JavaScript from anywhere:  CJAX.callback.callbackName();
+        (just change 'callbackName' for the action name of the callback you invoked.
+        <br />
+
+    </p>
+
+    <h5>Examples of custom callbacks</h5>
+
+    <?php
+    echo $ajax->code("
+        \$ajax->on('bubbles', \$ajax->info('Making Bubbles!'));
+
+        \$ajax->on('dancing', \$ajax->dance()); // triggers a fictional plugin or a existing function called dance!
+
+        \$ajax->on('swimming', \$ajax->swim())); //triggers a fictional plugin or a existing function called swim().
+
+        ");
+    ?>
+
+    <?php
+    echo $ajax->code("
+
+          //would trigger, bubble callback, which would display an info message saying \"Making Bubbles!\"
+          CJAX.callback.bubble();
+
+          //would trigger the dancing callback, this could be used anywhere on your site, or within a custom plugin.
+          CJAX.callback.dancing();
+
+          //Would trigger the swimming custom callback called swimming()
+          CJAX.callback.swimming();
+
+
+          //To be on the safe side, you may want to add a check to make sure the callback exists eg:
+
+          if(CJAX.callback.bubble) {
+            CJAX.callback.bubble();
+          }
+
+        ","JAVASCRIPT");
+    ?>
+    </p>
+
+
 
     <br />
 </div>

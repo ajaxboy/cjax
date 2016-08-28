@@ -164,8 +164,6 @@ Validate Plugin
 
 <p>This Plugins uses Jquery and Jquery.validate plugin to dynamically add validation functionality to your forms through CJAX Api.</p>
 
-<p class="important"><strong>Important:</strong>&nbsp; You <kbd>MUST</kbd> load Jquery on the page for this plugin to work. You do not need to load jquery.validate plugin, it is loaded automatically if not found (Cjax 5.1+).</p>
-
 <p>Features:</p>
 
 <ul>
@@ -239,6 +237,7 @@ Enter an field entry to for each field you which to validate. Each entry takes t
 
 <h2>Demo</h2>
 
+<a href="#" id="code">View</a>
 
 <div id='not_found'></div>
 

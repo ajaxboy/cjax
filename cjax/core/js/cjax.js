@@ -687,7 +687,8 @@ function CJAX_FRAMEWORK() {
 									if(!json && err) {
 
 										console.warn('There was an error while processing data:', err);
-										console.log('String:', buff);
+										console.log('Original String:', buff);
+										console.info('Modified String:', new_buff4);
 									}
 								}
 							}

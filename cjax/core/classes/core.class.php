@@ -1149,9 +1149,15 @@ if (document.addEventListener) {
 	 * @param string $data
 	 * @return encoded string
 	 */
-	public function encode($data)
+	public function encode($data, $encode_quotes = false)
 	{
-		$data = str_replace(array("+","\n"),array("[plus]","[nl]"), $data);
+		$find = array("+","\r\n","\r");
+		$replace = array("[plus]","[nl]","[nl]");
+		if($encode_quotes) {
+			$find[] = "\"";
+			$replace[] = "'";
+		}
+		$data = str_replace($find, $replace, $data);
 		$data = urlencode($data);
 
 		return $data;
@@ -1567,13 +1573,16 @@ if (document.addEventListener) {
 		if (is_bool($tags)) {
 			$code_used = 'PHP';
 			if (!$tags) {
-				$data = highlight_string($data, true);; // Add nice and friendly <script> tags around highlighted text
+				$data = highlight_string($data, true); // Add nice and friendly <script> tags around highlighted text
 			} else {
 				$data = highlight_string("<?php \n" . $data . "\n?>", true);
 			}
 		} else {
+			if(strtolower($tags) == 'javascript') {
+				//return $this->jsCode($data, true);
+			}
 			$code_used = $tags;
-			$data = self::highlight_html($data, true) . "<br /><br />"; // Add nice and friendly <script> tags around highlighted text
+			$data = self::highlight_html($data, true) . "<br />"; // Add nice and friendly <script> tags around highlighted text
 		}
 
 		if ($extra) {
@@ -1617,9 +1626,9 @@ if (document.addEventListener) {
 		return '<pre>'.preg_replace($find, $replace, $string).'</pre>';
 	}
 
-	function jsCode($data, $tags = false)
+	function jsCode($data, $tags = true)
 	{
-		$c_string = "#DD0000";
+		$c_string = "#89ADC6";
 		$c_comment = "#FF8000";
 		$c_keyword = "green";
 		$c_default = "#0000BB";
@@ -1634,7 +1643,7 @@ if (document.addEventListener) {
 
 		//$data = str_replace(array(') { ', ' }', ";", "\r\n"), array(") {\n", "\n}", ";\n", "\n"), $data); // Newlinefy all braces and change Windows linebreaks to Linux (much nicer!)
 		//$data = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $data); // Regex identifies all extra empty lines produced by the str_replace above. It is quicker to do it like this than deal with a more complicated regular expression above.
-		$data =  "<script>". highlight_string("\n" . $data ."\n") . "</script>";
+		$data =  highlight_string("\n" . $data ."\n", true);
 
 		//$data = explode("\n", str_replace(array("<br />"), array("\n"),$data));
 

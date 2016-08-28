@@ -613,7 +613,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 			$data['options'] = $options;
 		}
 		$data['message'] =  $this->encode($this->template('overlay.html'));
-		$data['content'] = $this->encode($content);
+		$data['content'] = $this->encode($content,true);
 
 		return $this->xmlItem($this->xml($data),'overlayContent','api');
 	}

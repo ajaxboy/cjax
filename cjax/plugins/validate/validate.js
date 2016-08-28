@@ -66,9 +66,13 @@ function validate(btn_id, url, fields)
 						postCallback(validate.buffer);
 						CJAX.ajaxSettings.success = null;
 					};
-					window['validate'].callback.call();
+					if(CJAX.callback.validate) {
+						CJAX.callback.validate.call();
+					}
 				} else {
-					window['validate'].callback.call();
+					if(CJAX.callback.validate) {
+						CJAX.callback.validate.call();
+					}
 					postCallback(validate.buffer);
 				}
 			};

@@ -40,8 +40,8 @@ class Validate extends plugin {
 	function onLoad($button_id, $post_url, $rules = array(), $import_js = false)
 	{
 		$ajax = ajax();
-		
-		$this->callback($ajax->form($post_url));
+
+		$ajax->on('validate', $ajax->form($post_url));
 
 		$this->rules = $rules;
 	}
