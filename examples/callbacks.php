@@ -228,7 +228,7 @@ $ajax->on('overlayPop', $ajax->success('overlayPop callback here!'));
         You may name your custom callback, anything you like.
         <br />
         <br />
-        You may access this callback through a plugin or simply thorugh JavaScript from anywhere:  CJAX.callback.callbackName();
+        You may access this callback through a plugin or simply through JavaScript from anywhere:  CJAX.callback.callbackName();
         (just change 'callbackName' for the action name of the callback you invoked.
         <br />
 
