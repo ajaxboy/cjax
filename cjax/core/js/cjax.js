@@ -545,7 +545,9 @@ function CJAX_FRAMEWORK() {
 								}
 							}
 						} else {
-							options[i] = CJAX.decode(options[i]).replace(tag, tag_value);
+							if(typeof options[i] == 'string') {
+								options[i] = CJAX.decode(options[i]).replace(tag, tag_value);
+							}
 						}
 					}
 				}
@@ -3467,7 +3469,11 @@ function CJAX_FRAMEWORK() {
 			for(option in options.options) {
 				new_event = options.options[option];
 
-				new_event.options = CJAX.util.tag(new_event.options,'{response}', response);
+				if(new_event.options) {
+					new_event.options = CJAX.util.tag(new_event.options, '{response}', response);
+				} else {
+					new_event = CJAX.util.tag(new_event, '{response}', response);
+				}
 
 				if(new_event.is_plugin) {
 					CJAX._extendPlugin(new_event.is_plugin, new_event);

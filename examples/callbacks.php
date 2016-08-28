@@ -34,6 +34,9 @@ $ajax->click('button4', $ajax->overlayContent("Testing on-overlayPop!"));
 
 $ajax->on('overlayPop', $ajax->success('overlayPop callback here!'));
 
+$ajax->on('bubbles', $ajax->info('{response}'));
+
+
 ?>
 <!doctype html>
 <head>
@@ -257,7 +260,7 @@ $ajax->on('overlayPop', $ajax->success('overlayPop callback here!'));
           CJAX.callback.dancing();
 
           //Would trigger the swimming custom callback called swimming()
-          CJAX.callback.swimmingca();
+          CJAX.callback.swimming();
 
 
           //To be on the safe side, you may want to add a check to make sure the callback exists eg:
@@ -275,7 +278,55 @@ $ajax->on('overlayPop', $ajax->success('overlayPop callback here!'));
         the {response} tag.
     </p>
 
+    <?php
+    echo $ajax->code("
+        \$ajax->on('bubbles', \$ajax->info('{response}'));
 
+
+        ");
+    ?>
+
+
+    <?php
+    echo $ajax->code("
+
+          //use the CJAX.ready() method if you call the function directly on page load.
+
+          CJAX.ready(function() {
+
+            if(CJAX.callback.bubble) {
+                CJAX.callback.bubble('Making Bubble!');
+            }
+
+          });
+
+        ","JAVASCRIPT");
+    ?>
+
+    <p>
+        On this example, we're putting the JS callback directly on a button.
+    </p>
+
+    <?php
+    echo $ajax->code("
+
+           <input type=\"button\" id=\"custom_button1\" value=\"Make Bubbles!\" onclick=\"javascript:CJAX.callback.bubbles('Making Bubble!');\"/>
+
+
+        ","HTML", true);
+    ?>
+
+    <div class="form">
+        <div>
+            <div>
+                <input type="button" id="custom_button1" onclick="javascript:CJAX.callback.bubbles('Making Bubble!');" value="Make Bubbles!" />
+            </div>
+            <div>
+                &nbsp;
+            </div>
+        </div>
+
+    </div>
 
     <br />
 </div>
