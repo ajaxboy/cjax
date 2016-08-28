@@ -3,10 +3,10 @@
 
 class click_ajax_request {
 	
-	function click_button($message)
+	public function click_button($message)
 	{
 		$ajax = ajax();
-		
+
 		$ajax->success("You clicked the button.. $message");
 	}
 }

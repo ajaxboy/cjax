@@ -222,7 +222,7 @@ class plugin extends ext {
 					continue;
 				}
 
-				if(plugin::isAborted($k) || $plugin->exclude) {
+				if($plugin->exclude) {
 					continue;
 				}
 				if(method_exists($plugin, $event)) {
@@ -234,27 +234,6 @@ class plugin extends ext {
 				}
 			}
 		}
-	}
-
-	function isAborted($plugin_name = null)
-	{
-		$plugin = self::getInstance();
-		if(!$plugin_name) {
-			$plugin_name = $plugin->loading;
-		}
-		if(isset(self::$_aborted[$plugin_name])) {
-			return  true;
-		}
-	}
-
-	/**
-	 *
-	 * @deprecated
-	 * @param unknown_type $apiObj
-	 */
-	function prevent($apiObj)
-	{
-		$this->xml->callback = $apiObj;
 	}
 
 	/**
@@ -396,10 +375,6 @@ class plugin extends ext {
 	 */
 	public function set($setting, $value , $instance_id = null)
 	{
-		if(plugin::isAborted($this->loading)) {
-			return;
-		}
-
 		$params = range('a','z');
 
 		if(!in_array($setting, $params)) {
@@ -576,7 +551,7 @@ class plugin extends ext {
 	 * @param unknown_type $setting
 	 * @param unknown_type $value
 	 */
-	public  function save($setting, $value, $prefix = null)
+	public function save($setting, $value, $prefix = null)
 	{
 		if(!$prefix) {
 			$prefix = $this->loading;
@@ -642,9 +617,6 @@ class plugin extends ext {
 
 	public static function dir($plug_name = null)
 	{
-		if(!$plug_name) {
-			$plug_name = $this->loading;
-		}
 		$dir = self::$_dirs[$plug_name];
 
 		return $dir;

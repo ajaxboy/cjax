@@ -246,7 +246,7 @@ class CoreEvents extends cjaxFormat {
 	public $_flag = null;
 	public $_flag_count = 0;
 
-	function xmlItem($xml, $name)
+	public function xmlItem($xml, $name)
 	{
 		if(!is_integer($xml)) {
 			die("XML:$name ".print_r($xml,1)." is not an integer.");
@@ -262,7 +262,7 @@ class CoreEvents extends cjaxFormat {
 		return $_xml;
 	}
 
-	function camelize($string, $ucfirst = true)
+	public function camelize($string, $ucfirst = true)
 	{
 		$string = str_replace(array('-', '_'), ' ', $string);
 		$string = ucwords($string);
@@ -539,7 +539,7 @@ class CoreEvents extends cjaxFormat {
 		return $_cache;
 	}
 
-	function lastEntryId()
+	static function lastEntryId()
 	{
 		$count = 0;
 		if(self::$cache) {
@@ -551,7 +551,7 @@ class CoreEvents extends cjaxFormat {
 		return $count;
 	}
 
-	function lastId()
+	static function lastId()
 	{
 		return self::lastEntryId();
 	}
@@ -598,7 +598,7 @@ class CoreEvents extends cjaxFormat {
 	 *
 	 * sets flag
 	 */
-	function first()
+	public function first()
 	{
 		$this->flag('first');
 	}
@@ -609,7 +609,7 @@ class CoreEvents extends cjaxFormat {
 	 * @param xml $xml
 	 * @return string
 	 */
-	function xml($xml, $api_name  = null)
+	public function xml($xml, $api_name  = null)
 	{
 		$ajax = ajax();
 		if(isset($xml['do'])) {
@@ -641,7 +641,7 @@ class CoreEvents extends cjaxFormat {
 	}
 
 
-	function cacheWrapper($wrapper = array())
+	public function cacheWrapper($wrapper = array())
 	{
 		if(!is_array($wrapper)) {
 			return;
@@ -649,7 +649,7 @@ class CoreEvents extends cjaxFormat {
 		self::$wrapper = implode('(!xml!)',$wrapper);
 	}
 
-	function fallbackPrint($out)
+	public function fallbackPrint($out)
 	{
 		$ajax = ajax();
 		$path = $ajax->_path;
@@ -683,16 +683,17 @@ if (document.addEventListener) {
 		return $data;
 	}
 
-	function getCache()
+	static function getCache()
 	{
 		return  CoreEvents::$cache;
 	}
+
 	/**
 	 * Used for loading "fly" events
 	 *
 	 * @param string $add
 	 */
-	function cache($add=null,$cache_id = null)
+	static function cache($add=null,$cache_id = null)
 	{
 		if(!self::$_is_shutdown_called) {
 			$bol = register_shutdown_function(array('CoreEvents','saveSCache'));
@@ -753,7 +754,7 @@ if (document.addEventListener) {
 	 *
 	 * @param string $jsdir
 	 */
-	function js($jsdir,$force=false)
+	public function js($jsdir,$force=false)
 	{
 		if($force) {
 			self::$path = $jsdir;
@@ -770,7 +771,7 @@ if (document.addEventListener) {
 	 * @param unknown_type $js_path
 	 * @return unknown
 	 */
-	function head_ref($js_path = null, $min = false)
+	public function head_ref($js_path = null, $min = false)
 	{
 		$ajax = ajax();
 		$file = "cjax.js";
@@ -849,7 +850,7 @@ if (document.addEventListener) {
 		return $href;
 	}
 
-	function curl($url, $post_data = array())
+	public function curl($url, $post_data = array())
 	{
 		$ajax = CJAX::getInstance();
 
@@ -872,7 +873,7 @@ if (document.addEventListener) {
 		return $data;
 	}
 
-	function remote($url)
+	static function remote($url)
 	{
 		$content = @file_get_contents($url);
 
@@ -887,7 +888,7 @@ if (document.addEventListener) {
 		}
 	}
 
-	function fsockopen($url)
+	public static function fsockopen($url)
 	{
 		if(!function_exists('fsockopen')) {
 			die('You  need cURL or fsockopen enabled to connect to a remote server.');
@@ -933,7 +934,7 @@ if (document.addEventListener) {
 		return implode($data);
 	}
 
-	function readCache($crc32 = null)
+	public function readCache($crc32 = null)
 	{
 		if(!$crc32) {
 			$filename = 'cjax.txt';
@@ -959,21 +960,13 @@ if (document.addEventListener) {
 		}
 	}
 
-	function tapCache($crc32)
-	{
-		$cache = self::readCache('cjax-'.$crc32);
-		if($cache) {
-			return $cache[$crc32];
-		}
-	}
-
 	/**
 	 * write to a file in file system, used as an alrernative to for cache
 	 *
 	 * @param string $content
 	 * @param string $flag
 	 */
-	function write($content, $filename = null)
+	public function write($content, $filename = null)
 	{
 		if(!$filename) {
 			$filename = 'cjax.txt';
@@ -1014,7 +1007,7 @@ if (document.addEventListener) {
 	 * perform cross domain  requests
 	 * @param unknown_type $url
 	 */
-	function crossdomain($url)
+	public function crossdomain($url)
 	{
 		$response = $this->remote($url);
 
@@ -1029,7 +1022,7 @@ if (document.addEventListener) {
 	 * @param $flag_id
 	 * @param $command_count
 	 */
-	function flag($flag_id,$command_count = 1 , $settings = array())
+	public function flag($flag_id,$command_count = 1 , $settings = array())
 	{
 		$flags = array();
 
@@ -1061,13 +1054,18 @@ if (document.addEventListener) {
 	 *
 	 * tell whether this is an ajax request or not.
 	 */
-	function isAjaxRequest()
+	public function isAjaxRequest()
 	{
-		$request = self::input('ajax');
+		return self::_isAjaxRequest();
+	}
+
+	private static function _isAjaxRequest()
+	{
+		$request = self::_input('ajax');
 		if($request) {
 			return true;
 		}
-		$request = self::input('cjax_iframe');
+		$request = self::_input('cjax_iframe');
 		if($request) {
 			return true;
 		}
@@ -1105,7 +1103,7 @@ if (document.addEventListener) {
 	 *
 	 * @return boolean
 	 */
-	function request($callback = null, &$params = null)
+	public function request($callback = null, &$params = null)
 	{
 		$ajax = ajax();
 		$r = $ajax->isAjaxRequest();
@@ -1131,7 +1129,7 @@ if (document.addEventListener) {
 		return true;
 	}
 
-	function setRequest($request = true)
+	public function setRequest($request = true)
 	{
 		if($request) {
 			$_GET['cjax'] = time();
@@ -1166,7 +1164,7 @@ if (document.addEventListener) {
 	/**
 	 * Converts an array into xml..
 	 */
-	function xmlIt($input = array(), $tag = null)
+	public function xmlIt($input = array(), $tag = null)
 	{
 		$new = array();
 		if(is_array($input) && $input) {
@@ -1222,7 +1220,7 @@ if (document.addEventListener) {
 		}
 	}
 
-	function cookie($setting, $value = null)
+	public function cookie($setting, $value = null)
 	{
 		if($value===null) {
 			@setcookie ($setting, $value, time()-(3600*1000), '/');
@@ -1231,12 +1229,12 @@ if (document.addEventListener) {
 		}
 	}
 
-	function getSetting($setting)
+	public function getSetting($setting)
 	{
 		return $this->get($setting);
 	}
 
-	function setLastCache($add=null,$cache_id = null)
+	public static function setLastCache($add=null,$cache_id = null)
 	{
 		if($cache_id) {
 			self::$lastCache[$cache_id] = $add;
@@ -1250,7 +1248,7 @@ if (document.addEventListener) {
 	 * remove cache
 	 * @param mixed $cache_id
 	 */
-	function removeExecCache($cache_id)
+	static function removeExecCache($cache_id)
 	{
 		if(is_array($cache_id)) {
 			foreach($cache_id as $k) {
@@ -1269,7 +1267,7 @@ if (document.addEventListener) {
 	 * remove cache
 	 * @param mixed $cache_id
 	 */
-	function removeLastCache($count)
+	static function removeLastCache($count)
 	{
 		do {
 			$count--;
@@ -1284,7 +1282,7 @@ if (document.addEventListener) {
 	 * remove cache
 	 * @param mixed $cache_id
 	 */
-	function removeCache($cache_id)
+	public static function removeCache($cache_id)
 	{
 		unset(self::$cache[$cache_id]);
 	}
@@ -1300,7 +1298,7 @@ if (document.addEventListener) {
 
 	public function success($msg=null,$seconds=3)
 	{
-		$ajax = CJAX::getInstance();
+		$ajax = ajax();
 		if(!$msg) {
 			$msg = "Success!";
 		}
@@ -1312,7 +1310,7 @@ if (document.addEventListener) {
 	 */
 	public  function loading($msg = null)
 	{
-		$ajax = CJAX::getInstance();
+		$ajax = ajax();
 		if(!$msg) {
 			$msg = "Loading...";
 		}
@@ -1321,7 +1319,7 @@ if (document.addEventListener) {
 
 	public function process($msg=null,$seconds=3)
 	{
-		$ajax = CJAX::getInstance();
+		$ajax = ajax();
 		if(!$msg) {
 			$msg = "Processing...";
 		}
@@ -1330,26 +1328,17 @@ if (document.addEventListener) {
 
 	public function info($msg=null,$seconds=3)
 	{
-		$ajax = CJAX::getInstance();
+		$ajax = ajax();
 		return $ajax->message($ajax->format->message($msg,cjaxFormat::CSS_INFO),$seconds);
 	}
 
 	public function error($msg=null,$seconds=15)
 	{
-		$ajax = CJAX::getInstance();
+		$ajax = ajax();
 		if(!$msg) {
 			$msg = "Error!";
 		}
 		return $ajax->message($ajax->format->message($msg,cjaxFormat::CSS_ERROR),$seconds);
-	}
-
-
-	function _lastExecCount($count = 0)
-	{
-		if($count) {
-			self::$_lastExecCount = $count;
-		}
-		return self::$_lastExecCount;
 	}
 
 	// error handler function
@@ -1362,26 +1351,44 @@ if (document.addEventListener) {
 	 * @param string $errline
 	 * @return string
 	 */
-	function CJAXErrorHandler($errno, $errstr, $errfile, $errline)
+	public static function CJAXErrorHandler($errno, $errstr, $errfile, $errline)
 	{
+		$data = array();
 		switch ($errno) {
 			case E_USER_ERROR:
-				echo "<b>CJAX:</b> [$errno] $errstr<br />\n";
-				echo "  Fatal error on line $errline in file $errfile";
-				echo ", PHP " . PHP_VERSION . " (" . PHP_OS . ")<br />\n";
-				echo "Aborting...<br />\n";
+				$data[] = "<b>CJAX:</b> [$errno] $errstr<br />\n";
+				$data[] = "  Fatal error on line $errline in file $errfile";
+				$data[] = ", PHP " . PHP_VERSION . " (" . PHP_OS . ")<br />\n";
+				$data[] = "Aborting...<br />\n";
+
+				echo implode($data);
 				exit(1);
 				break;
 
 			case E_USER_WARNING:
-				echo "<b>Cjax WARNING</b> [$errno] $errstr<br />\n";
+				$data[] = "<b>Cjax WARNING</b> [$errno] $errstr<br />\n";
 				break;
+			case E_NOTICE:
 			case E_USER_NOTICE:
-				echo "<b>Cjax NOTICE</b> [$errno] $errstr<br />\n";
+				$data[] = "<b>NOTICE WARNING</b> [$errno] $errstr<br />$errfile:$errline<br />\n";
 				break;
 			default:
-				echo "Unknown error type: [$errno] $errstr<br />\n";
-				break;
+				$data[] = "Unknown error type: [$errno] $errstr<br />$errfile:$errline<br />\n";
+
+
+		}
+		if ($data) {
+			$ajax = ajax();
+
+			self::$cache = array();
+			$options = array(
+				'color' =>  '#CD0000',
+				'width' => '800px'
+			);
+
+			self::$cache = array();
+			$ajax->dialog(implode($data),"Error(s) Have Ocurred. Please address before continuing.", $options);
+			exit(0);
 		}
 
 		/* Don't execute PHP internal error handler */
@@ -1503,7 +1510,7 @@ if (document.addEventListener) {
 		return implode($data);
 	}
 
-	function input($value=null)
+	private static function _input($value)
 	{
 		if($value===null) $value= 'cjax';
 		$v = isset($_REQUEST[$value])? $_REQUEST[$value] : (isset($_GET[$value])? $_GET[$value]:null);
@@ -1524,6 +1531,11 @@ if (document.addEventListener) {
 			return $return;
 		}
 		return addslashes($v);
+	}
+
+	public function input($value=null)
+	{
+		return self::_input($value);
 	}
 
 	/*
@@ -1658,6 +1670,13 @@ if (document.addEventListener) {
 
 	static function errorHandlingConfig()
 	{
+		//CJAXErrorHandler
+		// set to the user defined error handler
+
+		if(self::_isAjaxRequest()) {
+			$old_error_handler = set_error_handler(array('CoreEvents', 'CJAXErrorHandler'), E_ALL);
+		}
+
 		/**Error Handling**/
 		@ini_set('display_errors', 1);
 		@ini_set('log_errors', 1);

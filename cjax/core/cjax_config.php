@@ -48,9 +48,9 @@ class CJAX extends CJAX_FRAMEWORK {
 		if(self::$CJAX) {
 			return self::$CJAX;
 		}
-		
+
 		CoreEvents::errorHandlingConfig();
-		
+
 		$ajax = new CJAX_FRAMEWORK;
 		
 		if(!defined('JSON_FORCE_OBJECT')) {
