@@ -515,7 +515,7 @@ function CJAX_FRAMEWORK() {
 								return CJAX.util.objectify(event[2], null);
 							} else {
 								if(event){
-									data[event[1]] = event[2];
+									data[event[1]] =  CJAX.decode(event[2]);
 								}
 							}
 						}
