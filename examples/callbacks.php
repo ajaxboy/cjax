@@ -120,7 +120,7 @@ $ajax->on('overlayPop', $ajax->success('overlayPop callback here!'));
         The following actions have no specific purpose, but it shows you an example how you may pass multiple
         actions, and trigger inside the on() callback method. You can also use the tag {response} to replace with the
         actual response of the ajax request. The success callback will only trigger after the ajax request is completed
-        and the server response did not was not an error status code.
+        and the server response was not an error status code.
 
     </p>
     <?php
