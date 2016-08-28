@@ -251,23 +251,28 @@ $ajax->on('overlayPop', $ajax->success('overlayPop callback here!'));
     echo $ajax->code("
 
           //would trigger, bubble callback, which would display an info message saying \"Making Bubbles!\"
-          CJAX.callback.bubble.call();
+          CJAX.callback.bubble();
 
           //would trigger the dancing callback, this could be used anywhere on your site, or within a custom plugin.
-          CJAX.callback.dancing.call();
+          CJAX.callback.dancing();
 
           //Would trigger the swimming custom callback called swimming()
-          CJAX.callback.swimmingca.call();
+          CJAX.callback.swimmingca();
 
 
           //To be on the safe side, you may want to add a check to make sure the callback exists eg:
 
           if(CJAX.callback.bubble) {
-            CJAX.callback.bubble.call();
+            CJAX.callback.bubble();
           }
 
         ","JAVASCRIPT");
     ?>
+    </p>
+
+    <p>
+        You may pass a parateter to your custom callbacks. It would be accessible retroactively to your callback declaration through
+        the {response} tag.
     </p>
 
 
