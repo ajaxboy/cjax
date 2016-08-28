@@ -28,7 +28,7 @@ $ajax->click("#overlay_no_cache",$ajax->overlay("ajax.php?overlay/view_overlay",
 
 //pass content..
 //with settings..
-$ajax->click("#overlay_content",$ajax->overlayContent("Hello World",array('top'=> '200px')));
+$ajax->click("overlay_content",$ajax->overlayContent("Hello World",array('top'=> '200px')));
 
 
 $ajax->click("#overlay_dialog", $ajax->dialog('Hello World','Dialog#1'));

@@ -640,6 +640,7 @@ function CJAX_FRAMEWORK() {
 			},
 			json: function(buffer, tag)
 			{
+				var err;
 				if(typeof buffer=='object') {
 					return buffer;
 				}
@@ -659,6 +660,7 @@ function CJAX_FRAMEWORK() {
 							json =  eval("("+data+")");
 						}
 					} catch(e) {
+						err = e;
 						return false;
 					}
 
@@ -676,6 +678,19 @@ function CJAX_FRAMEWORK() {
 							if(typeof json != 'object') {
 								new_buff3 = CJAX.decode(new_buff2).replace(/\\/gi, '');
 								json = try1(new_buff3);
+
+
+								if(!json) {
+									new_buff4 = new_buff3.replace(/\r?\n|\r|\t/gm,'');
+
+									json = try1(new_buff4);
+
+									if(!json && err) {
+
+										console.warn('There was an error while processing data:', err);
+										console.log('String:', buff);
+									}
+								}
 							}
 						}
 
@@ -2324,20 +2339,24 @@ function CJAX_FRAMEWORK() {
 			}
 		}
 
-		var method;
+		var action,buffer, method;
 		CJAX.ready(function() {
 			for(_id in actions) {
 				buffer = actions[_id];
 				method = CJAX.xml('do', buffer);
-
-				buffer = CJAX.util.objectify(buffer, 'cjax');
 
 				if(method=='_import' || method=='_imports' || CJAX.xml('is_plugin', buffer)) {
 					//already imported.
 					continue;
 				}
 
-				CJAX._process(buffer,'process_all for '+method, method+' '+_id);
+				action = CJAX.util.objectify(buffer, 'cjax');
+
+				if(typeof action.options == 'object' && CJAX.util.count(action.options) == 0) {
+					console.warn(action, 'possibly missing options!');
+				}
+
+				CJAX._process(action,'process_all for '+method, method+' '+_id);
 			}
 		});
 		CJAX.is_loading = false;
@@ -3736,9 +3755,6 @@ function CJAX_FRAMEWORK() {
 				options[x] = options2[x];
 			}
 		}
-
-		var url = options.url;
-		var $out = [];
 		var controller = options.url.replace(/\/.+/g,'').replace(/^.+\?/,'');
 
 
@@ -3749,37 +3765,14 @@ function CJAX_FRAMEWORK() {
 			CJAX.ajaxSettings.dataType = settings[1];
 		}
 
-		if(options) {
-			switch(typeof options) {
-				case 'function':
-					CJAX.callback_success[url] = options;
-					break;
-				case 'object':
-
-					if(options.success) {
-						CJAX.callback['success'] = options.success;
-					}
-					if(options.error) {
-						CJAX.callback['error'] = options.error;
-					}
-
-					if(options.data) {
-						options.args  = options.data;
-					}
-					break;
-				default:
-					options.args  = options;
-			}
-		}
-
-		return CJAX._call(options,options2, CJAX.callback_success[url]);
+		return CJAX._call(options,options2);
 	};
 
 	/**
 	 * call:
 	 * url,rel,confirm
 	 */
-	this._call		=		function( xcache , options, callback ) {
+	this._call		=		function( xcache ) {
 		var selector;
 		var cache = xcache;
 		if(typeof xcache != 'object' || xcache.cjax) {
@@ -3788,10 +3781,10 @@ function CJAX_FRAMEWORK() {
 		if(!cache.callback) {
 			cache.callback = {};
 		}
+
 		selector = cache.selector;
 
-
-		options = {};
+		var options = {};
 		if(cache.options) {
 			options = cache.options;
 		}
@@ -3873,6 +3866,10 @@ function CJAX_FRAMEWORK() {
 					new_response = CJAX.util.jsonEval(new_response);
 				} else {
 					CJAX.process_all(new_response);
+				}
+
+				if(cache.callback) {
+					cache.callback.success(new_response);
 				}
 
 				if(CJAX.callback.success) {
@@ -3975,32 +3972,28 @@ function CJAX_FRAMEWORK() {
 		return CJAX.call(options, options.success);
 	};
 
-	this.get		=		function($url , container , callback) {
+	this.get		=		function($url , callback) {
 		var options = {};
 
+		if(typeof $url == 'object') {
+			options = $url;
+			$url = options.url;
+		}
+		options.callback = {};
+		options.options = {};
+
 		if(callback) {
+
 			if(!CJAX.lib.isFn(callback)) {
-				options.options = {};
 				options.options.dataType = callback;
 			}
-		} else {
-			if(!options.options) {
-				options.options = {};
-			}
+			options.callback.success = callback;
+
 			options.options.dataType = CJAX.ajaxSettings.dataType;
 		}
 		options.url = $url;
 		if(/^https?/.test(options.url)) {
 			options.crossdomain = true;
-		}
-		if(CJAX.lib.isFn(container)) {
-			options.callback = {};
-			options.callback.success = container;
-		} else {
-			options.container =  container;
-			if(CJAX.lib.isFn(callback)) {
-				options.callback.success = callback;
-			}
 		}
 
 		CJAX.IS_POST = false;
