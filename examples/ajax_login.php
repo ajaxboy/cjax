@@ -9,10 +9,10 @@ $ajax = ajax();
 //Makes sure that $ajax->Exec/$ajax->form() is triggerd after the overlay is created by being attached to the actual overlay
 
 
-$ajax->on('overlayPop', $ajax->click('button1', $ajax->form('ajax.php?ajax_login/handler')));
-
-
 $ajax->click('a_login', $ajax->overlay('resources/html/login.html'));
+
+
+$ajax->on('overlayPop', $ajax->click('button1', $ajax->form('ajax.php?ajax_login/handler')));
 
 
 ?>

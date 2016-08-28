@@ -23,7 +23,6 @@ function CJAX_FRAMEWORK() {
 	this.version	=	'5.9';
 	this.debug = false;
 	this.DOMContentLoaded = false;
-	this.tags = {};
 	this._Ready = {};
 	this.loaded = {};
 	this.payload = {};
@@ -47,11 +46,6 @@ function CJAX_FRAMEWORK() {
 	this.inits = [];//plugins init code
 	this.vars = [];
 	this.waitingFor = {}; //for plugins
-	/**
-	 * Timeout to preload stuff in milliseconds
-	 */
-	this.preloadTime = 0;
-	this.found_extra_time = 0;
 	this.message_id = 0;
 	this.commands = {};
 	this.callback_success = {};
@@ -66,8 +60,6 @@ function CJAX_FRAMEWORK() {
 	this.dir;
 	this.files = false;
 	this.styles = [];
-	//collection of elements that are using listeners
-	this.current_element = [];
 
 	this.timer = 0;
 	this.funtion_timer = true;
@@ -76,6 +68,12 @@ function CJAX_FRAMEWORK() {
 		invalid: 'Invalid Input!',
 		success: 'Success!',
 		error: 'Error!'
+	};
+	this.callback  = {
+		success: function() {},
+		complete: function() {},
+		error: function() {},
+		overlayPop: function() {}
 	};
 
 	this.ajaxSettings = this.ajaxDefaultSettings = {
@@ -1185,10 +1183,10 @@ function CJAX_FRAMEWORK() {
 		options.message_id = 'cjax_message_overlay';
 		options.success = function() {
 			CJAX.lib.overlayCallback(CJAX.decode(options.content), options);
-			if(CJAX.ajaxSettings.overlayPop && typeof CJAX.ajaxSettings.overlayPop=='function') {
-				CJAX.ajaxSettings.overlayPop(options);
+			if(CJAX.callback.overlayPop && typeof CJAX.callback.overlayPop=='function') {
+				CJAX.callback.overlayPop(options);
 				if(options.clear) {
-					CJAX.ajaxSettings.overlayPop = function () {};
+					CJAX.callback.overlayPop = function () {};
 				}
 			}
 		};
@@ -1226,9 +1224,8 @@ function CJAX_FRAMEWORK() {
 			}
 			CJAX.get(options.url, function(response) {
 				CJAX.lib.overlayCallback(response,options);
-				if(CJAX.ajaxSettings.overlayPop && typeof CJAX.ajaxSettings.overlayPop=='function') {
-					CJAX.ajaxSettings.overlayPop(options);
-					CJAX.ajaxSettings.overlayPop = function() {};
+				if(CJAX.callback.overlayPop && typeof CJAX.callback.overlayPop=='function') {
+					CJAX.callback.overlayPop(options);
 				}
 			});
 		};
@@ -1403,7 +1400,6 @@ function CJAX_FRAMEWORK() {
 							}, false );
 						} else {
 							element.onload = function () {
-								console.log('onload', element);
 								element.loaded = true;
 								return $callback();
 							};
@@ -2259,7 +2255,7 @@ function CJAX_FRAMEWORK() {
 			}
 		}
 		if(is_loading!='skip') {
-			this.commands =  actions;
+			CJAX.commands =  actions;
 		}
 		if(!is_loading) CJAX.is_loading = false;
 		if(caller==null) var caller = 'unkonwn';
@@ -3444,7 +3440,7 @@ function CJAX_FRAMEWORK() {
 	};
 
 	this.on			=		function(options) {
-		CJAX.ajaxSettings[options.type] = function(response) {
+		CJAX.callback[options.type] = function(response) {
 			var new_event;
 			for(option in options.options) {
 				new_event = options.options[option];
@@ -3657,6 +3653,9 @@ function CJAX_FRAMEWORK() {
 				return CJAX.util.applySelector(element_id,callback);
 			} else {
 				element_id = element_id.replace(/^\#/,'');
+				if(item = CJAX.is_element(element_id) ) {
+					return item;
+				}
 				console.log('Invalid Element ID:', element_id, callback);
 			}
 			return false;
@@ -3758,10 +3757,10 @@ function CJAX_FRAMEWORK() {
 				case 'object':
 
 					if(options.success) {
-						CJAX.callback_success[url] = options.success;
+						CJAX.callback['success'] = options.success;
 					}
 					if(options.error) {
-						CJAX.ajaxSettings.error = options.error;
+						CJAX.callback['error'] = options.error;
 					}
 
 					if(options.data) {
@@ -3876,11 +3875,11 @@ function CJAX_FRAMEWORK() {
 					CJAX.process_all(new_response);
 				}
 
-				if(cache.callback.success) {
-					cache.callback.success(new_response);
+				if(CJAX.callback.success) {
+					CJAX.callback.success(new_response);
 				}
-				if(cache.callback.complete) {
-					cache.callback.complete(new_response);
+				if(CJAX.callback.complete) {
+					CJAX.callback.complete(new_response);
 				}
 
 				return new_response;
@@ -4005,7 +4004,7 @@ function CJAX_FRAMEWORK() {
 		}
 
 		CJAX.IS_POST = false;
-		return CJAX.call(options, options.success);
+		return CJAX.call(options);
 	};
 
 	this._handleRequestHeaders		=		function(url,args)
@@ -4095,12 +4094,12 @@ function CJAX_FRAMEWORK() {
 
 				if(cache.callback.success) {
 					cache.callback.success(response);
-				} else if(CJAX.ajaxSettings.success && typeof CJAX.ajaxSettings.success=='function') {
-					CJAX.ajaxSettings.success(response);
+				} else if(CJAX.callback.success && typeof CJAX.callback.success=='function') {
+					CJAX.callback.success(response);
 				}
 
-				if(CJAX.ajaxSettings.complete && typeof CJAX.ajaxSettings.complete=='function') {
-					CJAX.ajaxSettings.complete(response);
+				if(CJAX.callback.complete && typeof CJAX.callback.complete=='function') {
+					CJAX.callback.complete(response);
 				}
 
 			}
@@ -4144,12 +4143,12 @@ function CJAX_FRAMEWORK() {
 				error_msg = 'Error: Server responded with a unsual response, see available server error logs for details.';
 				break;
 		}
-		if(CJAX.ajaxSettings['error'+status] && typeof CJAX.ajaxSettings['error'+status]=='function') {
-			CJAX.ajaxSettings['error'+status](this,response, error_msg, status);
+		if(CJAX.callback['error'+status] && typeof CJAX.callback['error'+status]=='function') {
+			CJAX.callback['error'+status](this,response, error_msg, status);
 		}
 		if(error_msg) {
-			if(CJAX.ajaxSettings.error && typeof CJAX.ajaxSettings.error=='function') {
-				CJAX.ajaxSettings.error(response, error_msg, status);
+			if(CJAX.callback.error && typeof CJAX.callback.error=='function') {
+				CJAX.callback.error(response, error_msg, status);
 			}
 		}
 
