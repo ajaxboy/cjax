@@ -1511,6 +1511,10 @@ function CJAX_FRAMEWORK() {
 
 		if(/[^a-zA-Z0-9_\-]/.test(element_id)) {
 			CJAX.$(element_id, function(elements) {
+
+				if(CJAX.debug) {
+					console.info('AddEventTo selector', element_id, 'elements:', elements);
+				}
 				for(var x in elements) {
 					options.selector = elements[x];
 					CJAX.__AddEventTo(elements[x], options);
@@ -2358,6 +2362,10 @@ function CJAX_FRAMEWORK() {
 					console.warn(action, 'possibly missing options!');
 				}
 
+				if(CJAX.debug) {
+					console.info('process_all item', action);
+				}
+
 				CJAX._process(action,'process_all for '+method, method+' '+_id);
 			}
 		});
@@ -2883,7 +2891,7 @@ function CJAX_FRAMEWORK() {
 		if(!CJAX.funtion_timer) {
 			seconds = 0;
 		}
-		if(CJAX.debug) {
+		if(CJAX.debug && seconds) {
 			console.log(CJAX.method ,"waits :",seconds,'caller:',caller);
 		}
 
