@@ -679,7 +679,6 @@ function CJAX_FRAMEWORK() {
 								new_buff3 = CJAX.decode(new_buff2).replace(/\\/gi, '');
 								json = try1(new_buff3);
 
-
 								if(!json) {
 									new_buff4 = new_buff3.replace(/\r?\n|\r|\t/gm,'');
 
@@ -3288,27 +3287,30 @@ function CJAX_FRAMEWORK() {
 
 	this.updateX		=		function(options) {
 
-		var src_prop = options.options.b;
-		var dest_prop = options.options.c;
+		var data = {};
+		var dest_prop = options.options.b;
+		var src_prop  = options.options.c;
 		var selector  = options.selector;
 
-		if(!dest_prop) {
-			dest_prop = src_prop;
+		if(!src_prop) {
+			src_prop = dest_prop;
 		}
 
 		CJAX.$(options.options.a, function(elements) {
-
 			for(var x in elements) {
-				//if (!selector) {
-				//CJAX.property(elements[x])
-				if (selector.getAttribute(src_prop)) {
+
+				if (selector.hasAttribute(src_prop)) {
 					_value = selector.getAttribute(src_prop);
 				} else {
 					_value = selector[src_prop];
 				}
 
-				elements[x][dest_prop] = _value;
+				data.selector = elements[x];
+				data.options = {};
+				data.options.a = {};
+				data.options.a[dest_prop] = _value;
 
+				CJAX.property(data);
 			}
 		});
 	};
