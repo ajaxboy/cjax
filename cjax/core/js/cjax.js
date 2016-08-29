@@ -1509,11 +1509,11 @@ function CJAX_FRAMEWORK() {
 	{
 		var	element_id = options.element_id;
 
-		if(CJAX.debug) {
-			console.info('AddEventTo Selector', element_id);
-		}
-
 		if(/[^a-zA-Z0-9_\-]/.test(element_id)) {
+
+			if(CJAX.debug) {
+				console.info('AddEventTo Selector for sizzle', element_id);
+			}
 
 			CJAX.$(element_id, function(elements) {
 
@@ -3692,6 +3692,9 @@ function CJAX_FRAMEWORK() {
 			} else {
 				element_id = element_id.replace(/^\#/,'');
 				if(item = CJAX.is_element(element_id) ) {
+					if(CJAX.debug) {
+						console.log('in sizzle context, no callback.',element_id, ' is_element fallback.');
+					}
 					return item;
 				}
 				console.log('Invalid Element ID:', element_id, callback);
