@@ -2296,9 +2296,6 @@ function CJAX_FRAMEWORK() {
 			for(_id in preload) {
 				buffer = preload[_id];
 				method = CJAX.xml('do',buffer);
-				if(CJAX.debug) {
-					console.info("Preloading", method);
-				}
 
 				switch(method) {
 					case '_import':
@@ -2627,7 +2624,7 @@ function CJAX_FRAMEWORK() {
 				_new.fn(params['a'], params['b'], params['c'], params['d'], params['e'], params['f']);
 			}
 			if(CJAX.debug) {
-				console.info('Called plugin:', plugin_name);
+				console.info('Running Plugin:', plugin_name);
 			}
 			return _new;
 		}catch(e) {
@@ -2908,10 +2905,6 @@ function CJAX_FRAMEWORK() {
 							SUBFIX = cache.fn;
 						}
 						break;
-				}
-
-				if(CJAX.debug) {
-					console.log('Call executed.');
 				}
 
 				if(seconds){
@@ -4521,6 +4514,7 @@ function CJAX_FRAMEWORK() {
 
 	this.onStartEvents		=		function() {
 		CJAX.importFile(__base__+'core/css/cjax.css');
+		CJAX.importFile(__base__+'lib/sizzle.js');
 		//ajax requests made with jquery..
 		if(typeof jQuery !='undefined') {
 			jQuery.ajaxSetup({
@@ -4531,8 +4525,6 @@ function CJAX_FRAMEWORK() {
 					}
 				}
 			});
-		} else {
-			CJAX.importFile(__base__+'lib/sizzle.js');
 		}
 	};
 }
