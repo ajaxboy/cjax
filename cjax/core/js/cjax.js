@@ -2307,12 +2307,6 @@ function CJAX_FRAMEWORK() {
 
 						CJAX._process(buffer,'process_all for '+method, method+' '+_id);
 						break;
-					case '_imports':
-						files = CJAX.xml('files',buffer);
-
-						CJAX._import(files+CJAX.tag('plugin_dir',CJAX.xml('plugin_dir', buffer)) , true);
-
-						break;
 					default:
 						if(CJAX.xml('is_plugin', buffer) ) {
 							plugin_buffer = buffer;
@@ -2408,9 +2402,9 @@ function CJAX_FRAMEWORK() {
 		}
 	};
 
-	this._import		=		function(buffer, loop)
+	this._import		=		function(options, loop)
 	{
-		var file = CJAX.xml('file',buffer);
+		var file = options.file;
 
 		if(!file) {
 			console.info('no file',buffer);
@@ -2434,15 +2428,6 @@ function CJAX_FRAMEWORK() {
 		CJAX.lib.loadCallback(f, function() {
 			f.loaded = true;
 		});
-		if(loop) {
-			new_buffer = CJAX.remove1Tag('file',buffer);
-			exists = CJAX.xml('file',new_buffer);
-			if(exists) {
-				CJAX.lib.loadCallback(f, function() {
-					return CJAX._import(new_buffer);
-				});
-			}
-		}
 		return f;
 	};
 
