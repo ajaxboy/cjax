@@ -2407,14 +2407,14 @@ function CJAX_FRAMEWORK() {
 		var file = options.file;
 
 		if(!file) {
-			console.info('no file',buffer);
+			console.info('no file',options);
 			return;
 		}
 
 		if(/^https?/.test(file)) {
 			f = CJAX.script.load(file);
 		} else {
-			if(dir = CJAX.xml('plugin_dir',buffer)) {
+			if(dir = options.plugin_dir) {
 				file = CJAX.pBase+dir+'/'+file;
 				f  = CJAX.script.load(file);
 			} else {
