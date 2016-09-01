@@ -281,39 +281,55 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		$_options = (isset($url[3])) ? $url[3] : null;
 
 		$_params = null;
-		if($params && !is_array($params)) {
+		if ($params && !is_array($params)) {
 			$params = array($params);
 		}
-		if($params) {
+		if ($params) {
 
-			foreach($params as $v) {
-				$_params[] =  '|' . $v . '|';
+			foreach ($params as $v) {
+				$_params[] = '|' . $v . '|';
 			}
-			$_params  =  '/' .implode('/', $_params);
+			$_params = '/' . implode('/', $_params);
 		}
 
-		if($_options) {
+		if ($_options) {
 			//merged any passed options, this gets pulled back and sent to ajax options.
 			$options = array_merge($options, $_options);
 		}
 
 		//$cwd = getcwd();
 
-		$f =  'ajax.php';
+		$f = 'ajax.php';
 
-		$path = str_replace($_SERVER['SCRIPT_NAME'],'', $_SERVER['SCRIPT_FILENAME']);
+		$path = str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['SCRIPT_FILENAME']);
+		$path2 = str_replace($_SERVER['SCRIPT_NAME'], '', $path);
 		$file_path = dirname($_SERVER['SCRIPT_NAME']) . '/';
+		$count = substr_count($file_path, '/') - 1;
 
-		if(is_file($path . $file_path . AJAX_FILE)) {
+		if (is_file($path . $file_path . AJAX_FILE)) {
 			//ajax.php is found inside the directory in the script that called it, so you call it relative.
 			$f = AJAX_FILE;
 		} else if (dirname($path . $file_path) . AJAX_FILE) {
 			$f = '../' . AJAX_FILE;
 		} else {
 			$path = dirname(dirname(dirname(ajax()->config->js_path)));
-			if($path) {
+			if ($path) {
 				$f = $path . '/' . AJAX_FILE;
 			}
+		}
+
+		$cwd = getcwd();
+
+		if (!is_file($cwd . '/' . $f)) {
+			do {
+				$sub = str_repeat('../', $count);
+				$f_path = $sub  .   $f;
+				$new_file = $cwd . '/' . $f_path;
+				if(is_file($new_file)) {
+					$f = $f_path;
+					break;
+				}
+			} while ($count && $count--) ;
 		}
 
 		$url = sprintf('%s?%s/%s%s', $f, $controller, $method, $_params);
