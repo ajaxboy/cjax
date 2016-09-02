@@ -39,7 +39,7 @@ Use wget in terminal:
 
 First CD into the directory you intend to install it.
 ```
-wget -N https://github.com/ajaxboy/cjax/archive/5.9rc8.zip ; unzip '5.9rc.zip' ;  cp -rf cjax-5.9rc8/* . ; rm -fr cjax-5.9rc8 ;  rm 5.9rc8.zip
+wget -N https://github.com/ajaxboy/cjax/archive/5.9rc8.zip ; unzip '5.9rc8.zip' ;  cp -rf cjax-5.9rc8/* . ; rm -fr cjax-5.9rc8 ;  rm 5.9rc8.zip
 ```
 
 Any of these ways work, the bottom line is to get the files on the root (public directory) of your website.
