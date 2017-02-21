@@ -1257,7 +1257,7 @@ function CJAX_FRAMEWORK() {
 					CJAX.lib.fnCall(element, getter);
 				}
 			},
-			fnCall: function(element, setting) {
+			fnCall: function(element, setting,data) {
 
 				if(CJAX.lib.isFn(element[setting])) {
 					element[setting](data.b);
