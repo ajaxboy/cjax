@@ -297,39 +297,51 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 			$options = array_merge($options, $_options);
 		}
 
-		//$cwd = getcwd();
 
-		$f = 'ajax.php';
 
-		$path = str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['SCRIPT_FILENAME']);
-		$path2 = str_replace($_SERVER['SCRIPT_NAME'], '', $path);
-		$file_path = dirname($_SERVER['SCRIPT_NAME']) . '/';
-		$count = substr_count($file_path, '/') - 1;
+		if(strpos($controller,':') !== false) {
+			$parts = explode(':', $controller);
+			$path  = $parts[1];
+			$controller = $parts[0];
 
-		if (is_file($path . $file_path . AJAX_FILE)) {
-			//ajax.php is found inside the directory in the script that called it, so you call it relative.
-			$f = AJAX_FILE;
-		} else if (dirname($path . $file_path) . AJAX_FILE) {
-			$f = '../' . AJAX_FILE;
+			$f = $path . '/ajax.php';
+
 		} else {
-			$path = dirname(dirname(dirname(ajax()->config->js_path)));
-			if ($path) {
-				$f = $path . '/' . AJAX_FILE;
-			}
-		}
 
-		$cwd = getcwd();
+			//$cwd = getcwd();
 
-		if (!is_file($cwd . '/' . $f)) {
-			do {
-				$sub = str_repeat('../', $count);
-				$f_path = $sub  .   $f;
-				$new_file = $cwd . '/' . $f_path;
-				if(is_file($new_file)) {
-					$f = $f_path;
-					break;
+			$f = 'ajax.php';
+
+			$path = str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['SCRIPT_FILENAME']);
+			$file_path = dirname($_SERVER['SCRIPT_NAME']) . '/';
+			$count = substr_count($file_path, '/') - 1;
+
+			if (is_file($path . $file_path . AJAX_FILE)) {
+				//ajax.php is found inside the directory in the script that called it, so you call it relative.
+				$f = AJAX_FILE;
+			} else if (dirname($path . $file_path) . AJAX_FILE) {
+				$f = '../' . AJAX_FILE;
+			} else {
+				$path = dirname(dirname(dirname(ajax()->config->js_path)));
+				if ($path) {
+					$f = $path . '/' . AJAX_FILE;
 				}
-			} while ($count && $count--) ;
+			}
+
+			$cwd = getcwd();
+
+			$_file = $cwd . '/' . $f;
+			if (!is_file($_file)) {
+				do {
+					$sub = str_repeat('../', $count);
+					$f_path = $sub . $f;
+					$new_file = $cwd . '/' . $f_path;
+					if (is_file($new_file)) {
+						$f = $f_path;
+						break;
+					}
+				} while ($count && $count--);
+			}
 		}
 
 		$url = sprintf('%s?%s/%s%s', $f, $controller, $method, $_params);
@@ -591,13 +603,14 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 				}
 				$data[$k] = $_data;
 			}
-			$data['options'] = $options;
 		}
 		$data['url'] = $url;
 		$data['cache'] = $use_cahe;
 		if($url) {
-			$data['message'] = $this->template('overlay.html');
+			$options['template'] = $this->template('overlay.html');
 		}
+
+		$data['options'] = $options;
 
 		return $this->xmlItem($this->xml($data),'overlay','api');
 	}

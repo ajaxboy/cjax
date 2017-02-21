@@ -150,11 +150,7 @@ function CJAX_FRAMEWORK() {
 						element.insertBefore(child,element.firstChild);
 					}
 				} else {
-					if(data.c){
-						element['innerHTML'] = element['innerHTML']+data.b;
-					} else {
-						element['innerHTML'] = data.b+element['innerHTML'];
-					}
+					CJAX.lib.fnCall(element,{insert: data.b},data);
 				}
 				break;
 			case 'append':
@@ -447,6 +443,7 @@ function CJAX_FRAMEWORK() {
 					}
 					break;
 				case 'LABEL':
+				case 'BUTTON':
 				case 'DIV':
 				case 'SPAN':
 				case 'THEAD':
@@ -1336,6 +1333,13 @@ function CJAX_FRAMEWORK() {
 							element['outerHTML'] = element['outerHTML']+value;
 						}
 						break;
+					case 'insert':
+						if(data.c){
+							element['innerHTML'] = element['innerHTML']+value;
+						} else {
+							element['innerHTML'] = value+element['innerHTML'];
+						}
+						break;
 				}
 			},
 			isFn:  function(fn) {
@@ -1508,6 +1512,13 @@ function CJAX_FRAMEWORK() {
 	this.AddEventTo	=	function( options )
 	{
 		var	element_id = options.element_id;
+
+
+
+        if(!/[^a-zA-Z0-9_\-]/.test(element_id) && element_id.indexOf('#')==-1) {
+            element_id = '#'+element_id;
+        }
+
 
 		if(/[^a-zA-Z0-9_\-]/.test(element_id)) {
 
@@ -1745,6 +1756,8 @@ function CJAX_FRAMEWORK() {
 						}
 					}
 				}
+				options.buffer = options.xml;
+				options.selector = element;
 
 				return CJAX.setEventProcessFnHandler(options, element, trigger, use_fns,
 					function(new_fn, cache, element) {
@@ -2428,6 +2441,15 @@ function CJAX_FRAMEWORK() {
 		CJAX.lib.loadCallback(f, function() {
 			f.loaded = true;
 		});
+		if(loop) {
+			new_buffer = CJAX.remove1Tag('file',buffer);
+			exists = CJAX.xml('file',new_buffer);
+			if(exists) {
+				CJAX.lib.loadCallback(f, function() {
+					return CJAX._import(new_buffer);
+				});
+			}
+		}
 		return f;
 	};
 
@@ -2837,7 +2859,7 @@ function CJAX_FRAMEWORK() {
 		if(!CJAX.defined(caller)) {
 			var caller = 'unknown';
 		}
-		if(!CJAX.is_cjax(buffer)) {
+		if(!CJAX.is_cjax(buffer) && typeof buffer != 'object') {
 			alert('no cjax - caller: '+caller+'\n'+buffer);return false ;
 		};
 
@@ -2889,6 +2911,19 @@ function CJAX_FRAMEWORK() {
 						if(CJAX[cache.fn]) {
 							SUBFIX = cache.fn;
 						}
+						break;
+					case '_call':
+						if(typeof  cache != 'object') {
+							cache = CJAX.util.objectify(cache, 'cjax');
+							if(cache) {
+								cache.options = CJAX.util.json(cache.options);
+							}
+						}
+						xml_data = cache;
+						break;
+					case '_overLay':
+
+						xml_data = cache;
 						break;
 				}
 
@@ -3589,6 +3624,11 @@ function CJAX_FRAMEWORK() {
 		}
 	};
 
+	this.refresh		=		function()
+	{
+		//this is intentionally left blank.
+	};
+
 	this._handlerFormRequest		= 	function(url, serial, args)
 	{
 		if(CJAX.debug) {
@@ -3755,6 +3795,8 @@ function CJAX_FRAMEWORK() {
 				options[x] = options2[x];
 			}
 		}
+
+		var url = options.url;
 		var controller = options.url.replace(/\/.+/g,'').replace(/^.+\?/,'');
 
 
@@ -3995,6 +4037,19 @@ function CJAX_FRAMEWORK() {
 		options.url = $url;
 		if(/^https?/.test(options.url)) {
 			options.crossdomain = true;
+		}
+		if(CJAX.lib.isFn($container)) {
+			options.callback = {};
+			options.callback.success = $container;
+		} else {
+
+			if(typeof $container == 'string') {
+				options.container = $container;
+			}
+			if (CJAX.lib.isFn(callback)) {
+				options.callback = {};
+				options.callback.success = callback;
+			}
 		}
 
 		CJAX.IS_POST = false;
@@ -4356,7 +4411,7 @@ function CJAX_FRAMEWORK() {
 						}
 					}
 				}
-				url = url.replace(v[x], _value);
+				url = url.replace(v[x], encodeURIComponent(_value));
 			}
 		} catch(e) {}//IE being weird
 		return url;

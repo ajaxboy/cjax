@@ -839,6 +839,8 @@ if (document.addEventListener) {
 	 */
 	public function init($min = true)
 	{
+		//always the full version all through RC releases
+		$min  = false;
 		if($min) {
 			$this->_file = "cjax.min.js";
 		}
