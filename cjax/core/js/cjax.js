@@ -1419,7 +1419,6 @@ function CJAX_FRAMEWORK() {
 			},
 			overlayOptions: function(options) {
 
-
 				var top = (CJAX.util.get.y()+100)+'px';
 
 				CJAX.$('cjax_overlay').style.display = 'block';
@@ -1478,7 +1477,7 @@ function CJAX_FRAMEWORK() {
 
 					if(options.url) {
 						//if it has a url then it's overlay()
-						CJAX.get(options.url, function (response) {
+						CJAX.get(options, function (response) {
 							CJAX.lib.overlayCallback(response, options);
 							if (CJAX.callback.overlayPop && typeof CJAX.callback.overlayPop == 'function') {
 								CJAX.callback.overlayPop(options);
