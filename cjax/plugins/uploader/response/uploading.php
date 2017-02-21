@@ -28,7 +28,7 @@ class Uploading extends uploader
 		$instance_id =  isset($_REQUEST['instance_id'])? $_REQUEST['instance_id']: 0;
 		$use_debug = isset($_REQUEST['use_debug'])  && $_REQUEST['use_debug']? 1 : 0;
 		$ajax->cacheWrapper(array("<html><body>","</body></html>"));
-		$options = (object) $this->options = $this->get('≈' . $instance_id,'uploader');
+		$options = $this->options = (object) $this->get('upload_options' . $instance_id,'uploader');
 		$options->use_debug = $use_debug;
 
 		if(!$options->target) {
