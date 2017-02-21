@@ -2921,7 +2921,8 @@ function CJAX_FRAMEWORK() {
 						}
 						xml_data = cache;
 						break;
-					case '_overLay':
+					case 'overLay':
+					case 'overLayContent':
 
 						xml_data = cache;
 						break;
