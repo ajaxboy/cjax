@@ -1181,69 +1181,20 @@ function CJAX_FRAMEWORK() {
 
 	this.overLayContent		=		function(content, options)
 	{
-		var top = (CJAX.util.get.y()+100)+'px';
-
 		if(!options.content) {
 			return CJAX._removeOverLay();
 		}
-		CJAX.lib.overlayOptions(options);
 
-		CJAX.$('cjax_overlay').style.display = 'block';
-		if(!options.top) {
-			options.top = top;
-		}
-		options.message = CJAX.decode(CJAX.decode(options.message));
-		options.content = CJAX.decode(CJAX.decode(options.content));
-		options.message_id = 'cjax_message_overlay';
-		options.success = function() {
-			CJAX.lib.overlayCallback(CJAX.decode(options.content), options);
-			if(CJAX.callback.overlayPop && typeof CJAX.callback.overlayPop=='function') {
-				CJAX.callback.overlayPop(options);
-				if(options.clear) {
-					CJAX.callback.overlayPop = function () {};
-				}
-			}
-		};
-		CJAX.message(options);
+		CJAX.message(CJAX.lib.overlayOptions(options));
 	};
 
 	this.overLay		=		function(url, options)
 	{
-		var top = (CJAX.util.get.y()+100)+'px';
-
-		if(!options.top) {
-			options.top = top;
-		}
-
 		if(!options.url) {
 			return CJAX._removeOverLay();
 		}
 
-		CJAX.lib.overlayOptions(options);
-
-		CJAX.$('cjax_overlay').style.display = 'block';
-
-		if(options.callback) {
-			options.callback = CJAX.lib.pharseFunction(options.callback);
-		} else {
-			options.callback = function() {};
-		}
-
-		options.message_id =  'cjax_message_overlay';
-		options.message = CJAX.decode(options.message);
-		options.success = function() {
-			if(options.cache) {
-				CJAX.ajaxSettings.cache = true;
-				CJAX.ajaxSettings.process = false;
-			}
-			CJAX.get(options.url, function(response) {
-				CJAX.lib.overlayCallback(response,options);
-				if(CJAX.callback.overlayPop && typeof CJAX.callback.overlayPop=='function') {
-					CJAX.callback.overlayPop(options);
-				}
-			});
-		};
-		CJAX.message(options);
+		CJAX.message(CJAX.lib.overlayOptions(options));
 
 	};
 
@@ -1468,6 +1419,15 @@ function CJAX_FRAMEWORK() {
 			},
 			overlayOptions: function(options) {
 
+
+				var top = (CJAX.util.get.y()+100)+'px';
+
+				if(!options.top) {
+					options.top = top;
+				}
+
+				CJAX.$('cjax_overlay').style.display = 'block';
+
 				if(options.transparent || options.color) {
 					var _opacity =_alpha =_color = null;
 					if(!options.transparent) {
@@ -1500,6 +1460,49 @@ function CJAX_FRAMEWORK() {
 						CJAX.$('cjax_overlay').className = 'overlay_class';
 					}
 				}
+
+				CJAX.$('cjax_overlay').style.display = 'block';
+				if(!options.top) {
+					options.top = top;
+				}
+
+				if(options.content) {
+
+					options.message = CJAX.decode(CJAX.decode(options.message));
+					options.content = CJAX.decode(CJAX.decode(options.content));
+
+				} else {
+					options.message = CJAX.decode(options.options.template);
+				}
+
+				options.message_id =  'cjax_message_overlay';
+				options.success = function() {
+					if(options.cache) {
+						CJAX.ajaxSettings.cache = true;
+						CJAX.ajaxSettings.process = false;
+					}
+
+					if(options.url) {
+						//if it has a url then it's overlay()
+						CJAX.get(options.url, function (response) {
+							CJAX.lib.overlayCallback(response, options);
+							if (CJAX.callback.overlayPop && typeof CJAX.callback.overlayPop == 'function') {
+								CJAX.callback.overlayPop(options);
+							}
+						});
+					} else {
+						//overlayContent
+						CJAX.lib.overlayCallback(CJAX.decode(options.content), options);
+						if(CJAX.callback.overlayPop && typeof CJAX.callback.overlayPop=='function') {
+							CJAX.callback.overlayPop(options);
+							if(options.clear) {
+								CJAX.callback.overlayPop = function () {};
+							}
+						}
+					}
+				};
+
+				return options;
 			}
 		};
 	}();
@@ -4038,19 +4041,6 @@ function CJAX_FRAMEWORK() {
 		options.url = $url;
 		if(/^https?/.test(options.url)) {
 			options.crossdomain = true;
-		}
-		if(CJAX.lib.isFn($container)) {
-			options.callback = {};
-			options.callback.success = $container;
-		} else {
-
-			if(typeof $container == 'string') {
-				options.container = $container;
-			}
-			if (CJAX.lib.isFn(callback)) {
-				options.callback = {};
-				options.callback.success = callback;
-			}
 		}
 
 		CJAX.IS_POST = false;
