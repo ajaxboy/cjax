@@ -202,8 +202,8 @@ function CJAX_FRAMEWORK() {
 		}
 
 		/*if(count == 0) {
-			return CJAX.Execfn(raw_fn, CJAX.clicked);
-		}*/
+		 return CJAX.Execfn(raw_fn, CJAX.clicked);
+		 }*/
 
 		function _processFn(my_fn, type)
 		{
@@ -1422,11 +1422,10 @@ function CJAX_FRAMEWORK() {
 
 				var top = (CJAX.util.get.y()+100)+'px';
 
+				CJAX.$('cjax_overlay').style.display = 'block';
 				if(!options.top) {
 					options.top = top;
 				}
-
-				CJAX.$('cjax_overlay').style.display = 'block';
 
 				if(options.transparent || options.color) {
 					var _opacity =_alpha =_color = null;
@@ -1459,11 +1458,6 @@ function CJAX_FRAMEWORK() {
 
 						CJAX.$('cjax_overlay').className = 'overlay_class';
 					}
-				}
-
-				CJAX.$('cjax_overlay').style.display = 'block';
-				if(!options.top) {
-					options.top = top;
 				}
 
 				if(options.content) {
@@ -1518,9 +1512,9 @@ function CJAX_FRAMEWORK() {
 
 
 
-        if(!/[^a-zA-Z0-9_\-]/.test(element_id) && element_id.indexOf('#')==-1) {
-            element_id = '#'+element_id;
-        }
+		if(!/[^a-zA-Z0-9_\-]/.test(element_id) && element_id.indexOf('#')==-1) {
+			element_id = '#'+element_id;
+		}
 
 
 		if(/[^a-zA-Z0-9_\-]/.test(element_id)) {
@@ -1552,7 +1546,6 @@ function CJAX_FRAMEWORK() {
 
 		events = CJAX.util.json(options.options);
 		event_trigger = options.event;
-
 
 		if(!element) {
 			console.error('__AddEventTo', 'No Element:',element, options);
@@ -4024,6 +4017,10 @@ function CJAX_FRAMEWORK() {
 		if(typeof $url == 'object') {
 			options = $url;
 			$url = options.url;
+
+			if(!options.selector) {
+				console.log('get()', 'missing selector');
+			}
 		}
 		options.callback = {};
 		options.options = {};
@@ -4262,7 +4259,7 @@ function CJAX_FRAMEWORK() {
 	this.message	=	function(message, seconds, message_type) {
 		var type_class = '';
 		if(message_type) {
-				type_class = ' cjax_'+message_type;
+			type_class = ' cjax_'+message_type;
 		}
 		if(typeof message=='undefined') {
 			CJAX.$('cjax_message').innerHTML='';
@@ -4315,7 +4312,14 @@ function CJAX_FRAMEWORK() {
 				} else {
 					var use_fns = false;
 
-					if(selector && (id.indexOf('.')!=-1 || id.indexOf('function')!=-1)) {
+
+
+					if(id.indexOf('.')!=-1 || id.indexOf('function')!=-1) {
+
+
+						if(!selector) {
+							console.log('URL-value: Invalid Selector for: "'+ id +'"');
+						}
 						var data = id.split('.');
 						switch(data[0]) {
 							case 'this':
