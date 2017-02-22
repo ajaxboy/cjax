@@ -299,48 +299,50 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 
 
 
-		if(strpos($controller,':') !== false) {
-			$parts = explode(':', $controller);
-			$path  = $parts[1];
-			$controller = $parts[0];
+		if(!$f = ajax()->config->ajax_file) {
+			if (strpos($controller, ':') !== false) {
+				$parts = explode(':', $controller);
+				$path = $parts[1];
+				$controller = $parts[0];
 
-			$f = $path . '/ajax.php';
+				$f = $path . '/ajax.php';
 
-		} else {
-
-			//$cwd = getcwd();
-
-			$f = 'ajax.php';
-
-			$path = str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['SCRIPT_FILENAME']);
-			$file_path = dirname($_SERVER['SCRIPT_NAME']) . '/';
-			$count = substr_count($file_path, '/') - 1;
-
-			if (is_file($path . $file_path . AJAX_FILE)) {
-				//ajax.php is found inside the directory in the script that called it, so you call it relative.
-				$f = AJAX_FILE;
-			} else if (dirname($path . $file_path) . AJAX_FILE) {
-				$f = '../' . AJAX_FILE;
 			} else {
-				$path = dirname(dirname(dirname(ajax()->config->js_path)));
-				if ($path) {
-					$f = $path . '/' . AJAX_FILE;
-				}
-			}
 
-			$cwd = getcwd();
+				//$cwd = getcwd();
 
-			$_file = $cwd . '/' . $f;
-			if (!is_file($_file)) {
-				do {
-					$sub = str_repeat('../', $count);
-					$f_path = $sub . $f;
-					$new_file = $cwd . '/' . $f_path;
-					if (is_file($new_file)) {
-						$f = $f_path;
-						break;
+				$f = 'ajax.php';
+
+				$path = str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['SCRIPT_FILENAME']);
+				$file_path = dirname($_SERVER['SCRIPT_NAME']) . '/';
+				$count = substr_count($file_path, '/') - 1;
+
+				if (is_file($path . $file_path . AJAX_FILE)) {
+					//ajax.php is found inside the directory in the script that called it, so you call it relative.
+					$f = AJAX_FILE;
+				} else if (dirname($path . $file_path) . AJAX_FILE) {
+					$f = '../' . AJAX_FILE;
+				} else {
+					$path = dirname(dirname(dirname(ajax()->config->js_path)));
+					if ($path) {
+						$f = $path . '/' . AJAX_FILE;
 					}
-				} while ($count && $count--);
+				}
+
+				$cwd = getcwd();
+
+				$_file = $cwd . '/' . $f;
+				if (!is_file($_file)) {
+					do {
+						$sub = str_repeat('../', $count);
+						$f_path = $sub . $f;
+						$new_file = $cwd . '/' . $f_path;
+						if (is_file($new_file)) {
+							$f = $f_path;
+							break;
+						}
+					} while ($count && $count--);
+				}
 			}
 		}
 

@@ -6,6 +6,16 @@
 
 
 /**
+ * When you make ajax request from many different origins including sub-directories and misc places
+ * Cjax may get confused as to where ajax.php is, this is specific when you use  array controller/method
+ * for example call(array('controller','method')),  instead of  call('../ajax.php?controller/method')
+ * if Cjax can't find file ajax.php,  is best to specify its location here so that cjax always finds it.
+ */
+$config->ajax_file = '/ajax.php';
+
+
+
+/**
  * Setting to where the js directory is.
  * Eg: http://yoursite.com/cjax/
  */
