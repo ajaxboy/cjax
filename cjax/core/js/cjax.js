@@ -1417,7 +1417,10 @@ function CJAX_FRAMEWORK() {
 				}
 				return buffer;
 			},
-			overlayOptions: function(options) {
+			overlayOptions: function(opts) {
+
+				options = Object.assign({}, opts);
+
 
 				var top = (CJAX.util.get.y()+100)+'px';
 
