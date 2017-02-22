@@ -2363,7 +2363,7 @@ function CJAX_FRAMEWORK() {
 				action = CJAX.util.objectify(buffer, 'cjax');
 
 				if(typeof action.options == 'object' && CJAX.util.count(action.options) == 0) {
-					console.warn(action, 'possibly missing options!');
+					//console.warn(action, 'possibly missing options!');
 				}
 
 				if(CJAX.debug) {
