@@ -44,6 +44,11 @@ if(isset($_REQUEST['json'])) {
 			$_cache = CoreEvents::mkArray($_cache);
 		}
 
+		if($preload && is_array($preload)) {
+			$preload = CoreEvents::processScache($preload);
+			$preload = CoreEvents::mkArray($preload);
+		}
+
 		$source = 'CJAX.process_all("'.$_cache.'","'.$preload.'", '.$debug.', true);';
 	}
 
