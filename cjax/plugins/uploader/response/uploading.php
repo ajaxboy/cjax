@@ -11,7 +11,9 @@ class Uploading extends uploader
 	private $error;
 	private $post;
 	private $options;
+	private $data = array();
 	private $files;
+	private $default_exts = array('jpg','jpeg','gif','png');
 
 	private $upload_count = 0;
 
@@ -25,21 +27,26 @@ class Uploading extends uploader
 		$error = false;
 		$files_fount = false;
 		$files = array();
+		$success = array();
 		$instance_id =  isset($_REQUEST['instance_id'])? $_REQUEST['instance_id']: 0;
 		$use_debug = isset($_REQUEST['use_debug'])  && $_REQUEST['use_debug']? 1 : 0;
 		$ajax->cacheWrapper(array("<html><body>","</body></html>"));
-		$options = $this->options = (object) $this->get('upload_options' . $instance_id,'uploader');
+		$options = $this->options =  (object) $this->get('upload_options' . $instance_id,'uploader');
 		$options->use_debug = $use_debug;
+		$data = $this->data = (isset($_REQUEST['data']) ? $_REQUEST['data']: array());
+
 
 		if(!$options->target) {
 			$this->abort("No target directory.");
 		}
+
 
 		if(!is_writable($options->target )) {
 			return $this->abort(sprintf("Directory %s is not writable.", $options->target));
 		}
 
 		$this->chkLength();
+
 
 		if(!$_FILES) {
 			if(isset($_REQUEST['files']) && $_REQUEST['files']) {
@@ -50,7 +57,11 @@ class Uploading extends uploader
 				}
 			}
 		} else {
+
 			foreach($_FILES as $k => $v) {
+
+				$file_number = $this->fileNumber($v['name']);
+
 				if(is_array($v['error'])) {
 					foreach($v['error'] as $k2 => $err) {
 						$filename = $v['name'][$k2];
@@ -65,7 +76,7 @@ class Uploading extends uploader
 							$this->error = $this->error($err,$filename, $size);
 							continue;
 						} else {
-							if($filename && !$this->chkExt($filename)) {
+							if($filename && !$this->chkExt($filename, $file_number)) {
 								break;
 							}
 
@@ -79,7 +90,7 @@ class Uploading extends uploader
 					if(!$filename) {
 						continue;
 					}
-					if($filename && !$this->chkExt($filename)) {
+					if($filename && !$this->chkExt($filename, $file_number)) {
 						break;
 					}
 					if($v['error']) {
@@ -94,9 +105,11 @@ class Uploading extends uploader
 						}
 					}
 				}
+				if(isset($data['success']) && isset($data['success'][$file_number])) {
+					$success[]  = $data['success'][$file_number];
+				}
 			}
 		}
-
 
 		$this->debug($options);
 
@@ -134,8 +147,14 @@ class Uploading extends uploader
 				}
 
 				foreach($files as $k => $v) {
+
+					$info = pathinfo($v);
+					//is not an image, so no preview!
+					if(!in_array($info['extension'], $this->default_exts)) {
+						continue;
+					}
 					$img = sprintf("<img class='%s' src='%s' />", $img_class, $preview_url . $v);
-					if ($options->preview_type == 'single') {
+					if ($options->preview_type == 'single' || !$options->preview_type) {
 						$ajax->update($preview_container, $img);
 					} else {
 						$ajax->insert($preview_container, $img);
@@ -153,11 +172,14 @@ class Uploading extends uploader
 						)
 					);
 				}
-
 			}
+
 
 			$_files = implode(', ',$files);
 			$message = $options->success_message;
+			if($success) {
+				$message .= implode("<br />",$success);
+			}
 			if($message) {
 				$message = str_replace("@files", $_files, $message);
 				$ajax->success($message);
@@ -167,6 +189,15 @@ class Uploading extends uploader
 			$ajax->warning($this->error, 10);
 		}
 
+	}
+
+	public function fileNumber($files = array())
+	{
+		foreach($files as $k => $v) {
+			if($v) {
+				return $k;
+			}
+		}
 	}
 
 	public function flush()
@@ -216,19 +247,44 @@ class Uploading extends uploader
 		}
 	}
 
+
+	public function decodeExtError($default_error, $file_number)
+	{
+		if(isset($this->data['exterror']) && isset($this->data['exterror'][$file_number])) {
+			return $this->data['exterror'][$file_number];
+		}
+		return $default_error;
+	}
+
 	/**
 	 *
 	 * Check file extension
 	 * @param unknown_type $filename
 	 */
-	function chkExt($filename)
+	function chkExt($filename,$file_number = 0)
 	{
 		$info = pathinfo($filename);
 
 		if($this->options->ext && is_array($this->options->ext)) {
 			$exts =  array_map('strtolower', $this->options->ext);
+
+			/**
+			 * extension is specified inline file
+			 */
+			if(isset($this->data['ext']) && $this->data['ext'][$file_number]) {
+				$data_ext = strtolower($this->data['ext'][$file_number]);
+
+				if(!in_array($data_ext, $exts)) {
+					$this->error = $this->decodeExtError("File Extension: .$data_ext  is not allowed.", $file_number);
+					return false;
+				}
+
+				//only that extension is now allowed
+				$exts = array($data_ext);
+			}
 			if(!in_array(strtolower($info['extension']), $exts)) {
-				$this->error = "File Extension: .{$info['extension']}  is not supported.";
+				$allowed = "Allowed: "  .  implode(',',$exts);
+				$this->error = $this->decodeExtError("File Extension: .{$info['extension']}  is not supported. $allowed", $file_number);
 				return false;
 			}
 		}

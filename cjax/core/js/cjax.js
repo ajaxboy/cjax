@@ -4506,7 +4506,11 @@ function CJAX_FRAMEWORK() {
 		var tried = 0;
 		var trying = function() {
 			setTimeout(function() {
-				fn();
+				if(typeof fn == 'function') {
+					fn.call();
+				} else {
+					console.warn('Repat: ', fn, 'fn is not a function');
+				}
 			}, internal)
 		};
 		try {

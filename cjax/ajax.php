@@ -20,7 +20,7 @@
 if(!defined('AJAX_CD')) {
 	//if you experience a file not found error, and  AJAX_CD hasn't been defined anywhere
 	//enter a relateive path to the base directory where the controllers are.
-	define('AJAX_CD', 'controllers');
+	define('AJAX_CD', 'response');
 }
 if(!defined('AJAX_WD')) {
 	//directory where cjax directory is located
@@ -83,6 +83,7 @@ class ajax  {
 
 				if(is_dir($plugin->controllers_dir)) {
 
+					$controller = '';
 					$alt_controller = array(
 						'class' => $plugin->controller,
 						'dir' => $plugin->controllers_dir,
