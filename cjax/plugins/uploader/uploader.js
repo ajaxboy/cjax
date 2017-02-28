@@ -44,11 +44,6 @@ function uploader(a,b,c)
 
 		new_url = CJAX._pharseValues(new_url);
 
-		if(options.debug || options.log) {
-			console.log('-------------Uploader Debug Details---------------------');
-			console.log('URL: ', new_url);
-			console.log('Options: ', options);
-		}
 		with(form) {
 			method = 'POST';
 			action = new_url;
@@ -58,12 +53,16 @@ function uploader(a,b,c)
 	};
 
 
-	iResponse	=	function(iframe, data) {
+	iResponse	=	function(iframe,form) {
 		uploader.load(iframe, function() {
 			_fn = function(data) {
 				CJAX.process_all(data);
 				if(options.debug || options.log) {
-					console.log('Upload Response: ', CJAX.commands);
+					console.log('-------------Uploader Debug Details---------------------');
+					console.log('URL: ', form.action);
+					console.info('Response: ', data);
+					console.info('Response Commands: ', CJAX.commands);
+					console.info('Options: ', options);
 				}
 				if(url) {
 					$callback(false);
@@ -123,7 +122,7 @@ function uploader(a,b,c)
 						if (file.files.length) {
 
 							attachForm(file.form, iframe);
-							iResponse(iframe);
+							iResponse(iframe,file.form);
 							file.form.submit();
 							file.value = '';
 						}

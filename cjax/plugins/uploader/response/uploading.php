@@ -62,6 +62,30 @@ class Uploading extends uploader
 
 				$file_number = $this->fileNumber($v['name']);
 
+				if($options->file_callback && isset($options->file_callback[$file_number])) {
+
+					$data['max_size'] = $this->getMaxLength();
+
+					$response = call_user_func_array($options->file_callback[$file_number],array($v['tmp_name'][$file_number],$data,$v));
+
+					$data['file_callback'][$file_number]['response'] = $response;
+
+
+					if(isset($response['success'])) {
+						$data['success'][$file_number] = $response['success'];
+					}
+					if(isset($response['error'])) {
+
+						if (isset($response['error'])) {
+							$this->error = $response['error'];
+						}
+						/**
+						 * the callback function return false, so we don't upload
+						 */
+						continue;
+					}
+				}
+
 				if(is_array($v['error'])) {
 					foreach($v['error'] as $k2 => $err) {
 						$filename = $v['name'][$k2];
@@ -81,7 +105,7 @@ class Uploading extends uploader
 							}
 
 							if($f = $this->uploadFile($v['tmp_name'][$k2],$filename)) {
-								$files[] = $f;
+								$files[$file_number] = $f;
 							}
 						}
 					}
@@ -101,7 +125,7 @@ class Uploading extends uploader
 							$files_fount = true;
 						}
 						if($f = $this->uploadFile($v['tmp_name'], $filename)) {
-							$files[] = $f;
+							$files[$file_number] = $f;
 						}
 					}
 				}
@@ -127,9 +151,9 @@ class Uploading extends uploader
 
 
 		if(!$this->error) {
-			if($this->post) {
+			/*if($this->post) {
 				$ajax->ajaxVars($this->post);
-			}
+			}*/
 
 			if($options->preview_container) {
 				$preview_container = $options->preview_container;
@@ -182,7 +206,15 @@ class Uploading extends uploader
 			}
 			if($message) {
 				$message = str_replace("@files", $_files, $message);
-				$ajax->success($message);
+				$ajax->success($message,4, 'msg_'.rand(100000));
+			}
+
+
+			if($options->after) {
+				$this->post['a'] = $files;
+				$this->post['b'] = $options;
+				$this->post['c'] = $data;
+				$ajax->post($options->after,$this->post);
 			}
 		} else {
 
@@ -353,25 +385,33 @@ class Uploading extends uploader
 	{
 		if(isset($_SERVER['CONTENT_LENGTH']) && $_SERVER['CONTENT_LENGTH']) {
 
-			$post_max = $_post_max = @ini_get('post_max_size');// / 8;
-
-			$post_max = preg_replace("/([^0-9]+)/","", $post_max);
-
-			switch (substr($_post_max,-1) )
-			{
-				case 'G':
-					$post_max = $post_max * 1024;
-				case 'M':
-					$post_max = $post_max * 1024;
-				case 'K':
-					$post_max = $post_max * 1024;
-			}
+			$post_max = $this->getMaxLength();
 
 			if($_SERVER['CONTENT_LENGTH'] > $post_max) {
-				$error = "Upload Failed. This server limits max upload to $_post_max (post_max_size in php.ini). ";
+				$error = "Upload Failed. This server limits max upload to $post_max (post_max_size in php.ini). ";
 				$this->abort($error);
 			}
 		}
+	}
+
+
+	public function getMaxLength()
+	{
+		$post_max = $_post_max = @ini_get('post_max_size');// / 8;
+
+		$post_max = preg_replace("/([^0-9]+)/","", $post_max);
+
+		switch (substr($_post_max,-1) )
+		{
+			case 'G':
+				$post_max = $post_max * 1024;
+			case 'M':
+				$post_max = $post_max * 1024;
+			case 'K':
+				$post_max = $post_max * 1024;
+		}
+
+		return $post_max;
 	}
 
 	/**
@@ -382,7 +422,7 @@ class Uploading extends uploader
 	 * @param string $fileName
 	 * @param integer $size
 	 */
-	function error($errorNo,$fileName, $size = 0)
+	function error($errorNo,$fileName)
 	{
 		$ajax  = ajax();
 		$error = null;

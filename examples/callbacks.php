@@ -254,7 +254,7 @@ $ajax->on('bubbles', $ajax->info('{response}'));
     echo $ajax->code("
 
           //would trigger, bubble callback, which would display an info message saying \"Making Bubbles!\"
-          CJAX.callback.bubble();
+          CJAX.callback.bubbles();
 
           //would trigger the dancing callback, this could be used anywhere on your site, or within a custom plugin.
           CJAX.callback.dancing();
@@ -265,8 +265,8 @@ $ajax->on('bubbles', $ajax->info('{response}'));
 
           //To be on the safe side, you may want to add a check to make sure the callback exists eg:
 
-          if(CJAX.callback.bubble) {
-            CJAX.callback.bubble();
+          if(CJAX.callback.bubbles) {
+            CJAX.callback.bubbles();
           }
 
         ","JAVASCRIPT");

@@ -660,14 +660,18 @@ class plugin extends ext {
 				if(file_exists($f = "{$dir}{$v}.php")) {
 					require_once $f;
 					$class = $v;
-					$parent = get_parent_class($class);
-					if(!class_exists($class)) {
+
+					if(!class_exists($class, false)) {
 						$class = 'plugin_'.$v;
-					} else if($parent!='plugin') {
-						$class = 'plugin_'.$v;
+					} else {
+						$parent = get_parent_class($class);
+
+						if($parent!='plugin') {
+							$class = 'plugin_' . $v;
+						}
 					}
 
-					if(class_exists($class)) {
+					if(class_exists($class, false)) {
 						$vars = get_class_vars($class);
 
 						if(isset($vars['file'])) {

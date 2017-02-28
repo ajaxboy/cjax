@@ -271,6 +271,18 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 			</li>
 		</ul>
 
+
+		<h3>Plugin Ideas</h3>
+		<ul>
+			<li>
+				<a href="#">Edit</a> (in place text editor)
+			</li>
+			<li>
+				<a href="#">Tabs</a>
+			</li>
+		</ul>
+
+
 		<h3>Effects</h3>
 
 		<ul>

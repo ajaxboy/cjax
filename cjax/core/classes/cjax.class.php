@@ -24,7 +24,7 @@ require_once 'core.class.php';
 require_once 'xmlItem.class.php';
 class CJAX_FRAMEWORK Extends CoreEvents {
 
-	function click($element_id, $actions = array())
+	public function click($element_id, $actions = array())
 	{
 		if(!$actions) {
 			return $this->__call('click', $element_id);
@@ -32,12 +32,12 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		return $this->Exec($element_id, $actions);
 	}
 
-	function change($element_id, $actions)
+ 	public function change($element_id, $actions)
 	{
 		return $this->Exec($element_id, $actions,'change');
 	}
 
-	function blur($element_id, $actions)
+ 	public function blur($element_id, $actions)
 	{
 		if(!$actions) {
 			return $this->__call('blur', $element_id);
@@ -45,17 +45,17 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		return $this->Exec($element_id, $actions,'blur');
 	}
 
-	function keyup($element_id, $actions)
+	public function keyup($element_id, $actions)
 	{
 		return $this->Exec($element_id, $actions,'keyup');
 	}
 
-	function keydown($element_id, $actions)
+	public function keydown($element_id, $actions)
 	{
 		return $this->Exec($element_id, $actions,'keydown');
 	}
 
-	function keypress($element_id, $actions, $key = null)
+	public function keypress($element_id, $actions, $key = null)
 	{
 		if($key && is_a($actions,'xmlItem')) {
 			if(is_array($key)) {
@@ -72,7 +72,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		return $this->Exec($element_id, $actions,'keypress');;
 	}
 
-	function toggle($container_id, $label1 =  'Show', $label2 = 'Hide')
+	public function toggle($container_id, $label1 =  'Show', $label2 = 'Hide')
 	{
 		$data['do'] = 'toggle';
 		$data['container_id'] = $container_id;
@@ -149,7 +149,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	 * @param unknown_type $count
 	 * @param unknown_type $call_id
 	 */
-	function prevent($plugin_name,$id, $count = 1)
+	public function prevent($plugin_name,$id, $count = 1)
 	{
 		$data['do'] = 'prevent';
 		$data['count'] = $count;
@@ -165,7 +165,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	 * @param $actions
 	 * @param $event
 	 */
-	function Exec($selector , $actions , $event="click")
+	public function Exec($selector , $actions , $event="click")
 	{
 		if(!self::getCache()) {
 			return false;
@@ -246,7 +246,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	 *
 	 *  Uses call() to post stuff
 	 */
-	function post($url, $vars = array())
+	public function post($url, $vars = array())
 	{
 		if(is_array($vars)) {
 			$this->post = $vars;
@@ -266,7 +266,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	 * @param unknown_type $container_id
 	 * @param unknown_type $confirm
 	 */
-	function callc($url, $container_id=null, $confirm=null)
+	public function callc($url, $container_id=null, $confirm=null)
 	{
 		$this->wait(200, true);// 200 milliseconds
 		return $this->call($url, $container_id, $confirm);
@@ -435,7 +435,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	 *
 	 * @param unknown_type $vars
 	 */
-	function ajaxVars($vars)
+	public function ajaxVars($vars)
 	{
 		$data['do'] = 'ajaxVars';
 		if(is_array($vars)) {
@@ -457,7 +457,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	 * @param unknown_type $data
 	 * @param unknown_type $title
 	 */
-	function debug($data, $title ='Debug Information', $extra = null)
+	public function debug($data, $title ='Debug Information', $extra = null)
 	{
 		if($extra) {
 			$extra .= '<br />';
@@ -483,7 +483,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		return $this->xml($options);
 	}
 
-	function select($element, $options = array(), $selected = null,$allow_input = false)
+	public function select($element, $options = array(), $selected = null,$allow_input = false)
 	{
 		$select['do'] = 'select';
 		$select['element_id'] = $element;
@@ -564,7 +564,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	 *
 	 * @param unknown_type $style
 	 */
-	function style($element_id,$style = array() )
+	public function style($element_id,$style = array() )
 	{
 		$data['do'] = 'style';
 		$data['element'] = $element_id;
@@ -585,7 +585,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	$options['transparent'] = '60%'; // from 1 transparent to 100 solid, how transparent should it be? default is 80.
 	$options['color'] = '#FF8040'
 	 */
-	function overlay($url = null, $options = array(), $use_cahe = false)
+	public function overlay($url = null, $options = array(), $use_cahe = false)
 	{
 		if(is_array($url)) {
 			$url = $this->urlAccess($url);
@@ -630,7 +630,7 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 	 * @param $content
 	 * @param $options
 	 */
-	function overlayContent($content = null,$options = array())
+	public function overlayContent($content = null,$options = array())
 	{
 		$data['do'] = 'overLayContent';
 		if(!isset($options['click_close'])) {
