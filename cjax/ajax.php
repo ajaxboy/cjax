@@ -39,7 +39,7 @@ if(!defined('AJAX_FILE')) {
  **/
 class ajax  {
 	
-	function ajax($controller)
+	function __construct($controller)
 	{
 		$ajax = ajax();
 		
