@@ -14,6 +14,9 @@ Version 5.9  brings scalabity improvements and processing power to work on heavy
 
 
 
+![alt tag](http://cjax.sourceforge.net/media/how_cjax_works.jpg)
+
+
 Note: SourceForge is not longer the official download location.
 
 
