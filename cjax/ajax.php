@@ -38,6 +38,11 @@ if(!defined('AJAX_FILE')) {
  * //@ajax_php;
  **/
 class ajax  {
+
+    public static function allowAction($controller, $action = null)
+    {
+        CoreEvents::allowAction($controller, $action);
+    }
 	
 	function __construct($controller)
 	{
@@ -138,11 +143,25 @@ class ajax  {
 			header("Status: 404 Not Found");
 			$this->abort("Controller Method/Function: {$raw_class}::{$function}() was not found");
 		}
+
+        try {
+
+            CoreEvents::verifyAction($raw_class, $function);
+
+        } catch (Exception $e) {
+
+            $this->abort($e->getMessage());
+        }
+
 		return $this->_response( call_user_func_array(array($requestObject, $function), $args) );
 	}
 	
 	function abort($err)
 	{
+        if(!ajax()->isAjaxRequest()) {
+            print $err;
+            die(0);
+        }
 		ajax()->error($err, 10);
 		exit(0);
 	}

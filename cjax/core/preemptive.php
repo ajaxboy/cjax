@@ -91,8 +91,22 @@ if(!$ajax->isAjaxRequest()) {
 
 	if(count(array_keys(debug_backtrace(false))) == 2) {
 
-		if(!defined('AJAX_VIEW') && !in_array($controller, $allowed)) {
-			exit("Security Error. You cannot access this file directly.");
-		}
+        if(!defined('AJAX_VIEW') && !in_array($controller, $allowed)) {
+
+            if($controller = stristr($controller,':x', true)) {
+
+                $ajax->verifyAction($controller, $function, true);
+
+                $ajax->controller 	= 	$controller;
+                $_REQUEST['controller'] = $controller;
+                $_REQUEST['function'] = $function;
+                $_REQUEST['cjax'] = time();
+
+            } else {
+
+                exit("Security Error. You cannot access this file directly.");
+            }
+        }
+
 	}
 }
