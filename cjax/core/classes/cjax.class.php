@@ -280,32 +280,43 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 
 		$_options = (isset($url[3])) ? $url[3] : null;
 
-		$_params = null;
-		if ($params && !is_array($params)) {
-			$params = array($params);
-		}
-		if ($params) {
-
-			foreach ($params as $v) {
-				$_params[] = '|' . $v . '|';
-			}
-			$_params = '/' . implode('/', $_params);
-		}
-
-		if ($_options) {
-			//merged any passed options, this gets pulled back and sent to ajax options.
-			$options = array_merge($options, $_options);
-		}
+        $_params = null;
+        if ($params && !is_array($params)) {
+            $params = array($params);
+        }
 
 
+        //if it comes from call() or form() it will always be empty
+        //so it must be coming from route()
+        if($options) {
+            $_params = '/' . implode('/', $options);
+        } else {
 
-		if(!$f = ajax()->config->ajax_file) {
-			if (strpos($controller, ':') !== false) {
-				$parts = explode(':', $controller);
-				$path = $parts[1];
-				$controller = $parts[0];
+            if ($params) {
 
-				$f = $path . '/ajax.php';
+                foreach ($params as $v) {
+                    $_params[] = '|' . $v . '|';
+                }
+                $_params = '/' . implode('/', $_params);
+            }
+
+            if ($_options) {
+                //merged any passed options, this gets pulled back and sent to ajax options.
+                $options = array_merge($options, $_options);
+            }
+        }
+
+
+        $ajax = ajax();
+
+
+        if(!$f = $ajax->config->ajax_file) {
+            if(strpos($controller,':') !== false) {
+                $parts = explode(':', $controller);
+                $path  = $parts[1];
+                $controller = $parts[0];
+
+                $f = $path . '/ajax.php';
 
 			} else {
 
@@ -683,7 +694,6 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		}
 
 		return $this->xml($data);
-		return $this->xmlItem($this->xml($data), 'import') ;
 	}
 
 	/**
