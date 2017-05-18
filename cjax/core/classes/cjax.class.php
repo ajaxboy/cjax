@@ -272,6 +272,15 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		return $this->call($url, $container_id, $confirm);
 	}
 
+    public function route($url, $params = array())
+    {
+        if($params && !is_array($params)) {
+            $params = array($params);
+        }
+
+        return $this->urlAccess($url, $params);
+    }
+
 	private function urlAccess($url = array(), &$options = array())
 	{
 		$controller = $url[0];
@@ -583,7 +592,6 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		return $this->xml($data);
 	}
 
-	private static $overLay = array();
 	/**
 	 *
 	 * overlay url
@@ -766,19 +774,6 @@ class CJAX_FRAMEWORK Extends CoreEvents {
 		}
 		$this->_flag = $data;
 		return $this;
-	}
-
-	/**
-	 *
-	 * Removes waiting times
-	 */
-	public function waitReset()
-	{
-		$data['do'] = '_wait';
-
-		$data['time_reset'] = 1;
-
-		return $this->xml($data);
 	}
 
 	/**
