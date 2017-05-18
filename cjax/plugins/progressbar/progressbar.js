@@ -1,8 +1,9 @@
 
 
 CJAX.importFile({
-    files: 'css/style.css',
+    files: 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js,css/style.css',
     plugin:'progressbar',
+    check: 'jQuery'
 });
 //docs:
 function progressbar(element_id, progress)
