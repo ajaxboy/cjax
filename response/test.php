@@ -4,7 +4,7 @@ class Test {
 
 	public function __construct() {}
 
-	function test($a = null, $b = null)
+	public function test($a = null, $b = null)
 	{
 		$step1 = true;
 		include 'cjax/integration/default/testing.php';
