@@ -160,9 +160,9 @@ class ajax  {
 	{
         if(!ajax()->isAjaxRequest()) {
             print $err;
-            die(0);
+        } else {
+            ajax()->error($err, 10);
         }
-		ajax()->error($err, 10);
 		exit(0);
 	}
 
