@@ -75,10 +75,12 @@ $ajax->click('#link4', $ajax->call(array('progressbar','start', array('data.test
 
 <div id="content">
 
-
-    Credits# Cj Galindo  and includes the work of
-	<!-- Text -->
+    <!-- Text -->
 	Slick, simple and usable progressbar for your measuring needs.
+
+    <h5>Note</h5>
+
+    To actually learn how is done, you are expected to check the source code of the example, not just this page.
 
 	<h3>Examples</h3>
 
@@ -87,6 +89,9 @@ $ajax->click('#link4', $ajax->call(array('progressbar','start', array('data.test
 	<?php
 
 	echo $ajax->code("
+	
+	#Check examples/controllers/progressbar.php  for example on handling the progressbar
+	
 	//show progressbar at 1%
 	\$ajax->progressbar('#progressbar1', 20);
 
@@ -96,9 +101,41 @@ $ajax->click('#link4', $ajax->call(array('progressbar','start', array('data.test
     
     \$ajax->progressbar('#progressbar4', 40);
 
-	", true, true);
+	", true);
 		?>
 
+
+    <?php
+
+    echo $ajax->code("    <ul class=\"inline\">
+        <li>
+            <div id=\"progressbar1\">
+                <img src=\"/cjax/plugins/progressbar/img/check.png\" />
+            </div>
+            <a href=\"#\" class=\"link\" data-test=\"1\">Test</a>
+        </li>
+        <li>
+            <div id=\"progressbar2\">
+                <img src=\"/cjax/plugins/progressbar/img/cj.png\" />
+            </div>
+            <a href=\"#\" class=\"link\" data-test=\"2\">Test</a>
+        </li>
+        <li>
+
+            <div id=\"progressbar3\">
+            </div>
+            <a href=\"#\" class=\"link\" data-test=\"3\">Test</a>
+        </li>
+        <li>
+            <div id=\"progressbar4\">
+            </div>
+            <a href=\"#\" id=\"link4\" data-test=\"4\">Test</a>
+        </li>
+    </uL>
+        
+
+	","HTML", true);
+    ?>
 
 
     <h6>Example</h6>
