@@ -48,7 +48,9 @@ There are other integrations being worked on, such as for Laravel.
 If you download this package and figure out how to integrate it anywhere else, contact me @ajaxboy
 and we can work together to incorporate that.
 
-IMPORTANT: The current integration may have an issue when copying files, please refer to a related problem here to see how to resolve this issue: https://github.com/ajaxboy/cjax/issues/41
+IMPORTANT: The current integration may have an issue when copying files, 
+please refer to a related problem here to see how to resolve this issue: 
+https://github.com/ajaxboy/cjax/issues/41
 ````
 
 boom! you are set.
