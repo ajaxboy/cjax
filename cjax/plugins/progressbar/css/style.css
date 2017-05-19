@@ -7,7 +7,7 @@
   text-align: center;
 }*/
 
-.avatar-container {
+.progressbar {
   position: relative;
   display: inline-block;
   border-radius: 50%;
@@ -21,7 +21,7 @@
   cursor: pointer;
   text-shadow: 2px 2px 4px #000000;
 }
-.avatar-container .avatar {
+.progressbar .avatar {
   display: block;
   margin: 15px;
   border-radius: 50%;
@@ -30,11 +30,11 @@
   overflow: hidden;
   z-index: 100;
 }
-.avatar-container .avatar img {
+.progressbar .avatar img {
   width: 100%;
   height: auto;
 }
-.avatar-container .info {
+.progressbar .pbinfo {
   display: none;
   font-weight: bold;
   font-size: 2rem;
@@ -49,10 +49,10 @@
   color: white;
   z-index: 1000;
 }
-.avatar-container .info.js-active {
+.progressbar .js-active {
   display: table;
 }
-.avatar-container .info .info-inner {
+.progressbar .info-inner {
   display: table-cell;
   text-align: center;
   vertical-align: middle;

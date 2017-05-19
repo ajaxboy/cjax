@@ -7,6 +7,14 @@ body {
  background-color: #fff;
 }
 
+.inline {
+ list-style: none;
+}
+.inline li {
+ display: inline;
+ margin: 15px;
+}
+
 .try_it {
  position: relative;
 }

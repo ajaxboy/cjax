@@ -266,9 +266,13 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 			<li>
 				<a href="validation_uploader.php">Validation + Uploader</a>
 			</li>
+            <li>
+                <a href="plugin_progressbar.php">Progressbar</a>
+            </li>
 			<li>
 				<a href="plugins.php">Creating Plugins</a>(JS+PHP)
 			</li>
+
 		</ul>
 
 

@@ -228,7 +228,6 @@ function CJAX_FRAMEWORK() {
 				element = CJAX.$(data.a);
 				CJAX.lib.fnCall(element,{append: data.b}, data);
 				return;
-				return;
 				break;
 			case 'insert':
 
