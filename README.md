@@ -38,14 +38,7 @@ git clone https://github.com/ajaxboy/cjax.git
 ```
 
 
-Use wget in terminal:
-
-First CD into the directory you intend to install it.
-```
-wget -N https://github.com/ajaxboy/cjax/archive/5.9rc8.zip ; unzip '5.9rc8.zip' ;  cp -rf cjax-5.9rc8/* . ; rm -fr cjax-5.9rc8 ;  rm 5.9rc8.zip
-```
-
-Any of these ways work, the bottom line is to get the files on the root (public directory) of your website.
+The bottom line is trying to get the files on the root (public directory) of your website.
 
 ````
                          INTEGRATION
@@ -54,6 +47,8 @@ For further CodeIgniter Cjax Docs visit CI's wiki: https://github.com/bcit-ci/Co
 There are other integrations being worked on, such as for Laravel.
 If you download this package and figure out how to integrate it anywhere else, contact me @ajaxboy
 and we can work together to incorporate that.
+
+IMPORTANT: The current integration may have an issue when copying files, please refer to a related problem here to see how to resolve this issue: https://github.com/ajaxboy/cjax/issues/41
 ````
 
 boom! you are set.
