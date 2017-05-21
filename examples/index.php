@@ -75,7 +75,16 @@ h4 {
 <h5>Welcome to the World of Cjax</h5>
 <p>
 Let Cjax bring you to a whole new level of thinking when doing application interactions.
-Let yourself loose, and explore the posiblities of what you can do with Cjax. Full professional installation is available, <a href="mailto:&#099;&#106;&#120;&#120;&#105;&#050;&#049;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;?subject=Questions About Cjax">contact author</a> if you have any questions.
+Let yourself loose, and explore the possibilities of what you can do with Cjax.
+  <ul class="inline">
+        <li>
+            <a href="https://github.com/ajaxboy/cjax/issues">View Isses List</a>
+        </li>
+        <li>
+            <a href="https://github.com/ajaxboy/cjax/releases">View Previous Releases</a>
+        </li>
+    </ul>
+
 </p>
 <p class="soft-note">
 	This site's examples and, Cjax in general are updated on regular basis from <a  target="_blank" href="https://github.com/ajaxboy/cjax/tree/master">development branch</a>.
