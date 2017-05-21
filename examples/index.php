@@ -78,7 +78,7 @@ Let Cjax bring you to a whole new level of thinking when doing application inter
 Let yourself loose, and explore the possibilities of what you can do with Cjax.
   <ul class="inline">
         <li>
-            <a href="https://github.com/ajaxboy/cjax/issues">View Isses List</a>
+            <a href="https://github.com/ajaxboy/cjax/issues">View Issues List</a>
         </li>
         <li>
             <a href="https://github.com/ajaxboy/cjax/releases">View Previous Releases</a>
