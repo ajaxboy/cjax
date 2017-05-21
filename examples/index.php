@@ -225,7 +225,7 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 				<a href="call.php">Call</a>
 			</li>
 			<li>
-				Form
+                <a href="send_form.php">Form</a>
 			</li>
 			<li>
 				<a href="flush.php">Flush</a>
