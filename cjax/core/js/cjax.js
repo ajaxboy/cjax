@@ -538,8 +538,12 @@ function CJAX_FRAMEWORK() {
 					try {
 						new_obj = JSON.parse(JSON.stringify(obj));
 					} catch(e) {
-						console.warn('Could not conver object, you could encounter some asynchronicity:.', obj);
-						return obj;
+                        new_obj = {};
+						for(x in obj) {
+                            new_obj[x] = obj;
+						}
+						//console.warn('Could not conver object, you could encounter some asynchronicity:.', obj);
+
 					}
 				}
 
@@ -3630,25 +3634,46 @@ function CJAX_FRAMEWORK() {
 	};
 
 	this.on			=		function(options) {
-		CJAX.callback[options.type] = function(response) {
-			var new_event;
-			for(option in options.options) {
-				new_event = options.options[option];
 
-				if(new_event.options) {
-					new_event.options = CJAX.util.tag(new_event.options, '{response}', response);
-				} else {
-					new_event = CJAX.util.tag(new_event, '{response}', response);
-				}
+        var callback_opts_fn = function(options, response,selector) {
+            var new_event;
+            for(option in options.options) {
+                new_event = options.options[option];
 
-				if(new_event.is_plugin) {
-					CJAX._extendPlugin(new_event.is_plugin, new_event);
-				} else {
-					CJAX._process(new_event);
-				}
+                if(selector) {
+                    new_event.selector = selector;
+                }
 
-			}
-		};
+                if(new_event.options) {
+                    new_event.options = CJAX.util.tag(new_event.options, '{response}', response);
+                } else {
+                    new_event = CJAX.util.tag(new_event, '{response}', response);
+                }
+
+                if(new_event.is_plugin) {
+                    CJAX._extendPlugin(new_event.is_plugin, new_event);
+                } else {
+                    CJAX._process(new_event);
+                }
+
+            }
+        };
+
+        if(options.type[0] == '#' || options.type[0] == '.') {
+
+            CJAX.$(options.type, function(elements) {
+                for(x in elements) {
+
+                    callback_opts_fn(options, null, elements[x]);
+                }
+            });
+
+        } else {
+
+            CJAX.callback[options.type] = function (response) {
+                callback_opts_fn(options, response);
+            };
+        }
 	};
 
 	this._form		=		function( buffer , obj_buffer) {
