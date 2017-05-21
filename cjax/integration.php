@@ -35,7 +35,7 @@ function rcopy($src, $dst, $rm = false) {
         if(is_file($dst)) {
             unlink($dst);
         }
-        if($src == __FILE__) {
+        if(strpos($src,'integration.php') !== false) {
             return true;
         }
         if(!copy ( $src, $dst )) {
