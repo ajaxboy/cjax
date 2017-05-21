@@ -254,26 +254,28 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 	<div style="width: 210px;float: left">
 	<h3>Tools</h3>
 		<ul>
-			<li>
-				<a href="plugin_autocomplete.php">Autocomplete</a>
-			</li>
-			<li>
-				<a href="plugin_validate.php">Validate</a> (Jquery.validate)
-			</li>
-			<li>
-				<a href="plugin_uploadify.php">Uploadify</a> (Jquery.uploadify)
-			</li>
-			<li>
-				<a href="validation_uploader.php">Validation + Uploader</a>
-			</li>
-            <li>
-                <a href="plugin_progressbar.php">Progressbar</a>
-            </li>
             <li>
                 <a href="plugin_uploader.php">Ajax Uploader</a>
             </li>
+			<li>
+				<a href="plugin_autocomplete.php">Autocomplete</a>
+			</li>
             <li>
                 <a href="pagination.php">Pagination</a>
+            </li>
+            <li>
+                <a href="plugin_progressbar.php">Progressbar</a>
+            </li>
+
+            <li>
+                <a href="plugin_uploadify.php">Uploadify</a> (Jquery.uploadify)
+            </li>
+            <li>
+                <a href="plugin_validate.php">Validate</a> (Jquery.validate)
+            </li>
+
+            <li>
+                <a href="validation_uploader.php">Validation + Uploader</a>
             </li>
 			<li>
 				<a href="plugins.php">Creating Plugins</a>(JS+PHP)
