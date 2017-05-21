@@ -252,7 +252,7 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 	
 	
 	<div style="width: 210px;float: left">
-	<h3>Plugins</h3>
+	<h3>Tools</h3>
 		<ul>
 			<li>
 				<a href="plugin_autocomplete.php">Autocomplete</a>
@@ -268,6 +268,12 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 			</li>
             <li>
                 <a href="plugin_progressbar.php">Progressbar</a>
+            </li>
+            <li>
+                <a href="plugin_uploader.php">Ajax Uploader</a>
+            </li>
+            <li>
+                <a href="pagination.php">Pagination</a>
             </li>
 			<li>
 				<a href="plugins.php">Creating Plugins</a>(JS+PHP)
@@ -292,18 +298,6 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 		<ul>
 			<li>
 				<a href="spin.php">Spin Text</a>
-			</li>
-		</ul>
-
-		<h3>Tools</h3>
-
-		<ul>
-
-			<li>
-				<a href="plugin_uploader.php">Ajax Uploader</a>
-			</li>
-			<li>
-				<a href="pagination.php">Pagination</a>
 			</li>
 		</ul>
 
