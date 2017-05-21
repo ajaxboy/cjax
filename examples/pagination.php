@@ -152,7 +152,7 @@ $ajax->pagination('pager3', $options);
 
 
 
-", 'HTML', "<div class='try_it' style='margin-left: 250px;'><img src='resources/images/try_it.png' /></div>");
+", 'HTML', true);
 	?>
 	<br />
 	<div id='pager1'>Pagination Page One</div>
@@ -204,7 +204,7 @@ $ajax->pagination('pager3', $options);
 
 
 
-", 'HTML', "<div class='try_it' style='margin-left: 250px;'><img src='resources/images/try_it.png' /></div>");
+", 'HTML', true);
 	?>
 	<br />
 	<div id='pager2'>Pagination Page One</div>
@@ -242,7 +242,7 @@ $ajax->pagination('pager3', $options);
 
 
 
-", 'HTML', "<div class='try_it' style='margin-left: 250px;'><img src='resources/images/try_it.png' /></div>");
+", 'HTML', true);
 	?>
 
 
