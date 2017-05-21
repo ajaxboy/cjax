@@ -268,10 +268,10 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
             </li>
 
             <li>
-                <a href="plugin_uploadify.php">Uploadify</a> (Jquery.uploadify)
+                <a href="plugin_uploadify.php">Uploadify</a>
             </li>
             <li>
-                <a href="plugin_validate.php">Validate</a> (Jquery.validate)
+                <a href="plugin_validate.php">Validate</a>
             </li>
 
             <li>
