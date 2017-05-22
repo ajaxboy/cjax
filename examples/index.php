@@ -5,7 +5,7 @@ require 'ajax.php';
 $ajax->spin('star', 'spin');
 
 $ajax->click('#a_in_place', $ajax->dialog("This is an idea for an upcoming tool related to in place editing.","In place Editor"));
-$ajax->click('#a_tabs', $ajax->dialog("This is an idea for an upcoming tool related to in place tabs.","Tabs"));
+$ajax->click('#a_tabs', $ajax->dialog("This is an idea for an upcoming tool related to tabs.","Tabs"));
 
 ?>
 <!doctype html>
@@ -295,7 +295,7 @@ Let yourself loose, and explore the possibilities of what you can do with Cjax.
 		</ul>
 
 
-		<h3>Plugin Ideas</h3>
+		<h3>Tool Ideas</h3>
 		<ul>
 			<li>
 				<a id="a_in_place" href="#">Edit</a> (in place text editor)
