@@ -6,4 +6,4 @@
  * Time: 3:23 PM
  */
 
-header('location docs/triggers.php');
+header('location: docs/triggers.php');
