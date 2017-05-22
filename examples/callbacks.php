@@ -247,8 +247,9 @@ $ajax->on('bubbles', $ajax->info('{response}'));
     <p>
         You can now use on() method on elements selectors, this allows you to apply functions to custom selectors.
         Unlike using click() and other events, the on() event basically triggers the functions/actions on the spot.
-        This allows you to apply functions on elements with ease and without needed an event to trigger it.
+        This allows you to apply functions on elements with ease and without the need to trigger it.
     </p>
+    <p>
     <?php
     echo $ajax->code("
         \$ajax->on('.response', \$ajax->prop(array('style' => array('backgroundColor' => 'Red'))));

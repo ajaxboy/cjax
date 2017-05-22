@@ -75,6 +75,9 @@ $ajax = ajax();
         <li>
             <a href="../keypress.php">keypress()</a>
         </li>
+        <li>
+            <a href="../callbacks.php">On()</a>
+        </li>
     </u>
     <!-- Code Used -->
 
