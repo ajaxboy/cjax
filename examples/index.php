@@ -177,11 +177,11 @@ Let yourself loose, and explore the possibilities of what you can do with Cjax.
 			</li>
 		</ul>
 		
-		<h3>Other</h3>
+		<h3>Other Intricacies</h3>
 
 		<ul>
 			<li>
-				<a href="callbacks.php">Ajax Callbacks</a>
+				<a href="callbacks.php">On() (callbacks)</a>
 			</li>
 			<li>
 				<a href="sizzle.php">Advanced Selectors</a>
@@ -189,11 +189,11 @@ Let yourself loose, and explore the possibilities of what you can do with Cjax.
 			<li>
 				<a href="js_properties.php">JS Properties</a>
 			</li>
+            <li>
+                <a href="js_functions.php">JS Functions</a>
+            </li>
 			<li>
 				<a href="main_property.php">Main Property</a>
-			</li>
-			<li>
-				<a href="js_functions.php">Access JS Functions</a>
 			</li>
 			<li>
 				<a href="element_properties.php">Elements Properties</a>

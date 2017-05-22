@@ -41,7 +41,7 @@ $ajax->on('bubbles', $ajax->info('{response}'));
 <!doctype html>
 <head>
     <link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
-    <title>ajax Callbacks</title>
+    <title>On ajax Callbacks</title>
     <?php echo $ajax->init(false);?>
 </head>
 <body>
@@ -236,6 +236,30 @@ $ajax->on('bubbles', $ajax->info('{response}'));
         <br />
 
     </p>
+
+
+    <h4>On Selectors</h4>
+
+
+    <p class="info">
+        Cjax RC10+
+    </p>
+    <p>
+        You can now use on() method on elements selectors, this allows you to apply functions to custom selectors.
+        Unlike using click() and other events, the on() event basically triggers the functions/actions on the spot.
+        This allows you to apply functions on elements with ease and without needed an event to trigger it.
+    </p>
+    <?php
+    echo $ajax->code("
+        \$ajax->on('.response', \$ajax->prop(array('style' => array('backgroundColor' => 'Red'))));
+        
+        \$ajax->on('.response', \$ajax->update('Some Text!'));
+        ");
+    ?>
+    </p>
+
+    <br />
+
 
     <h5>Examples of custom callbacks</h5>
 
