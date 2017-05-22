@@ -102,7 +102,7 @@ body {
  width: 200px;
 }
 
-.req {
+.req, .v {
  font-family: "Adobe Devanagari";
  font-size: 19px;
  color: #0000BB;
