@@ -1206,7 +1206,7 @@ if (document.addEventListener) {
 	/**
 	 * Converts an array into xml..
 	 */
-	public function xmlIt($input = array(), $tag = null)
+	public static function  xmlIt($input = array(), $tag = null)
 	{
 		$new = array();
 		if(is_array($input) && $input) {
