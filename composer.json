@@ -20,5 +20,6 @@
     "psr-0": {
       "cjax": "cjax/core/classes"
     }
-  }
+  },
+  "version": "0.0.1"
 }
