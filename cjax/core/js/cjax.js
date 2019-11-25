@@ -100,10 +100,10 @@ function CJAX_FRAMEWORK() {
 
 		switch(fn) {
 			case 'replace':
-				if(data.b[0]=='#' && !/[^a-zA-Z0-9_]/.test(data.b.replace(/^#/,''))) {
+				if (data.b[0]=='#' && !/[^a-zA-Z0-9_]/.test(data.b.replace(/^#/,''))) {
 					data.b = data.b.replace(/^\#/,'');
 					child = CJAX.$(data.b);
-					if(!child) {
+					if (!child) {
 						console.log('Element#1', data.b,'could not be found.');
 						return;
 					}
@@ -114,10 +114,10 @@ function CJAX_FRAMEWORK() {
 				}
 				break;
 			case 'append':
-				if(data.b[0]=='#') {
+				if (data.b[0]=='#') {
 					data.b = data.b.replace(/^\#/,'');
 					child = CJAX.$(data.b);
-					if(!child) {
+					if (!child) {
 						console.log('Element', data.b,'could not be found.');
 						return;
 					}
@@ -139,7 +139,7 @@ function CJAX_FRAMEWORK() {
 
 		var data = opts.options;
 
-		if(!data) {
+		if (!data) {
 			console.warn('_fn no data', opts,data, arguments.callee.caller);
 			return false;
 		}
@@ -148,17 +148,17 @@ function CJAX_FRAMEWORK() {
 
 		switch(fn) {
 			case 'document':
-				if(typeof document[data.a]=='string') {
+				if (typeof document[data.a]=='string') {
 					data.b = CJAX._pharseValues(data.b);
 					return document[data.a] = data.b;
 				}
 				return;
 				break;
 			case 'confirm':
-				if(my_fn(data.a)) {
+				if (my_fn(data.a)) {
 
 					console.log(data.b);
-					if(typeof data.b=='function') {
+					if (typeof data.b=='function') {
 						data.b();
 					}
 				}
@@ -211,10 +211,10 @@ function CJAX_FRAMEWORK() {
 				return;
 				break;
 			case 'prepend':
-				if(data.b[0]=='#') {
+				if (data.b[0]=='#') {
 					data.b = data.b.replace(/^\#/,'');
 					child = CJAX.$(data.b);
-					if(!child) {
+					if (!child) {
 						console.log('Element#1', data.b,'could not be found.');
 						return;
 					}
@@ -233,16 +233,16 @@ function CJAX_FRAMEWORK() {
 
 				element = CJAX.$(data.a);
 
-				if(data.b[0]=='#') {
+				if (data.b[0]=='#') {
 					data.b = data.b.replace(/^\#/,'');
 					child = CJAX.$(data.b);
-					if(!child) {
+					if (!child) {
 						console.log('Element', data.b,'could not be found.');
 						return;
 					}
 
-					if(data.c) {
-						if(element.lastChild) {
+					if (data.c) {
+						if (element.lastChild) {
 							element.insertBefore(child,element.lastChild.nextSibling);
 						} else {
 							element.appendChild(child);
@@ -264,7 +264,7 @@ function CJAX_FRAMEWORK() {
 				break;
 			default:
 
-				if(CJAX.lib.isFn(window[fn])) {
+				if (CJAX.lib.isFn(window[fn])) {
 					return processCustomFn(window[fn], 'direct');
 				} else {
 					//return processCustomFn(fn, 'window');
@@ -275,7 +275,7 @@ function CJAX_FRAMEWORK() {
 				return;
 		}
 
-		/*if(count == 0) {
+		/*if (count == 0) {
 		 return CJAX.Execfn(raw_fn, CJAX.clicked);
 		 }*/
 
@@ -286,8 +286,8 @@ function CJAX_FRAMEWORK() {
 				case 'direct':
 
 					/*str = raw_fn.toLowerCase().replace(/\b([a-z])/gi,function(c){return c.toUpperCase();});
-					 if(CJAX.handlers['_handler'+str] && CJAX.lib.isFn(CJAX.handlers['_handler'+str])) {
-					 if(CJAX.handlers['_handler'+str](data.a,data.b,data,opts)) {
+					 if (CJAX.handlers['_handler'+str] && CJAX.lib.isFn(CJAX.handlers['_handler'+str])) {
+					 if (CJAX.handlers['_handler'+str](data.a,data.b,data,opts)) {
 					 return true;
 					 }
 					 }
@@ -295,7 +295,7 @@ function CJAX_FRAMEWORK() {
 
 
 					arr_data = [];
-					for(x in data) {
+					for (x in data) {
 						arr_data.push(data[x]);
 					}
 					my_fn.apply(this, arr_data);
@@ -311,7 +311,7 @@ function CJAX_FRAMEWORK() {
 					data.a = data.a.replace(/^\#/,'');
 					data.b = CJAX.decode(data.b);
 					element = CJAX.$(data.a);
-					if(!element) {
+					if (!element) {
 						console.log('Element',data.a, 'cold not be found in the document.');
 						return;
 					}
@@ -324,23 +324,23 @@ function CJAX_FRAMEWORK() {
 			}
 
 
-			if(typeof my_fn =='object') {
-				if(prop) {
+			if (typeof my_fn =='object') {
+				if (prop) {
 					data.a = prop;
 				}
 				CJAX.lib.fnCallback(my_fn, data.a, data.b, data.c, data);
 			} else {
-				if(!data.c) {
-					if(data.b){
-						if(CJAX.lib.isFn(my_fn)) {
-							if(type=='window') {
+				if (!data.c) {
+					if (data.b){
+						if (CJAX.lib.isFn(my_fn)) {
+							if (type=='window') {
 								window[raw_fn][data.a](data.b);
 							}
 						}
 					}
 				} else {
 					arr_data = [];
-					for(x in data) {
+					for (x in data) {
 						arr_data.push(data[x]);
 					}
 					my_fn.apply(this, arr_data);
@@ -350,7 +350,7 @@ function CJAX_FRAMEWORK() {
 
 
 		try {
-			for(x in data) {
+			for (x in data) {
 				data[x] = CJAX.lib.pharseFunction(data[x]);
 			}
 		} catch(e) {
@@ -359,14 +359,14 @@ function CJAX_FRAMEWORK() {
 			return;
 		}
 
-		if(typeof data.a == 'string') {
+		if (typeof data.a == 'string') {
 			parts = data.a.split('.');
-			if(CJAX.util.count(parts) > 1) {
-				if(window[fn]) {
+			if (CJAX.util.count(parts) > 1) {
+				if (window[fn]) {
 					fn = window[fn];
-					if(fn[parts[0]]) {
+					if (fn[parts[0]]) {
 						fn = fn[parts[0]];
-						if(typeof fn[parts[1]]=='object') {
+						if (typeof fn[parts[1]]=='object') {
 							fn = fn[parts[1]];
 						} else {
 							prop = parts[1];
@@ -376,34 +376,34 @@ function CJAX_FRAMEWORK() {
 			}
 		}
 
-		if(CJAX.ie) {
-			if(CJAX.ie[raw_fn]) {
+		if (CJAX.ie) {
+			if (CJAX.ie[raw_fn]) {
 
-				if(!fn || typeof fn=='string') {
+				if (!fn || typeof fn=='string') {
 					fn = window[fn];
 				}
 				return processCustomFn(fn,'direct');
 			}
 		}
 
-		if(CJAX.lib.isFn(fn)) {
+		if (CJAX.lib.isFn(fn)) {
 			processCustomFn(fn,'direct');
-		} else if(window[fn]) {
+		} else if (window[fn]) {
 			fn = window[fn];
-			if(CJAX.lib.isFn(fn)) {
+			if (CJAX.lib.isFn(fn)) {
 				return processCustomFn(fn, 'direct');
 			} else {
 				return processCustomFn(fn, 'window');
 			}
 		} else {
-			if(typeof fn=='object') {
+			if (typeof fn=='object') {
 				processCustomFn(fn);
 			} else  {
 				element = CJAX.$(data.a);
 
-				if(element) {
+				if (element) {
 					xfn = element[fn];
-					if(xfn) {
+					if (xfn) {
 						processCustomFn(xfn);
 					} else {
 						processCustomFn(fn,'custom');
@@ -419,24 +419,24 @@ function CJAX_FRAMEWORK() {
 	{
 		var element = settings.selector;
 
-		if(!element) {
+		if (!element) {
 			element = CJAX.$(settings.element_id);
 		}
 
-		if(!element) {
+		if (!element) {
 			console.log('property: element_id -', settings.element_id, 'was not found', settings);
 			return;
 		}
 
-		if(settings.options) {
+		if (settings.options) {
 			var value = settings.options.a;
 		} else {
 			var value = settings.value;
-			if(CJAX.util.json(value)) {
+			if (CJAX.util.json(value)) {
 				value = CJAX.util.json(value);
 			}
 		}
-		if(typeof value =='object') {
+		if (typeof value =='object') {
 			try {
 				for (x in value) {
 					if (typeof value[x] == 'object') {
@@ -465,7 +465,7 @@ function CJAX_FRAMEWORK() {
 					break;
 				case 'A':
 					var href = element.href;
-					if(/^https?/.test(href)) {
+					if (/^https?/.test(href)) {
 						element.href =  value;
 						element.innerHTML =  value;
 					} else {
@@ -508,7 +508,7 @@ function CJAX_FRAMEWORK() {
 	this.remove		=		function( buffer ) {
 		element_id = buffer.element_id;
 		var element = CJAX.is_element(element_id);
-		if(element) {
+		if (element) {
 			element.parentNode.removeChild( element );
 		}
 	};
@@ -518,7 +518,7 @@ function CJAX_FRAMEWORK() {
 		return {
 			applySelector: function(selector,callback) {
 
-				if(typeof selector == 'object') {
+				if (typeof selector == 'object') {
 					return callback({0 : selector});
 				}
 				CJAX.util.queue('sizzle.js', function () {
@@ -526,7 +526,7 @@ function CJAX_FRAMEWORK() {
 				});
 			},
 			copyObject: function(obj) {
-				if(typeof  obj != 'object') {
+				if (typeof  obj != 'object') {
 					return {};
 				}
 
@@ -539,7 +539,7 @@ function CJAX_FRAMEWORK() {
 						new_obj = JSON.parse(JSON.stringify(obj));
 					} catch(e) {
                         new_obj = {};
-						for(x in obj) {
+						for (x in obj) {
                             new_obj[x] = obj;
 						}
 						//console.warn('Could not conver object, you could encounter some asynchronicity:.', obj);
@@ -565,13 +565,13 @@ function CJAX_FRAMEWORK() {
 							if (parent) {
 								return CJAX.util.objectify(event[2], null);
 							} else {
-								if(event){
+								if (event){
 									data[event[1]] =  CJAX.decode(event[2]);
 								}
 							}
 						}
 
-						if(data && data.options) {
+						if (data && data.options) {
 							data.options = CJAX.util.jsonString(data.options);
 						}
 
@@ -583,10 +583,10 @@ function CJAX_FRAMEWORK() {
 				}
 			},
 			tag: function(options, tag, tag_value) {
-				if(options) {
+				if (options) {
 					for (var i in options) {
 						if (typeof options[i] == 'object') {
-							if(options[i].options) {
+							if (options[i].options) {
 								options[i].options = CJAX.util.tag(options[i].options,tag, tag_value);
 							} else {
 								for (var i2 in options[i]) {
@@ -596,7 +596,7 @@ function CJAX_FRAMEWORK() {
 								}
 							}
 						} else {
-							if(typeof options[i] == 'string') {
+							if (typeof options[i] == 'string') {
 								options[i] = CJAX.decode(options[i]).replace(tag, tag_value);
 							}
 						}
@@ -608,13 +608,13 @@ function CJAX_FRAMEWORK() {
 				return str.toLowerCase().replace(/[^\w\s]/gi, '');
 			},
 			payload: function(file, data) {
-				if(typeof data == 'undefined') {
+				if (typeof data == 'undefined') {
 					return CJAX.payload[CJAX.util.cleanString(file)];
 				}
 				CJAX.payload[CJAX.util.cleanString(file)] = data;
 			},
 			loaded: function(file, data) {
-				if(typeof data == 'undefined') {
+				if (typeof data == 'undefined') {
 					return CJAX.loaded[CJAX.util.cleanString(file)];
 				}
 				CJAX.loaded[CJAX.util.cleanString(file)] = data;
@@ -623,10 +623,10 @@ function CJAX_FRAMEWORK() {
 				CJAX.queueCompleted[CJAX.util.cleanString(file)] = true;
 			},
 			queue: function(file, fn) {
-				if(!fn) {
+				if (!fn) {
 					return CJAX.queue[CJAX.util.cleanString(file)];
 				}
-				if(CJAX.queueCompleted[CJAX.util.cleanString(file)]) {
+				if (CJAX.queueCompleted[CJAX.util.cleanString(file)]) {
 					fn.call();
 				} else {
 					var count = CJAX.util.count(CJAX.queue[CJAX.util.cleanString(file)]);
@@ -637,7 +637,7 @@ function CJAX_FRAMEWORK() {
 				}
 			},
 			cacheURL: function(cache_url, data, dataType) {
-				if(typeof cache_url != 'undefined') {
+				if (typeof cache_url != 'undefined') {
 					var lower_url = CJAX.util.cleanString(cache_url);
 
 					CJAX.cache_calls[lower_url] = {
@@ -647,7 +647,7 @@ function CJAX_FRAMEWORK() {
 				}
 			},
 			cachedURL: function(cache_url) {
-				if(typeof cache_url != 'undefined') {
+				if (typeof cache_url != 'undefined') {
 					var lower_url = CJAX.util.cleanString(cache_url);
 
 					return CJAX.cache_calls[lower_url];
@@ -656,9 +656,9 @@ function CJAX_FRAMEWORK() {
 			cacheState: function(cache_url, settings) {
 				var lower_url = CJAX.util.cleanString(cache_url);
 
-				if(CJAX.calls_in_progress[lower_url]) {
+				if (CJAX.calls_in_progress[lower_url]) {
 
-					for(x in settings) {
+					for (x in settings) {
 						CJAX.calls_in_progress[lower_url][x] = settings[x];
 					}
 				} else {
@@ -669,24 +669,24 @@ function CJAX_FRAMEWORK() {
 				}
 			},
 			cachedState: function(cache_url) {
-				if(typeof cache_url != 'undefined') {
+				if (typeof cache_url != 'undefined') {
 					var lower_url = CJAX.util.cleanString(cache_url);
 
 					return CJAX.calls_in_progress[lower_url];
 				}
 			},
 			isXML: function(data) {
-				if(typeof data !='string') {
+				if (typeof data !='string') {
 					return false;
 				}
-				if(data.indexOf('<')!=-1 && data.indexOf('>')!=-1) {
+				if (data.indexOf('<')!=-1 && data.indexOf('>')!=-1) {
 					return true;
 				}
 				return false;
 			},
 			jsonString: function(data) {
 				var json = CJAX.util.json(data);
-				if(!json) {
+				if (!json) {
 					return data;
 				}
 				return json;
@@ -694,21 +694,21 @@ function CJAX_FRAMEWORK() {
 			json: function(buffer, tag)
 			{
 				var err;
-				if(typeof buffer=='object') {
+				if (typeof buffer=='object') {
 					return buffer;
 				}
 				var _parse;
-				if(typeof JSON !='undefined' && !CJAX.ie) {
+				if (typeof JSON !='undefined' && !CJAX.ie) {
 					_parse = JSON.parse;
 				}
-				if(!tag) {
+				if (!tag) {
 					var tag = 'json';
 				}
 
 				var try1 = function(data, try_num) {
 
 					try {
-						if(_parse) {
+						if (_parse) {
 							json =  _parse(data);
 						} else {
 							json =  eval("("+data+")");
@@ -720,7 +720,7 @@ function CJAX_FRAMEWORK() {
 					return json;
 				};
 
-				if(buff = CJAX.decode(CJAX.xml(tag,buffer))) {
+				if (buff = CJAX.decode(CJAX.xml(tag,buffer))) {
 					try {
 						var json = try1(buff,1);
 
@@ -728,16 +728,16 @@ function CJAX_FRAMEWORK() {
 							new_buff2 = CJAX.decode(buff);
 							json = try1(new_buff2,2);
 
-							if(typeof json != 'object') {
+							if (typeof json != 'object') {
 								new_buff3 = CJAX.decode(new_buff2).replace(/\\/gi, '');
 								json = try1(new_buff3,3);
 
-								if(!json) {
+								if (!json) {
 									new_buff4 = new_buff3.replace(/\r?\n|\r|\t/gm,'');
 
 									json = try1(new_buff4,4);
 
-									if(!json && err) {
+									if (!json && err) {
 
 										console.warn('There was an error while processing data:', err);
 										console.log('Original String:', buff);
@@ -765,7 +765,7 @@ function CJAX_FRAMEWORK() {
 					console.log("Could not convert Json Object");
 					return;
 				};
-				if(json) {
+				if (json) {
 					return json;
 				}
 			},
@@ -775,21 +775,21 @@ function CJAX_FRAMEWORK() {
 			 *  output will be an array
 			 */
 			array: function(buffer) {
-				if(CJAX.xml('json',buffer)) {
+				if (CJAX.xml('json',buffer)) {
 					return eval("("+CJAX.decode(CJAX.xml('json',buffer))+")");
 				}
 				var array = CJAX.xml('arr',buffer,true);
 
 				var xml_arr = [];
-				for(x in array) {
+				for (x in array) {
 					xml_arr[x] = array[x];
 				}
 
 				var k,v;
 				var xml_arr = [];
 
-				for(x in array) {
-					if(CJAX.util.isXML(array[x])) {
+				for (x in array) {
+					if (CJAX.util.isXML(array[x])) {
 						k = CJAX.xml('k',array[x]);
 						v = CJAX.xml('v',array[x]);
 						xml_arr[k] = v;
@@ -856,13 +856,13 @@ function CJAX_FRAMEWORK() {
 			get: {
 				y: function() {
 					var scrOfY = 0;
-					if( typeof( window.pageYOffset ) == 'number' ) {
+					if ( typeof( window.pageYOffset ) == 'number' ) {
 						//Netscape compliant
 						scrOfY = window.pageYOffset;
-					} else if( document.body && ( document.body.scrollLeft || document.body.scrollTop ) ) {
+					} else if ( document.body && ( document.body.scrollLeft || document.body.scrollTop ) ) {
 						//DOM compliant
 						scrOfY = document.body.scrollTop;
-					} else if( document.documentElement && ( document.documentElement.scrollLeft || document.documentElement.scrollTop ) ) {
+					} else if ( document.documentElement && ( document.documentElement.scrollLeft || document.documentElement.scrollTop ) ) {
 						//IE6 standards compliant mode
 						scrOfY = document.documentElement.scrollTop;
 					}
@@ -870,7 +870,7 @@ function CJAX_FRAMEWORK() {
 				},
 				extension: function(path) {
 					var pos = CJAX.util.strrpos(path,'.');
-					if(!pos) {
+					if (!pos) {
 						return '';
 					}
 					return CJAX.php.substr(path,pos,path.length);
@@ -878,7 +878,7 @@ function CJAX_FRAMEWORK() {
 				byClassName:function(theClass,tag)
 				{
 					var allHTMLTags = new Array();
-					if(tag == null ) {
+					if (tag == null ) {
 						var tag = "*";
 					}
 					var allHTMLTags=document.getElementsByTagName(tag);
@@ -891,16 +891,16 @@ function CJAX_FRAMEWORK() {
 				}
 				,
 				dirname : function (path,loops) {
-					if(typeof loops=='undefined') {
+					if (typeof loops=='undefined') {
 						var loops = 1;
 					}
 					var self = CJAX.util.get.selfpath();
-					if(!self || !path) {
+					if (!self || !path) {
 						return false;
 					}
 					path.match(/(.*)[\/\\]/)[1];
-					if( loops ){
-						for(var i = 0; i < loops-1; i++){
+					if ( loops ){
+						for (var i = 0; i < loops-1; i++){
 							try{
 								path = path.match( /(.*)[\/\\]/ )[1];
 							}
@@ -910,7 +910,7 @@ function CJAX_FRAMEWORK() {
 					return path;
 				},
 				document : function(frame) {
-					if(CJAX.defined(frame) && frame) {
+					if (CJAX.defined(frame) && frame) {
 						var iframeDoc;
 						if (this.contentDocument) {
 							iframeDoc = this.contentDocument;
@@ -926,16 +926,16 @@ function CJAX_FRAMEWORK() {
 					return document.body;
 				}
 				,basepath : function () {
-					if(CJAX.base) {
+					if (CJAX.base) {
 						return CJAX.base;
 					}
 					var path = CJAX.util.get.selfpath();
 
 
 					path = CJAX.util.get.dirname(path,3);
-					if(path) {
+					if (path) {
 						var len = path.substr(path.length - 4);
-						if(len=='core') {
+						if (len=='core') {
 							//if cjax is called from a parent-child file
 							path = CJAX.util.get.dirname(path,2);
 						}
@@ -956,9 +956,9 @@ function CJAX_FRAMEWORK() {
 						var paths = [];
 						var script;
 						var scripts = CJAX.elem_docs( 'script' );
-						for( var i = 0; i < scripts.length; i++ ){
+						for ( var i = 0; i < scripts.length; i++ ){
 							script = scripts[i];
-							if(script.src) paths[i] = script.src;
+							if (script.src) paths[i] = script.src;
 						}
 						return paths;
 					}
@@ -969,7 +969,7 @@ function CJAX_FRAMEWORK() {
 
 					script = CJAX.$('cjax_lib');
 
-					if(script) {
+					if (script) {
 						src = script.src;
 						var f = src.replace(/cjax-.+$/,'');
 
@@ -980,8 +980,8 @@ function CJAX_FRAMEWORK() {
 				},
 				value : function(elem,verbose) {
 					var type = (typeof elem);
-					if( typeof verbose == 'undefined') { verbose = true; }
-					if( type.indexOf( 'object' ) == -1) {var elem = CJAX.$(elem,verbose);}
+					if ( typeof verbose == 'undefined') { verbose = true; }
+					if ( type.indexOf( 'object' ) == -1) {var elem = CJAX.$(elem,verbose);}
 					return elem.value;
 				},
 				position : function(obj) {
@@ -1000,30 +1000,30 @@ function CJAX_FRAMEWORK() {
 				property : {
 					enabled: function(elem,verbose) {
 						var type = (typeof elem);
-						if( typeof verbose == 'undefined') { verbose = true; }
-						if( type.indexOf( 'object' ) == -1) {var elem = CJAX.$(elem,verbose);}
+						if ( typeof verbose == 'undefined') { verbose = true; }
+						if ( type.indexOf( 'object' ) == -1) {var elem = CJAX.$(elem,verbose);}
 						return (elem.disabled)? false : true;
 					},
 					disabled: function(elem,verbose) {
 						var type = (typeof elem);
-						if( typeof verbose == 'undefined') { verbose = true; }
-						if( type.indexOf( 'object' ) == -1) {var elem = CJAX.$(elem,verbose);}
+						if ( typeof verbose == 'undefined') { verbose = true; }
+						if ( type.indexOf( 'object' ) == -1) {var elem = CJAX.$(elem,verbose);}
 						return elem.disabled;
 					},style : function(elem,verbose) {
 						var type = (typeof elem);
-						if( typeof verbose == 'undefined') { verbose = true; }
-						if( type.indexOf( 'object' ) == -1) {var elem = CJAX.$(elem,verbose);}
+						if ( typeof verbose == 'undefined') { verbose = true; }
+						if ( type.indexOf( 'object' ) == -1) {var elem = CJAX.$(elem,verbose);}
 						return elem.style;
 					}
 					, parent : function(elem,verbose) {
 						var type = (typeof elem);
-						if( typeof verbose == 'undefined') { verbose = true; }
-						if( type.indexOf( 'object' ) == -1) {var elem = CJAX.$(elem,verbose);}
+						if ( typeof verbose == 'undefined') { verbose = true; }
+						if ( type.indexOf( 'object' ) == -1) {var elem = CJAX.$(elem,verbose);}
 						return elem.parentNode;
 					}, position : function(elem,verbose) {
 						var type = (typeof elem);
-						if( typeof verbose == 'undefined') { verbose = true; }
-						if( type.indexOf( 'object' ) == -1) {var elem = CJAX.$(elem,verbose);}
+						if ( typeof verbose == 'undefined') { verbose = true; }
+						if ( type.indexOf( 'object' ) == -1) {var elem = CJAX.$(elem,verbose);}
 						var pos = [];
 						var  curleft = curtop = curright = curdown = 0;
 						if ( elem.offsetParent ) {
@@ -1038,10 +1038,10 @@ function CJAX_FRAMEWORK() {
 					}
 				},parent : function(elem,type_of) {
 					var type = (typeof elem);
-					if( typeof verbose == 'undefined') { verbose = true; }
-					if( type.indexOf( 'object' ) == -1) {var elem = CJAX.$(elem,verbose);}
+					if ( typeof verbose == 'undefined') { verbose = true; }
+					if ( type.indexOf( 'object' ) == -1) {var elem = CJAX.$(elem,verbose);}
 					var parent;
-					if(CJAX.util.get.isType(elem.parentNode,type_of)) {
+					if (CJAX.util.get.isType(elem.parentNode,type_of)) {
 						return elem.parentNode;
 					} else {
 						var giveup = 30;
@@ -1050,7 +1050,7 @@ function CJAX_FRAMEWORK() {
 							i++;
 							parent = 	elem.parentNode;
 							elem = elem.parentNode;
-							if(i >= giveup) {
+							if (i >= giveup) {
 								break;
 							}
 						}
@@ -1058,14 +1058,14 @@ function CJAX_FRAMEWORK() {
 					}
 				},
 				isType: function(element,element_type) {
-					if(!element)  return false;
+					if (!element)  return false;
 					var type = (typeof element);
-					if(element_type=='table') {
-						if(element.rows.length) {
+					if (element_type=='table') {
+						if (element.rows.length) {
 							return true;
 						}
 					}
-					if( type.indexOf( element_type ) == -1) { return false; }
+					if ( type.indexOf( element_type ) == -1) { return false; }
 					return true;
 				}
 			}
@@ -1079,7 +1079,7 @@ function CJAX_FRAMEWORK() {
 		var container = CJAX.$(container_id);
 
 		console.log('toggle:',options);
-		if(!container) {
+		if (!container) {
 			alert("CJAX Error -  Element "+ container_id +" not found");
 			return;
 		}
@@ -1107,7 +1107,7 @@ function CJAX_FRAMEWORK() {
 				prop = 'innerHTML';
 		}
 
-		if(element[prop] ==  label2) {
+		if (element[prop] ==  label2) {
 			element[prop] = label1;
 
 			container.style.display = 'none'
@@ -1129,7 +1129,7 @@ function CJAX_FRAMEWORK() {
 		var element_id = options.element_id;
 		var element = CJAX.$(element_id);
 
-		if(!element) {
+		if (!element) {
 			alert('An error Ocurred, see console for details.');
 			console.error("CJAX Error -  Element "+ element_id+" not found");
 			return;
@@ -1142,29 +1142,29 @@ function CJAX_FRAMEWORK() {
 
 		var options_count = CJAX.util.count(options);
 
-		if(element.type=='select-one') {
+		if (element.type=='select-one') {
 			element.style.display = 'inline';
-			if(options_count) {
+			if (options_count) {
 				element.options.length = 0;
 				for ( x in options ) {
 					addOption(element,options[x],x);
-					if(options_count==x) {
+					if (options_count==x) {
 						break;
 					}
 				}
 			} else {
-				if(allow_input) {
+				if (allow_input) {
 					make_input(element);
 				} else {
 					element.style.display = 'none';
 				}
 			}
-			if(_selected!=null) {
+			if (_selected!=null) {
 				element.value = _selected;
 			}
 		} else {
-			if(element.type=='text') {
-				if(CJAX.util.count(options)) {
+			if (element.type=='text') {
+				if (CJAX.util.count(options)) {
 					var obj = document.createElement('SELECT');
 					id = element.id;
 					name = element.name;
@@ -1173,26 +1173,26 @@ function CJAX_FRAMEWORK() {
 					obj.className = element.className;
 					obj.setAttribute('id', id);
 					obj.setAttribute('name', name);
-					if(obj) {
+					if (obj) {
 						obj.options.length = 0;
 					}
 					var x = 0;
 					for ( var i in options ) {
 						x++;
 						addOption(obj,options[i],i);
-						if(options_count==x) {
+						if (options_count==x) {
 							break;
 						}
 					}
 					replacedNode = element.parentNode.replaceChild(obj, element);
 					//element.parentNode.appendChild(obj);
-					if(_selected!=null) {
+					if (_selected!=null) {
 						obj.value = _selected;
 					}
 				}
 
 			} else {
-				if(!CJAX.util.count(options)) {
+				if (!CJAX.util.count(options)) {
 					make_input(element);
 				}
 			}
@@ -1212,12 +1212,12 @@ function CJAX_FRAMEWORK() {
 			element.parentNode.replaceChild(obj, element);
 			obj.id = element_id;
 
-			if(_selected!=null) {
+			if (_selected!=null) {
 				obj.style.color = '#ACACAC';
 				obj.value = _selected;
 
 				obj.onclick = function() {
-					if(obj.value ==_selected) {
+					if (obj.value ==_selected) {
 						obj.value = '';
 						obj.style.color = '';
 					}
@@ -1247,7 +1247,7 @@ function CJAX_FRAMEWORK() {
 
 	this.overLayContent		=		function(content, options)
 	{
-		if(!options.content) {
+		if (!options.content) {
 			return CJAX._removeOverLay();
 		}
 
@@ -1256,7 +1256,7 @@ function CJAX_FRAMEWORK() {
 
 	this.overLay		=		function(url, options)
 	{
-		if(!options.url) {
+		if (!options.url) {
 			return CJAX._removeOverLay();
 		}
 
@@ -1270,7 +1270,7 @@ function CJAX_FRAMEWORK() {
 		CJAX.ajaxSettings.cache = true;
 
 		CJAX.get(__base__+'core/templates/'+template_name, function(template) {
-			if(success) {
+			if (success) {
 				success(template);
 			} else {
 				return template;
@@ -1282,7 +1282,7 @@ function CJAX_FRAMEWORK() {
 	{
 		var el = CJAX.$(opts.options.a);
 
-		if(el) {
+		if (el) {
 			var node = el.childNodes[opts.options.b];
 
 
@@ -1309,8 +1309,8 @@ function CJAX_FRAMEWORK() {
 
 		return {
 			overlayCallback: function(response,options) {
-				if(options.callback) {
-					if(CJAX.lib.isFn(options.callback)) {
+				if (options.callback) {
+					if (CJAX.lib.isFn(options.callback)) {
 						//response = callback(response, CJAX.$('cjax_message_overlay'));
 						CJAX.html('cjax_overlay_content',response);
 					} else {
@@ -1322,24 +1322,24 @@ function CJAX_FRAMEWORK() {
 					CJAX.html('cjax_overlay_content',response);
 				}
 
-				if(options.complete) {
+				if (options.complete) {
 					options.complete(options);
 				}
 
-				if(options.click_close) {
+				if (options.click_close) {
 					CJAX.$('cjax_overlay').onclick = function() {
 						CJAX._removeOverLay();
 					};
 				}
 			},
 			fnCallback: function(element, prop, getter, callback, data) {
-				if(CJAX.lib.isFn(callback)) {
-					if(!element[prop]) {
+				if (CJAX.lib.isFn(callback)) {
+					if (!element[prop]) {
 						console.log(element, 'property:', prop, 'is invalid.');
 						return;
 					}
 					element = element[prop](getter);
-					if(typeof callback=='function') {
+					if (typeof callback=='function') {
 						callback(element);
 					}
 				} else {
@@ -1348,7 +1348,7 @@ function CJAX_FRAMEWORK() {
 			},
 			fnCall: function(element, setting, data) {
 
-				if(!element) {
+				if (!element) {
 
 					console.warn('fnCall invalid element.', data);
 					return false;
@@ -1372,7 +1372,7 @@ function CJAX_FRAMEWORK() {
 						element['outerHTML'] = value+element['outerHTML'];
 						break;
 					case 'append':
-						if(data.replace) {
+						if (data.replace) {
 							element['outerHTML'] = value;
 						} else {
 							element['outerHTML'] = element['outerHTML']+value;
@@ -1380,7 +1380,7 @@ function CJAX_FRAMEWORK() {
 						break;
 					case 'insert':
 
-						if(data.c){
+						if (data.c){
 							var div = document.createElement('div');
 							div.innerHTML = value;
 							var items = div.childNodes[0];
@@ -1395,32 +1395,32 @@ function CJAX_FRAMEWORK() {
 				}
 			},
 			isFn:  function(fn) {
-				if(typeof fn=='function') {
+				if (typeof fn=='function') {
 					return true;
 				}
 				return Object.prototype.toString.call(fn) == '[object Function]';
 			},
 			loadCallback: function(element, $callback, caller) {
-				if(!element) {
+				if (!element) {
 					console.log('Script was not found', element, caller, $callback.toString());
 					return ;
 				}
-				if(typeof element == 'string') {
+				if (typeof element == 'string') {
 					var raw_string = element;
 					element = CJAX.util.loaded(element);
 
-					if(!element) {
+					if (!element) {
 						var payload = CJAX.util.payload(raw_string);
-						if(!payload) {
+						if (!payload) {
 							//object hasnt beed added to payload
 							console.warn('Script/Element was not found:', raw_string, CJAX.loaded);
 							return false;
 						} else {
-							if(CJAX.debug) {
+							if (CJAX.debug) {
 								console.info('Payload Found:', raw_string, CJAX.loaded, payload);
 							}
 
-							if(!/[^a-zA-Z0-9_\-]/.test(raw_string)) {
+							if (!/[^a-zA-Z0-9_\-]/.test(raw_string)) {
 								new_element = CJAX.$(raw_string);
 								if (new_element) {
 
@@ -1428,15 +1428,15 @@ function CJAX_FRAMEWORK() {
 									$callback(new_element);
 									return new_element;
 								}
-								/*if(!/[^a-zA-Z0-9_]/.test(raw_string) && window[raw_string]) {
+								/*if (!/[^a-zA-Z0-9_]/.test(raw_string) && window[raw_string]) {
 								 $callback(element);
 								 return window[raw_string];
 								 }*/
 							}
 							//object is already registered that is going to load, it is a matter of time.
-							if(typeof payload != 'boolean') {
+							if (typeof payload != 'boolean') {
 								payload = payload - 100;
-								if(payload <= 0) {
+								if (payload <= 0) {
 									console.warn('Payload for', raw_string, 'has expired.');
 									return false;
 								}
@@ -1450,13 +1450,13 @@ function CJAX_FRAMEWORK() {
 					element.loaded = true;
 					return $callback(element);
 				}
-				if(element.loaded) {
+				if (element.loaded) {
 					$callback();
 					return false;
 				}
 
-				if($callback) {
-					if(CJAX.lib.isFn($callback)) {
+				if ($callback) {
+					if (CJAX.lib.isFn($callback)) {
 
 						element.onreadystatechange = function () {
 							if (this.readyState == 'complete' || this.readyState == 'loaded') {
@@ -1466,7 +1466,7 @@ function CJAX_FRAMEWORK() {
 							}
 						};
 
-						if(element.addEventListener) {
+						if (element.addEventListener) {
 							element.addEventListener( 'load', function() {
 								element.loaded = true;
 								return $callback();
@@ -1480,7 +1480,7 @@ function CJAX_FRAMEWORK() {
 							giveup = function (time) {
 								setTimeout(function () {
 									if (typeof element == 'object' && !element.loaded) {
-										//if(CJAX.debug) {
+										//if (CJAX.debug) {
 										console.log('Forcing loadCallback', element, 'to complete.');
 										//}
 										element.loaded = true;
@@ -1499,21 +1499,21 @@ function CJAX_FRAMEWORK() {
 				return element;
 			},
 			pharseFunction: function(buffer) {
-				if(typeof buffer != 'string') {
+				if (typeof buffer != 'string') {
 					return buffer;
 				}
 
-				if(typeof buffer=='string' && buffer.substr(0,'function('.length)=='function(') {
+				if (typeof buffer=='string' && buffer.substr(0,'function('.length)=='function(') {
 					try {
 						fn = eval('('+buffer+')');
 					} catch(e) {
 						console.error('Function Error:\n',e, '\n\n', buffer);
 					}
-					if(CJAX.lib.isFn(fn)) {
+					if (CJAX.lib.isFn(fn)) {
 						return fn;
 					}
 				}
-				if(CJAX.xml('json',buffer)) {
+				if (CJAX.xml('json',buffer)) {
 					return CJAX.util.json(buffer);
 				}
 				return buffer;
@@ -1524,9 +1524,9 @@ function CJAX_FRAMEWORK() {
 
 				CJAX.$('cjax_overlay').style.display = 'block';
 
-				if(options.transparent || options.color) {
+				if (options.transparent || options.color) {
 					var _opacity =_alpha =_color = null;
-					if(!options.transparent) {
+					if (!options.transparent) {
 						options.transparent = 80;
 					}
 					_opacity = parseFloat("0."+parseFloat(options.transparent));
@@ -1534,30 +1534,30 @@ function CJAX_FRAMEWORK() {
 					_color = options.color;
 
 					var overlay_class = CJAX.css.add('.overlay_class','cjax');
-					if(overlay_class) {
-						with (overlay_class.style) {
-							display = 'block';
-							position = 'fixed';
-							top = 0;
-							left= 0;
-							width= '100%';
-							height = '100%';
-							Zindex = 5000;
-							marginBottom = '0px';
-							if(options.transparent) {
-								opacity = _opacity;
-								filter = _alpha;
-							}
-							if(_color) {
-								backgroundColor = _color;
-							}
+					if (overlay_class) {
+						overlay_class.style.display = 'block';
+						overlay_class.style.position = 'fixed'
+						overlay_class.style.top = 0;
+						overlay_class.style.left= 0;
+						overlay_class.style.width= '100%';
+						overlay_class.style.height = '100%';
+						overlay_class.style.Zindex = 5000;
+						overlay_class.style.marginBottom = '0px';
+
+						if (options.transparent) {
+							overlay_class.style._opacity = '0px';
+							overlay_class.style._alpha = '0px';
+						}
+						if (_color) {
+							overlay_class.style.backgroundColor = _color;
+
 						}
 
 						CJAX.$('cjax_overlay').className = 'overlay_class';
 					}
 				}
 
-				if(options.content) {
+				if (options.content) {
 
 					options.message = CJAX.decode(CJAX.decode(options.message));
 					options.content = CJAX.decode(CJAX.decode(options.content));
@@ -1569,12 +1569,12 @@ function CJAX_FRAMEWORK() {
 				options.message_id =  'cjax_message_overlay';
 				options.success = function(div,opts) {
 					opts.div = div;
-					if(opts.cache) {
+					if (opts.cache) {
 						CJAX.ajaxSettings.cache = true;
 						CJAX.ajaxSettings.process = false;
 					}
 
-					if(opts.url) {
+					if (opts.url) {
 						//if it has a url then it's overlay()
 						CJAX.get(opts, function (response) {
 							CJAX.lib.overlayCallback(response, opts);
@@ -1585,9 +1585,9 @@ function CJAX_FRAMEWORK() {
 					} else {
 						//overlayContent
 						CJAX.lib.overlayCallback(CJAX.decode(opts.content), opts);
-						if(CJAX.callback.overlayPop && typeof CJAX.callback.overlayPop=='function') {
+						if (CJAX.callback.overlayPop && typeof CJAX.callback.overlayPop=='function') {
 							CJAX.callback.overlayPop(opts);
-							if(opts.clear) {
+							if (opts.clear) {
 								CJAX.callback.overlayPop = function () {};
 							}
 						}
@@ -1598,16 +1598,16 @@ function CJAX_FRAMEWORK() {
 
 					var overlay = CJAX.$('cjax_message_overlay');
 
-					if(opts.top == 'auto') {
+					if (opts.top == 'auto') {
 						var content = CJAX.$('#cjax_overlay_content');
 						var height = content.offsetHeight;
 						var top = opts.top;
 
 						CJAX.set.center(overlay, {top: (top - height)});
 					}
-					if(!opts.top) {
+					if (!opts.top) {
 						var top = (CJAX.util.get.y()+100)+'px';
-						if(!opts.top) {
+						if (!opts.top) {
 							opts.top = top;
 						}
 
@@ -1631,23 +1631,23 @@ function CJAX_FRAMEWORK() {
 
 
 
-		if(!/[^a-zA-Z0-9_\-]/.test(element_id) && element_id.indexOf('#')==-1) {
+		if (!/[^a-zA-Z0-9_\-]/.test(element_id) && element_id.indexOf('#')==-1) {
 			element_id = '#'+element_id;
 		}
 
 
-		if(/[^a-zA-Z0-9_\-]/.test(element_id)) {
+		if (/[^a-zA-Z0-9_\-]/.test(element_id)) {
 
-			if(CJAX.debug) {
+			if (CJAX.debug) {
 				console.info('AddEventTo Selector for sizzle', element_id);
 			}
 
 			CJAX.$(element_id, function(elements) {
 
-				if(CJAX.debug) {
+				if (CJAX.debug) {
 					console.info('AddEventTo Selector', element_id, 'elements:', elements);
 				}
-				for(var x in elements) {
+				for (var x in elements) {
 					options.selector = elements[x];
 					CJAX.__AddEventTo(elements[x], options);
 				}
@@ -1666,22 +1666,21 @@ function CJAX_FRAMEWORK() {
 		events = CJAX.util.json(options.options);
 		event_trigger = options.event;
 
-		if(!element) {
+		if (!element) {
 			console.error('__AddEventTo', 'No Element:',element, options);
 			return false;
 		}
 
-		for(var x in events) {
+		for (var x in events) {
 			data = events[x];
 			trigger = data.event? data.event: event_trigger;
-
 
 			data.selector = options.selector;
 			data.cache_id = x;
 
-			if(!CJAX.is_loading && data.is_plugin) {
+			if (!CJAX.is_loading && data.is_plugin) {
 				new_options = data;
-				if(window[new_options.is_plugin]) {
+				if (window[new_options.is_plugin]) {
 					CJAX.set.event(element, trigger, new_options);
 				} else {
 
@@ -1701,8 +1700,8 @@ function CJAX_FRAMEWORK() {
 		var _fn, new_fn;
 
 		var _stop = false;
-		if(use_fns) {
-			for(var i = 1; i < fns.length; i++) {
+		if (use_fns) {
+			for (var i = 1; i < fns.length; i++) {
 				pub_fn = CJAX.lib.pharseFunction(fns[i]);
 				x_fn = function() {
 					props = {
@@ -1720,7 +1719,7 @@ function CJAX_FRAMEWORK() {
 				};
 				fn_object = new x_fn();
 
-				if(CJAX.lib.isFn(pub_fn) || CJAX.lib.isFn(pub_fn  = window[fns[i]])) {
+				if (CJAX.lib.isFn(pub_fn) || CJAX.lib.isFn(pub_fn  = window[fns[i]])) {
 					switch(element.type) {
 						default:
 						case 'text':
@@ -1731,9 +1730,9 @@ function CJAX_FRAMEWORK() {
 			}
 		}
 
-		if(plugin_name = cache.is_plugin) {
+		if (plugin_name = cache.is_plugin) {
 
-			if(init = CJAX.inits[plugin_name]) {
+			if (init = CJAX.inits[plugin_name]) {
 				plugin_fn = CJAX.lib.pharseFunction(init);
 				plugin_fn();
 			}
@@ -1772,16 +1771,16 @@ function CJAX_FRAMEWORK() {
 				break;
 			case 'onkeypress':
 				var key = cache.key;
-				if(key) {
+				if (key) {
 					element.onkeypress = function(e) {
-						if(e.keyCode) {
+						if (e.keyCode) {
 							element.keyCode = e.keyCode;
 						} else {
 							element.keyCode = e.charCode;
 						}
 					};
 					new_fn = function(data) {
-						if(key[element.keyCode]) {
+						if (key[element.keyCode]) {
 							_fn(data);
 						}
 					};
@@ -1811,17 +1810,17 @@ function CJAX_FRAMEWORK() {
 			},
 			event: function(element,trigger,options){
 				var use_fns = false;
-				if(typeof options == 'undefined') {
+				if (typeof options == 'undefined') {
 					options = {};
 				}
 
 				var cache_id = new Date().getTime();
-				if(options.cache_id) {
+				if (options.cache_id) {
 					cache_id = options.cache_id;
 				}
 
-				if(typeof element=='string') {
-					if(element.indexOf(':') !=-1) {
+				if (typeof element=='string') {
+					if (element.indexOf(':') !=-1) {
 						use_fns = true;
 						fns = element.split(':');
 						element = fns[0];
@@ -1831,15 +1830,15 @@ function CJAX_FRAMEWORK() {
 					}
 				}
 
-				if( !element ) return false;
+				if ( !element ) return false;
 				var element = CJAX.is_element( element );
 
 				var f = options.toString();
 				f = f.substr(0,f.indexOf('('));
 				f = f.replace(/\s+$/,"");
 
-				if(f =='function' ||CJAX.lib.isFn(options)) {
-					if(typeof options =='function') {
+				if (f =='function' ||CJAX.lib.isFn(options)) {
+					if (typeof options =='function') {
 						return CJAX._addEvent(element ,trigger , options, cache_id);
 					} else {
 						return CJAX._addEvent(element ,trigger ,eval(options), cache_id);
@@ -1847,8 +1846,8 @@ function CJAX_FRAMEWORK() {
 				}
 
 				var href;
-				if(href = element.href) {
-					if(href.indexOf('#')==-1) {//avoid removing internal anchor
+				if (href = element.href) {
+					if (href.indexOf('#')==-1) {//avoid removing internal anchor
 						//removes all clickable events
 						element.onclick = function() {return false;};
 					} else {
@@ -1860,10 +1859,10 @@ function CJAX_FRAMEWORK() {
 						case 'DIV':
 							element.style.cursor = 'pointer';
 					}
-					if(element.type && (element.type == 'checkbox' || element.type=='radio')) {
+					if (element.type && (element.type == 'checkbox' || element.type=='radio')) {
 						element.onclick = function() {return true;};
 					} else {
-						if(element.tagName=='LI') {
+						if (element.tagName=='LI') {
 							//for now do nothing...
 							element.onclick = function() {return false;};
 						}  else {
@@ -1889,41 +1888,41 @@ function CJAX_FRAMEWORK() {
 
 			}
 			,type: function(elem,new_type,verbose){
-				if( !elem ) return false;
+				if ( !elem ) return false;
 				var elem = CJAX.is_element(elem,verbose);
-				if( elem ) { elem.type = new_type; return true;}
+				if ( elem ) { elem.type = new_type; return true;}
 				return false;
 			}, 'class': function(element,_class){
 				element = CJAX.is_element(element,false);
-				if(element) {
+				if (element) {
 					element.className = _class;
 				}
 			}
 			,center : function(obj,options) {
-				if(typeof options == 'undefined') var options = {};
+				if (typeof options == 'undefined') var options = {};
 				var element = CJAX.is_element(obj);
 
-				if(options.width) {
+				if (options.width) {
 					prefix = parseInt(options.width);
 					suffix = options.width.match(/(\%|px|em|pt|in|cm|mm|ex|pc)/)[0];
-					if(!suffix) {
+					if (!suffix) {
 						options.width = prefix+'px';
 					}
 					switch(suffix)
 					{
 						case '%':
-							if(prefix > 100) {
+							if (prefix > 100) {
 								prefix = 100;
 							}
 							options.marginLeft = '-'+(prefix / 2)+'%';
-							if(!options.left) {
+							if (!options.left) {
 								options.left = '50%';
 							} else {
 								options.marginLeft = 1;
 							}
 							break;
 						case 'px':
-							if(!options.left) {
+							if (!options.left) {
 								options.left = '50%';
 								options.marginLeft = '-'+(prefix/ 2)+'px';
 							} else {
@@ -1931,10 +1930,10 @@ function CJAX_FRAMEWORK() {
 							}
 					}
 				} else {
-					if(options.left) {
+					if (options.left) {
 						prefix = parseInt(options.left);
 						suffix = options.left.match(/(\%|px|em|pt|in|cm|mm|ex|pc)/)[0];
-						if(!suffix) {
+						if (!suffix) {
 							options.left = prefix+'px';
 						}
 						switch(suffix)
@@ -1953,17 +1952,17 @@ function CJAX_FRAMEWORK() {
 
 				element.style.position ='absolute';
 				var ctop = (screen.height /4);
-				if(CJAX.defined(options.top) && options.top) {
+				if (CJAX.defined(options.top) && options.top) {
 					var _top = options.top;
-					if(CJAX.php.isNumeric(_top)) {
+					if (CJAX.php.isNumeric(_top)) {
 						_top = _top+'px';
 					}
 				} else {
 					var  _top = CJAX.util.get.y()+ctop+'px';
 				}
-				if(CJAX.defined(options.left) && options.left) {
+				if (CJAX.defined(options.left) && options.left) {
 					var _left = options.left;
-					if(options.marginLeft) {
+					if (options.marginLeft) {
 						var _margin_left = options.marginLeft;
 					} else {
 						var _margin_left = '';
@@ -1972,22 +1971,19 @@ function CJAX_FRAMEWORK() {
 					var  _left = '50%';
 					var _margin_left = '-'+((element.offsetWidth / 2))+'px';
 				}
-				if(options.marginLeft) {
+				if (options.marginLeft) {
 					_margin_left = options.marginLeft;
 				}
-				with (element.style) {
-					top = _top;
-					left = _left;
-					maxWidth = '800px';
-				}
 
-				if(options.width) {
-					with(element.style) {
-						maxWidth = options.width;
-						width = options.width;
-					}
+				element.style.top = _top;
+				element.style.left = _left;
+				element.style.maxWidth = '800px';
+
+				if (options.width) {
+					element.style.maxWidth = options.width;
+					element.style.width = options.width;
 				}
-				if(_margin_left && _margin_left !='0px') {
+				if (_margin_left && _margin_left !='0px') {
 					element.style.marginLeft = _margin_left;
 				}
 				return element;
@@ -1997,15 +1993,15 @@ function CJAX_FRAMEWORK() {
 
 
 	this.is_cjax		=		function(buffer) {
-		if(typeof buffer !='string') {
+		if (typeof buffer !='string') {
 			return;
 		}
-		if( !CJAX.xml(this.name,(CJAX.defined(buffer)?buffer:null)) ){ return false; }
+		if ( !CJAX.xml(this.name,(CJAX.defined(buffer)?buffer:null)) ){ return false; }
 		return true;
 	};
 
 	this.get_function		=		function(options) {
-		if(typeof  options == 'object') {
+		if (typeof  options == 'object') {
 			return options['do'];
 		}
 		return CJAX.xml( 'do' , options);
@@ -2013,18 +2009,18 @@ function CJAX_FRAMEWORK() {
 
 	this._addEvent		=		function( obj, type, fn, cache_id)
 	{
-		if(typeof cache_id == 'undefined') {
+		if (typeof cache_id == 'undefined') {
 			cache_id = new Date().getTime();
 		}
 
-		if(!CJAX.defined(id)) {
+		if (!CJAX.defined(id)) {
 			var id = null;
 		}
-		if(type.substring(0, 2) == "on"){
+		if (type.substring(0, 2) == "on"){
 			type = type.substring(2);
 		}
 		if (obj.addEventListener) {
-			if(type=='ready'){
+			if (type=='ready'){
 				CJAX.ready(fn,obj);
 				return  CJAX._EventCache.add(obj, type, fn);
 			}
@@ -2058,10 +2054,10 @@ function CJAX_FRAMEWORK() {
 
 				var item;
 
-				for(var i in listEvents){
+				for (var i in listEvents){
 					item = listEvents[i];
 
-					if(item.node==element) {
+					if (item.node==element) {
 						if (item.node.removeEventListener) {
 							item.node.removeEventListener(item.event_name, item.handler);
 						} else {
@@ -2078,18 +2074,18 @@ function CJAX_FRAMEWORK() {
 				};
 			},
 			flush : function( event_id ) {
-				if(typeof event_id =='undefined') var event_id;
+				if (typeof event_id =='undefined') var event_id;
 				var i, item;
 
-				for(i = listEvents.length - 1; i >= 0; i = i - 1){
+				for (i = listEvents.length - 1; i >= 0; i = i - 1){
 					item = listEvents[i];
-					if(item[0].removeEventListener){
+					if (item[0].removeEventListener){
 						item[0].removeEventListener(item[1], item[2], item[3]);
 					};
-					if(item[1].substring(0, 2) != "on"){
+					if (item[1].substring(0, 2) != "on"){
 						item[1] = "on" + item[1];
 					};
-					if(item[0].detachEvent){
+					if (item[0].detachEvent){
 						//item[0].detachEvent(item[1], item[2]);
 						item[0].detachEvent(item[1], item[0][eventtype+item[2]]);
 					};
@@ -2100,7 +2096,7 @@ function CJAX_FRAMEWORK() {
 	}();
 
 	this.tagExists 		=		function(tag, buffer) {
-		if(!CJAX.xml(tag, buffer)) {
+		if (!CJAX.xml(tag, buffer)) {
 			return '';
 		}
 	};
@@ -2117,7 +2113,7 @@ function CJAX_FRAMEWORK() {
 		return{
 			input:function(id) {
 				var element = CJAX.is_element(id,false);
-				if(element) {
+				if (element) {
 					return element;
 				}
 				element = document.createElement('INPUT');
@@ -2126,16 +2122,16 @@ function CJAX_FRAMEWORK() {
 				return element;
 			},
 			div:function(id,parent,append) {
-				if(typeof append == 'undefined') var append = true;
+				if (typeof append == 'undefined') var append = true;
 				var element = CJAX.is_element(id,false);
-				if(!parent || parent == 'body') {
+				if (!parent || parent == 'body') {
 					parent = CJAX.elem_docs( 'body' )[0];
 				} else {
-					if( !parent ) parent = CJAX.is_element(parent,false);
+					if ( !parent ) parent = CJAX.is_element(parent,false);
 				}
-				if( !parent )return false;
-				if(element && parent){
-					if( append ) {
+				if ( !parent )return false;
+				if (element && parent){
+					if ( append ) {
 						parent.appendChild( element );
 					} else {
 						CJAX.elem_docs( 'body' )[0].appendChild( element );
@@ -2145,7 +2141,7 @@ function CJAX_FRAMEWORK() {
 				var div = document.createElement( 'div' );
 				div.setAttribute('id',id);
 
-				if( append ) {
+				if ( append ) {
 					parent.appendChild( div );
 				} else {
 					CJAX.elem_docs( 'body' )[0].appendChild( div );
@@ -2154,7 +2150,7 @@ function CJAX_FRAMEWORK() {
 			},
 			select: function(id,parent) {
 				var select;
-				if(select = CJAX.is_element(id)) {
+				if (select = CJAX.is_element(id)) {
 					return select;
 				}
 				select = document.createElement('select');
@@ -2165,10 +2161,10 @@ function CJAX_FRAMEWORK() {
 			},
 			span:function(id,parent) {
 				var element = CJAX.is_element( id );
-				if(!parent || parent == 'body') parent = CJAX.elem_docs( 'body' );
+				if (!parent || parent == 'body') parent = CJAX.elem_docs( 'body' );
 				else parent = CJAX.is_element(parent,false);
-				if( !parent )return false;
-				if(element && parent)
+				if ( !parent )return false;
+				if (element && parent)
 				{
 					parent.appendChild( element );
 					return element;
@@ -2179,12 +2175,12 @@ function CJAX_FRAMEWORK() {
 				return div;
 			},
 			frame:function(id,parent,src) {
-				if(!id) {
+				if (!id) {
 					var id = 'cjax_iframe';
 				}
 				var f = CJAX.$(id);
-				if(!f) {
-					if(CJAX.ie) {
+				if (!f) {
+					if (CJAX.ie) {
 						f = document.createElement('<iframe name="'+id+'"/>');
 					} else {
 						f = document.createElement("IFRAME");
@@ -2194,10 +2190,10 @@ function CJAX_FRAMEWORK() {
 					f.setAttribute("width",600);
 					f.setAttribute("height",300);
 
-					if(typeof src !='undefined' && src) {
+					if (typeof src !='undefined' && src) {
 						f.setAttribute("src",src);
 					}
-					if(typeof parent !='undefined' && parent) {
+					if (typeof parent !='undefined' && parent) {
 						CJAX.$(parent).appendChild(f);
 					}
 				}
@@ -2221,7 +2217,7 @@ function CJAX_FRAMEWORK() {
 			 * checks to see if specific data is an array
 			 */
 			is_array: function( element ) {
-				if(CJAX.util.isXML(element) && CJAX.xml('json', element)) {
+				if (CJAX.util.isXML(element) && CJAX.xml('json', element)) {
 					return true;
 				} else {
 					return typeof(element)=='object'&&(element instanceof Array);
@@ -2241,31 +2237,31 @@ function CJAX_FRAMEWORK() {
 				return this.substring(0, l+1);
 			},
 			rtrim: function(str,replace) {
-				if(!replace) {
+				if (!replace) {
 					var replace = " ";
 				}
 				return  str.replace(/\s+$/,"");
 			},
 			ltrim: function(string,replace) {
-				if(!replace) {
+				if (!replace) {
 					var replace = " ";
 				}
 				return string.replace(/replace/ig,string);
 			},
 			substr: function( f_string, f_start, f_length ) {
-				if(f_start < 0) {
+				if (f_start < 0) {
 					f_start += f_string.length;
 				}
 
-				if(f_length == undefined) {
+				if (f_length == undefined) {
 					f_length = f_string.length;
-				} else if(f_length < 0){
+				} else if (f_length < 0){
 					f_length += f_string.length;
 				} else {
 					f_length += f_start;
 				}
 
-				if(f_length < f_start) {
+				if (f_length < f_start) {
 					f_length = f_start;
 				}
 				return f_string.substring(f_start, f_length);
@@ -2284,20 +2280,20 @@ function CJAX_FRAMEWORK() {
 	this.script		=		function() {
 		return {
 			loaded : function ( path ,force) {
-				if(!CJAX.defined(path)) {
+				if (!CJAX.defined(path)) {
 					return false;
 				}
 				//Loaded by CJAX
-				if(!CJAX.defined(force)) {
+				if (!CJAX.defined(force)) {
 					return (path.loaded())? true:false;
 				}
 				//Loaded on the document
 				var scripts = CJAX.elem_docs( 'script' );
 				var s;
-				if(scripts.length){
-					for(var i = 0; i < scripts.length; i++ ){
+				if (scripts.length){
+					for (var i = 0; i < scripts.length; i++ ){
 						s = scripts[i];
-						if(s.src==path) return s;
+						if (s.src==path) return s;
 					}
 				}
 				return false;
@@ -2305,12 +2301,12 @@ function CJAX_FRAMEWORK() {
 			},
 			load: function(script, $callback, waitfor) {
 				var f = script.replace(/.*\//,'');
-				if(CJAX.util.loaded(f)) {
-					if(CJAX.debug) {
+				if (CJAX.util.loaded(f)) {
+					if (CJAX.debug) {
 						console.log('Already loaded:',script );
 					}
 
-					if($callback && !waitfor) {
+					if ($callback && !waitfor) {
 						$callback();
 					}
 					return false;
@@ -2318,7 +2314,7 @@ function CJAX_FRAMEWORK() {
 				CJAX.util.payload(f, true);
 				var head = CJAX.elem_docs( 'head' )[0];
 				var file_ext = CJAX.util.get.extension(script);
-				if(file_ext=='.css') {
+				if (file_ext=='.css') {
 					var s = document.createElement("link");
 					s.setAttribute("rel", "stylesheet");
 					s.setAttribute("type", "text/css");
@@ -2330,7 +2326,7 @@ function CJAX_FRAMEWORK() {
 					head.appendChild( s );
 					s.onload = function() {
 						var queue = CJAX.util.queue(f);
-						if(queue) {
+						if (queue) {
 							for (var x in queue) {
 								queue[x].call(this);
 							}
@@ -2342,12 +2338,12 @@ function CJAX_FRAMEWORK() {
 
 				CJAX.util.loaded(f, s);
 
-				if($callback && !waitfor) {
+				if ($callback && !waitfor) {
 					CJAX.lib.loadCallback(s , $callback,f);
 				}
 
-				if(waitfor) {
-					if(CJAX.util.loaded(waitfor)) {
+				if (waitfor) {
+					if (CJAX.util.loaded(waitfor)) {
 						CJAX.lib.loadCallback(CJAX.util.loaded(waitfor) , function() {
 							CJAX.lib.loadCallback(s , function() {
 								$callback();
@@ -2357,8 +2353,8 @@ function CJAX_FRAMEWORK() {
 						CJAX.waitingFor[waitfor] = $callback;
 					}
 				} else {
-					if(CJAX.waitingFor[f]) {
-						if(CJAX.debug) {
+					if (CJAX.waitingFor[f]) {
+						if (CJAX.debug) {
 							console.log('waiting for ',f,'to load to fire pending task.');
 						}
 
@@ -2369,7 +2365,7 @@ function CJAX_FRAMEWORK() {
 			},
 			reload: function(script,id) {
 				var file_ext = CJAX.util.get.extension(script);
-				if(file_ext=='.css') {
+				if (file_ext=='.css') {
 					var s = document.createElement("link");
 					s.setAttribute("rel", "stylesheet");
 					s.setAttribute("type", "text/css");
@@ -2399,36 +2395,36 @@ function CJAX_FRAMEWORK() {
 
 		if (!CJAX.is_cjax(actions) && typeof actions != 'object'){ return; }
 
-		if(!CJAX.is_loading) {
-			if(!preload) {
+		if (!CJAX.is_loading) {
+			if (!preload) {
 				preload = CJAX.xml('preload', raw_actions);
 
 				preload = CJAX.util.json(preload);
 			}
 		}
-		if(is_loading!='skip') {
+		if (is_loading!='skip') {
 			CJAX.commands =  actions;
 		}
-		if(!is_loading) CJAX.is_loading = false;
-		if(caller==null) var caller = 'unkonwn';
-		if(debug!=null) {
+		if (!is_loading) CJAX.is_loading = false;
+		if (caller==null) var caller = 'unkonwn';
+		if (debug!=null) {
 			CJAX.debug = debug;
 		}
-		if(CJAX.debug) {
+		if (CJAX.debug) {
 			console.log('initiating process_all', 'initiated by:',caller);
 		}
 
 		//preload
-		if(preload) {
+		if (preload) {
 
 			var plugin_buffer;
-			for(_id in preload) {
+			for (_id in preload) {
 				buffer = preload[_id];
 				method = CJAX.xml('do',buffer);
 
 				switch(method) {
 					case '_import':
-						if(time = CJAX.xml('time', buffer)) {
+						if (time = CJAX.xml('time', buffer)) {
 							CJAX.found_extra_time += parseInt(time);
 						} else {
 							CJAX.found_extra_time += default_load_timeout;
@@ -2437,7 +2433,7 @@ function CJAX_FRAMEWORK() {
 						CJAX._process(buffer,'process_all for '+method, method+' '+_id);
 						break;
 					default:
-						if(CJAX.xml('is_plugin', buffer) ) {
+						if (CJAX.xml('is_plugin', buffer) ) {
 							plugin_buffer = buffer;
 							plugin_method = CJAX.xml('do',plugin_buffer);
 							var options = CJAX.util.objectify(plugin_buffer,'cjax');
@@ -2445,14 +2441,14 @@ function CJAX_FRAMEWORK() {
 							CJAX.commands[_id] = options;
 
 							CJAX._plugins[plugin_method] = options;
-							if(CJAX.debug) {
+							if (CJAX.debug) {
 								console.log('Preloading Plugin:', method);
 							}
 							var file = CJAX.pBase+options.file;
 
 							init = CJAX.xml('init', plugin_buffer);
 
-							if(init) {
+							if (init) {
 								CJAX.inits[plugin_method] = init;
 							}
 
@@ -2471,17 +2467,17 @@ function CJAX_FRAMEWORK() {
 
 		var action,buffer, method;
 		CJAX.ready(function() {
-			for(_id in actions) {
+			for (_id in actions) {
 				buffer = actions[_id];
 				method = CJAX.xml('do', buffer);
 
-				if(method=='_import' || method=='_imports' || CJAX.xml('is_plugin', buffer)) {
+				if (method=='_import' || method=='_imports' || CJAX.xml('is_plugin', buffer)) {
 					//already imported.
 					continue;
 				}
 				action = CJAX.util.objectify(buffer, 'cjax');
 
-				if(CJAX.util.count(action)==0) {
+				if (CJAX.util.count(action)==0) {
 					console.warn('ohoh!, looks like objectify() failed to pharse the string in question for: ',method);
 					console.info('Trying manual approach...');
 					//do it manually..
@@ -2499,11 +2495,11 @@ function CJAX_FRAMEWORK() {
 
 				CJAX.commands[_id] = action;
 
-				if(typeof action.options == 'object' && CJAX.util.count(action.options) == 0) {
+				if (typeof action.options == 'object' && CJAX.util.count(action.options) == 0) {
 					//console.warn(action, 'possibly missing options!');
 				}
 
-				if(CJAX.debug) {
+				if (CJAX.debug) {
 					console.info('process_all item', action);
 				}
 
@@ -2516,14 +2512,14 @@ function CJAX_FRAMEWORK() {
 
 	this._extendPlugin		=		function(plugin_name, options, settings)
 	{
-		if(waitfor = options.waitfor) {
-			if(CJAX.debug) {
+		if (waitfor = options.waitfor) {
+			if (CJAX.debug) {
 				console.info(plugin_name, 'waiting for', waitfor);
 			}
 			//using waitfor method. see above this loop
 			return true;
 		}
-		if(CJAX.debug) {
+		if (CJAX.debug) {
 			console.log('Loading:', options);
 		}
 
@@ -2532,16 +2528,16 @@ function CJAX_FRAMEWORK() {
 
 		callbacks = options.callback;
 
-		if(CJAX.debug && callbacks) {
+		if (CJAX.debug && callbacks) {
 			console.info('Plugin Buffer', options.xml);
 			console.info("Callbacks found for", plugin_name, callbacks);
 		}
-		if(CJAX.lib.isFn(_p) || typeof _p == 'object') {
+		if (CJAX.lib.isFn(_p) || typeof _p == 'object') {
 			CJAX.extend(_p, options, callbacks, settings);
 		} else {
 			CJAX.lib.loadCallback(CJAX.util.loaded(options.filename), function(){
 
-				if(CJAX.lib.isFn(window[plugin_name]) || typeof window[plugin_name] == 'object') {
+				if (CJAX.lib.isFn(window[plugin_name]) || typeof window[plugin_name] == 'object') {
 					plugin = CJAX.extend(window[plugin_name], options, callbacks, settings);
 				} else {
 					console.log(plugin_name, 'option ??', window[plugin_name], _p);
@@ -2554,15 +2550,15 @@ function CJAX_FRAMEWORK() {
 	{
 		var file = options.file;
 
-		if(!file) {
+		if (!file) {
 			console.info('no file',options);
 			return;
 		}
 
-		if(/^https?/.test(file)) {
+		if (/^https?/.test(file)) {
 			f = CJAX.script.load(file);
 		} else {
-			if(dir = options.plugin_dir) {
+			if (dir = options.plugin_dir) {
 				file = CJAX.pBase+dir+'/'+file;
 				f  = CJAX.script.load(file);
 			} else {
@@ -2570,16 +2566,16 @@ function CJAX_FRAMEWORK() {
 			}
 
 		}
-		if(CJAX.debug) {
+		if (CJAX.debug) {
 			console.log('Imported File:', file);
 		}
 		CJAX.lib.loadCallback(f, function() {
 			f.loaded = true;
 		});
-		if(loop) {
+		if (loop) {
 			new_buffer = CJAX.remove1Tag('file',buffer);
 			exists = CJAX.xml('file',new_buffer);
-			if(exists) {
+			if (exists) {
 				CJAX.lib.loadCallback(f, function() {
 					return CJAX._import(new_buffer);
 				});
@@ -2592,13 +2588,13 @@ function CJAX_FRAMEWORK() {
 	{
 		var plugin_name = options.is_plugin;
 		buffer = options.xml;
-		if(typeof plugin_fn == 'object') {
+		if (typeof plugin_fn == 'object') {
 
 			plugin = plugin_fn;
 			params = options.options;
 
 			//the plugin is attached to an elements trigger, no need to fire it.
-			if(!CJAX.DOMContentLoaded && (options.event_element_id  || options.on)) {
+			if (!CJAX.DOMContentLoaded && (options.event_element_id  || options.on)) {
 				return plugin;
 			}
 			plugin_fn.fn(params['a'], params['b'], params['c'], params['d'], params['e'], params['f']);
@@ -2613,22 +2609,22 @@ function CJAX_FRAMEWORK() {
 		var params = {};
 
 
-		if(_extra = options.extra) {
+		if (_extra = options.extra) {
 			extra = CJAX.util.json(_extra);
 		}
 
-		if(options.options) {
+		if (options.options) {
 			params = options.options;
 		}
 
 		var uniqid  = CJAX._uniqid(buffer);
 		CJAX.$plugin = uniqid;
-		if(CJAX.lib.isFn(plugin_fn)) {
+		if (CJAX.lib.isFn(plugin_fn)) {
 			fn = plugin_fn;
 		} else {
 			fn = window[plugin_name];
 		}
-		if(file.indexOf('/')!=-1) {
+		if (file.indexOf('/')!=-1) {
 			base = plugins_dir+file.replace(/\/.+$/,'/');
 			//fn.file = file.replace(/.+\//,'');
 		} else {
@@ -2637,22 +2633,22 @@ function CJAX_FRAMEWORK() {
 		}
 
 		var cb = function() {
-			if(CJAX.debug) {
+			if (CJAX.debug) {
 				console.log('cb:', callbacks);
 			}
 			callbacks = CJAX.util.json(callbacks);
 
-			for(event in callbacks) {
+			for (event in callbacks) {
 				buffer = callbacks[event];
 				method = CJAX.xml('do', buffer);
 
-				if(CJAX.debug) {
+				if (CJAX.debug) {
 					console.info(method+':','Executing function - ', method);
 				}
-				if(method=='AddEventTo') {
+				if (method=='AddEventTo') {
 					var events = CJAX.util.json(CJAX.xml('options', buffer));
 
-					for(x in events) {
+					for (x in events) {
 						event_buffer = events[x];
 						CJAX._process(event_buffer.xml);
 					}
@@ -2682,16 +2678,16 @@ function CJAX_FRAMEWORK() {
 				controllers: 'controllers',
 				post: CJAX.post,
 				overlay: function(url, options) {
-					if(!options) {
+					if (!options) {
 						options = {};
 					}
-					if(options.remote) {
+					if (options.remote) {
 						CJAX.post(CJAX.f+'?_crossdomain/overlay','a='+escape(escape(url)), function(response) {
 
 							return CJAX.overLayContent(response, options);
 						});
 					} else {
-						if(/^https?/.test(url)) {
+						if (/^https?/.test(url)) {
 							return CJAX.overLay(url, options);
 						} else {
 							console.log("overLay",'requires a full URL.');
@@ -2703,7 +2699,7 @@ function CJAX_FRAMEWORK() {
 				base : base,
 				$: CJAX.$,
 				handler: function(handler, callback) {
-					if(CJAX.debug) {
+					if (CJAX.debug) {
 						console.log('Setting Handler..',handler);
 					}
 					//CJAX.found_extra_time += 100;
@@ -2712,7 +2708,7 @@ function CJAX_FRAMEWORK() {
 				isFn: CJAX.lib.isFn,
 				load: CJAX.lib.loadCallback,
 				payload: function(element, fn, expiry) {
-					if(typeof  expiry == 'undefined') {
+					if (typeof  expiry == 'undefined') {
 						var expiry = true;
 					}
 					CJAX.util.payload(element, expiry);
@@ -2724,8 +2720,8 @@ function CJAX_FRAMEWORK() {
 				callback: function() {
 					callbacks = CJAX.util.json(callbacks);
 
-					for(event in callbacks) {
-						for(x in callbacks[event]) {
+					for (event in callbacks) {
+						for (x in callbacks[event]) {
 							CJAX._process(callbacks[event][x]);
 						}
 					}
@@ -2734,13 +2730,13 @@ function CJAX_FRAMEWORK() {
 				file: file,
 				serialize: CJAX._serialize,
 				importFile: function(_file, $callback) {
-					if(/^https?/.test(_file)) {
+					if (/^https?/.test(_file)) {
 						return CJAX.importFile(_file, $callback);
 					}
-					if(_file.indexOf('.css')!=-1) {
+					if (_file.indexOf('.css')!=-1) {
 						_file = base+_file;
 					} else {
-						if(_file.indexOf('/')==-1) {
+						if (_file.indexOf('/')==-1) {
 							_file = base+_file;
 						}
 					}
@@ -2748,11 +2744,11 @@ function CJAX_FRAMEWORK() {
 				},
 				fn: fn
 			};
-			for(x in extra) {
+			for (x in extra) {
 				func[x] = CJAX.lib.pharseFunction(extra[x]);
 			}
-			if(settings){
-				for(x in settings) {
+			if (settings){
+				for (x in settings) {
 					func[x] = CJAX.lib.pharseFunction(settings[x]);
 				}
 			}
@@ -2762,10 +2758,10 @@ function CJAX_FRAMEWORK() {
 		try {
 			window[plugin_name] = _new = new _plugin(buffer);
 			//_new.fn.apply(window[plugin_name], Object.keys(params).map(function (key) {return params[key]}));
-			if(!options.event_element_id && !options.on) {
+			if (!options.event_element_id && !options.on) {
 				_new.fn(params['a'], params['b'], params['c'], params['d'], params['e'], params['f']);
 			}
-			if(CJAX.debug) {
+			if (CJAX.debug) {
 				console.info('Running Plugin:', plugin_name);
 			}
 			return _new;
@@ -2784,18 +2780,18 @@ function CJAX_FRAMEWORK() {
 		var path = plugins_dir+file;
 		var plugin = CJAX.xml( 'do' ,buffer);
 		//for some reason a different method was returned, regain the original value
-		if(CJAX.debug) {
+		if (CJAX.debug) {
 			console.log('Loading Plugin:', path);
 		}
-		if(CJAX.lib.isFn(window[plugin]) || CJAX.lib.isFn(plugin) || my_plugin) {
-			if(CJAX.lib.isFn(my_plugin)) {
+		if (CJAX.lib.isFn(window[plugin]) || CJAX.lib.isFn(plugin) || my_plugin) {
+			if (CJAX.lib.isFn(my_plugin)) {
 				fn = my_plugin;
-			} else if(window[plugin]) {
+			} else if (window[plugin]) {
 				fn = window[plugin];
 			} else {
 				fn = plugin;
 			}
-			if(seconds){
+			if (seconds){
 				return setTimeout( function() {
 					return CJAX.extend(fn, CJAX._plugins[plugin], callbacks);
 				},seconds*1000);
@@ -2803,7 +2799,7 @@ function CJAX_FRAMEWORK() {
 				return CJAX.extend(fn, CJAX._plugins[plugin], callbacks);
 			}
 		} else {
-			if(CJAX.ie) {
+			if (CJAX.ie) {
 				alert(plugin+' could not be found or took to long to load.');
 			}
 			console.log(plugin,'could not be found or took to long to load.');
@@ -2812,10 +2808,10 @@ function CJAX_FRAMEWORK() {
 
 	this.importFile		=		function(file, $callback, waitfor)
 	{
-		if(typeof file =='object') {//for plugins
-			if(file.files){
+		if (typeof file =='object') {//for plugins
+			if (file.files){
 				var time = 300;
-				if(file.time) {
+				if (file.time) {
 					time = file.time;
 				}
 				var files = file.files.split(',');
@@ -2824,36 +2820,36 @@ function CJAX_FRAMEWORK() {
 				var check = file.check;
 				var last_number = CJAX.util.count(files) -1;
 
-				for(var x in files) {
+				for (var x in files) {
 					new_files[x] = {};
 					new_files[x].file = files[x];
 					new_files[x].filename = files[x].replace(/.*\//, '');
 				}
 
-				if(check) {
-					if(typeof check != 'object') {
+				if (check) {
+					if (typeof check != 'object') {
 						check = {0 : check};
 					}
-					for(var x in check) {
-						if(new_files[x]) {
-							if(window[check[x]]) {
+					for (var x in check) {
+						if (new_files[x]) {
+							if (window[check[x]]) {
 								new_files[x].cancel = check[x];
 							}
 						}
 					}
 				}
 
-				if(!file.callbacks) {
-					if(file.callback) {
+				if (!file.callbacks) {
+					if (file.callback) {
 						new_files[last_number].callback = file.callback;
 					}
 				} else {
-					for(x in file.callbacks) {
+					for (x in file.callbacks) {
 						new_files[x].callback = file.callbacks[x];
 					}
 				}
 
-				if(payload) {
+				if (payload) {
 
 					var payloadHandler = function(pfile, cb) {
 						var cbs = function () {
@@ -2867,13 +2863,13 @@ function CJAX_FRAMEWORK() {
 						return cbs;
 					};
 
-					if(typeof payload != 'object') {
+					if (typeof payload != 'object') {
 						payload = payload.split(',');
 					}
 					var new_callback = {};
 					var pl = {};
 					for (var x in payload) {
-						if(typeof payload[x] != 'object') {
+						if (typeof payload[x] != 'object') {
 							pl = {
 								file: payload[x],
 								callback: null
@@ -2900,9 +2896,9 @@ function CJAX_FRAMEWORK() {
 					var f =  fileData.file;
 					var callback = fileData.callback;
 
-					if(CJAX.util.payload(fileData.filename)) {
+					if (CJAX.util.payload(fileData.filename)) {
 
-						if(callback) {
+						if (callback) {
 							CJAX.lib.loadCallback(fileData.filename, function(obj) {
 								var call_number = 0;
 								var calling = function () {
@@ -2913,7 +2909,7 @@ function CJAX_FRAMEWORK() {
 								try {
 									calling();
 								}catch(e) {
-									if(call_number >= 10) {
+									if (call_number >= 10) {
 										console.log('Giving up trying to load callback for', fileData.filename);
 										return false;
 									}
@@ -2927,11 +2923,11 @@ function CJAX_FRAMEWORK() {
 						return false;
 					}
 					//is already loaded
-					if(fileData.cancel) {
-						if(file.debug) {
+					if (fileData.cancel) {
+						if (file.debug) {
 							console.info('Element importing was cancelled because it matches',fileDta.cancel,fileData);
 						}
-						if(callback) {
+						if (callback) {
 							callback();
 						}
 					} else {
@@ -2944,12 +2940,12 @@ function CJAX_FRAMEWORK() {
 						}
 					}
 				};
-				for(xfile in new_files) {
+				for (xfile in new_files) {
 					f = testFile(new_files[xfile]);
 				}
 				return true;
 			} else {
-				if(file.plugin) {
+				if (file.plugin) {
 					file = CJAX.importFile(CJAX.pBase+file.plugin+'/'+file.file, $callback);
 				} else {
 					file = file.file;
@@ -2963,13 +2959,13 @@ function CJAX_FRAMEWORK() {
 
 	this.importPlugin		=		function(file, $callback, waitfor, plugin_name)
 	{
-		if(typeof file == 'object') {
+		if (typeof file == 'object') {
 			var options = file;
 			file = CJAX.pBase + options.file;
 			CJAX._plugins[options.is_plugin] = options;
 		}
 		var _import = CJAX.script.load(file, $callback, waitfor);
-		if(plugin_name) {
+		if (plugin_name) {
 			console.log('plugin',plugin_name);
 		}
 		return _import;
@@ -2991,10 +2987,10 @@ function CJAX_FRAMEWORK() {
 	 */
 	this.process		=		function( buffer , obj_buffer, caller, uniqid)
 	{
-		if(!CJAX.defined(caller)) {
+		if (!CJAX.defined(caller)) {
 			var caller = 'unknown';
 		}
-		if(!CJAX.is_cjax(buffer) && typeof buffer != 'object') {
+		if (!CJAX.is_cjax(buffer) && typeof buffer != 'object') {
 			alert('no cjax - caller: '+caller+'\n'+buffer);return false ;
 		};
 
@@ -3006,12 +3002,12 @@ function CJAX_FRAMEWORK() {
 		var obj_buffer = cache;
 		var xml_data = cache;
 
-		if(typeof xml_data != 'object') {
+		if (typeof xml_data != 'object') {
 			xml_data = CJAX.util.objectify(cache,'cjax');
 		}
 		CJAX.method = CJAX.get_function(cache);
 
-		if(!CJAX.method) {
+		if (!CJAX.method) {
 			console.warn('Not processed:', cache, xml_data,caller);
 			console.trace();
 			return false;
@@ -3022,37 +3018,37 @@ function CJAX_FRAMEWORK() {
 
 		wait = CJAX._wait(xml_data);
 
-		if(wait) {
+		if (wait) {
 			seconds = wait;
 		} else {
 			var seconds = xml_data.seconds;
-			if(!seconds && CJAX.timer) {
+			if (!seconds && CJAX.timer) {
 				seconds = CJAX.timer;
 			}
 		}
-		if(!CJAX.funtion_timer) {
+		if (!CJAX.funtion_timer) {
 			seconds = 0;
 		}
-		if(CJAX.debug && seconds) {
+		if (CJAX.debug && seconds) {
 			console.log(CJAX.method ,"waits :",seconds,'caller:',caller);
 		}
 
 
 		//If it is a method
-		if(CJAX[SUBFIX]) {
+		if (CJAX[SUBFIX]) {
 
 			//try {
 			switch(CJAX.method) {
 				case '_fn':
-					if(CJAX[cache.fn]) {
+					if (CJAX[cache.fn]) {
 						SUBFIX = cache.fn;
 					}
 					break;
 				case '_form':
 				case '_call':
-					if(typeof  cache != 'object') {
+					if (typeof  cache != 'object') {
 						cache = CJAX.util.objectify(cache, 'cjax');
-						if(cache) {
+						if (cache) {
 							cache.options = CJAX.util.json(cache.options);
 						}
 					}
@@ -3066,7 +3062,7 @@ function CJAX_FRAMEWORK() {
 					break;
 			}
 
-			if(seconds){
+			if (seconds){
 				setTimeout(function() {
 					CJAX[SUBFIX](xml_data, cache);
 				},seconds);
@@ -3088,14 +3084,14 @@ function CJAX_FRAMEWORK() {
 	};
 
 	this.xml		=		function (start , buffer , loop , caller) {
-		if(typeof buffer == 'object') {
+		if (typeof buffer == 'object') {
 			return buffer[start];
 		}
-		if(!buffer) return;
-		if(loop == null) var loop = 0;
-		if(typeof start=='undefined') return '';
-		if(caller == null) var caller = 'unknown';
-		if(!buffer || !start) return '';
+		if (!buffer) return;
+		if (loop == null) var loop = 0;
+		if (typeof start=='undefined') return '';
+		if (caller == null) var caller = 'unknown';
+		if (!buffer || !start) return '';
 		var real_var = start;
 		var end = '</'+start+'>';
 		start = '<'+start+'>';
@@ -3114,7 +3110,7 @@ function CJAX_FRAMEWORK() {
 		var _new_var = buffer.substr(loc_start+start_len,middle);
 		var string_len = loc_start+start_len+_new_var.length+start_len;
 
-		if(loop) {
+		if (loop) {
 			var myarr = [];
 			var i = 0;
 			var value;
@@ -3126,7 +3122,7 @@ function CJAX_FRAMEWORK() {
 
 				i++;
 			}
-			if(CJAX.debug) {
+			if (CJAX.debug) {
 				console.log("xml count:",i, 'for tag:',real_var);
 			}
 			return (myarr)?myarr:'';
@@ -3137,16 +3133,16 @@ function CJAX_FRAMEWORK() {
 	this.getbyname	=	function(name,tag){
 		var x=document.getElementsByName(name);
 
-		if(x.length) {
+		if (x.length) {
 			return x;
-		} else if(x && tag) {
+		} else if (x && tag) {
 			var elements = document.getElementsByTagName(tag);
 			var new_elements = [];
 			var element;
 			var x = 0;
-			for(var i = 0; i < elements.length; i++) {
+			for (var i = 0; i < elements.length; i++) {
 				element = elements[i];
-				if(element.name == name) {
+				if (element.name == name) {
 					new_elements[x] = element;
 					x = x+1;
 				}
@@ -3159,16 +3155,16 @@ function CJAX_FRAMEWORK() {
 	this.css		=		function(_class,title)  {
 		return {
 			add:function(_class,title) {
-				//if(typeof title=='undefined') var title = 'cjax';
-				if(HELPER_STYLE && title=='cjax') {
-					if(HELPER_STYLE.cssRules) {
-						if(!CJAX.css.get(_class,title)) {
+				//if (typeof title=='undefined') var title = 'cjax';
+				if (HELPER_STYLE && title=='cjax') {
+					if (HELPER_STYLE.cssRules) {
+						if (!CJAX.css.get(_class,title)) {
 							HELPER_STYLE.insertRule(_class+' { }', 0);
 						}
 						return CJAX.css.get(_class,title);
 					} else {
 						//for IE
-						if(!CJAX.css.get(_class,title)) {
+						if (!CJAX.css.get(_class,title)) {
 							HELPER_STYLE.addRule(_class, null,0);
 						}
 						return CJAX.css.get(_class,title);
@@ -3182,20 +3178,20 @@ function CJAX_FRAMEWORK() {
 				var styles = document.styleSheets;
 				var style;
 				for (var i = 0; i < styles.length; i++ ) {
-					if(styles[i].title == title ) {
+					if (styles[i].title == title ) {
 						style = styles[i];
 						break;
 					}
 				}
 
 				var head = CJAX.elem_docs('head')[0];
-				//if(!CJAX.defined(style)) {
+				//if (!CJAX.defined(style)) {
 				var obj = _create(title);
 				head.appendChild( obj );
 				//}
 
 				//first for FF
-				if(obj.sheet) {
+				if (obj.sheet) {
 					var style = HELPER_STYLE = obj.sheet;
 					style.insertRule(_class+' { }', 0);
 				} else {
@@ -3209,9 +3205,9 @@ function CJAX_FRAMEWORK() {
 				return new_style;
 			},
 			getClass: function(_class,css_file) {
-				if(typeof css_file =='undefined') var css_file = null;
+				if (typeof css_file =='undefined') var css_file = null;
 
-				if(CJAX.defined(CJAX.styles[_class])) {
+				if (CJAX.defined(CJAX.styles[_class])) {
 					return CJAX.styles[_class];
 				}
 
@@ -3222,30 +3218,30 @@ function CJAX_FRAMEWORK() {
 					style = styles[i];
 					rules = style.cssRules;
 
-					if(css_file && style.href) {
+					if (css_file && style.href) {
 						var base = CJAX.util.get.basename(style.href);
-						if(css_file != base) {
+						if (css_file != base) {
 							continue;
 						}
 					}
-					if(!CJAX.defined(rules.length)) {
+					if (!CJAX.defined(rules.length)) {
 						continue;
 					}
 					//css file is too big
-					if(rules.length && rules.length > 50) {
+					if (rules.length && rules.length > 50) {
 						continue;
 					}
-					for(var i = 0; i < rules.length;i++) {
+					for (var i = 0; i < rules.length;i++) {
 
-						if(typeof rules[i]=='number' || typeof rules[i]=='function') {
+						if (typeof rules[i]=='number' || typeof rules[i]=='function') {
 							continue;
 						}
-						if(!CJAX.defined(rules[i].selectorText)) {
+						if (!CJAX.defined(rules[i].selectorText)) {
 							continue;
 						}
 
 						try {
-							if(rules[i].selectorText==_class) {
+							if (rules[i].selectorText==_class) {
 								CJAX.styles[_class] = rules[i];
 								return rules[i];
 							}
@@ -3255,24 +3251,24 @@ function CJAX_FRAMEWORK() {
 				}
 			},
 			get: function(_class,css_title) {
-				if(typeof css_title == 'undefined') var css_title = null;
+				if (typeof css_title == 'undefined') var css_title = null;
 
-				if(css_title=='cjax') {
+				if (css_title=='cjax') {
 					var style = HELPER_STYLE;
 
 					var rule;
-					if(style.cssRules){
-						for(x in style.cssRules) {
+					if (style.cssRules){
+						for (x in style.cssRules) {
 							rule = style.cssRules[x];
-							if(CJAX.defined(rule) && CJAX.defined(rule.selectorText) && rule.selectorText.toLowerCase() == _class) {
+							if (CJAX.defined(rule) && CJAX.defined(rule.selectorText) && rule.selectorText.toLowerCase() == _class) {
 								return style.cssRules[x];
 							}
 						}
 					} else {
 						//for IE
-						for(x in style.rules) {
+						for (x in style.rules) {
 							rule = style.rules[x];
-							if(CJAX.defined(rule) && CJAX.defined(rule.selectorText) && rule.selectorText.toLowerCase() == _class) {
+							if (CJAX.defined(rule) && CJAX.defined(rule.selectorText) && rule.selectorText.toLowerCase() == _class) {
 								return style.rules[x];
 							}
 						}
@@ -3307,7 +3303,7 @@ function CJAX_FRAMEWORK() {
 
 	this.intval		=		function( number ) {
 		var ret =  isNaN( number )? false:true;
-		if( ret ) { return number; } else { return 0; }
+		if ( ret ) { return number; } else { return 0; }
 	};
 
 	this.wait		=		function(seconds)
@@ -3316,7 +3312,7 @@ function CJAX_FRAMEWORK() {
 	};
 
 	this._wait		=		function( buffer ) {
-		if(typeof buffer=='undefined') {
+		if (typeof buffer=='undefined') {
 			CJAX.timer = 0;
 			CJAX.waiting = false;
 			console.log("Timer has be reset.");
@@ -3329,7 +3325,7 @@ function CJAX_FRAMEWORK() {
 
 		CJAX.funtion_timer = 0;
 
-		if(typeof buffer == 'object') {
+		if (typeof buffer == 'object') {
 
 			timeout = buffer.timeout;
 			ms = buffer.ms;//is milliseconds?
@@ -3343,12 +3339,12 @@ function CJAX_FRAMEWORK() {
 			not_wait = CJAX.xml('no_wait',buffer);
 		}
 
-		if(time_reset) {
+		if (time_reset) {
 			CJAX.timer = 0;
 		}
 		var timeout;
-		if(ms) {
-			if(timeout.indexOf('.')!=-1) {
+		if (ms) {
+			if (timeout.indexOf('.')!=-1) {
 				timeout = parseFloat(timeout);
 				timeout = timeout * 1000;
 			}
@@ -3357,16 +3353,16 @@ function CJAX_FRAMEWORK() {
 			timeout = timeout * 1000;
 		}
 
-		if(not_wait) {
+		if (not_wait) {
 			CJAX.funtion_timer = 0;
 		} else {
 			CJAX.funtion_timer = true;
 		}
-		if(!timeout) {
+		if (!timeout) {
 			return;
 		}
 		CJAX.waiting = true;
-		if(!CJAX.timer) {
+		if (!CJAX.timer) {
 			CJAX.timer = timeout;
 		} else {
 			CJAX.timer = parseInt(CJAX.timer)+parseInt(timeout);
@@ -3380,10 +3376,10 @@ function CJAX_FRAMEWORK() {
 	 * data delivered from php
 	 **/
 	this.decode = function( data ) {
-		if(!data) {
+		if (!data) {
 			return '';
 		}
-		if(typeof data !='string') {
+		if (typeof data !='string') {
 			return data;
 		}
 		data = data.replace(/\+/gim," ");
@@ -3399,7 +3395,7 @@ function CJAX_FRAMEWORK() {
 
 	this.update			=		function(element_id, data)
 	{
-		if(data) {
+		if (data) {
 			CJAX.$(element_id).innerHTML =  data;
 		} else {
 			CJAX.$(element_id).innerHTML =  '';
@@ -3408,15 +3404,15 @@ function CJAX_FRAMEWORK() {
 
 
 	this.prop			=		function(options) {
-		if(options.options.b) {
+		if (options.options.b) {
 			CJAX.$(options.options.b, function(elements) {
-				for(var x in elements) {
+				for (var x in elements) {
 					options.selector = elements[x];
 					CJAX.property(options,options.xml);
 				}
 			});
 		} else {
-			if(!options.selector) {
+			if (!options.selector) {
 				options.selector = CJAX.clicked;
 			}
 			return CJAX.property(options);
@@ -3437,12 +3433,12 @@ function CJAX_FRAMEWORK() {
 				CJAX.$('.'+ swap1, function(elements) {
 
 					CJAX.$('.'+ swap2, function(elements2) {
-						for(x in elements2) {
+						for (x in elements2) {
 							elements2[x].setAttribute('class', swap1);
 						}
 					});
 
-					for(x in elements) {
+					for (x in elements) {
 						elements[x].setAttribute('class', swap2);
 					}
 				});
@@ -3458,12 +3454,12 @@ function CJAX_FRAMEWORK() {
 		var src_prop  = options.options.c;
 		var selector  = options.selector;
 
-		if(!src_prop) {
+		if (!src_prop) {
 			src_prop = dest_prop;
 		}
 
 		CJAX.$(options.options.a, function(elements) {
-			for(var x in elements) {
+			for (var x in elements) {
 
 				try {
 					if (selector.hasAttribute(src_prop)) {
@@ -3495,14 +3491,14 @@ function CJAX_FRAMEWORK() {
 	{
 		var element = CJAX.is_element(CJAX.xml('element_id',buffer));
 
-		if( !element )  {
+		if ( !element )  {
 			console.log(element,'was not found');
 			return false;
 		}
 
 		var data = CJAX.xml('data',buffer);
 
-		if(data) {
+		if (data) {
 			data = CJAX.decode( data );
 			element.innerHTML = data;
 		} else {
@@ -3519,7 +3515,7 @@ function CJAX_FRAMEWORK() {
 	};
 
 	this._serialize		=		function(form,include_files) {
-		if(typeof include_files =='undefined') {
+		if (typeof include_files =='undefined') {
 			var include_files = true;
 		} else {
 			CJAX.files = false;
@@ -3542,14 +3538,14 @@ function CJAX_FRAMEWORK() {
 			elem_name =  elem.name;
 			elem_value = elem.value;
 			elem_len = elem.length;
-			if(!elem_type)continue;
-			if(elem_type=='file' && include_files) {
+			if (!elem_type)continue;
+			if (elem_type=='file' && include_files) {
 				CJAX.files = true;
 			}
-			if(elem_id && elem_name)elem_id = elem_name;
-			if(!elem_id && elem_name)elem_id = elem_name;
+			if (elem_id && elem_name)elem_id = elem_name;
+			if (!elem_id && elem_name)elem_id = elem_name;
 
-			if(!elem_id) {
+			if (!elem_id) {
 				continue;
 			}
 
@@ -3561,7 +3557,7 @@ function CJAX_FRAMEWORK() {
 			} catch(e) {}
 			switch ( elem_type ) {
 				case 'submit':
-					if(elem_name.toLowerCase()=='submit') {
+					if (elem_name.toLowerCase()=='submit') {
 						elem.name = 'btnSubmit';
 					}
 					continue;
@@ -3574,14 +3570,14 @@ function CJAX_FRAMEWORK() {
 					//if has no value, then not send
 					elem_value = ((elem.checked)? 1:'');
 
-					if(!elem_value) {
+					if (!elem_value) {
 						continue;
 					}
-					if(elem.value) {
-						if(typeof elem.value=='string' && elem.value=='0') {
+					if (elem.value) {
+						if (typeof elem.value=='string' && elem.value=='0') {
 							elem_value = ((elem.checked)? 1:0);
 						} else  {
-							if(elem.checked) {
+							if (elem.checked) {
 								elem_value = elem.value;
 							} else {
 								elem_value = '';
@@ -3600,13 +3596,13 @@ function CJAX_FRAMEWORK() {
 
 					name =  elem.getAttribute('name');
 					var radios = document.getElementsByName(name);
-					if(radios) {
+					if (radios) {
 						var element;
 						var check = '';
 
-						for(var i = 0; i < radios.length; i++) {
+						for (var i = 0; i < radios.length; i++) {
 							element = radios[i];
-							if(element.checked) {
+							if (element.checked) {
 								check = element.value;
 								break;
 							}
@@ -3622,7 +3618,7 @@ function CJAX_FRAMEWORK() {
 				default:
 					elem_value = elem.value;
 			}
-			if(typeof elem_value =='string' && elem_value.indexOf('&') !=-1) {
+			if (typeof elem_value =='string' && elem_value.indexOf('&') !=-1) {
 				elem_value = escape(elem_value);
 			}
 
@@ -3637,20 +3633,20 @@ function CJAX_FRAMEWORK() {
 
         var callback_opts_fn = function(options, response,selector) {
             var new_event;
-            for(option in options.options) {
+            for (option in options.options) {
                 new_event = options.options[option];
 
-                if(selector) {
+                if (selector) {
                     new_event.selector = selector;
                 }
 
-                if(new_event.options) {
+                if (new_event.options) {
                     new_event.options = CJAX.util.tag(new_event.options, '{response}', response);
                 } else {
                     new_event = CJAX.util.tag(new_event, '{response}', response);
                 }
 
-                if(new_event.is_plugin) {
+                if (new_event.is_plugin) {
                     CJAX._extendPlugin(new_event.is_plugin, new_event);
                 } else {
                     CJAX._process(new_event);
@@ -3659,10 +3655,10 @@ function CJAX_FRAMEWORK() {
             }
         };
 
-        if(options.type[0] == '#' || options.type[0] == '.') {
+        if (options.type[0] == '#' || options.type[0] == '.') {
 
             CJAX.$(options.type, function(elements) {
-                for(x in elements) {
+                for (x in elements) {
 
                     callback_opts_fn(options, null, elements[x]);
                 }
@@ -3678,10 +3674,10 @@ function CJAX_FRAMEWORK() {
 
 	this._form		=		function( buffer , obj_buffer) {
 		var selector;
-		if(obj_buffer) {
+		if (obj_buffer) {
 			selector = obj_buffer.selector;
 		}
-		if(typeof buffer == 'object') {
+		if (typeof buffer == 'object') {
 			buffer = buffer.xml;
 		}
 		buffer = CJAX.decode(buffer);
@@ -3692,25 +3688,25 @@ function CJAX_FRAMEWORK() {
 		var text = CJAX._text =  CJAX.xml('text',buffer);
 		CJAX.IS_POST = is_post  = CJAX.xml('post',buffer);
 
-		if(text) {
+		if (text) {
 			CJAX.loading(text,true);
 		}
 
 		var _confirm = CJAX.xml('confirm',buffer);
 
-		if(_confirm) {
+		if (_confirm) {
 			CJAX.$('cjax_overlay').style.display = 'block';
-			if(CJAX.handlers._handlerConfirm && CJAX.lib.isFn(CJAX.handlers._handlerConfirm)) {
+			if (CJAX.handlers._handlerConfirm && CJAX.lib.isFn(CJAX.handlers._handlerConfirm)) {
 				$callback = function() {
 					confirm_buffer = CJAX.remove1Tag('confirm', buffer);
 					CJAX._process(confirm_buffer);
 				};
-				if(!CJAX.handlers._handlerConfirm(_confirm, $callback)) {
+				if (!CJAX.handlers._handlerConfirm(_confirm, $callback)) {
 					CJAX.$('cjax_overlay').style.display = 'none';
 					return true;
 				}
 			} else {
-				if(!window.confirm(_confirm)) {
+				if (!window.confirm(_confirm)) {
 					CJAX.$('cjax_overlay').style.display = 'none';
 					return true;
 				}
@@ -3718,13 +3714,13 @@ function CJAX_FRAMEWORK() {
 			CJAX.$('cjax_overlay').style.display = 'none';
 		}
 
-		if(!form_id) {
+		if (!form_id) {
 			var element_id = CJAX.xml('event_element_id',buffer);
 
-			if(element_id) {
+			if (element_id) {
 				form = CJAX.$(element_id).form;
 			} else {
-				if(typeof CJAX.clicked =='undefined') {
+				if (typeof CJAX.clicked =='undefined') {
 					console.log("Form not found");
 					return;
 				}
@@ -3732,21 +3728,21 @@ function CJAX_FRAMEWORK() {
 			}
 		} else {
 			form = CJAX.is_element(form_id);
-			if(!form) {
+			if (!form) {
 				form = document.forms[form];
-				if(!form) {
+				if (!form) {
 					form = CJAX.$(form);
 				}
 			}
 		}
 
-		if(!form) {
+		if (!form) {
 			alert('CJAX: invalid form_id or form not found.');
 			return false;
 		}
-		if(!form.id) {
+		if (!form.id) {
 			form.id = 'cjax_form';
-			if(!form.name) {
+			if (!form.name) {
 				form.name = form.id;
 			}
 		}
@@ -3754,15 +3750,15 @@ function CJAX_FRAMEWORK() {
 		var serial = CJAX._serialize(form);
 		var url = CJAX._pharseValues(url, selector);
 
-		if( container ){
+		if ( container ){
 			container = CJAX.$( container );
-			if( !container ) return false;
+			if ( !container ) return false;
 		}
-		if(url) {
+		if (url) {
 			CJAX._handleRequestHeaders(url,args,serial);
 		}
 
-		if(CJAX.handlers._handlerFormRequest && CJAX.lib.isFn(CJAX.handlers._handlerFormRequest)) {
+		if (CJAX.handlers._handlerFormRequest && CJAX.lib.isFn(CJAX.handlers._handlerFormRequest)) {
 			handlerFormRequest = function() {
 				CJAX.handlers._handlerFormRequest(url, serial, args);
 			};
@@ -3772,20 +3768,20 @@ function CJAX_FRAMEWORK() {
 			};
 		}
 
-		if(CJAX.handlers.fileupload && CJAX.lib.isFn(CJAX.handlers.fileupload)) {
+		if (CJAX.handlers.fileupload && CJAX.lib.isFn(CJAX.handlers.fileupload)) {
 			CJAX.files = CJAX.handlers.fileupload(form, url, handlerFormRequest);
-		} else if(CJAX.files) {
-			if(CJAX.debug) {
+		} else if (CJAX.files) {
+			if (CJAX.debug) {
 				console.log('built-in handler:',CJAX.handlers);
 			}
 			//@deprecated
 			//CJAX.files = CJAX._handleUploads(form, url, handlerFormRequest);
-			if(url) {
+			if (url) {
 				handlerFormRequest();
 				CJAX.loading();
 			}
 		} else {
-			if(url) {
+			if (url) {
 				handlerFormRequest();
 
 			}
@@ -3799,34 +3795,34 @@ function CJAX_FRAMEWORK() {
 
 	this._handlerFormRequest		= 	function(url, serial, args)
 	{
-		if(CJAX.debug) {
+		if (CJAX.debug) {
 			console.log("Waiting for response...");
 		}
 		CJAX.HTTP_REQUEST_INSTANCE.onreadystatechange = function () {
-			if(CJAX.HTTP_REQUEST_INSTANCE.readyState) {
-				if(CJAX.HTTP_REQUEST_INSTANCE.readyState < 4) {
+			if (CJAX.HTTP_REQUEST_INSTANCE.readyState) {
+				if (CJAX.HTTP_REQUEST_INSTANCE.readyState < 4) {
 				} else {
-					if(CJAX.handlers._handlerRequestStatus && CJAX.lib.isFn(CJAX.handlers._handlerRequestStatus)) {
+					if (CJAX.handlers._handlerRequestStatus && CJAX.lib.isFn(CJAX.handlers._handlerRequestStatus)) {
 						response = CJAX.handlers._handlerRequestStatus(url, CJAX.HTTP_REQUEST_INSTANCE.status, {});
 					} else{
 						response = CJAX._handlerRequestStatus(url, CJAX.HTTP_REQUEST_INSTANCE.status,{});
 					}
-					if(CJAX._text) {
+					if (CJAX._text) {
 						CJAX.loading();
 					}
 				}
 			}
 		};
-		/*if(CJAX.ajaxSettings.AjaxVars) {
+		/*if (CJAX.ajaxSettings.AjaxVars) {
 		 serial += '&'+CJAX.ajaxSettings.AjaxVars;
 		 CJAX.ajaxSettings.AjaxVars = null;
 		 }*/
 
 		var full_url = url.replace(/\&+$/,'');
-		if(serial) {
+		if (serial) {
 			full_url +='&'+serial;
 		}
-		if(args) {
+		if (args) {
 			full_url +='&'+args;
 		}
 
@@ -3837,7 +3833,7 @@ function CJAX_FRAMEWORK() {
 
 	this.setHandler		=		function(name, callback_handler)
 	{
-		if(CJAX.lib.isFn(callback_handler)) {
+		if (CJAX.lib.isFn(callback_handler)) {
 			CJAX.handlers[name] = callback_handler;
 		} else {
 			console.log('Invalid Handler was assigned');
@@ -3847,38 +3843,38 @@ function CJAX_FRAMEWORK() {
 	this.ajaxVars		=		function(buffer)
 	{
 		vars = buffer.vars;
-		if(vars) {
+		if (vars) {
 			CJAX.ajaxSettings.AjaxVars = vars;
 		}
 	};
 
 	this.$					=		function(element_id, callback) {
-		if(!element_id) {
+		if (!element_id) {
 			return;
 		}
-		if(typeof element_id =='object') {
-			if(callback) {
+		if (typeof element_id =='object') {
+			if (callback) {
 				CJAX.util.applySelector(element_id,callback);
 			}
 			return element_id;
 		}
 
-		if(element_id=='body') {
+		if (element_id=='body') {
 			return CJAX.elem_docs( 'body' )[0];
 		}
-		if(element_id=='head') {
+		if (element_id=='head') {
 			return CJAX.elem_docs( 'head' )[0];
 		}
 
 
-		if(/[^a-zA-Z0-9_\-]/i.test(element_id)) {
+		if (/[^a-zA-Z0-9_\-]/i.test(element_id)) {
 
-			if(CJAX.lib.isFn(callback)) {
+			if (CJAX.lib.isFn(callback)) {
 				return CJAX.util.applySelector(element_id,callback);
 			} else {
 				element_id = element_id.replace(/^\#/,'');
-				if(item = CJAX.is_element(element_id) ) {
-					if(CJAX.debug) {
+				if (item = CJAX.is_element(element_id) ) {
+					if (CJAX.debug) {
 						console.log('in sizzle context, no callback.',element_id, ' is_element fallback.');
 					}
 					return item;
@@ -3887,7 +3883,7 @@ function CJAX_FRAMEWORK() {
 			}
 			return false;
 		}
-		if(CJAX.lib.isFn(callback)) {
+		if (CJAX.lib.isFn(callback)) {
 			return callback({ 0: CJAX.is_element(element_id)})
 		}
 		return CJAX.is_element(element_id);
@@ -3897,26 +3893,26 @@ function CJAX_FRAMEWORK() {
 	 * return an element object can pass an string as id or an object
 	 **/
 	this.is_element			=			function(id_obj, verbose) {
-		if(typeof id_obj == 'object') {
+		if (typeof id_obj == 'object') {
 			return id_obj;
 		}
-		if(CJAX.debug) { verbose = true; }
+		if (CJAX.debug) { verbose = true; }
 
 		var elem = document.getElementById(id_obj);
 
-		if(typeof id_obj == 'undefined' || id_obj===null) {
+		if (typeof id_obj == 'undefined' || id_obj===null) {
 			console.warn('Element '+id_obj+' not found');
 			return false;
 		}
 
-		if( !elem ){
+		if ( !elem ){
 
-			if(CJAX.util.isXML(id_obj)) {
+			if (CJAX.util.isXML(id_obj)) {
 				elem = CJAX.xml('element_id',id_obj);
 			}
 
-			if(!elem) {
-				if( verbose ) {
+			if (!elem) {
+				if ( verbose ) {
 					console.log('CJAX: Element "'+id_obj+'" not found on document');
 				}
 				return false;
@@ -3926,10 +3922,10 @@ function CJAX_FRAMEWORK() {
 	};
 
 	this.elem_docs		=		function(id_obj,verbose) {
-		if(typeof verbose =='undefined') verbose = true;
+		if (typeof verbose =='undefined') verbose = true;
 		var obj = document.getElementsByTagName(id_obj);
-		if( !obj ) {
-			if( verbose ) {
+		if ( !obj ) {
+			if ( verbose ) {
 				console.warning('CJAX: Element '+id_obj+' not found on document');
 			}
 			return;
@@ -3955,11 +3951,11 @@ function CJAX_FRAMEWORK() {
 	 */
 	this.call			=		function(options, options2)
 	{
-		if(typeof options !='object') {
+		if (typeof options !='object') {
 			var url = options;
 			options = {};
 			options.url = url;
-			for(x in options2) {
+			for (x in options2) {
 				options[x] = options2[x];
 			}
 		}
@@ -3971,7 +3967,7 @@ function CJAX_FRAMEWORK() {
 		options.controller = controller
 
 		var settings = controller.split(':');
-		if(settings.length > 1) {
+		if (settings.length > 1) {
 			CJAX.ajaxSettings.dataType = settings[1];
 		}
 
@@ -3985,17 +3981,17 @@ function CJAX_FRAMEWORK() {
 	this._call		=		function( xcache ) {
 		var selector;
 		var cache = xcache;
-		if(typeof xcache != 'object' || xcache.cjax) {
+		if (typeof xcache != 'object' || xcache.cjax) {
 			cache = CJAX.util.objectify(xcache, 'cjax');
 		}
-		if(!cache.callback) {
+		if (!cache.callback) {
 			cache.callback = {};
 		}
 
 		selector = cache.selector;
 
 		var options = {};
-		if(cache.options) {
+		if (cache.options) {
 			options = cache.options;
 		}
 
@@ -4008,34 +4004,34 @@ function CJAX_FRAMEWORK() {
 		var crossdomain = cache.crossdomain;
 
 		var is_loading  =  cache.is_loading;
-		if(!is_loading) is_loading = false;
+		if (!is_loading) is_loading = false;
 
 		var text = cache.text;
-		if( !text || text==1) {
+		if ( !text || text==1) {
 			text = 'Loading...';
 		}
-		if(text =='no_text') {
+		if (text =='no_text') {
 			text = null;
 		}
-		if(CJAX.text) {
+		if (CJAX.text) {
 			text = CJAX.text;
 		}
 
 		var container_id =  cache.container_id;
 
-		if(_confirm) {
+		if (_confirm) {
 			CJAX.$('cjax_overlay').style.display = 'block';
-			if(CJAX.handlers._handlerConfirm && CJAX.lib.isFn(CJAX.handlers._handlerConfirm)) {
+			if (CJAX.handlers._handlerConfirm && CJAX.lib.isFn(CJAX.handlers._handlerConfirm)) {
 				$callback = function() {
 					confirm_buffer = CJAX.remove1Tag('confirm', buffer);
 					CJAX._process(confirm_buffer);
 				};
-				if(!CJAX.handlers._handlerConfirm(_confirm, $callback)) {
+				if (!CJAX.handlers._handlerConfirm(_confirm, $callback)) {
 					CJAX.$('cjax_overlay').style.display = 'none';
 					return true;
 				}
 			} else {
-				if(!window.confirm(CJAX.decode(_confirm))) {
+				if (!window.confirm(CJAX.decode(_confirm))) {
 					CJAX.$('cjax_overlay').style.display = 'none';
 					return true;
 				}
@@ -4045,7 +4041,7 @@ function CJAX_FRAMEWORK() {
 
 		url = CJAX._pharseValues(url, selector);
 
-		if(CJAX.ajaxSettings.stop) {
+		if (CJAX.ajaxSettings.stop) {
 			CJAX.ajaxSettings.stop = false;
 			return true;
 		}
@@ -4053,39 +4049,39 @@ function CJAX_FRAMEWORK() {
 		var is_post  = cache.post? cache.post:'';
 		var args = cache.args;
 
-		if(args) {
+		if (args) {
 			CJAX.IS_POST = true;
 		}
 
-		if(container_id) {
+		if (container_id) {
 			var container = CJAX.is_element( container_id ,false);
-			if( !container ) {
+			if ( !container ) {
 				alert("CJAX Error: container "+container_id+ " not found");
 				return false;
 			}
 		}
 
-		if(CJAX.ajaxSettings.cache || options.cache) {
+		if (CJAX.ajaxSettings.cache || options.cache) {
 
-			if(cached_data = CJAX.util.cachedURL(url)) {
+			if (cached_data = CJAX.util.cachedURL(url)) {
 
 				var new_response = cached_data.response;
 				CJAX.ajaxSettings.cache = false;
 
-				if(cached_data.dataType == 'json' || options.dataType == 'json') {
+				if (cached_data.dataType == 'json' || options.dataType == 'json') {
 					new_response = CJAX.util.jsonEval(new_response);
 				} else {
 					CJAX.process_all(new_response);
 				}
 
-				if(cache.callback && cache.callback.success) {
+				if (cache.callback && cache.callback.success) {
 					cache.callback.success(new_response);
 				}
 
-				if(CJAX.callback.success) {
+				if (CJAX.callback.success) {
 					CJAX.callback.success(new_response);
 				}
-				if(CJAX.callback.complete) {
+				if (CJAX.callback.complete) {
 					CJAX.callback.complete(new_response);
 				}
 
@@ -4093,10 +4089,10 @@ function CJAX_FRAMEWORK() {
 			}
 		}
 
-		if(CJAX.ajaxSettings.cache || options.cache) {
+		if (CJAX.ajaxSettings.cache || options.cache) {
 			var cached_state = CJAX.util.cachedState(url)
 
-			if(cached_state) {
+			if (cached_state) {
 				//the first call to be cached is in progress, but
 				//an action occured to process that same call again
 				//and the first call is not completed, and it hasn't been cached
@@ -4108,39 +4104,39 @@ function CJAX_FRAMEWORK() {
 		}
 
 		CJAX.HTTP_REQUEST_INSTANCE = CJAX.AJAX ();
-		if(url.indexOf('&') != -1) {
+		if (url.indexOf('&') != -1) {
 			var ms=+new Date().getTime();
 			url += "&cjax="+ms;
 		}
 
-		if(crossdomain) {
+		if (crossdomain) {
 			var ms=+new Date().getTime();
 
 			var crossdomain_url = CJAX.f+'?_crossdomain/'+ms;
 			return CJAX.post(crossdomain_url,'a='+escape(escape(url)), function(response) {
 
-				if(CJAX.lib.isFn(callback)) {
+				if (CJAX.lib.isFn(callback)) {
 					callback(response);
 				}
-				if(container)  {
+				if (container)  {
 					container.innerHTML = response;
 				}
 			});
 		}
 
-		if(text) {
+		if (text) {
 			CJAX.loading(text);
 		}
 
 		var full_url = CJAX._handleRequestHeaders(url, args);
 
 		try {
-			if(CJAX.debug) {
+			if (CJAX.debug) {
 				console.log("Waiting for response..");
 			}
 			CJAX.HTTP_REQUEST_INSTANCE.onreadystatechange = function () {
-				if(CJAX.HTTP_REQUEST_INSTANCE.readyState) {
-					if(CJAX.HTTP_REQUEST_INSTANCE.readyState < 4) {
+				if (CJAX.HTTP_REQUEST_INSTANCE.readyState) {
+					if (CJAX.HTTP_REQUEST_INSTANCE.readyState < 4) {
 						CJAX.util.cacheState(url, {readyState: CJAX.HTTP_REQUEST_INSTANCE.readyState});
 					} else {
 						CJAX.loading();
@@ -4163,12 +4159,12 @@ function CJAX_FRAMEWORK() {
 		var options = {};
 
 		options.url = $url;
-		if(typeof $args =='function') {
+		if (typeof $args =='function') {
 			options.success = $args;
 		} else {
-			if(typeof $args=='object') {
+			if (typeof $args=='object') {
 				var query = '';
-				for(x in $args) {
+				for (x in $args) {
 					query += x+'='+$args[x]+'&';
 				}
 				$args = query.replace(/\&$/,'');
@@ -4185,11 +4181,11 @@ function CJAX_FRAMEWORK() {
 	this.get		=		function($url , callback, dataType) {
 		var options = {};
 
-		if(typeof $url == 'object') {
+		if (typeof $url == 'object') {
 			options = $url;
 			$url = options.url;
 
-			if(!options.selector) {
+			if (!options.selector) {
 				console.log('get()', 'missing selector');
 			}
 		}
@@ -4199,9 +4195,9 @@ function CJAX_FRAMEWORK() {
 
 		dataType = dataType? dataType : CJAX.ajaxSettings.dataType;
 
-		if(callback) {
+		if (callback) {
 
-			if(!CJAX.lib.isFn(callback)) {
+			if (!CJAX.lib.isFn(callback)) {
 				options.options.dataType = callback;
 			}
 			options.callback.success = callback;
@@ -4209,7 +4205,7 @@ function CJAX_FRAMEWORK() {
 			options.options.dataType = dataType;
 		}
 		options.url = $url;
-		if(/^https?/.test(options.url)) {
+		if (/^https?/.test(options.url)) {
 			options.crossdomain = true;
 		}
 
@@ -4219,7 +4215,7 @@ function CJAX_FRAMEWORK() {
 
 	this._handleRequestHeaders		=		function(url,args)
 	{
-		if(!CJAX.HTTP_REQUEST_INSTANCE) CJAX.HTTP_REQUEST_INSTANCE = CJAX.AJAX();
+		if (!CJAX.HTTP_REQUEST_INSTANCE) CJAX.HTTP_REQUEST_INSTANCE = CJAX.AJAX();
 		if (!CJAX.IS_POST && url.length < 1200) {
 			//reset instance
 			CJAX.HTTP_REQUEST_INSTANCE.onreadystatechange = function () {};
@@ -4238,7 +4234,7 @@ function CJAX_FRAMEWORK() {
 			}
 			CJAX.HTTP_REQUEST_INSTANCE.setRequestHeader("Content-length", full_url.length);
 			CJAX.HTTP_REQUEST_INSTANCE.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			if(url.length > 1500) {
+			if (url.length > 1500) {
 				CJAX.HTTP_REQUEST_INSTANCE.setRequestHeader("Connection", "Closed");
 			} else {
 				CJAX.HTTP_REQUEST_INSTANCE.setRequestHeader("Connection", "Keep-Alive");
@@ -4255,16 +4251,16 @@ function CJAX_FRAMEWORK() {
 		CJAX.default_timeout = 5;
 		var response =  CJAX.HTTP_REQUEST_INSTANCE.responseText;
 
-		if(!cache.callback) {
+		if (!cache.callback) {
 			cache.callback = {};
 		}
-		if(!cache.options) {
+		if (!cache.options) {
 			cache.options = {};
 		}
 
 		var dataType = cache.options.dataType;
 
-		if(!dataType) {
+		if (!dataType) {
 			dataType = CJAX.ajaxSettings.dataType;
 		}
 
@@ -4284,13 +4280,13 @@ function CJAX_FRAMEWORK() {
 						break;
 					default:
 					case 'text/html':
-						if(CJAX.ajaxSettings.process) {
+						if (CJAX.ajaxSettings.process) {
 							CJAX.process_all(response);
 						}
 						response =  unescape(response);
 				}
 
-				if( container ){
+				if ( container ){
 					try {
 						container.innerHTML = response;
 					} catch(err)   {
@@ -4298,17 +4294,17 @@ function CJAX_FRAMEWORK() {
 					}
 				}
 
-				if(CJAX.callback_success[url]) {
+				if (CJAX.callback_success[url]) {
 					CJAX.callback_success[url](response);
 				}
 
-				if(cache.callback.success) {
+				if (cache.callback.success) {
 					cache.callback.success(response);
-				} else if(CJAX.callback.success && typeof CJAX.callback.success=='function') {
+				} else if (CJAX.callback.success && typeof CJAX.callback.success=='function') {
 					CJAX.callback.success(response);
 				}
 
-				if(CJAX.callback.complete && typeof CJAX.callback.complete=='function') {
+				if (CJAX.callback.complete && typeof CJAX.callback.complete=='function') {
 					CJAX.callback.complete(response);
 				}
 
@@ -4322,10 +4318,10 @@ function CJAX_FRAMEWORK() {
 				break;
 			case 404:
 				error_msg = 'CJAX Error: File not found '+url;
-				if( container ) {
-					if(!container.type) { alert('_call: container type is'+ container + error_msg ); return false; }
+				if ( container ) {
+					if (!container.type) { alert('_call: container type is'+ container + error_msg ); return false; }
 				}
-				if(url.indexOf('ajax.php')==-1) {
+				if (url.indexOf('ajax.php')==-1) {
 					CJAX.error('Error: File not found '+url);
 				} else {
 					CJAX.message();
@@ -4353,11 +4349,11 @@ function CJAX_FRAMEWORK() {
 				error_msg = 'Error: Server responded with a unsual response, see available server error logs for details.';
 				break;
 		}
-		if(CJAX.callback['error'+status] && typeof CJAX.callback['error'+status]=='function') {
+		if (CJAX.callback['error'+status] && typeof CJAX.callback['error'+status]=='function') {
 			CJAX.callback['error'+status](this,response, error_msg, status);
 		}
-		if(error_msg) {
-			if(CJAX.callback.error && typeof CJAX.callback.error=='function') {
+		if (error_msg) {
+			if (CJAX.callback.error && typeof CJAX.callback.error=='function') {
 				CJAX.callback.error(response, error_msg, status);
 			}
 		}
@@ -4377,9 +4373,9 @@ function CJAX_FRAMEWORK() {
 		var time;
 		var seconds;
 		var options = {};
-		if(typeof buffer=='object') {
+		if (typeof buffer=='object') {
 
-			if(buffer.message_id) {
+			if (buffer.message_id) {
 				message_id = buffer.message_id;
 			} else {
 				message_id = 'cjax_message';
@@ -4388,7 +4384,7 @@ function CJAX_FRAMEWORK() {
 
 			time = buffer.time;
 
-			for(x in buffer) {
+			for (x in buffer) {
 				options[x] = buffer[x];
 			}
 
@@ -4403,7 +4399,7 @@ function CJAX_FRAMEWORK() {
 		}
 		var div = CJAX.create.div(message_id);
 
-		if(!buffer || !message) {
+		if (!buffer || !message) {
 			div.innerHTML = '';
 			return;
 		}
@@ -4411,14 +4407,14 @@ function CJAX_FRAMEWORK() {
 		div.innerHTML = message;
 		CJAX.set.center(div,options);
 		div.style.zIndex = '5999';
-		if(typeof buffer=='object') {
-			if(buffer.success) {
+		if (typeof buffer=='object') {
+			if (buffer.success) {
 				buffer.success(div, buffer);
 			}
 		}
 
-		if(time && (seconds > time) || (!seconds && time)){
-			if(CJAX.message_id) {
+		if (time && (seconds > time) || (!seconds && time)){
+			if (CJAX.message_id) {
 				clearTimeout(CJAX.message_id);
 			}
 			CJAX.messages[CJAX.message_id]= setTimeout(function(){
@@ -4432,18 +4428,18 @@ function CJAX_FRAMEWORK() {
 
 	this.message	=	function(message, seconds, message_type) {
 		var type_class = '';
-		if(message_type) {
+		if (message_type) {
 			type_class = ' cjax_'+message_type;
 		}
-		if(typeof message=='undefined') {
+		if (typeof message=='undefined') {
 			CJAX.$('cjax_message').innerHTML='';
 			return ;
 		}
-		if(typeof message =='object') {
+		if (typeof message =='object') {
 			options =  message;
 		} else {
 
-			if(typeof seconds =='undefined') {
+			if (typeof seconds =='undefined') {
 				var seconds = CJAX.default_timeout;
 			}
 
@@ -4457,7 +4453,7 @@ function CJAX_FRAMEWORK() {
 
 	this.loading	=	function(message)
 	{
-		if(typeof message=='undefined') {
+		if (typeof message=='undefined') {
 			this._message();
 			return;
 		}
@@ -4472,26 +4468,26 @@ function CJAX_FRAMEWORK() {
 	 */
 	this._pharseValues		=	function(url, selector)
 	{
-		if(undefined == url) {
+		if (undefined == url) {
 			return '';
 		}
 		var v = url.match(/\|[^\|\|]*\|/g);
 
 		try {
-			for(x in v) {
+			for (x in v) {
 				id = v[x].replace(/\|/g,'');
 
-				if(CJAX.intval(id)) {
+				if (CJAX.intval(id)) {
 					_value = id;
 				} else {
 					var use_fns = false;
 
 
 
-					if(id.indexOf('.')!=-1 || id.indexOf('function')!=-1) {
+					if (id.indexOf('.')!=-1 || id.indexOf('function')!=-1) {
 
 
-						if(!selector) {
+						if (!selector) {
 							console.log('URL-value: Invalid Selector for: "'+ id +'"');
 						}
 						var data = id.split('.');
@@ -4504,12 +4500,12 @@ function CJAX_FRAMEWORK() {
 								break;
 							default:
 								var fn = CJAX.lib.pharseFunction(data[0]);
-								if(CJAX.lib.isFn(fn)) {
+								if (CJAX.lib.isFn(fn)) {
 									_value = fn();
 								}
 						}
 					} else {
-						if(id.indexOf(':') !=-1) {
+						if (id.indexOf(':') !=-1) {
 							use_fns = true;
 							fns = id.split(':');
 							id = fns[0];
@@ -4517,7 +4513,7 @@ function CJAX_FRAMEWORK() {
 						} else {
 							element = CJAX.$(id);
 						}
-						if(!element) {
+						if (!element) {
 							_value = id;
 						} else {
 
@@ -4549,10 +4545,10 @@ function CJAX_FRAMEWORK() {
 						}
 					}
 				}
-				if(use_fns) {
-					for(var i = 1; i < fns.length; i++) {
+				if (use_fns) {
+					for (var i = 1; i < fns.length; i++) {
 						fn = CJAX.lib.pharseFunction(fns[i]);
-						if(!CJAX.lib.isFn(fn) && CJAX.lib.isFn(_value[fns[i]])) {
+						if (!CJAX.lib.isFn(fn) && CJAX.lib.isFn(_value[fns[i]])) {
 							_value = _value[fn]();
 						} else {
 							_fn = function() {
@@ -4566,12 +4562,12 @@ function CJAX_FRAMEWORK() {
 							};
 							fn_object = new _fn();
 
-							if(CJAX.lib.isFn(fn) || CJAX.lib.isFn(fn  = window[fns[i]])) {
+							if (CJAX.lib.isFn(fn) || CJAX.lib.isFn(fn  = window[fns[i]])) {
 								switch(element.type) {
 									default:
 									case 'text':
 										_value = fn_object.exec(_value, element);
-										if(typeof _value=='undefined') {
+										if (typeof _value=='undefined') {
 											_value = '';
 										}
 										break;
@@ -4598,11 +4594,11 @@ function CJAX_FRAMEWORK() {
 		CJAX.util.payload('sizzle.js', 10000);
 
 		CJAX.pBase = CJAX.base+'plugins/';
-		if(typeof _CJAX_PROCESS !='undefined') {
+		if (typeof _CJAX_PROCESS !='undefined') {
 			_CJAX_PROCESS();
 		} else {
 
-			if(CJAX.uri.indexOf('crc32')!=-1)  {
+			if (CJAX.uri.indexOf('crc32')!=-1)  {
 				crc32 = CJAX.uri.replace(/.+crc32=/,'');
 				CJAX.importFile(CJAX.base+'core/js/cjax.js.php?crc32='+crc32);
 			} else {
@@ -4612,17 +4608,17 @@ function CJAX_FRAMEWORK() {
 		var nav=navigator.userAgent.toLowerCase();
 		this.ie	= ((nav.indexOf("msie") != -1) && (nav.indexOf("opera") == -1));
 
-		if(CJAX.ie) {
+		if (CJAX.ie) {
 			CJAX.ie = {};
 			ie = ['alert','confirm','focus','blur'];
-			for(x in ie) {
+			for (x in ie) {
 				CJAX.ie[ie[x]] = true;
 			}
 		}
 
 		function myClickListener(e) {
 			var el;
-			if(e==null) {
+			if (e==null) {
 				el = event.srcElement;
 			} else {
 				el = e.target;
@@ -4646,7 +4642,7 @@ function CJAX_FRAMEWORK() {
 		}
 
 		var cjax_css = CJAX.css.add('.cjax','cjax');
-		if(cjax_css) {
+		if (cjax_css) {
 			cjax_css.style.position = 'absolute';
 			cjax_css.style.visibility = 'hidden';
 			cjax_css.style.display = 'none';
@@ -4657,9 +4653,9 @@ function CJAX_FRAMEWORK() {
 		var completed = function() {
 			CJAX.DOMContentLoaded = true;
 			var data;
-			for(var x in CJAX._Ready) {
+			for (var x in CJAX._Ready) {
 				data = CJAX._Ready[x];
-				if(data.element === true) {
+				if (data.element === true) {
 					CJAX.repeat(data.fn(data.element),400,20);
 				} else {
 					data.fn(data.element);
@@ -4673,20 +4669,20 @@ function CJAX_FRAMEWORK() {
 
 	this.repeat		=		function(fn, internal, times) {
 		var fn_timeout = 0;
-		if(!fn) {
+		if (!fn) {
 			console.warn('Repeat: No function specified');
 			return false;
 		}
-		if(typeof internal == 'undefined') {
+		if (typeof internal == 'undefined') {
 			var internal = 100;
 		}
-		if(typeof times == 'undefined') {
+		if (typeof times == 'undefined') {
 			var times = 15;
 		}
 		var tried = 0;
 		var trying = function() {
 			fn_timeout = setTimeout(function() {
-				if(typeof fn == 'function') {
+				if (typeof fn == 'function') {
 					fn.call();
 				} else {
 					console.warn('Repat: ', fn, 'fn is not a function', fn_timeout);
@@ -4697,7 +4693,7 @@ function CJAX_FRAMEWORK() {
 		try {
 			trying();
 		} catch(e) {
-			if(tried >= times) {
+			if (tried >= times) {
 				console.warn('Gave up on', fn, fn.toSource());
 				return false;
 			}
@@ -4706,13 +4702,13 @@ function CJAX_FRAMEWORK() {
 	};
 
 	this.ready		=		function(fn, obj) {
-		if(!CJAX.lib.isFn(fn)) {
-			if(CJAX.debug) {
+		if (!CJAX.lib.isFn(fn)) {
+			if (CJAX.debug) {
 				console.log(fn, 'is not a function');
 			}
 			return;
 		}
-		if(CJAX.DOMContentLoaded) {
+		if (CJAX.DOMContentLoaded) {
 			switch(typeof obj) {
 				case 'number':
 					CJAX.repeat(fn, obj, 20);
@@ -4735,11 +4731,11 @@ function CJAX_FRAMEWORK() {
 		CJAX.importFile(__base__+'core/css/cjax.css');
 		CJAX.importFile(__base__+'lib/sizzle.js');
 		//ajax requests made with jquery..
-		if(typeof jQuery !='undefined') {
+		if (typeof jQuery !='undefined') {
 			jQuery.ajaxSetup({
 				complete: function(a, b) {
 
-					if(a) {
+					if (a) {
 						CJAX.process_all(a.responseText);
 					}
 				}
