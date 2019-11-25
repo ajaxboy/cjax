@@ -15,7 +15,7 @@
  *   Email: cjxxi@msn.com
  **####################################################################################################    */
 
-
+namespace Ajaxboy;
 
 if(!defined('AJAX_CD')) {
 	//if you experience a file not found error, and  AJAX_CD hasn't been defined anywhere
