@@ -4744,5 +4744,5 @@ function CJAX_FRAMEWORK() {
 	};
 }
 
-var CJAX = new CJAX_FRAMEWORK();
+window.CJAX = new CJAX_FRAMEWORK();
 CJAX.initiate();
