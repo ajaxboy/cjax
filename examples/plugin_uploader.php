@@ -271,7 +271,7 @@ $uploader = $ajax->uploader(
 			<li>Debug capabilities</li>
 			<li>Prefix and Subfix- Allows to add unique variables at the beginning and end of each file uploaded.</li>
 			<li>Error Handling and verbose response</li>
-			<li>Smooth and silent file uploads (you don't interfere at all), while all settings are optinal.
+			<li>Smooth and silent file uploads (you don't interfere at all), while all settings are optional.
 			<li>Img preview once the files are up!</li>
 
 		</ul>
@@ -286,7 +286,7 @@ $uploader = $ajax->uploader(
 		<h3>Defining Settings</h3>
 
 		<p>This plugin takes a maximum of 3 parameters, the first two are required, the third one is optional - the third parameter is an array with options
-			you may specify to costimize the uploader, all options are optinal. </p>
+			you may specify to costimize the uploader, all options are optional. </p>
 		<br />
 
 
