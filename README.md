@@ -4,13 +4,14 @@
 
 ## Requirements
 
-+    PHP 5.2+
++    PHP 7.2+
 
+Note, older version of php may still be supported but are not recommended.
 
 
 ## Cjax 5.9
 
-Version 5.9  brings scalabity improvements and processing power to work on heavy duty ajax. It improves upon caching and processing core functionality, plugin processing, speed. So you definitely want this version (currently on the master branch)
+Version 5.9  brings scalability improvements and processing power to work on heavy duty ajax. It improves upon caching and processing core functionality, plugin processing, speed. So you definitely want this version (currently on the master branch)
 
 
 
@@ -27,15 +28,13 @@ Note: SourceForge is not longer the official download location.
 There are multiple ways you can install Cjax, here are several ways:
 
 
-The old fasion way:
-```
-Download zip from git 
-```
-
 git clone:
 ```
 git clone https://github.com/ajaxboy/cjax.git
 ```
+
+Dig in! - go ahead and look intp the example directory to start thinking about
+your use cases and view implementation help.
 
 
 The bottom line is trying to get the files on the root (public directory) of your website.
