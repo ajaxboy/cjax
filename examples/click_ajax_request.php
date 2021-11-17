@@ -85,6 +85,11 @@ $ajax->click("button2",$ajax->call(array('click_ajax_request','click_button','He
    <h5>As of <span class="req">CJAX 5.9+</span></h5>
 
     <?php
+
+    // controller: click_ajax_request
+    // method: click_button
+    // parameter: Hello!
+
     echo $ajax->code("
         \$ajax->click(\"button2\",\$ajax->call(array('click_ajax_request','click_button','Hello!'));
         ");
