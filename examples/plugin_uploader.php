@@ -159,6 +159,7 @@ $uploader = $ajax->uploader(
 	//settings are optional
 	array(
 		'suffix' => md5(time(). rand(1,10000000)), // makes files names universally unique,
+		'selector' => '.file', // css selector to know which fields to use. Make sure you add that class to the field.
 		'use_debug' => '|use_debug|', //sends the value of checkbox with that id, you can also say true or false
 		'ext' => array('jpg','gif', 'png','jpeg'), // extensions allowed
 		'no_files' => 'Please select a file',

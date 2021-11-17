@@ -4,14 +4,18 @@
 
 ## Requirements
 
-+    PHP 5.2+
++    PHP 7.2+
 
+Note, older version of php may still be supported but are not recommended.
 
 
 ## Cjax 5.9
 
-Version 5.9  brings scalabity improvements and processing power to work on heavy duty ajax. It improves upon caching and processing core functionality, plugin processing, speed. So you definitely want this version (currently on the master branch)
+Version 5.9  brings scalability improvements and processing power to work on heavy duty ajax. It improves upon caching and processing core functionality, plugin processing, speed. So you definitely want this version (currently on the master branch)
 
+
+
+![alt tag](http://cjax.sourceforge.net/media/how_cjax_works.jpg)
 
 
 Note: SourceForge is not longer the official download location.
@@ -24,25 +28,16 @@ Note: SourceForge is not longer the official download location.
 There are multiple ways you can install Cjax, here are several ways:
 
 
-The old fasion way:
-```
-Download zip from git 
-```
-
 git clone:
 ```
 git clone https://github.com/ajaxboy/cjax.git
 ```
 
+Dig in! - go ahead and look intp the example directory to start thinking about
+your use cases and view implementation help.
 
-Use wget in terminal:
 
-First CD into the directory you intend to install it.
-```
-wget -N https://github.com/ajaxboy/cjax/archive/5.9rc.zip ; unzip '5.9rc.zip' ;  cp -rf cjax-5.9rc/* . ; rm -fr cjax-5.9rc ;  rm 5.9rc.zip
-```
-
-Any of these ways work, the bottom line is to get the files on the root (public directory) of your website.
+The bottom line is trying to get the files on the root (public directory) of your website.
 
 ````
                          INTEGRATION
@@ -51,6 +46,10 @@ For further CodeIgniter Cjax Docs visit CI's wiki: https://github.com/bcit-ci/Co
 There are other integrations being worked on, such as for Laravel.
 If you download this package and figure out how to integrate it anywhere else, contact me @ajaxboy
 and we can work together to incorporate that.
+
+IMPORTANT: The current integration may have an issue when copying files, 
+please refer to a related problem here to see how to resolve this issue: 
+https://github.com/ajaxboy/cjax/issues/41
 ````
 
 boom! you are set.
@@ -224,9 +223,10 @@ http://cjax.sourceforge.net/docs/
 No!, absolutely no!. Cjax works with PHP Sessions, it saves a variable to keep track of your ajax actions. This variable in array format, is converted into an xml string, this string is processed by Cjax's engine, once interpreted it serves the desired functionality, cjax uses the best methods to interact with the DOM elements, it doesn't require any code on the page. There is absolutely zero code printed on the page!, and that is why Cjax is the fastest!.
 
 #### Is Cjax in competition with jQuery?
-A few people have asked this question, there is a large explation for it. But I will sumarize in a brief. 
+A few people have asked this question, there is a large explation for it. 
+But I will sumarize in a brief. 
 
-Cjax works well with jQuery. Although Cjax and jQuery can do a few of the same things, they are not exclusive to each other, you can use both. Cjax doesn't require it, or needs it, but it will work in friendly terms with it. Cjax can use jQuery selector engine or Sizzle. ajax controllers will even process ajax requests made with jQuery as if you made it with Cjax itself. For these that wish to use jQuery to make ajax request, they can absolutely use the Cjax processing engine, and Ajax Controllers, using an ajax framework for ajax is the same as using a php framework for php, Ajax controllers although similar to other frameworks controllers, it is different, it is less heavy, and it is dedicated. 
-
-#### Why do I need to write server side code from client, if I can just write client side?
-Well this is true, but then you know there are other projects like node.js that lets you write client side code entirely, and no one is complaining, braking convention is not unheard of. There are different ways to do different thigns. There are other projects out there that in some way have similarities to Cjax, but they do it wrong, they add pages footprint, they make you add inline codes on the page, or simply they want to try to be a client side library on the server side, and that is not right not even for us!. Fortunately Cjax does none of these things. it is a unique well established ajax framework (over 10 years old), these are some preconceptions some people may have, but they just have to try it and investigate better to see that Cjax is not just any library, Cjax will go through great extents to make sure you write the less amount of code, and will use not only the best practices to get things done, in fact is the only piece of software in the world known to use even listerner from the server side, what this translates to is - no footprint on your pages, and less work for you.
+Cjax is not a replacement for Jquery. Cjax offers plenty of features besides allowing you to use wildcard selectors
+and ajax requests. Cjax offers a powerful MVC system to power up the backend of your application using ajax. Jquery will do so
+in the front end. In some cases Cjax uses jquery to quickly produce tools (plugins) that are powerful
+in both backend and front-end. 

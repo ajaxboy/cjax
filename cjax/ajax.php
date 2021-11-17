@@ -20,7 +20,7 @@
 if(!defined('AJAX_CD')) {
 	//if you experience a file not found error, and  AJAX_CD hasn't been defined anywhere
 	//enter a relateive path to the base directory where the controllers are.
-	define('AJAX_CD', 'controllers');
+	define('AJAX_CD', 'response');
 }
 if(!defined('AJAX_WD')) {
 	//directory where cjax directory is located
@@ -38,8 +38,13 @@ if(!defined('AJAX_FILE')) {
  * //@ajax_php;
  **/
 class ajax  {
+
+    public static function allowAction($controller, $action = null)
+    {
+        CoreEvents::allowAction($controller, $action);
+    }
 	
-	function ajax($controller)
+	function __construct($controller)
 	{
 		$ajax = ajax();
 		
@@ -83,6 +88,7 @@ class ajax  {
 
 				if(is_dir($plugin->controllers_dir)) {
 
+					$controller = '';
 					$alt_controller = array(
 						'class' => $plugin->controller,
 						'dir' => $plugin->controllers_dir,
@@ -137,12 +143,26 @@ class ajax  {
 			header("Status: 404 Not Found");
 			$this->abort("Controller Method/Function: {$raw_class}::{$function}() was not found");
 		}
+
+        try {
+
+            CoreEvents::verifyAction($raw_class, $function);
+
+        } catch (Exception $e) {
+
+            $this->abort($e->getMessage());
+        }
+
 		return $this->_response( call_user_func_array(array($requestObject, $function), $args) );
 	}
 	
 	function abort($err)
 	{
-		ajax()->error($err, 10);
+        if(!ajax()->isAjaxRequest()) {
+            print $err;
+        } else {
+            ajax()->error($err, 10);
+        }
 		exit(0);
 	}
 

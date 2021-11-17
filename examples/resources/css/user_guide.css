@@ -7,6 +7,14 @@ body {
  background-color: #fff;
 }
 
+.inline {
+ list-style: none;
+}
+.inline li {
+ display: inline;
+ margin: 15px;
+}
+
 .try_it {
  position: relative;
 }
@@ -94,7 +102,7 @@ body {
  width: 200px;
 }
 
-.req {
+.req, .v {
  font-family: "Adobe Devanagari";
  font-size: 19px;
  color: #0000BB;

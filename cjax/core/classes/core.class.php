@@ -246,6 +246,46 @@ class CoreEvents extends cjaxFormat {
 	public $_flag = null;
 	public $_flag_count = 0;
 
+    //give special direct access to a router action from within  controller
+    public static $allowActions = array();
+
+    public $verifyAction = array();
+
+    public static function allowAction($controller, $action = null)
+    {
+        $controller = strtolower($controller);
+        $action = strtolower($action);
+
+        self::$allowActions[$controller][] = $action;
+    }
+
+    public static function verifyAction($controller, $action, $engage = false)
+    {
+        $ajax = ajax();
+        if($engage) {
+            return $ajax->verifyAction[strtolower($controller)] = strtolower($action);
+        }
+
+        if(!$ajax->verifyAction) {
+            return true;
+        }
+
+        foreach(self::$allowActions as $k => $v) {
+            //check controller
+
+            if(!array_key_exists($k , $ajax->verifyAction)) {
+
+                Throw New Exception(sprintf('Action/Controller %s does not have view access to this page.', $controller));
+            }
+
+            if(implode($v) && !in_array($action, $v)) {
+
+                Throw New Exception(sprintf('Action: %s does not have view access to this page.', $action));
+            }
+        }
+        return true;
+    }
+
 	public function xmlItem($xml, $name)
 	{
 		if(!is_integer($xml)) {
@@ -839,6 +879,8 @@ if (document.addEventListener) {
 	 */
 	public function init($min = true)
 	{
+		//always the full version all through RC releases
+		$min  = false;
 		if($min) {
 			$this->_file = "cjax.min.js";
 		}

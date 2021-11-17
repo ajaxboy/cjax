@@ -463,14 +463,24 @@ class plugin extends ext {
 		} else {
 			$_plugin = self::$_instances[$plugin];
 		}
+		$controller_file_name = $_plugin->controller;
 		$dir = plugin::dir($plugin).$_plugin->controllers_dir;
 		$_plugin->xml = $ajax->xmlObject($instance_id);
 		$_plugin->controllers_dir = $dir;
+
 		if(!$_plugin->controller) {
 			$_plugin->controller = $plugin;
 		} else {
 			$_plugin->controller = $_plugin->controller;
 		}
+		if(!$controller_file_name) {
+			$controller_file_name = "{$plugin}.php";
+		} else {
+			$controller_file_name  .= '.php';
+		}
+		$_plugin->controller_file = $dir. "/" . $controller_file_name;
+
+
 		$_plugin->loading = $plugin;
 		return $_plugin;
 	}
@@ -650,14 +660,18 @@ class plugin extends ext {
 				if(file_exists($f = "{$dir}{$v}.php")) {
 					require_once $f;
 					$class = $v;
-					$parent = get_parent_class($class);
-					if(!class_exists($class)) {
+
+					if(!class_exists($class, false)) {
 						$class = 'plugin_'.$v;
-					} else if($parent!='plugin') {
-						$class = 'plugin_'.$v;
+					} else {
+						$parent = get_parent_class($class);
+
+						if($parent!='plugin') {
+							$class = 'plugin_' . $v;
+						}
 					}
 
-					if(class_exists($class)) {
+					if(class_exists($class, false)) {
 						$vars = get_class_vars($class);
 
 						if(isset($vars['file'])) {

@@ -4,6 +4,8 @@ require 'ajax.php';
 
 $ajax->spin('star', 'spin');
 
+$ajax->click('#a_in_place', $ajax->dialog("This is an idea for an upcoming tool related to in place editing.","In place Editor"));
+$ajax->click('#a_tabs', $ajax->dialog("This is an idea for an upcoming tool related to tabs.","Tabs"));
 
 ?>
 <!doctype html>
@@ -75,7 +77,16 @@ h4 {
 <h5>Welcome to the World of Cjax</h5>
 <p>
 Let Cjax bring you to a whole new level of thinking when doing application interactions.
-Let yourself loose, and explore the posiblities of what you can do with Cjax. Full professional installation is available, <a href="mailto:&#099;&#106;&#120;&#120;&#105;&#050;&#049;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;?subject=Questions About Cjax">contact author</a> if you have any questions.
+Let yourself loose, and explore the possibilities of what you can do with Cjax.
+  <ul class="inline">
+        <li>
+            <a href="https://github.com/ajaxboy/cjax/issues">View Issues List</a>
+        </li>
+        <li>
+            <a href="https://github.com/ajaxboy/cjax/releases">View Previous Releases</a>
+        </li>
+    </ul>
+
 </p>
 <p class="soft-note">
 	This site's examples and, Cjax in general are updated on regular basis from <a  target="_blank" href="https://github.com/ajaxboy/cjax/tree/master">development branch</a>.
@@ -166,11 +177,11 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 			</li>
 		</ul>
 		
-		<h3>Other</h3>
+		<h3>Other Intricacies</h3>
 
 		<ul>
 			<li>
-				<a href="callbacks.php">Ajax Callbacks</a>
+				<a href="callbacks.php">On() (callbacks)</a>
 			</li>
 			<li>
 				<a href="sizzle.php">Advanced Selectors</a>
@@ -178,11 +189,11 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 			<li>
 				<a href="js_properties.php">JS Properties</a>
 			</li>
+            <li>
+                <a href="js_functions.php">JS Functions</a>
+            </li>
 			<li>
 				<a href="main_property.php">Main Property</a>
-			</li>
-			<li>
-				<a href="js_functions.php">Access JS Functions</a>
 			</li>
 			<li>
 				<a href="element_properties.php">Elements Properties</a>
@@ -225,7 +236,7 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 				<a href="call.php">Call</a>
 			</li>
 			<li>
-				Form
+                <a href="send_form.php">Form</a>
 			</li>
 			<li>
 				<a href="flush.php">Flush</a>
@@ -252,42 +263,54 @@ Let yourself loose, and explore the posiblities of what you can do with Cjax. Fu
 	
 	
 	<div style="width: 210px;float: left">
-	<h3>Plugins</h3>
+	<h3>Tools</h3>
 		<ul>
+            <li>
+                <a href="plugin_uploader.php">Ajax Uploader</a>
+            </li>
 			<li>
 				<a href="plugin_autocomplete.php">Autocomplete</a>
 			</li>
-			<li>
-				<a href="plugin_validate.php">Validate</a> (Jquery.validate)
-			</li>
-			<li>
-				<a href="plugin_uploadify.php">Uploadify</a> (Jquery.uploadify)
-			</li>
-			<li>
-				<a href="validation_uploader.php">Validation + Uploader</a>
-			</li>
+            <li>
+                <a href="pagination.php">Pagination</a>
+            </li>
+            <li>
+                <a href="plugin_progressbar.php">Progressbar</a>
+            </li>
+
+            <li>
+                <a href="plugin_uploadify.php">Uploadify</a>
+            </li>
+            <li>
+                <a href="plugin_validate.php">Validate</a>
+            </li>
+
+            <li>
+                <a href="validation_uploader.php">Validation + Uploader</a>
+            </li>
 			<li>
 				<a href="plugins.php">Creating Plugins</a>(JS+PHP)
 			</li>
+
 		</ul>
+
+
+		<h3>Tool Ideas</h3>
+		<ul>
+			<li>
+				<a id="a_in_place" href="#">Edit</a> (in place text editor)
+			</li>
+			<li>
+				<a id="a_tabs" href="#">Tabs</a>
+			</li>
+		</ul>
+
 
 		<h3>Effects</h3>
 
 		<ul>
 			<li>
 				<a href="spin.php">Spin Text</a>
-			</li>
-		</ul>
-
-		<h3>Tools</h3>
-
-		<ul>
-
-			<li>
-				<a href="plugin_uploader.php">Ajax Uploader</a>
-			</li>
-			<li>
-				<a href="pagination.php">Pagination</a>
 			</li>
 		</ul>
 

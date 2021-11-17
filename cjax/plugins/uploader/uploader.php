@@ -113,7 +113,7 @@ class uploader extends plugin {
 	
 	function onAjaxLoad($options = array(), $target_directory = null)
 	{
-		return $this->onLoad($options, $$target_directory);
+		return $this->onLoad($options, $target_directory);
 	}
 	
 }

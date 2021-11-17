@@ -41,7 +41,7 @@ $ajax->on('bubbles', $ajax->info('{response}'));
 <!doctype html>
 <head>
     <link rel="stylesheet" type="text/css" href="resources/css/user_guide.css" media="all">
-    <title>ajax Callbacks</title>
+    <title>On ajax Callbacks</title>
     <?php echo $ajax->init(false);?>
 </head>
 <body>
@@ -87,20 +87,48 @@ $ajax->on('bubbles', $ajax->info('{response}'));
         <iframe src="https://ghbtns.com/github-btn.html?user=ajaxboy&repo=cjax&type=watch&count=true&v=2" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
     </div>
 
-    <h2>Built-in &amp; Custom Callbacks</h2>
+    <h2>Introduction</h2>
+
+    <h2>Built-in, Custom Callbacks, and Selectors</h2>
 
     <p>
         <!-- Text -->
         When you make an ajax request, some times you want do something extra with the response of your ajax call, here is where the callback
         system takes place. There are callbacks also available for other events. In addition, you can create custom callbacks, see some examples below.
 
-
     </p>
 
+    <p>
+        You can also use on() method as a selector engine. When you would normally click() and other <a href="triggers.php">triggers</a>
+        You can now use on() method on elements selectors, this allows you to apply functions to custom selectors on the spot without
+        having an actual trigger action.
+        Unlike using click() and other events, the on() event basically triggers the functions/actions on the spot.
+        This allows you to apply functions on elements with ease and without the need to trigger it.
+    </p>
 
 
     <h3>Examples</h3>
 
+
+
+    <h4>Use On() as selector</h4>
+    <p>
+        You can now use on() method as a selector (<span class="v">Cjax 5.9 RC10 +</span>) this would allow to select multiple elements on the page
+        with wildcard selectos and apply a function to them all, without having a <a href="triggers.php">trigger</a>  such as a a click. Before, you
+        would have to specify the elements on the functions themselves, now you can apply the functions to a wildcard selector.
+    </p>
+    <p>
+        <?php
+        echo $ajax->code("
+        \$ajax->on('.response', \$ajax->prop(array('style' => array('backgroundColor' => 'Red'))));
+        
+        \$ajax->on('.response', \$ajax->update('Some Text!'));
+        ");
+        ?>
+    </p>
+
+
+    <h4>Use On() as callback trigger</h4>
     <?php
 
     echo $ajax->code("
@@ -237,6 +265,11 @@ $ajax->on('bubbles', $ajax->info('{response}'));
 
     </p>
 
+
+
+    <br />
+
+
     <h5>Examples of custom callbacks</h5>
 
     <?php
@@ -254,7 +287,7 @@ $ajax->on('bubbles', $ajax->info('{response}'));
     echo $ajax->code("
 
           //would trigger, bubble callback, which would display an info message saying \"Making Bubbles!\"
-          CJAX.callback.bubble();
+          CJAX.callback.bubbles();
 
           //would trigger the dancing callback, this could be used anywhere on your site, or within a custom plugin.
           CJAX.callback.dancing();
@@ -265,8 +298,8 @@ $ajax->on('bubbles', $ajax->info('{response}'));
 
           //To be on the safe side, you may want to add a check to make sure the callback exists eg:
 
-          if(CJAX.callback.bubble) {
-            CJAX.callback.bubble();
+          if(CJAX.callback.bubbles) {
+            CJAX.callback.bubbles();
           }
 
         ","JAVASCRIPT");

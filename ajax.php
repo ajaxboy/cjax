@@ -12,7 +12,7 @@
  *   -- AUTHOR COPYRIGHT MUST REMAIN INTACT -
  *   Written by: CJ Galindo
  *   Website: http://cjax.sourceforge.net                     $
- *   Email: cjxxi@msn.com
+ *   Email: cjxxi21@gmail.com
  **####################################################################################################    */
 
 
